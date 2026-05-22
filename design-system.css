@@ -16,6 +16,15 @@
  * Urheber: Die Grünen.
  */
 
+/* Schriften (CONTEXT D-3): Barlow Semi Condensed + Vollkorn werden direkt hier
+   per @import geladen, damit jedes konsumierende Tool die Schriften automatisch
+   erhält. @import muss vor allen anderen Regeln stehen — der Datei-Header-
+   Kommentar darüber zählt nicht als Regel. Gewichte auf die tatsächlich von den
+   Komponenten genutzten Schnitte reduziert: Barlow 400 (Copy), 600/700
+   (Subline/UI), 900 (Headline) inkl. Kursiv; Vollkorn 400 und 900-Kursiv
+   (Hervorhebung). */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,400;1,900&family=Vollkorn:ital,wght@0,400;0,900&display=swap');
+
 :root {
   /* === Farben ============================================================ */
 
@@ -94,4 +103,327 @@
          (X = Basiseinheit des jeweiligen Layouts)
      Diese Verhältnisse werden in den konsumierenden Tools formatabhängig
      umgesetzt und sind hier nur zur Nachvollziehbarkeit festgehalten. */
+
+  /* === Komponenten-Maße ================================================== */
+
+  /* Web-Ergänzung, Issue #4 — nicht im CD-Quickguide.
+     Der Quickguide tokenisiert nur das CD-Vokabular (Farben, Schrift,
+     Zeilenabstände, Abstände). Rundungen, Strichstärke und Inhaltsbreite sind
+     reine Web-Größen, die die Komponenten brauchen. Als Tokens ergänzt, damit
+     keine Komponente harte px-/rem-Werte verwendet. */
+  --gat-radius-sm: 0.25rem; /* kleine Rundung — Buttons, Badges */
+  --gat-radius-md: 0.5rem; /* Karten-Rundung */
+  --gat-border-width: 2px; /* Standard-Strichstärke — Sekundär-Button-Outline */
+  --gat-container-max: 72rem; /* maximale Inhaltsbreite */
+
+  /* Breakpoints — NUR zur Dokumentation. @media-Bedingungen können kein var()
+     lesen, daher stehen die rem-Werte in den Media-Queries direkt; diese Tokens
+     dienen ausschließlich der Nachvollziehbarkeit. */
+  --gat-breakpoint-sm: 36rem; /* nur Doku — @media nutzt den rem-Wert direkt */
+  --gat-breakpoint-md: 48rem; /* nur Doku — @media nutzt den rem-Wert direkt */
+}
+
+/* ========================================================================= *
+ * KOMPONENTEN — Issue #4                                                      *
+ * Flache, einklassige Selektoren mit dem Prefix .gat- (CONTEXT D-1).          *
+ * Keine nackten Tag-Selektoren: das Stylesheet wird in fremde Tools           *
+ * eingebunden und darf deren Markup nicht umstylen. Jeder Wert verweist auf   *
+ * ein --gat--Token.                                                          *
+ * ========================================================================= */
+
+/* === Layout / Seitenstruktur ============================================= */
+
+/* Zentrierter Inhalts-Container — begrenzt die Lesebreite und setzt ein
+   seitliches Padding. */
+.gat-container {
+  max-width: var(--gat-container-max);
+  margin-inline: auto;
+  padding-inline: var(--gat-space-4);
+}
+
+/* Responsives Raster: bricht dank repeat(auto-fit, minmax()) ohne Media-Query
+   selbsttätig auf eine Spalte um. */
+.gat-grid {
+  display: grid;
+  gap: var(--gat-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+/* Feste Spaltenvarianten — 2 bzw. 3 gleich breite Spalten. */
+.gat-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.gat-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Unter --gat-breakpoint-sm (36rem) brechen die festen Varianten auf eine
+   Spalte um. @media kann kein var() lesen, daher steht der rem-Wert direkt. */
+@media (max-width: 36rem) {
+  .gat-grid--2,
+  .gat-grid--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Vertikaler Block mit CD-Abstandsrhythmus. */
+.gat-section {
+  padding-block: var(--gat-space-6);
+}
+
+/* === Header / Navigation ================================================= */
+
+/* Seitenkopf auf dunkelgrüner Fläche (CONTEXT D-5). Fläche und on-primary-Text
+   werden gemeinsam gesetzt — die CD-Regel „Typografie immer auf Grün" ist so
+   strukturell erzwungen. */
+.gat-header {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
+
+/* Zentrierte Header-Zeile als Flexbox; bricht auf schmalen Viewports um. */
+.gat-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--gat-space-4);
+  max-width: var(--gat-container-max);
+  margin-inline: auto;
+  padding: var(--gat-space-4);
+}
+
+/* Logo-Wrapper — das Padding bildet die CD-Schutzzone (Freiraum rund um das
+   Logo) ab. */
+.gat-header__logo {
+  display: inline-block;
+  padding: var(--gat-space-3); /* CD-Schutzzone — Freiraum rund um das Logo */
+}
+
+/* Das gelieferte Logo-SVG ist einfarbig dunkelgrün und wäre auf der
+   dunkelgrünen Header-Fläche unsichtbar. Es wird daher per CSS-Maske auf Weiß
+   umgefärbt (CONTEXT D-4): die Maske blendet die Logo-Silhouette aus der
+   weißen background-color aus. Da das SVG monochrom ist, ist die Maske exakt.
+   aspect-ratio hält das Originalverhältnis 150,32 × 132,07. */
+.gat-header__logo-mark {
+  display: block;
+  width: 2.5rem;
+  aspect-ratio: 150.32 / 132.07;
+  background-color: var(--gat-color-weiss);
+  -webkit-mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+  mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+}
+
+/* Navigations-Container — Flexbox mit Umbruch. Der Umbruch ersetzt ein
+   JavaScript-Hamburger-Menü (kein JS erlaubt). */
+.gat-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gat-space-4);
+  align-items: center;
+}
+
+/* Einzelner Navigationslink — erbt die weiße Header-Textfarbe. */
+.gat-nav__link {
+  font-family: var(--gat-font-copy);
+  font-weight: 600;
+  color: inherit;
+  text-decoration: none;
+  padding-bottom: var(--gat-space-1);
+  border-bottom: var(--gat-border-width) solid transparent;
+}
+
+/* Hover/Fokus zeigen die gelbe CD-Unterstreichung — rein per CSS, kein JS. */
+.gat-nav__link:hover,
+.gat-nav__link:focus-visible {
+  border-bottom-color: var(--gat-color-highlight);
+}
+
+/* Aktiver Zustand — dauerhafte gelbe CD-Unterstreichung. Die Klasse setzt das
+   konsumierende Tool; hier keine JS-Zustandslogik. */
+.gat-nav__link--active {
+  border-bottom-color: var(--gat-color-highlight);
+}
+
+/* === Typografie ========================================================== */
+
+/* Die CD-Zeilenabstandsfaktoren SIND bereits die --gat-leading--Tokens (0,9
+   bzw. 1,3) — sie werden direkt einheitslos als line-height gesetzt und nicht
+   erneut multipliziert.
+   Hinweis CD-Regel „Text nur auf Grün": die Typo-Klassen setzen ausschließlich
+   color (Anthrazit-Textton) und keinen Hintergrund. Die Paarung mit einer
+   grünen Fläche erzwingen strukturell .gat-header und .gat-card. */
+
+/* Headline (H1-Rolle) — Barlow in Black (900), das CD-„Ultra"-Pendant. */
+.gat-headline {
+  font-family: var(--gat-font-headline);
+  font-weight: 900;
+  font-size: var(--gat-text-h1);
+  line-height: var(--gat-leading-headline);
+  color: var(--gat-color-text);
+}
+
+/* Subline — Barlow halbfett, enger CD-Headline-Zeilenabstand. */
+.gat-subline {
+  font-family: var(--gat-font-headline);
+  font-weight: 600;
+  font-size: var(--gat-text-subline);
+  line-height: var(--gat-leading-headline);
+  color: var(--gat-color-text);
+}
+
+/* Fließtext — Barlow regular, weiter CD-Copy-Zeilenabstand (1,3). */
+.gat-fliesstext {
+  font-family: var(--gat-font-copy);
+  font-weight: 400;
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-color-text);
+}
+
+/* Hervorhebung/Zitat — Vollkorn in Black-Kursiv, die CD-Hervorhebungsrolle. */
+.gat-emphasis {
+  font-family: var(--gat-font-emphasis);
+  font-style: italic;
+  font-weight: 900;
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-color-text);
+}
+
+/* === Buttons ============================================================= */
+
+/* Basis-Button — Layout, Padding, Rundung und Schrift. Die Farbwelt liefern
+   die Modifier --primary / --secondary. */
+.gat-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gat-space-2);
+  padding: var(--gat-space-2) var(--gat-space-4);
+  border: var(--gat-border-width) solid transparent;
+  border-radius: var(--gat-radius-sm);
+  font-family: var(--gat-font-copy);
+  font-weight: 700;
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Sichtbarer Tastatur-Fokus — grüner Outline, rein per CSS. */
+.gat-btn:focus-visible {
+  outline: var(--gat-border-width) solid var(--gat-color-primary);
+  outline-offset: var(--gat-space-1);
+}
+
+/* Primär-Button — dunkelgrüne Fläche, weißer Text (Kontrast 5,63:1). */
+.gat-btn--primary {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
+
+/* Hover dunkelt die Fläche relativ ab — brightness führt keine neue Farbe
+   ein, der Wert bleibt token-getrieben. */
+.gat-btn--primary:hover {
+  filter: brightness(0.92);
+}
+
+/* Sekundär-Button — Outline-Stil: transparente Fläche, grüner Rahmen. */
+.gat-btn--secondary {
+  background: transparent;
+  color: var(--gat-color-primary);
+  border-color: var(--gat-color-primary);
+}
+
+/* Hover füllt die Fläche dunkelgrün und setzt den Text auf Weiß. */
+.gat-btn--secondary:hover {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
+
+/* === Karten / Flächen ==================================================== */
+
+/* Die Karten erzwingen die CD-Grundregel „Typografie steht immer auf grüner
+   Fläche" strukturell: jede Variante paart eine grüne Fläche mit dem passenden
+   on--Textton. */
+
+/* Basis-Karte — nur Layout, Padding und Rundung. Eine Karte wird stets über
+   eine grüne Variante genutzt, daher hier keine eigene Fläche. */
+.gat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gat-space-3);
+  padding: var(--gat-space-5);
+  border-radius: var(--gat-radius-md);
+}
+
+/* Primär-Karte — dunkelgrüne Fläche, weißer Text (Kontrast 5,63:1). */
+.gat-card--primary {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
+
+/* Sekundär-Karte — hellgrüne Fläche, Anthrazit-Text (Kontrast 6,09:1).
+   Weiß auf Hellgrün fiele durch den Kontrast und wird nie gepaart. */
+.gat-card--secondary {
+  background: var(--gat-color-secondary);
+  color: var(--gat-color-on-secondary);
+}
+
+/* Karten-Headline — erbt bewusst die color der Variante, damit der Text immer
+   korrekt auf seiner grünen Fläche sitzt; keine eigene Textfarbe setzen. */
+.gat-card__title {
+  font-family: var(--gat-font-headline);
+  font-weight: 900;
+  font-size: var(--gat-text-h3);
+  line-height: var(--gat-leading-headline);
+}
+
+/* Karten-Fließtext — erbt ebenfalls die color der Variante. */
+.gat-card__body {
+  font-family: var(--gat-font-copy);
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+}
+
+/* === CD-Gestaltungselemente ============================================== */
+
+/* CD-Unterstreichung — Akzent unter Inline-Text, in Magenta. */
+.gat-underline {
+  border-bottom: var(--gat-border-width) solid var(--gat-color-accent);
+  padding-bottom: var(--gat-space-1);
+}
+
+/* Hervorhebung — gelbe Marker-Fläche hinter Inline-Text. Gelb + Anthrazit ist
+   ein kontraststarkes Paar; nie mit Weiß-Text kombinieren. */
+.gat-highlight {
+  background: var(--gat-color-highlight);
+  color: var(--gat-color-text);
+  padding: 0 var(--gat-space-1);
+}
+
+/* „Störer" — leicht gedrehtes Badge, reines CSS (CONTEXT D-6). Der
+   rotate-Winkel ist eine bewusste gestalterische Konstante. */
+.gat-stoerer {
+  display: inline-block;
+  padding: var(--gat-space-2) var(--gat-space-4);
+  border-radius: var(--gat-radius-sm);
+  font-family: var(--gat-font-headline);
+  font-weight: 900;
+  line-height: var(--gat-leading-headline);
+  text-align: center;
+  transform: rotate(-6deg);
+}
+
+/* Störer-Variante Gelb — gelbe Fläche, Anthrazit-Text. */
+.gat-stoerer--gelb {
+  background: var(--gat-color-highlight);
+  color: var(--gat-color-text);
+}
+
+/* Störer-Variante Magenta — magenta Fläche, weißer Text. */
+.gat-stoerer--magenta {
+  background: var(--gat-color-accent);
+  color: var(--gat-color-on-primary);
 }
