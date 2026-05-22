@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Provenance: SHA-256 of the source .md this page was generated from. -->
+<meta name="artifact-source-sha256" content="3160202e185a4c342c21d443d34c025773471cd4b5d13a9bfec6ff6498f6e062">
+<meta name="artifact-source-file" content="PLAN.md">
+<meta name="artifact-generated-at" content="2026-05-22">
+<!-- Which version of the design system this page was authored against. -->
+<meta name="design-system-version" content="ds-1">
+<title>Plan: Integrations-Leitfaden und Querverlinkung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://flomotlik.github.io/claude-code/design-system.css">
+</head>
+<body>
+<div class="page">
+
+<header class="row">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">00</span>Plan</p>
+  </div>
+  <div class="body">
+    <h1 class="masthead-title">Integrations-Leitfaden und Querverlinkung</h1>
+    <p class="masthead-sub">Issue: integration-guide (GrueneAT/design-system#6) &middot; Generated 2026-05-22</p>
+  </div>
+</header>
+
+<hr class="rule">
+
+<section class="row" id="strategy">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">01</span>Strategy</p>
+    <p class="margin-note">Zuerst lesen &mdash; der Rest ist Detail.</p>
+  </div>
+  <div class="body">
+    <h2>Strategy summary</h2>
+    <p>Reine Dokumentations- und Beispiel-Arbeit auf einem inhaltlich fertigen
+       Repo. Die kritische Forschungsfrage &mdash; wo überall Verweise auf das
+       persönliche System liegen &mdash;
+       <span class="mark mark-green">hat ein eindeutiges Ergebnis: genau eine
+       Produktdatei ist betroffen</span>, <code>README.md</code>, Zeilen
+       22&ndash;33. <code>index.html</code> und <code>design-system.css</code>
+       sind bereits sauber.</p>
+    <ul class="points">
+      <li class="point">
+        <p class="point-claim">Vier klar trennbare Pakete.</p>
+        <p class="point-detail">README umarbeiten, CHANGELOG anlegen,
+          Minimal-Beispiel anlegen, Style-Guide-Abschnitt ergänzen &mdash;
+          jedes ein eigener Commit.</p>
+      </li>
+      <li class="point is-note">
+        <p class="point-claim">Etablierte Standards statt Eigenbau.</p>
+        <p class="point-detail"><code>CHANGELOG.md</code> folgt &bdquo;Keep a
+          Changelog&ldquo; 1.1.0 + SemVer 2.0.0; das Minimal-Beispiel bindet
+          die absolute gehostete CSS-URL ein (nicht relativ).</p>
+      </li>
+      <li class="point is-risk">
+        <p class="point-claim">Gefahr: zu breiter Such-/Ersetzungsschritt.</p>
+        <p class="point-detail">Ein <code>grep</code>/<code>sed</code> ohne
+          <code>--exclude-dir=.issues</code> beschädigt 12 Artefaktdateien,
+          deren <code>flomotlik</code>-<code>&lt;link&gt;</code> korrekt ist.
+          Jede Verifikation schließt <code>.issues/</code> aus.</p>
+      </li>
+    </ul>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Tasks</div></div>
+      <div class="stat">
+        <div class="stat-num is-green">2</div>
+        <div class="stat-label">Neue Dateien</div></div>
+      <div class="stat">
+        <div class="stat-num is-orange">2</div>
+        <div class="stat-label">Geänderte Dateien</div></div>
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Entscheidungen (D-1..D-6)</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="flow">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">02</span>Flow</p>
+  </div>
+  <div class="body">
+    <h2>Task flow &amp; dependencies</h2>
+    <div class="flow">
+      <div class="flow-node is-foundation">
+        <span class="n">Task 1</span>
+        <span class="t">README.md umarbeiten</span>
+        <span class="d">personal-system-Block löschen, Stand ersetzen, Einbindung verfeinern.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 2</span>
+        <span class="t">CHANGELOG.md anlegen</span>
+        <span class="d">Keep a Changelog, Eintrag [1.0.0] - 2026-05-22.</span>
+      </div>
+      <div class="flow-node is-key">
+        <span class="n">Task 3</span>
+        <span class="t">examples/minimal.html anlegen</span>
+        <span class="d">Vollständiges Minimal-Beispiel, absolute Hosted-CSS-URL.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 4</span>
+        <span class="t">index.html ergänzen</span>
+        <span class="d">Integrations-Abschnitt vor dem Footer + Nav-Link.</span>
+      </div>
+    </div>
+    <div class="callout is-note">
+      <p class="callout-label">Reihenfolge</p>
+      <p>Tasks laufen sequenziell. Task 3 ist die lasttragende Arbeit (das
+        dogfoodende Beispiel); Task 4 verlinkt es. Task 1 und 2 etablieren die
+        Doku-Verweise, auf die Task 4 zeigt.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="decisions">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">03</span>Decisions</p>
+  </div>
+  <div class="body">
+    <h2>Key decisions &amp; options</h2>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Bezug zum persönlichen System (D-1)</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body">Bestehende Verweise repo-weit aus den
+        Produktdateien <strong>entfernen</strong> &mdash; betroffen ist nur
+        <code>README.md</code> (Zeilen 22&ndash;33). <code>.issues/</code>
+        bleibt unangetastet.</p>
+      <p class="decision-body rejected">Querverlinkung persönliches
+        &harr; org-System (ursprünglicher ISSUE.md-Punkt) &mdash; ein
+        öffentliches Org-Repo soll nicht auf das private System des
+        Maintainers verweisen.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Versionierung (D-2)</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body">Feste Latest-URL +
+        <code>CHANGELOG.md</code> im &bdquo;Keep a Changelog&ldquo;-Format mit
+        Semantic Versioning. Start bei <code>1.0.0</code> (D-4).</p>
+      <p class="decision-body rejected">Versionierte URLs / Pfade
+        (<code>/v1/design-system.css</code>) &mdash; per D-2 ausgeschlossen.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Git-Tag fuer v1.0.0 (D-5)</p>
+        <span class="lozenge is-note">Note</span>
+      </div>
+      <p class="decision-body">Es wird <strong>kein</strong> Git-Tag gesetzt.
+        Das <code>CHANGELOG.md</code> verzichtet daher bewusst auf
+        Compare-/Release-Links &mdash; diese wären ohne Tag 404.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Minimal-Beispiel als echte Datei (D-3)</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body"><code>examples/minimal.html</code> als echte,
+        über GitHub Pages erreichbare Datei, die das System real dogfooded
+        &mdash; absolute gehostete CSS-URL, kein Build.</p>
+      <p class="decision-body rejected">Relative
+        <code>../design-system.css</code>-Einbindung &mdash; würde das
+        Hosting nicht dogfooden und Konsumenten ein falsches Muster zeigen.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="detail">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">04</span>Detail</p>
+  </div>
+  <div class="body">
+    <h2>Full detail</h2>
+    <details class="detail">
+      <summary>Show full artifact source
+        <span class="summary-hint">click to expand</span></summary>
+      <div class="detail-body">
+        <pre><code id="artifact-source-target"></code></pre>
+      </div>
+    </details>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="provenance">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">05</span>Provenance</p>
+  </div>
+  <div class="body">
+    <h2>Provenance</h2>
+    <p>Generated from the canonical <code>.md</code>. This HTML is never
+       hand-edited &mdash; if the <code>.md</code> changes, regenerate with
+       <code>/issue:view</code>.</p>
+    <footer class="footer">
+      <span>Source: <code>PLAN.md</code> &middot;
+        SHA-256 <code>3160202e185a4c342c21d443d34c025773471cd4b5d13a9bfec6ff6498f6e062</code></span>
+      <span>Generated 2026-05-22 &middot; design system ds-1</span>
+    </footer>
+  </div>
+</section>
+
+</div>
+
+<!-- Raw artifact source as DATA, never markup. -->
+<script type="application/json" id="artifact-source">
+{"source": "# Plan: Integrations-Leitfaden und Querverlinkung\n\n<objective>\nZiel: Die Konsumenten-Dokumentation des Gr\u00fcne AT Design System fertigstellen \u2014\neine verfeinerte Einbindungs-Anleitung in `README.md`, ein echtes\nMinimal-Beispiel (`examples/minimal.html`), eine `CHANGELOG.md` und ein knapper\nIntegrations-Abschnitt im Style Guide (`index.html`). Zus\u00e4tzlich werden alle\nVerweise auf das pers\u00f6nliche/private System des Maintainers aus den\nProduktdateien entfernt.\n\nWarum: Das Designsystem ist nach den Issues #2\u2013#5 inhaltlich vollst\u00e4ndig\n(`design-system.css`, `index.html`), aber es fehlt die Doku, die ein neues\nGr\u00fcne-AT-Tool zum Einbinden braucht. Au\u00dferdem enth\u00e4lt `README.md` einen\nveralteten Stand-Abschnitt (behauptet Platzhalter-CSS / Skelett-`index.html`)\nund einen Bezug auf das pers\u00f6nliche System, der in ein \u00f6ffentliches\nOrganisations-Repo nicht geh\u00f6rt.\n\nScope (in):\n- `README.md`: personal-system-Abschnitt l\u00f6schen (Zeilen 22\u201333), veralteten\n  \u201eStand\"-Abschnitt ersetzen, Einbindungs-Abschnitt verfeinern + CHANGELOG-Link.\n- `CHANGELOG.md` (neu): Keep-a-Changelog-Format, Start-Eintrag `[1.0.0] - 2026-05-22`.\n- `examples/minimal.html` (neu): vollst\u00e4ndiges, eigenst\u00e4ndiges Minimal-Beispiel.\n- `index.html`: knapper Integrations-Abschnitt vor dem Footer + Nav-Link.\n\nScope (out):\n- Querverlinkung pers\u00f6nliches \u2194 org-System \u2014 per CONTEXT.md D-1 entf\u00e4llt dieser\n  urspr\u00fcngliche ISSUE.md-Punkt vollst\u00e4ndig; statt zu verlinken wird der Bezug\n  entfernt.\n- `design-system.css` und `assets/` \u2014 inhaltlich unver\u00e4ndert (RESEARCH best\u00e4tigt:\n  keine personal-system-Verweise, nichts zu tun).\n- `.issues/`-Artefakte \u2014 Entwickler-Tooling, NICHT anfassen (D-1).\n- Git-Tag / GitHub-Release `v1.0.0` \u2014 wird NICHT gesetzt (D-5).\n</objective>\n\n<strategy>\nReine Dokumentations- und Beispiel-Arbeit auf einem inhaltlich fertigen Repo.\nDie kritische Forschungsfrage \u2014 wo \u00fcberall Verweise auf das pers\u00f6nliche System\nliegen \u2014 hat ein eindeutiges Ergebnis: genau eine Produktdatei ist betroffen,\n`README.md`, Zeilen 22\u201333. `index.html` und `design-system.css` sind bereits\nsauber. Alle weiteren Treffer liegen unter `.issues/` und sind ausdr\u00fccklich\nout of scope.\n\nDie Arbeit zerf\u00e4llt in vier klar trennbare Pakete: README umarbeiten,\nCHANGELOG anlegen, Minimal-Beispiel anlegen, Style-Guide-Abschnitt erg\u00e4nzen.\nBewusste Entscheidungen: (a) `CHANGELOG.md` folgt \u201eKeep a Changelog\" 1.1.0 +\nSemVer 2.0.0 statt einer Eigenkonstruktion \u2014 etablierter Standard, Konsumenten\nkennen ihn; (b) das Minimal-Beispiel bindet die *absolute* gehostete CSS-URL ein\n(nicht relativ), sonst dogfooded es das Hosting nicht; (c) da kein Git-Tag\ngesetzt wird, verzichtet das CHANGELOG bewusst auf Compare-/Release-Links \u2014\ndiese w\u00e4ren sonst 404.\n\nDie gr\u00f6\u00dfte Gefahr ist ein zu breiter Such-/Ersetzungsschritt, der die 12\n`.issues/`-Artefaktdateien besch\u00e4digt, deren `flomotlik`-`<link>` korrekt ist.\nJede Verifikation grep't daher strikt mit `--exclude-dir=.issues\n--exclude-dir=.git`. Die zweite Gotcha betrifft das Minimal-Beispiel: weil\n`design-system.css` bewusst keine Tag-Defaults setzt, muss die Beispielseite ihr\nbody-Grundlayout selbst setzen \u2014 das demonstriert das Beispiel sogar bewusst.\n</strategy>\n\n<skills>\nKeine Workspace-Skills vorhanden (`/workspace/design-system/` hat kein\n`.claude/skills/`-Verzeichnis und keine repo-lokale `CLAUDE.md`). Ma\u00dfgeblich\nsind die User-Memory-Vorgaben, die in die Task-Actions eingearbeitet sind:\nkeine Tool-/\u201eclaude\"-Attribution in Commits/Dateien, deutschsprachiger Inhalt,\nsimpler Stack f\u00fcr Beispiele (reines HTML, kein Framework, kein Build).\n</skills>\n\n<context>\nIssue: @.issues/integration-guide/ISSUE.md\nResearch: @.issues/integration-guide/RESEARCH.md\nContext (bindende Entscheidungen): @.issues/integration-guide/CONTEXT.md\n\n<interfaces>\n<!-- Executor: diese Vertr\u00e4ge direkt verwenden. Codebase NICHT explorieren. -->\n\n// \u2500\u2500 README.md \u2014 aktuelle Struktur (53 Zeilen, Issue #2) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n//   # Gr\u00fcne AT Design System            (Z. 1)   \u2014 Titel + Intro (Z. 3\u20139)\n//   ## Einbindung                       (Z. 11)  \u2014 <link>-Snippet (Z. 13\u201320)  \u2192 VERFEINERN\n//   ## Verh\u00e4ltnis zum pers\u00f6nlichen System (Z. 22) \u2014 Z. 22\u201333               \u2192 KOMPLETT L\u00d6SCHEN\n//   ## Stand und n\u00e4chste Schritte       (Z. 35)  \u2014 Z. 35\u201346                 \u2192 ERSETZEN (veraltet)\n//   ## Lizenz                           (Z. 48)  \u2014 CC BY 4.0 (Z. 50\u201353)     \u2192 unver\u00e4ndert\n//\n// Kanonische CSS-URL (best\u00e4tigt, README Z. 16):\n//   https://grueneat.github.io/design-system/design-system.css\n// Veralteter Text in \u201eStand und n\u00e4chste Schritte\" (FALSCH, zu ersetzen):\n//   \u201edesign-system.css ist aktuell ein Platzhalter mit Datei-Header,\n//    index.html ein Skelett.\" \u2192 nach #3/#4/#5 unwahr.\n\n// \u2500\u2500 design-system.css \u2014 \u00f6ffentliches Klassen-/Token-Vokabular \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n//   Tokens:      --gat-color-*, --gat-font-*, --gat-space-*, --gat-radius-*\n//   Token-Prefix: --gat- (alle Custom Properties im :root-Block).\n//   Komponenten (flach, einklassig, gat-pr\u00e4fixiert):\n//     gat-section          \u2014 vertikaler Block mit CD-Abstandsrhythmus\n//     gat-container        \u2014 zentrierter Inhaltscontainer\n//     gat-header / gat-header__inner / gat-header__logo / gat-header__logo-mark\n//     gat-nav / gat-nav__link / gat-nav__link--active\n//     gat-headline         \u2014 Headline (H1-Rolle), Barlow Black 900\n//     gat-subline          \u2014 Subline, Barlow Semibold 600\n//     gat-fliesstext       \u2014 Flie\u00dftext, Barlow Regular 400\n//     gat-emphasis         \u2014 Hervorhebung/Zitat, Vollkorn Black-Kursiv\n//     gat-btn / gat-btn--primary / gat-btn--secondary   (Modifier Pflicht)\n//     gat-card / gat-card--primary / gat-card--secondary (Modifier Pflicht)\n//     gat-card__title / gat-card__body\n//     gat-underline        \u2014 CD-Unterstreichung magenta\n//     gat-highlight        \u2014 gelbe Marker-Fl\u00e4che\n//     gat-stoerer / gat-stoerer--gelb / gat-stoerer--magenta\n//   WICHTIG: design-system.css setzt KEINE Tag-Defaults \u2014 konsumierende\n//   Seiten M\u00dcSSEN body-Grundlayout selbst setzen. Pflicht-Pattern (aus\n//   index.html <style> Z. 22\u201328):\n//     body { margin: 0;\n//            background: var(--gat-color-surface);\n//            color: var(--gat-color-text);\n//            font-family: var(--gat-font-copy); }\n//   Ohne diese body-Regel rendert die Seite serif und ohne Layout.\n\n// \u2500\u2500 index.html \u2014 Seitenstruktur (1244 Zeilen, Issue #5) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n//   <head>: <link rel=\"stylesheet\" href=\"design-system.css\">  (RELATIV \u2014 Z. 7)\n//   <body id=\"top\">:\n//     <header class=\"gat-header\"> mit <nav class=\"gat-nav\"> (Anchor-TOC).\n//       Nav-Links aktuell (in dieser Reihenfolge):\n//         #farben (gat-nav__link--active) #typografie #layout\n//         #komponenten #cd-layout #spezifikation\n//     <section>-Abschnitte: #farben #typografie #layout #komponenten\n//       #cd-layout #spezifikation\n//     <script type=\"application/json\" id=\"gat-design-spec\"> \u2014 maschinen-\n//       lesbare Spec (NICHT anfassen, keine Prosa hineinschreiben)\n//     <footer class=\"gat-section doc-footer\"> \u2014 letztes Element vor </body>\n//       (enth\u00e4lt Lizenz-Text + Kanonische Adresse)\n//   \u2192 Neuer Integrations-Abschnitt: eigene <section class=\"gat-section\">\n//     mit id, eingef\u00fcgt UNMITTELBAR VOR <footer class=\"gat-section doc-footer\">.\n//     Passender <a class=\"gat-nav__link\"> in den Nav-Block aufnehmen.\n\n// \u2500\u2500 .github/workflows/pages.yml \u2014 Deploy-Vertrag (NICHT \u00e4ndern) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n//   upload-pages-artifact mit path: '.' \u2192 ganzes Repo wird publiziert.\n//   \u21d2 examples/minimal.html ist automatisch erreichbar unter\n//     https://grueneat.github.io/design-system/examples/minimal.html\n</interfaces>\n\nKey files:\n@README.md \u2014 drei Abschnitte zu \u00e4ndern (l\u00f6schen / ersetzen / verfeinern)\n@index.html \u2014 Integrations-Abschnitt vor dem Footer erg\u00e4nzen + Nav-Link\n@design-system.css \u2014 Referenz f\u00fcr gat-Klassen; NICHT ver\u00e4ndern (D-6)\n</context>\n\n<commit_format>\nFormat: conventional, ohne Issue-Prefix (keine `.issues/config.yaml` vorhanden;\nRepo-Konvention aus RESEARCH: deutschsprachige conventional commits).\nPattern: {type}({scope}): {Beschreibung auf Deutsch}\nBeispiele:\n- docs(readme): Bezug zum pers\u00f6nlichen System entfernen\n- docs(changelog): Erstfassung im Keep-a-Changelog-Format\n- docs(examples): Minimal-Beispiel fuer konsumierende Tools ergaenzen\n- docs(styleguide): Integrations-Abschnitt ergaenzen\nKEINE Tool-/\u201eclaude\"-Attribution in Commit-Messages oder Dateiinhalten\n(User-Memory `feedback_no_claude_attribution`).\n</commit_format>\n\n<tasks>\n\n<task type=\"auto\">\n  <name>Task 1: README.md umarbeiten \u2014 personal-system-Abschnitt l\u00f6schen, Stand ersetzen, Einbindung verfeinern</name>\n  <files>README.md</files>\n  <action>\n  Drei zusammenh\u00e4ngende \u00c4nderungen an `README.md`. Deutschsprachig, kein\n  Framework-Jargon, keine Tool-Attribution.\n\n  (1) personal-system-Abschnitt L\u00d6SCHEN \u2014 per D-1 und RESEARCH-Inventur:\n  Den kompletten Block \u201e## Verh\u00e4ltnis zum pers\u00f6nlichen System\" inklusive\n  aller seiner Zeilen (aktuell Zeilen 22\u201333: \u00dcberschrift, beide Abs\u00e4tze,\n  beide Bullets) ersatzlos entfernen, samt der trennenden Leerzeile. Nach der\n  L\u00f6schung darf in `README.md` NIRGENDS mehr `flomotlik`, `claude-code`,\n  \u201epers\u00f6nliches System\" oder \u201ePers\u00f6nliches System\" vorkommen. Die\n  Abgrenzungs-Aussage \u201eorganisationsweit, verbindlich f\u00fcr alle Gr\u00fcne-AT-Repos\"\n  geht nicht verloren \u2014 sie steht bereits in der README-Einleitung (Z. 3\u20136).\n\n  (2) \u201e## Stand und n\u00e4chste Schritte\" ERSETZEN \u2014 der Abschnitt (aktuell\n  Z. 35\u201346) ist sachlich FALSCH: er behauptet `design-system.css` sei \u201eein\n  Platzhalter mit Datei-Header\" und `index.html` \u201eein Skelett\", und listet\n  offene Issues #3\u2013#6. Nach #3/#4/#5 ist beides unwahr. Den Abschnitt durch\n  einen neuen Abschnitt \u201e## Versionierung und Updates\" ersetzen, der korrekt\n  beschreibt:\n  - Das Designsystem ist produktiv: Design-Tokens, UI-Komponenten und ein\n    ausgearbeiteter Style Guide (`index.html`) sind vorhanden.\n  - Konsumierende Tools verlinken die feste, gehostete CSS-URL und erhalten\n    damit immer den aktuellen Stand \u2014 es gibt KEINE versionierten URLs (D-2).\n  - \u00c4nderungen \u2014 insbesondere Breaking Changes \u2014 werden in der `CHANGELOG.md`\n    dokumentiert; das Projekt folgt Semantic Versioning. Relativen Link\n    setzen: `[CHANGELOG.md](CHANGELOG.md)`.\n  KEINE Erw\u00e4hnung von \u201ePlatzhalter\", \u201eSkelett\", \u201eGrundger\u00fcst\" oder offenen\n  Folge-Issues mehr.\n\n  (3) \u201e## Einbindung\" VERFEINERN \u2014 das bestehende `<link>`-Snippet (Z. 15\u201317,\n  kanonische URL `https://grueneat.github.io/design-system/design-system.css`)\n  BEHALTEN. Erg\u00e4nzen:\n  - Hinweis, dass `design-system.css` bewusst KEINE Tag-Defaults setzt \u2014 eine\n    konsumierende Seite muss ihr body-Grundlayout selbst setzen (margin,\n    background, color, font-family aus den `--gat-*`-Tokens). Diese Eigenschaft\n    kurz benennen, damit Konsumenten nicht \u00fcber serif-gerenderte Seiten\n    stolpern.\n  - Verweis auf das Minimal-Beispiel `examples/minimal.html` \u2014 als relativer\n    Repo-Link `[examples/minimal.html](examples/minimal.html)` UND als\n    Live-Pages-URL `https://grueneat.github.io/design-system/examples/minimal.html`.\n\n  Abschnittsreihenfolge der fertigen README: Titel/Intro \u2192 ## Einbindung \u2192\n  ## Versionierung und Updates \u2192 ## Lizenz. Der `## Lizenz`-Abschnitt\n  (CC BY 4.0, Urheber: Die Gr\u00fcnen) bleibt unver\u00e4ndert.\n  </action>\n  <verify>\n  <automated>test -f README.md && ! grep -niE 'flomotlik|claude-code|pers\u00f6nlich|personal system' README.md && ! grep -niE 'Platzhalter|Skelett|Grundger\u00fcst' README.md && grep -q 'CHANGELOG.md' README.md && grep -q 'examples/minimal.html' README.md && grep -q 'grueneat.github.io/design-system/design-system.css' README.md && echo \"README OK\"</automated>\n  </verify>\n  <done>\n  - `README.md` enth\u00e4lt keinerlei `flomotlik` / `claude-code` / \u201epers\u00f6nlich\" / \u201epersonal system\" mehr.\n  - Der Abschnitt \u201eVerh\u00e4ltnis zum pers\u00f6nlichen System\" ist vollst\u00e4ndig entfernt.\n  - Kein \u201ePlatzhalter\" / \u201eSkelett\" / \u201eGrundger\u00fcst\" mehr; der veraltete Stand-Abschnitt ist durch \u201eVersionierung und Updates\" ersetzt.\n  - Einbindungs-Abschnitt verweist auf `examples/minimal.html` und benennt das fehlende Tag-Default-Verhalten.\n  - README verlinkt `CHANGELOG.md` relativ.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 2: CHANGELOG.md neu anlegen (Keep a Changelog, [1.0.0] - 2026-05-22)</name>\n  <files>CHANGELOG.md</files>\n  <action>\n  Neue Datei `CHANGELOG.md` im Repo-Root anlegen. Format: \u201eKeep a Changelog\"\n  1.1.0 + Semantic Versioning 2.0.0. Deutschsprachig.\n\n  Aufbau:\n  - Titel `# Changelog`.\n  - Einleitungsabsatz: alle nennenswerten \u00c4nderungen am Gr\u00fcne AT Design System\n    werden hier dokumentiert; Format basiert auf \u201eKeep a Changelog\", das\n    Projekt folgt Semantic Versioning. Kurzer Satz: konsumierende Tools binden\n    immer die aktuelle gehostete `design-system.css` ein (siehe README); diese\n    Datei zeigt, was sich zwischen den St\u00e4nden ge\u00e4ndert hat \u2014 insbesondere\n    Breaking Changes (MAJOR-Versionsspr\u00fcnge).\n  - `## [Unreleased]` \u2014 leer.\n  - `## [1.0.0] - 2026-05-22` mit einer `### Added`-Sektion, die den\n    funktional vollst\u00e4ndigen Stand nach #2\u2013#5 zusammenfasst: Design-Tokens aus\n    dem Corporate Design der Gr\u00fcnen \u00d6sterreich (Farben, Typografie \u2014 Barlow\n    Semi Condensed und Vollkorn, Abst\u00e4nde, Radien als `--gat-*`-CSS-Custom-\n    Properties); UI-Komponenten (`gat-header`/`gat-nav`, `gat-section`/\n    `gat-container`, Typografie-Klassen, `gat-btn`, `gat-card`, CD-Layout-\n    Elemente `gat-underline`/`gat-highlight`/`gat-stoerer`); sichtbarer Style\n    Guide unter `index.html` mit maschinenlesbarer Spezifikation;\n    Einbindungs-Anleitung und Minimal-Beispiel (`examples/minimal.html`).\n\n  WICHTIG (D-4/D-5): Startversion ist `1.0.0`. Es wird KEIN Git-Tag gesetzt \u2014\n  daher KEINE Compare-/Release-Link-Zeilen am Dateiende (`[1.0.0]: .../compare/...`\n  oder `.../releases/tag/...`). Diese w\u00fcrden ohne Tag auf 404 zeigen. Der\n  Versions-Header `## [1.0.0] - 2026-05-22` nennt Version und Datum direkt;\n  das gen\u00fcgt. Optional darf eine Markdown-Linkdefinition f\u00fcr `[Unreleased]`\n  ebenfalls weggelassen werden.\n\n  Wenn die Markdown-Versions-Header `[1.0.0]` / `[Unreleased]` ohne zugeh\u00f6rige\n  Linkdefinition stehen, d\u00fcrfen sie NICHT als anklickbarer Link gerendert\n  werden \u2014 entweder die eckigen Klammern als reinen Text belassen (Keep a\n  Changelog erlaubt das) oder konsequent ohne Linkdefinitionen schreiben.\n  </action>\n  <verify>\n  <automated>test -f CHANGELOG.md && grep -qF '[1.0.0] - 2026-05-22' CHANGELOG.md && grep -q 'Keep a Changelog' CHANGELOG.md && grep -q '### Added' CHANGELOG.md && ! grep -E 'compare/|releases/tag/' CHANGELOG.md && echo \"CHANGELOG OK\"</automated>\n  </verify>\n  <done>\n  - `CHANGELOG.md` existiert im Repo-Root.\n  - Enth\u00e4lt den Eintrag `[1.0.0] - 2026-05-22` mit einer `### Added`-Sektion.\n  - Folgt dem Keep-a-Changelog-Format mit `## [Unreleased]`-Block.\n  - Enth\u00e4lt KEINE Compare-/Release-Tag-Links (kein Git-Tag, D-5).\n  - Durchgehend deutschsprachig.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 3: examples/minimal.html neu anlegen (vollst\u00e4ndiges Minimal-Beispiel)</name>\n  <files>examples/minimal.html</files>\n  <action>\n  Neue Datei `examples/minimal.html` anlegen (das `examples/`-Verzeichnis neu\n  erstellen). Eine vollst\u00e4ndige, eigenst\u00e4ndige HTML5-Seite, die ein\n  konsumierendes Gr\u00fcne-AT-Tool demonstriert. Reines HTML, kein Build, kein\n  JavaScript, kein zweites Asset (User-Memory `feedback_simple_stack_for_tests`).\n  Deutschsprachig, `<html lang=\"de\">`.\n\n  Pflicht-Inhalt:\n  1. `<!doctype html>`, `<meta charset=\"utf-8\">`, `<meta name=\"viewport\"\n     content=\"width=device-width, initial-scale=1\">`, ein `<title>`.\n  2. GENAU EINE Stylesheet-Einbindung \u2014 die ABSOLUTE, gehostete URL:\n     `<link rel=\"stylesheet\" href=\"https://grueneat.github.io/design-system/design-system.css\">`.\n     KEINE relative `design-system.css` und KEINE `../design-system.css` \u2014 eine\n     relative Einbindung w\u00fcrde nur lokal funktionieren und das Hosting nicht\n     dogfooden. Die absolute Hosted-URL ist Pflicht (D-3).\n  3. Ein minimaler `<style>`-Block, der NUR das body-Grundlayout setzt:\n     `body { margin: 0; background: var(--gat-color-surface);\n     color: var(--gat-color-text); font-family: var(--gat-font-copy); }`.\n     Mit einem HTML-Kommentar versehen, der erkl\u00e4rt, dass `design-system.css`\n     bewusst keine Tag-Defaults setzt und eine konsumierende Seite ihr\n     body-Grundlayout selbst setzen muss \u2014 das ist die wichtigste Gotcha-\n     Demonstration des Beispiels. Sonst KEINE eigenen CSS-Regeln.\n  4. Ein erkl\u00e4render Kopf-Kommentar ganz oben: \u201eVollst\u00e4ndiges Minimal-Beispiel\n     eines konsumierenden Gr\u00fcne-AT-Tools \u2026\".\n  5. Echte `gat-`-Komponenten in einer plausiblen Tool-Seite \u2014 ausschlie\u00dflich\n     Klassen aus dem in <interfaces> dokumentierten Vokabular, KEINE\n     erfundenen Klassen:\n     - `gat-header` mit `gat-header__inner`, `gat-header__logo`,\n       `gat-header__logo-mark`, und einer `gat-nav` mit ein paar\n       `gat-nav__link` (einer mit `gat-nav__link--active`).\n     - eine `gat-section` mit `gat-container`-H\u00fclle.\n     - `gat-headline`, `gat-subline`, mindestens ein `gat-fliesstext`-Absatz.\n     - mindestens ein `gat-btn` MIT Modifier (`gat-btn--primary` und\n       `gat-btn--secondary`) \u2014 der Modifier ist Pflicht.\n     - mindestens eine `gat-card` MIT Modifier (`gat-card--primary` oder\n       `gat-card--secondary`), inkl. `gat-card__title` und `gat-card__body`.\n  6. Kein Verweis auf `flomotlik` / `claude-code` / das pers\u00f6nliche System.\n  7. Keine Tool-/\u201eclaude\"-Attribution.\n\n  Korrektes Markup je Komponente: `index.html` (der Style Guide,\n  `#komponenten`-Abschnitt) ist die Referenz. Das Beispiel baut nichts neu nach\n  \u2014 es verwendet nur vorhandene Klassen.\n  </action>\n  <verify>\n  <automated>test -f examples/minimal.html && grep -qF 'https://grueneat.github.io/design-system/design-system.css' examples/minimal.html && ! grep -E 'href=\"(\\.\\./)?design-system\\.css\"' examples/minimal.html && grep -q 'lang=\"de\"' examples/minimal.html && ! grep -niE 'flomotlik|claude-code' examples/minimal.html && python3 -c \"from html.parser import HTMLParser; import sys\nclass B(HTMLParser):\n VOID={'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}\n def __init__(s): super().__init__(); s.st=[]; s.bad=False\n def handle_starttag(s,t,a):\n  if t not in s.VOID: s.st.append(t)\n def handle_endtag(s,t):\n  if t in s.VOID: return\n  if s.st and s.st[-1]==t: s.st.pop()\n  elif t in s.st:\n   while s.st and s.st.pop()!=t: pass\n  else: s.bad=True\nb=B(); b.feed(open('examples/minimal.html',encoding='utf-8').read())\nsys.exit(1 if (b.bad or b.st) else 0)\" && echo \"minimal.html OK\"</automated>\n  </verify>\n  <done>\n  - `examples/minimal.html` existiert und ist wohlgeformtes, ausbalanciertes HTML.\n  - Bindet die absolute gehostete CSS-URL ein; keine relative `design-system.css`.\n  - Setzt das body-Grundlayout selbst und kommentiert die Tag-Default-Gotcha.\n  - Verwendet ausschlie\u00dflich echte `gat-`-Komponenten (Header/Nav, Section/Container, Typografie, Button mit Modifier, Card mit Modifier).\n  - `<html lang=\"de\">`, deutschsprachig, kein JavaScript, kein zweites Asset.\n  - Kein personal-system-Verweis, keine Tool-Attribution.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 4: index.html \u2014 Integrations-Abschnitt vor dem Footer erg\u00e4nzen + Nav-Link</name>\n  <files>index.html</files>\n  <action>\n  Dem Style Guide `index.html` einen knappen Integrations-Abschnitt hinzuf\u00fcgen.\n  RESEARCH best\u00e4tigt: `index.html` enth\u00e4lt KEINE personal-system-Verweise \u2014\n  es ist NICHTS zu entfernen, nur additiv zu erg\u00e4nzen.\n\n  (1) Neue `<section class=\"gat-section\" id=\"einbindung\">` einf\u00fcgen \u2014\n  UNMITTELBAR VOR `<footer class=\"gat-section doc-footer\">` (das ist das\n  letzte Element vor `</body>`), per D-6. Die Section enth\u00e4lt eine\n  `gat-container`-H\u00fclle mit:\n  - einer `gat-headline` oder passenden \u00dcberschrift \u201eEinbindung\" / \u201eEinbindung\n    in eigene Tools\";\n  - einem kurzen `gat-fliesstext`-Absatz, der erkl\u00e4rt, wie ein konsumierendes\n    Tool das gehostete Stylesheet per `<link>` einbindet;\n  - dem `<link>`-Snippet mit der kanonischen URL\n    `https://grueneat.github.io/design-system/design-system.css`. Das Snippet\n    als Codeblock darstellen \u2014 verwende dasselbe `doc-`-pr\u00e4fixierte\n    Codeblock-Muster, das `index.html` f\u00fcr andere Code-Snippets im\n    `#komponenten`-Abschnitt bereits nutzt (z. B. `doc-codeblock` o. \u00e4. \u2014 am\n    vorhandenen Markup orientieren, kein neues CSS erfinden);\n  - einem Hinweis, dass `design-system.css` keine Tag-Defaults setzt und die\n    konsumierende Seite ihr body-Grundlayout selbst setzen muss;\n  - Verweisen auf das Minimal-Beispiel `examples/minimal.html` (relativer\n    Link `examples/minimal.html`) und auf die `CHANGELOG.md` (relativer Link\n    `CHANGELOG.md`) f\u00fcr Versionierung/Updates.\n  Den `<script type=\"application/json\" id=\"gat-design-spec\">`-Block NICHT\n  anfassen \u2014 der Integrations-Abschnitt ist menschliche Doku und geh\u00f6rt nicht\n  in dieses JSON.\n\n  (2) Passenden Nav-Link in den `gat-nav`-Block aufnehmen: ein\n  `<a class=\"gat-nav__link\" href=\"#einbindung\">Einbindung</a>` erg\u00e4nzen. Die\n  vorhandenen Nav-Links sind in Reihenfolge: Farben, Typografie, Layout,\n  Komponenten, CD-Layout, Spezifikation \u2014 der neue Link kommt ans Ende, nach\n  \u201eSpezifikation\" (der Abschnitt selbst sitzt am Ende vor dem Footer). Der\n  `gat-nav__link--active`-Modifier bleibt unver\u00e4ndert auf \u201eFarben\".\n\n  Deutschsprachig, kein personal-system-Verweis, keine Tool-Attribution.\n  Die `id` des Nav-Links (`#einbindung`) MUSS exakt mit der `id` der neuen\n  Section \u00fcbereinstimmen.\n  </action>\n  <verify>\n  <automated>grep -q 'id=\"einbindung\"' index.html && grep -q 'href=\"#einbindung\"' index.html && grep -qF 'https://grueneat.github.io/design-system/design-system.css' index.html && grep -q 'examples/minimal.html' index.html && grep -q 'CHANGELOG.md' index.html && ! grep -niE 'flomotlik|claude-code|pers\u00f6nliches system' index.html && python3 -c \"from html.parser import HTMLParser; import sys\nclass B(HTMLParser):\n VOID={'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}\n def __init__(s): super().__init__(); s.st=[]; s.bad=False\n def handle_starttag(s,t,a):\n  if t not in s.VOID: s.st.append(t)\n def handle_endtag(s,t):\n  if t in s.VOID: return\n  if s.st and s.st[-1]==t: s.st.pop()\n  elif t in s.st:\n   while s.st and s.st.pop()!=t: pass\n  else: s.bad=True\nb=B(); b.feed(open('index.html',encoding='utf-8').read())\nsys.exit(1 if (b.bad or b.st) else 0)\" && echo \"index.html OK\"</automated>\n  </verify>\n  <done>\n  - `index.html` hat eine neue `<section id=\"einbindung\">` unmittelbar vor dem `doc-footer`.\n  - Der Abschnitt zeigt das `<link>`-Einbindungs-Snippet, den Tag-Default-Hinweis und Verweise auf `examples/minimal.html` und `CHANGELOG.md`.\n  - Ein `gat-nav__link` mit `href=\"#einbindung\"` ist im Nav-Block erg\u00e4nzt; `id` und `href` stimmen \u00fcberein.\n  - Der `#gat-design-spec`-JSON-Block ist unver\u00e4ndert.\n  - `index.html` parst weiterhin als ausbalanciertes HTML; kein personal-system-Verweis.\n  </done>\n</task>\n\n</tasks>\n\n<verification>\nNach allen Tasks die folgenden Repo-weiten Checks ausf\u00fchren (aus dem Repo-Root\n`/workspace/design-system/`):\n\n- Repo-weiter Inventur-Check \u2014 erwartet NULL Treffer (Produktdateien sauber,\n  `.issues/` und `.git/` ausgenommen):\n  ```\n  grep -rniE \"flomotlik|claude-code\" \\\n    --include=\"*.html\" --include=\"*.css\" --include=\"*.md\" --include=\"*.yml\" \\\n    --exclude-dir=.issues --exclude-dir=.git . ; \\\n    test $? -eq 1 && echo \"Inventur OK: keine Treffer\"\n  ```\n- Neue Dateien existieren: `test -f CHANGELOG.md && test -f examples/minimal.html`.\n- README enth\u00e4lt die stale Behauptungen nicht mehr:\n  `! grep -niE 'Platzhalter|Skelett|Grundger\u00fcst' README.md`.\n- `examples/minimal.html` bindet die absolute Hosted-CSS-URL ein und ist\n  wohlgeformtes HTML (siehe Task-3-Verify).\n- `index.html` parst weiterhin sauber und enth\u00e4lt den `#einbindung`-Abschnitt.\n- `git status` zeigt KEINE ge\u00e4nderten Dateien unter `.issues/` \u2014 andernfalls\n  wurde ein Such-/Ersetzungsschritt zu breit ausgef\u00fchrt.\n</verification>\n\n<success_criteria>\nAbbildung 1:1 auf die Acceptance Criteria aus ISSUE.md (in der durch CONTEXT.md\nrevidierten Fassung):\n\n- README enth\u00e4lt eine kopierbare Einbindungs-Anleitung mit der gehosteten\n  CSS-URL \u2014 verfeinert um Tag-Default-Hinweis und Beispiel-/CHANGELOG-Verweise\n  (Task 1).\n- Mindestens ein vollst\u00e4ndiges Minimal-Beispiel f\u00fcr ein konsumierendes Tool\n  existiert als echte Datei `examples/minimal.html` (Task 3).\n- Update-/Versionierungs-Strategie ist dokumentiert: feste Latest-URL +\n  `CHANGELOG.md` mit Semantic Versioning; README beschreibt sie und verlinkt\n  das CHANGELOG (Task 1 + Task 2).\n- Der urspr\u00fcngliche Punkt \u201eQuerverlinkung pers\u00f6nliches \u2194 org-System\" ist per\n  CONTEXT.md D-1 ersetzt: alle personal-system-Verweise sind aus den\n  Produktdateien (`README.md`) entfernt; `index.html` und `design-system.css`\n  waren bereits sauber; `.issues/` bleibt unangetastet (Task 1 + Task 4 +\n  finaler Inventur-Check).\n- Der Style Guide `index.html` ist um einen knappen Integrations-Abschnitt\n  vor dem Footer erg\u00e4nzt, inklusive Nav-Eintrag (Task 4).\n- `CHANGELOG.md` startet bei Version `1.0.0`, ohne Git-Tag und ohne\n  Compare-/Release-Links (D-4/D-5).\n- S\u00e4mtliche neuen/ge\u00e4nderten Inhalte sind deutschsprachig und enthalten keine\n  Tool-/\u201eclaude\"-Attribution.\n</success_criteria>\n"}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var dataEl = document.getElementById("artifact-source");
+  var target = document.getElementById("artifact-source-target");
+  if (dataEl && target) {
+    try {
+      target.textContent = JSON.parse(dataEl.textContent).source || "";
+    } catch (e) {
+      target.textContent = dataEl.textContent;
+    }
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el) { ev.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
