@@ -16,6 +16,15 @@
  * Urheber: Die Grünen.
  */
 
+/* Schriften (CONTEXT D-3): Barlow Semi Condensed + Vollkorn werden direkt hier
+   per @import geladen, damit jedes konsumierende Tool die Schriften automatisch
+   erhält. @import muss vor allen anderen Regeln stehen — der Datei-Header-
+   Kommentar darüber zählt nicht als Regel. Gewichte auf die tatsächlich von den
+   Komponenten genutzten Schnitte reduziert: Barlow 400 (Copy), 600/700
+   (Subline/UI), 900 (Headline) inkl. Kursiv; Vollkorn 400 und 900-Kursiv
+   (Hervorhebung). */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,400;1,900&family=Vollkorn:ital,wght@0,400;0,900&display=swap');
+
 :root {
   /* === Farben ============================================================ */
 
@@ -94,4 +103,22 @@
          (X = Basiseinheit des jeweiligen Layouts)
      Diese Verhältnisse werden in den konsumierenden Tools formatabhängig
      umgesetzt und sind hier nur zur Nachvollziehbarkeit festgehalten. */
+
+  /* === Komponenten-Maße ================================================== */
+
+  /* Web-Ergänzung, Issue #4 — nicht im CD-Quickguide.
+     Der Quickguide tokenisiert nur das CD-Vokabular (Farben, Schrift,
+     Zeilenabstände, Abstände). Rundungen, Strichstärke und Inhaltsbreite sind
+     reine Web-Größen, die die Komponenten brauchen. Als Tokens ergänzt, damit
+     keine Komponente harte px-/rem-Werte verwendet. */
+  --gat-radius-sm: 0.25rem; /* kleine Rundung — Buttons, Badges */
+  --gat-radius-md: 0.5rem; /* Karten-Rundung */
+  --gat-border-width: 2px; /* Standard-Strichstärke — Sekundär-Button-Outline */
+  --gat-container-max: 72rem; /* maximale Inhaltsbreite */
+
+  /* Breakpoints — NUR zur Dokumentation. @media-Bedingungen können kein var()
+     lesen, daher stehen die rem-Werte in den Media-Queries direkt; diese Tokens
+     dienen ausschließlich der Nachvollziehbarkeit. */
+  --gat-breakpoint-sm: 36rem; /* nur Doku — @media nutzt den rem-Wert direkt */
+  --gat-breakpoint-md: 48rem; /* nur Doku — @media nutzt den rem-Wert direkt */
 }
