@@ -1,0 +1,87 @@
+<!doctype html>
+<!--
+  Vollständiges Minimal-Beispiel eines konsumierenden Grüne-AT-Tools.
+
+  Diese Seite zeigt, wie ein neues Tool das Grüne AT Design System einbindet:
+  Sie lädt ausschließlich die gehostete design-system.css über ihre absolute
+  URL und baut die Oberfläche allein aus den vorhandenen gat-Komponenten auf.
+  Es gibt kein eigenes Asset, keinen Build-Schritt und kein JavaScript.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minimal-Beispiel — Grüne AT Design System</title>
+
+  <!-- Das gehostete Stylesheet wird absolut eingebunden. Eine relative URL
+       würde nur lokal funktionieren und das Pages-Hosting nicht abbilden. -->
+  <link rel="stylesheet" href="https://grueneat.github.io/design-system/design-system.css">
+
+  <style>
+    /* design-system.css setzt bewusst KEINE Tag-Defaults — es stylt also kein
+       body, kein h1 und keine sonstigen HTML-Elemente direkt. Eine
+       konsumierende Seite muss ihr body-Grundlayout daher selbst setzen,
+       sonst rendert sie serif und ohne Hintergrund. Diese vier Eigenschaften
+       sind das Minimum; sie bauen alle auf den --gat-*-Tokens auf. */
+    body {
+      margin: 0;
+      background: var(--gat-color-surface);
+      color: var(--gat-color-text);
+      font-family: var(--gat-font-copy);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="gat-header">
+    <div class="gat-header__inner">
+      <a class="gat-header__logo" href="#top">
+        <span class="gat-header__logo-mark"></span>
+      </a>
+      <nav class="gat-nav">
+        <a class="gat-nav__link gat-nav__link--active" href="#start">Start</a>
+        <a class="gat-nav__link" href="#mitmachen">Mitmachen</a>
+        <a class="gat-nav__link" href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="gat-section" id="start">
+    <div class="gat-container">
+      <h1 class="gat-headline">Gemeinsam für ein gutes Klima</h1>
+      <p class="gat-subline">
+        Ein Beispiel-Tool, das das Grüne AT Design System einbindet.
+      </p>
+      <p class="gat-fliesstext">
+        Diese Seite verwendet ausschließlich die zentral gepflegten Komponenten
+        des Designsystems. Wer ein neues Grüne-AT-Tool baut, kann diese Datei
+        als Ausgangspunkt nehmen: das gehostete Stylesheet einbinden, das
+        body-Grundlayout setzen und die Oberfläche aus den `gat-`-Klassen
+        zusammensetzen.
+      </p>
+
+      <p class="gat-fliesstext">
+        <a class="gat-btn gat-btn--primary" href="#mitmachen">Jetzt mitmachen</a>
+        <a class="gat-btn gat-btn--secondary" href="#kontakt">Kontakt aufnehmen</a>
+      </p>
+
+      <article class="gat-card gat-card--primary">
+        <h3 class="gat-card__title">Worum es geht</h3>
+        <p class="gat-card__body">
+          Eine Karte fasst eine einzelne Aussage kompakt zusammen. Die
+          Primär-Variante steht auf dunkelgrüner Fläche mit weißem Text.
+        </p>
+      </article>
+
+      <article class="gat-card gat-card--secondary">
+        <h3 class="gat-card__title">Wie es weitergeht</h3>
+        <p class="gat-card__body">
+          Die Sekundär-Variante steht auf hellgrüner Fläche mit
+          Anthrazit-Text. Für jede Karte ist ein Varianten-Modifier Pflicht.
+        </p>
+      </article>
+    </div>
+  </section>
+
+</body>
+</html>
