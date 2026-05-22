@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Provenance: SHA-256 of the source .md this page was generated from. -->
+<meta name="artifact-source-sha256" content="5d5320d4b70f32d295e0b735f25517167af04e925f1aa7898c183b44a734f66b">
+<meta name="artifact-source-file" content="PLAN.md">
+<meta name="artifact-generated-at" content="2026-05-22">
+<!-- Which version of the design system this page was authored against. -->
+<meta name="design-system-version" content="ds-1">
+<title>Plan: Kernkomponenten und Layout-System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://flomotlik.github.io/claude-code/design-system.css">
+</head>
+<body>
+<div class="page">
+
+<header class="row">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">#4</span>Plan</p>
+  </div>
+  <div class="body">
+    <h1 class="masthead-title">Kernkomponenten und Layout-System</h1>
+    <p class="masthead-sub">Issue: core-components-layout (GrueneAT/design-system#4) &middot; Generated 2026-05-22</p>
+  </div>
+</header>
+
+<hr class="rule">
+
+<section class="row" id="strategy">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">01</span>Strategy</p>
+    <p class="margin-note">Read this first &mdash; the rest is detail.</p>
+  </div>
+  <div class="body">
+    <h2>Strategy summary</h2>
+    <p>Issue&nbsp;#3 delivered the <code>--gat-</code> token vocabulary; this plan
+       adds the <span class="mark mark-green">component layer on top, purely
+       additively</span> &mdash; a flat, single-class CSS layer appended below the
+       existing <code>:root</code>. Nothing in the token base changes.</p>
+    <p>The one real design tension is the logo: the delivered SVG is monochrome
+       dark green (<code>#2d793c</code>) and would vanish on the dark-green header
+       (D-5). Resolution &mdash; copy the SVG into the repo under a URL-safe name
+       and recolor it to white via CSS <code>mask</code> + <code>background-color</code>,
+       so no second asset file is needed.</p>
+    <ul class="points">
+      <li class="point">
+        <p class="point-claim">Extend, don't restructure.</p>
+        <p class="point-detail">Components are appended below a complete, stable
+          token <code>:root</code> &mdash; flat single-class selectors, no naked
+          tag selectors that would bleed into consuming tools.</p>
+      </li>
+      <li class="point is-note">
+        <p class="point-claim">Close the token gap, don't hardcode.</p>
+        <p class="point-detail">Issue&nbsp;#3 has no radius/border/container token.
+          Task&nbsp;1 adds a small, clearly-commented supplementary
+          <code>--gat-</code> block so the "no hardcoded sizes" criterion holds.</p>
+      </li>
+      <li class="point is-note">
+        <p class="point-claim">CD rule enforced structurally.</p>
+        <p class="point-detail">"Text only on green" is baked into
+          <code>.gat-header</code> and <code>.gat-card--primary/secondary</code> &mdash;
+          a green surface and its matching <code>on-*</code> token are always paired.</p>
+      </li>
+      <li class="point is-risk">
+        <p class="point-claim">No JavaScript anywhere.</p>
+        <p class="point-detail">Responsiveness via <code>repeat(auto-fit,
+          minmax())</code>, <code>flex-wrap</code>, <code>clamp()</code> and a
+          minimal set of <code>max-width</code> media queries.</p>
+      </li>
+    </ul>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Tasks</div></div>
+      <div class="stat">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Files touched</div></div>
+      <div class="stat">
+        <div class="stat-num is-green">6/6</div>
+        <div class="stat-label">Locked decisions honored</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="flow">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">02</span>Flow</p>
+  </div>
+  <div class="body">
+    <h2>Task flow &amp; dependencies</h2>
+    <div class="flow">
+      <div class="flow-node is-foundation">
+        <span class="n">Task 1</span>
+        <span class="t">Foundation: @import, logo asset, supplementary tokens</span>
+        <span class="d">Font <code>@import</code> placed above <code>:root</code>; logo copied URL-safe; radius/border/container tokens.</span>
+      </div>
+      <div class="flow-node is-key">
+        <span class="n">Task 2</span>
+        <span class="t">Layout system + Header/Navigation</span>
+        <span class="d">Grid/container, dark-green header, CSS-recolored white logo, wrapping nav.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 3</span>
+        <span class="t">Typography classes</span>
+        <span class="d">Headline/Subline/Fliesstext/Emphasis with CD line-height tokens.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 4</span>
+        <span class="t">Button components</span>
+        <span class="d">Primary fill + secondary outline, token radius and border-width.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 5</span>
+        <span class="t">Card / surface components</span>
+        <span class="d">Green-surface variants pairing surface + on-* token (CD rule).</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 6</span>
+        <span class="t">CD elements + final verification</span>
+        <span class="d">Underline, highlight, Stoerer (gelb + magenta); whole-file checks.</span>
+      </div>
+    </div>
+    <p>Tasks run sequentially. Task&nbsp;1 is the foundation &mdash; tokens and the
+       logo asset must exist before any component references them. Task&nbsp;2 is
+       the load-bearing task (header + layout, the most CD-sensitive surface).
+       Tasks&nbsp;3&ndash;6 each append an independent component group and assume
+       Tasks&nbsp;1&ndash;(N&minus;1) are complete.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="decisions">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">03</span>Decisions</p>
+  </div>
+  <div class="body">
+    <h2>Key decisions &amp; options</h2>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Logo recolor on the dark-green header</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body">CSS <code>mask</code> + <code>background-color:
+        var(--gat-color-weiss)</code> on the monochrome SVG &mdash; token-driven,
+        vector-sharp, no second asset, user not blocked (D-2/D-4).</p>
+      <p class="decision-body rejected"><code>filter: brightness(0) invert(1)</code>
+        on an <code>&lt;img&gt;</code> &mdash; works but the white cannot come
+        from a token.</p>
+      <p class="decision-body rejected">Ask the user for a native light logo SVG
+        &mdash; an avoidable blocker; a later optional quality improvement.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Layout engine</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body">CSS Grid for the 2D page/container raster, Flexbox
+        for 1D component-internal axes (header row, nav, button groups).</p>
+      <p class="decision-body rejected">Flexbox-only &mdash; cannot do an
+        equal-height column raster. Grid-only &mdash; cannot do clean linear wrap.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">The radius/border/container token gap</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body">Add a small, clearly-commented supplementary
+        <code>--gat-</code> token block at the end of <code>:root</code>
+        (radius / border-width / container-max / breakpoint).</p>
+      <p class="decision-body rejected">Hardcode <code>4px</code> etc. directly in
+        components &mdash; violates the "no hardcoded sizes" acceptance criterion.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Stoerer accent color</p>
+        <span class="lozenge is-note">Both delivered</span>
+      </div>
+      <p class="decision-body">Ship both modifier classes &mdash;
+        <code>.gat-stoerer--gelb</code> and <code>.gat-stoerer--magenta</code>
+        &mdash; per locked decision D-6; the consuming tool picks per context.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="detail">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">04</span>Detail</p>
+  </div>
+  <div class="body">
+    <h2>Full detail</h2>
+    <details class="detail">
+      <summary>Show full artifact source
+        <span class="summary-hint">click to expand</span></summary>
+      <div class="detail-body">
+        <pre><code id="artifact-source-target"></code></pre>
+      </div>
+    </details>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="provenance">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">05</span>Provenance</p>
+  </div>
+  <div class="body">
+    <h2>Provenance</h2>
+    <p>Generated from the canonical <code>.md</code>. This HTML is never
+       hand-edited &mdash; if the <code>.md</code> changes, regenerate with
+       <code>/issue:view</code>.</p>
+    <footer class="footer">
+      <span>Source: <code>PLAN.md</code> &middot;
+        SHA-256 <code>5d5320d4b70f32d295e0b735f25517167af04e925f1aa7898c183b44a734f66b</code></span>
+      <span>Generated 2026-05-22 &middot; design system ds-1</span>
+    </footer>
+  </div>
+</section>
+
+</div>
+
+<!-- Raw artifact source as DATA, never markup. See Section 6. -->
+<script type="application/json" id="artifact-source">
+{"source": "# Plan: Kernkomponenten und Layout-System\n\n<objective>\nWhat this plan accomplishes: Extends `design-system/design-system.css` with the\ncomponent layer of the Gr\u00fcne-AT Design System \u2014 Header/Navigation, layout grid,\ntypography classes, buttons, cards, and CD design elements (underline, highlight,\n\"St\u00f6rer\" badge) \u2014 all as pure-CSS `gat-`-prefixed classes built strictly on the\nexisting `--gat-` token set from issue #3.\n\nWhy it matters: Issue #3 delivered the token vocabulary. Issue #5 (style-guide\nshowcase) and every consuming Gr\u00fcne-AT tool need a stable, reusable component\nlayer. This issue is the contract those consumers code against.\n\nScope IN: component CSS selectors appended below the existing `:root`; a small\nclearly-commented supplementary `--gat-` token block (radius/border/container/\nbreakpoint) to close the token gap; the Google-Fonts `@import`; copying the logo\nSVG into the repo under a URL-safe name.\nScope OUT: any JavaScript; filling `index.html` with component markup (issue #5);\na native light logo variant (CSS recolor is the chosen solution per RESEARCH.md).\n</objective>\n\n<strategy>\nThe token base from issue #3 is complete and stable, so this is purely additive:\nappend a flat, single-class component layer below the existing `:root`. The one\nreal design tension is the logo \u2014 the delivered SVG is monochrome dark green\n(`#2d793c`) and would vanish on the dark-green header (D-5). Resolution: copy the\nSVG into the repo under a URL-safe name and recolor it to white via CSS `mask` +\n`background-color`, so no second asset file is needed.\n\nStrategic options considered:\n- Layout engine: CSS Grid for the 2D page/container raster, Flexbox for 1D\n  component-internal axes (header row, nav, button groups). Grid-only cannot do\n  linear wrap cleanly; Flexbox-only cannot do equal-height column rasters. The\n  Grid+Flexbox split is the chosen, uncontentious approach.\n- Token gap: issue #3 deliberately tokenized only the CD vocabulary, so there is\n  no radius/border/container/breakpoint token. Rather than hardcode `4px` in\n  components (an acceptance-criterion violation), Task 1 adds a small, clearly\n  commented `--gat-` supplementary block. Chosen over hardcoding.\n- Logo recolor: CSS `mask` + `background-color` chosen over `filter:\n  brightness(0) invert(1)` \u2014 `mask` is the cleaner token-driven path and lets the\n  white come from `--gat-color-weiss`.\n\nKey decision points: all six locked decisions D-1\u2026D-6 are honored (gat- prefix,\nlogo asset, `@import` fonts, dark SVG + CSS recolor, dark-green header, St\u00f6rer in\nboth yellow and magenta). Responsiveness is achieved with `repeat(auto-fit,\nminmax())`, `flex-wrap`, and `clamp()` plus a minimal set of `max-width` media\nqueries \u2014 no JavaScript anywhere.\n</strategy>\n\n<skills>\nNo workspace skills found (`.claude/skills/` does not exist). None to inject.\n</skills>\n\n<context>\nIssue: @.issues/core-components-layout/ISSUE.md\nResearch: @.issues/core-components-layout/RESEARCH.md\nDecisions: @.issues/core-components-layout/CONTEXT.md\n\nRepo-path note: issue artifacts live at `/workspace/.issues/core-components-layout/`\nbut the edit target is the separate git clone at `/workspace/design-system/`.\nAll file edits in this plan are inside `/workspace/design-system/`.\n\n<interfaces>\n<!-- Executor: use these contracts directly. Do not explore the codebase. -->\n\nINPUT CONTRACT \u2014 existing tokens in design-system/design-system.css :root\n(issue #3, already present, unchanged). Components must reference ONLY these:\n\n  /* Farb-Primitive */\n  --gat-color-dunkelgruen: #257639;\n  --gat-color-hellgruen:   #56af31;\n  --gat-color-gelb:        #ffed00;\n  --gat-color-magenta:     #e6007e;\n  --gat-color-weiss:       #ffffff;\n  --gat-color-anthrazit:   #1d1d1b;\n  /* Farb-Semantik (Aliase) */\n  --gat-color-primary;       /* -> dunkelgruen */\n  --gat-color-secondary;     /* -> hellgruen   */\n  --gat-color-accent;        /* -> magenta     */\n  --gat-color-highlight;     /* -> gelb        */\n  --gat-color-text;          /* -> anthrazit   */\n  --gat-color-surface;       /* -> weiss       */\n  --gat-color-on-primary;    /* -> weiss   (Text auf Dunkelgr\u00fcn, 5,63:1) */\n  --gat-color-on-secondary;  /* -> anthrazit (Text auf Hellgr\u00fcn, 6,09:1) */\n  /* Schrift-Familien */\n  --gat-font-headline;   /* 'Barlow Semi Condensed', sans-serif */\n  --gat-font-copy;       /* 'Barlow Semi Condensed', sans-serif */\n  --gat-font-emphasis;   /* 'Vollkorn', serif */\n  /* Typo-Gr\u00f6\u00dfen */\n  --gat-text-h1: 2.441rem;  --gat-text-h2: 1.953rem;  --gat-text-h3: 1.563rem;\n  --gat-text-subline: 1.25rem;  --gat-text-copy: 1rem;  --gat-text-small: 0.8rem;\n  /* Zeilenabst\u00e4nde (einheitslos) */\n  --gat-leading-headline: 0.9;  --gat-leading-copy: 1.3;\n  /* Abst\u00e4nde */\n  --gat-space-1: 0.25rem; --gat-space-2: 0.5rem; --gat-space-3: 1rem;\n  --gat-space-4: 1.5rem;  --gat-space-5: 2rem;   --gat-space-6: 3rem;\n\nOUTPUT CONTRACT \u2014 new supplementary tokens (Task 1) and public component\nclasses (Tasks 2-6). These names are stable; renaming them is a breaking\nchange for issue #5 and consuming tools.\n\n  /* Supplementary tokens (Web-Erg\u00e4nzung, Issue #4) */\n  --gat-radius-sm;       /* small radius \u2014 buttons, badges */\n  --gat-radius-md;       /* card radius */\n  --gat-border-width;    /* standard stroke \u2014 secondary button outline */\n  --gat-container-max;   /* max content width, 72rem */\n  --gat-breakpoint-sm;   /* documenting comment only \u2014 @media cannot read var() */\n  --gat-breakpoint-md;   /* documenting comment only */\n\n  /* Layout */          .gat-container .gat-grid .gat-grid--2 .gat-grid--3 .gat-section\n  /* Header / Nav */    .gat-header .gat-header__inner .gat-header__logo\n                        .gat-nav .gat-nav__link .gat-nav__link--active\n  /* Typografie */      .gat-headline .gat-subline .gat-fliesstext .gat-emphasis\n  /* Buttons */         .gat-btn .gat-btn--primary .gat-btn--secondary\n  /* Karten */          .gat-card .gat-card--primary .gat-card--secondary\n                        .gat-card__title .gat-card__body\n  /* CD-Elemente */     .gat-underline .gat-highlight\n                        .gat-stoerer .gat-stoerer--gelb .gat-stoerer--magenta\n</interfaces>\n\nKey files:\n@design-system/design-system.css \u2014 the canonical stylesheet; 97 lines, holds the\n  file header + complete `:root` token block. Components are appended here.\n@design-system/index.html \u2014 page skeleton; NOT to be modified (issue #5 scope).\nLogo source: `/workspace/Gr\u00fcne Logo Bund dunkelgr\u00fcn RGB.svg` \u2014 monochrome SVG,\n  single fill `#2d793c`, 150,32\u00d7132,07, viewBox set. Must be copied URL-safe.\n</context>\n\n<commit_format>\nFormat: conventional with issue prefix (from .issues/config.yaml).\nPattern: {source-id}: {type}({scope}): {description}\nExample: 4: feat(components): add header and navigation component classes\nSource id is the GitHub issue number `4` (config: source.id). Types: feat, chore.\n</commit_format>\n\n<tasks>\n\n<task type=\"auto\">\n  <name>Task 1: Add font @import, copy logo asset, add supplementary token block</name>\n  <files>design-system/design-system.css, design-system/assets/gruene-logo.svg</files>\n  <action>\n  Three foundation changes, all prerequisites for the component layer.\n\n  1. Google Fonts @import (D-3). Insert as the FIRST CSS statement in\n     `design-system.css` \u2014 directly below the existing file-header comment block\n     and ABOVE `:root`. Comments do not count as rules, so this satisfies the\n     \"@import before all rules\" requirement. Use exactly this verified URL:\n       @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,400;1,900&family=Vollkorn:ital,wght@0,400;0,900&display=swap');\n     This is the RESEARCH.md URL tightened to the weights the components actually\n     use: Barlow 400 (copy), 600/700 (subline/UI), 900 (headline) + italics;\n     Vollkorn 400 and 900-italic (emphasis). Add a short German comment above it.\n\n  2. Copy the logo asset (D-2, D-4). Create `design-system/assets/` and copy\n     `/workspace/Gr\u00fcne Logo Bund dunkelgr\u00fcn RGB.svg` to\n     `design-system/assets/gruene-logo.svg` (URL-safe name, no umlauts/spaces).\n     Do NOT modify the SVG contents \u2014 it stays the monochrome dark-green vector;\n     the header recolors it via CSS in Task 2.\n\n  3. Supplementary token block. Append a new, clearly-commented `--gat-` block\n     INSIDE `:root`, at the end (just before the closing brace). German comment\n     banner marking it explicitly as \"Web-Erg\u00e4nzung, Issue #4 \u2014 Komponenten-\n     Ma\u00dfe\". Define:\n       --gat-radius-sm: 0.25rem;     /* Buttons, Badges */\n       --gat-radius-md: 0.5rem;      /* Karten */\n       --gat-border-width: 2px;      /* Sekund\u00e4r-Button-Outline */\n       --gat-container-max: 72rem;   /* max. Inhaltsbreite */\n     Plus two documenting-only comment tokens for breakpoints (a @media query\n     cannot read var(), so these exist purely for traceability):\n       --gat-breakpoint-sm: 36rem;   /* nur Doku \u2014 @media nutzt den rem-Wert direkt */\n       --gat-breakpoint-md: 48rem;   /* nur Doku \u2014 @media nutzt den rem-Wert direkt */\n     All comments in German per the issue-#3 convention.\n\n  No hardcoded colors/sizes introduced \u2014 every later component value resolves to\n  a token. Do NOT touch `index.html`.\n  </action>\n  <verify>\n  <automated>cd /workspace/design-system && test -f assets/gruene-logo.svg && head -c 5 assets/gruene-logo.svg | grep -q '<' && grep -q \"fonts.googleapis.com/css2\" design-system.css && grep -q -- \"--gat-radius-sm\" design-system.css && grep -q -- \"--gat-container-max\" design-system.css && awk '/@import/{i=NR} /:root/{r=NR} END{exit !(i>0 && i<r)}' design-system.css && echo OK</automated>\n  </verify>\n  <done>\n  - `design-system/assets/gruene-logo.svg` exists and is a valid SVG\n  - `@import` for Barlow Semi Condensed + Vollkorn is the first CSS statement, above `:root`\n  - Supplementary `--gat-radius-sm/md`, `--gat-border-width`, `--gat-container-max`,\n    `--gat-breakpoint-sm/md` tokens exist inside `:root`, clearly commented as Issue #4 additions\n  - `index.html` unchanged\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 2: Layout system + Header/Navigation components</name>\n  <files>design-system/design-system.css</files>\n  <action>\n  Append a commented section banner \"Layout / Seitenstruktur\" then a\n  \"Header / Navigation\" banner. All selectors are flat, single-class, `.gat-`\n  prefixed (D-1). No naked tag selectors (`h1`, `body`, `*`) \u2014 the stylesheet is\n  embedded into foreign tools. Every value resolves to a `--gat-` token.\n\n  Layout:\n  - `.gat-container` \u2014 `max-width: var(--gat-container-max)`, `margin-inline:\n    auto`, horizontal padding `var(--gat-space-4)`.\n  - `.gat-grid` \u2014 `display: grid`, `gap: var(--gat-space-4)`,\n    `grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr))` so\n    it reflows to one column on narrow viewports without a media query.\n  - `.gat-grid--2` / `.gat-grid--3` \u2014 fixed 2- and 3-column variants:\n    `grid-template-columns: repeat(2|3, 1fr)`. Inside one `max-width: 36rem`\n    media query, collapse both to `1fr` (single column). Comment the query with\n    `--gat-breakpoint-sm` for traceability.\n  - `.gat-section` \u2014 vertical rhythm block, `padding-block: var(--gat-space-6)`.\n\n  Header / Navigation (D-5 dark-green header, D-4 white-recolored logo):\n  - `.gat-header` \u2014 `background: var(--gat-color-primary)` (dark green),\n    `color: var(--gat-color-on-primary)` (white). CD rule \"Text on green\"\n    structurally enforced \u2014 surface + on-* token always paired.\n  - `.gat-header__inner` \u2014 Flexbox row: `display: flex`, `align-items: center`,\n    `justify-content: space-between`, `flex-wrap: wrap`, `gap: var(--gat-space-4)`,\n    centered via `max-width: var(--gat-container-max)` + `margin-inline: auto`,\n    padding `var(--gat-space-4)`.\n  - `.gat-header__logo` \u2014 the logo, recolored to white via CSS mask (the source\n    SVG is monochrome so the mask is exact):\n      display: inline-block; width: 2.5rem; aspect-ratio: 150.32 / 132.07;\n      background-color: var(--gat-color-weiss);\n      -webkit-mask: url('assets/gruene-logo.svg') no-repeat center / contain;\n      mask: url('assets/gruene-logo.svg') no-repeat center / contain;\n    Wrap it with `padding: var(--gat-space-3)` to represent the CD Schutzzone\n    (clear space around the logo) \u2014 comment this padding as the Schutzzone.\n  - `.gat-nav` \u2014 Flexbox: `display: flex`, `flex-wrap: wrap`,\n    `gap: var(--gat-space-4)`, `align-items: center`. Wrapping replaces a JS\n    hamburger menu (no JS allowed).\n  - `.gat-nav__link` \u2014 inherits white header text; `text-decoration: none`,\n    `font-family: var(--gat-font-copy)`. Add `:hover` and `:focus-visible`\n    states using a `--gat-color-highlight` (yellow) underline via\n    `text-decoration` or `border-bottom` \u2014 CSS only, no JS.\n  - `.gat-nav__link--active` \u2014 persistent active state: yellow CD underline\n    (`border-bottom: var(--gat-border-width) solid var(--gat-color-highlight)`).\n    The consuming tool sets this class; no JS state logic here.\n\n  Use the `-webkit-mask` prefix alongside `mask` for browser coverage. German\n  comments throughout.\n  </action>\n  <verify>\n  <automated>cd /workspace/design-system && python3 -c \"\nimport re,sys\ncss=open('design-system.css').read()\nfor s in ['.gat-container','.gat-grid','.gat-grid--2','.gat-grid--3','.gat-section','.gat-header','.gat-header__inner','.gat-header__logo','.gat-nav','.gat-nav__link','.gat-nav__link--active']:\n    assert s+' ' in css or s+',' in css or s+'{' in css or s+':' in css, 'missing '+s\n# component bodies must contain no hardcoded hex colors\nbodies=re.findall(r'\\.gat-[^{]*\\{([^}]*)\\}',css)\nbad=[b for b in bodies if re.search(r'#[0-9a-fA-F]{3,6}\\b',b)]\nassert not bad, 'hardcoded hex in component: '+str(bad)\nassert 'mask' in css and 'gruene-logo.svg' in css, 'logo mask missing'\nprint('OK')\n\"</automated>\n  </verify>\n  <done>\n  - `.gat-container`, `.gat-grid`, `.gat-grid--2/3`, `.gat-section` defined and responsive\n  - `.gat-header` is dark green with `on-primary` white text (D-5)\n  - `.gat-header__logo` recolors the SVG to white via `mask` + `background-color` (D-4)\n    and carries Schutzzone padding\n  - `.gat-nav` wraps without JS; `--active` shows the CD underline\n  - No hardcoded hex colors in any component body\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 3: Typography classes</name>\n  <files>design-system/design-system.css</files>\n  <action>\n  Append a \"Typografie\" section banner, then the typography classes. Flat\n  `.gat-` single-class selectors only. The CD line-height factors ARE the\n  `--gat-leading-*` tokens \u2014 set them directly as unitless `line-height`, do NOT\n  multiply again (RESEARCH.md pitfall: \u00d70,9 is already the token value).\n\n  - `.gat-headline` \u2014 `font-family: var(--gat-font-headline)`,\n    `font-weight: 900` (Barlow Black = the CD \"Ultra\" headline role),\n    `font-size: var(--gat-text-h1)`, `line-height: var(--gat-leading-headline)`\n    (0,9), `color: var(--gat-color-text)`.\n  - `.gat-subline` \u2014 `font-family: var(--gat-font-headline)`,\n    `font-weight: 600`, `font-size: var(--gat-text-subline)`,\n    `line-height: var(--gat-leading-headline)`, `color: var(--gat-color-text)`.\n  - `.gat-fliesstext` \u2014 `font-family: var(--gat-font-copy)`,\n    `font-weight: 400`, `font-size: var(--gat-text-copy)`,\n    `line-height: var(--gat-leading-copy)` (1,3),\n    `color: var(--gat-color-text)`.\n  - `.gat-emphasis` \u2014 `font-family: var(--gat-font-emphasis)` (Vollkorn),\n    `font-style: italic`, `font-weight: 900` (the CD Black-Italic emphasis\n    role), `line-height: var(--gat-leading-copy)`.\n\n  Optional: make `.gat-headline` fluid with `clamp()` using token endpoints\n  (e.g. `clamp(var(--gat-text-h2), 5vw, var(--gat-text-h1))`) \u2014 the `vw` middle\n  value is the one permitted non-token literal and is acceptable for fluid type;\n  comment it. Keep it simple if uncertain \u2014 a plain `var(--gat-text-h1)` is fine.\n\n  Note on the CD \"Text only on green\" rule: these typography classes set\n  `color` only (the anthracite text token); they do NOT set a background.\n  Pairing text with a green surface is enforced structurally by `.gat-header`\n  (Task 2) and `.gat-card` (Task 5). German comments.\n  </action>\n  <verify>\n  <automated>cd /workspace/design-system && python3 -c \"\nimport re\ncss=open('design-system.css').read()\nfor s in ['.gat-headline','.gat-subline','.gat-fliesstext','.gat-emphasis']:\n    assert s in css, 'missing '+s\ndef body(sel):\n    m=re.search(re.escape(sel)+r'\\s*\\{([^}]*)\\}',css); return m.group(1) if m else ''\nassert 'var(--gat-leading-headline)' in body('.gat-headline'), 'headline leading not token'\nassert 'var(--gat-leading-copy)' in body('.gat-fliesstext'), 'copy leading not token'\nassert 'var(--gat-font-emphasis)' in body('.gat-emphasis'), 'emphasis font not token'\nbodies=[body(s) for s in ['.gat-headline','.gat-subline','.gat-fliesstext','.gat-emphasis']]\nassert not any(re.search(r'#[0-9a-fA-F]{3,6}\\b',b) for b in bodies), 'hardcoded hex'\nprint('OK')\n\"</automated>\n  </verify>\n  <done>\n  - `.gat-headline`, `.gat-subline`, `.gat-fliesstext`, `.gat-emphasis` defined\n  - `line-height` uses `--gat-leading-headline` (0,9) for headline/subline and\n    `--gat-leading-copy` (1,3) for copy/emphasis \u2014 set directly, not re-multiplied\n  - Fonts and sizes resolve to `--gat-` tokens; no hardcoded hex\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 4: Button components (primary / secondary)</name>\n  <files>design-system/design-system.css</files>\n  <action>\n  Append a \"Buttons\" section banner, then the button classes. Flat `.gat-`\n  single-class selectors. Every value resolves to a token.\n\n  - `.gat-btn` \u2014 base: `display: inline-flex`, `align-items: center`,\n    `justify-content: center`, `gap: var(--gat-space-2)`,\n    `padding: var(--gat-space-2) var(--gat-space-4)`,\n    `border-radius: var(--gat-radius-sm)`,\n    `font-family: var(--gat-font-copy)`, `font-weight: 700`,\n    `font-size: var(--gat-text-copy)`, `line-height: var(--gat-leading-copy)`,\n    `text-decoration: none`, `cursor: pointer`, `border: var(--gat-border-width)\n    solid transparent`. Add a `:focus-visible` outline using a green token for\n    keyboard accessibility (CSS only).\n  - `.gat-btn--primary` \u2014 `background: var(--gat-color-primary)` (dark green),\n    `color: var(--gat-color-on-primary)` (white \u2014 verified 5,63:1 contrast).\n    Add a `:hover` state (e.g. slight `filter: brightness(0.92)` \u2014 token-free\n    but acceptable as a relative transform; comment it; OR shift background to\n    `--gat-color-secondary`). Prefer the brightness approach so no new color\n    is introduced.\n  - `.gat-btn--secondary` \u2014 outline style: `background: transparent`,\n    `color: var(--gat-color-primary)`,\n    `border: var(--gat-border-width) solid var(--gat-color-primary)`.\n    `:hover` fills the surface: `background: var(--gat-color-primary)`,\n    `color: var(--gat-color-on-primary)`.\n\n  Do NOT pair white text with light green anywhere (RESEARCH.md anti-pattern \u2014\n  `on-secondary` is anthracite for a reason). German comments.\n  </action>\n  <verify>\n  <automated>cd /workspace/design-system && python3 -c \"\nimport re\ncss=open('design-system.css').read()\nfor s in ['.gat-btn','.gat-btn--primary','.gat-btn--secondary']:\n    assert s in css, 'missing '+s\ndef body(sel):\n    m=re.search(re.escape(sel)+r'\\s*\\{([^}]*)\\}',css); return m.group(1) if m else ''\nassert 'var(--gat-radius-sm)' in body('.gat-btn'), 'btn radius not token'\nassert 'var(--gat-border-width)' in body('.gat-btn'), 'btn border-width not token'\nfor s in ['.gat-btn','.gat-btn--primary','.gat-btn--secondary']:\n    assert not re.search(r'#[0-9a-fA-F]{3,6}\\b',body(s)), 'hardcoded hex in '+s\nprint('OK')\n\"</automated>\n  </verify>\n  <done>\n  - `.gat-btn` base + `--primary` (dark green fill, white text) + `--secondary` (green outline)\n  - Radius and border-width come from `--gat-radius-sm` / `--gat-border-width`\n  - Hover and `:focus-visible` states defined, CSS only, no white-on-light-green pairing\n  - No hardcoded hex in button bodies\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 5: Card / surface components</name>\n  <files>design-system/design-system.css</files>\n  <action>\n  Append a \"Karten / Fl\u00e4chen\" section banner, then the card classes. Flat\n  `.gat-` single-class selectors. This task structurally enforces the CD rule\n  \"Typografie steht immer auf gr\u00fcner Fl\u00e4che\" \u2014 a card variant ALWAYS pairs a\n  green surface with its matching `on-*` text token.\n\n  - `.gat-card` \u2014 base layout: `display: flex`, `flex-direction: column`,\n    `gap: var(--gat-space-3)`, `padding: var(--gat-space-5)`,\n    `border-radius: var(--gat-radius-md)`. No standalone background \u2014 a card is\n    only ever used through a green variant.\n  - `.gat-card--primary` \u2014 `background: var(--gat-color-primary)` (dark green) +\n    `color: var(--gat-color-on-primary)` (white, 5,63:1). CD-conform.\n  - `.gat-card--secondary` \u2014 `background: var(--gat-color-secondary)`\n    (light green) + `color: var(--gat-color-on-secondary)` (anthracite, 6,09:1).\n    Never pair light green with white text.\n  - `.gat-card__title` \u2014 card headline: `font-family: var(--gat-font-headline)`,\n    `font-weight: 900`, `font-size: var(--gat-text-h3)`,\n    `line-height: var(--gat-leading-headline)`. Inherits the variant's `color`\n    (do NOT set an explicit text color \u2014 it must adapt to the green surface).\n  - `.gat-card__body` \u2014 card copy: `font-family: var(--gat-font-copy)`,\n    `font-size: var(--gat-text-copy)`, `line-height: var(--gat-leading-copy)`.\n    Inherits the variant `color`.\n\n  Critical: `__title` and `__body` must NOT hardcode a `color` \u2014 they inherit\n  from the `--primary` / `--secondary` variant so text always sits correctly on\n  its green surface. German comments.\n  </action>\n  <verify>\n  <automated>cd /workspace/design-system && python3 -c \"\nimport re\ncss=open('design-system.css').read()\nfor s in ['.gat-card','.gat-card--primary','.gat-card--secondary','.gat-card__title','.gat-card__body']:\n    assert s in css, 'missing '+s\ndef body(sel):\n    m=re.search(re.escape(sel)+r'\\s*\\{([^}]*)\\}',css); return m.group(1) if m else ''\nassert 'var(--gat-color-primary)' in body('.gat-card--primary') and 'var(--gat-color-on-primary)' in body('.gat-card--primary'), 'primary card surface/text not paired'\nassert 'var(--gat-color-secondary)' in body('.gat-card--secondary') and 'var(--gat-color-on-secondary)' in body('.gat-card--secondary'), 'secondary card surface/text not paired'\nassert 'var(--gat-radius-md)' in body('.gat-card'), 'card radius not token'\nfor s in ['.gat-card','.gat-card--primary','.gat-card--secondary','.gat-card__title','.gat-card__body']:\n    assert not re.search(r'#[0-9a-fA-F]{3,6}\\b',body(s)), 'hardcoded hex in '+s\nprint('OK')\n\"</automated>\n  </verify>\n  <done>\n  - `.gat-card` base + `--primary` (dark green + white) + `--secondary` (light green + anthracite)\n  - Each variant pairs a green surface token with the matching `on-*` text token (CD rule)\n  - `__title` / `__body` inherit the variant color \u2014 no hardcoded text color\n  - Radius from `--gat-radius-md`; no hardcoded hex\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 6: CD design elements \u2014 underline, highlight, St\u00f6rer; final verification</name>\n  <files>design-system/design-system.css</files>\n  <action>\n  Append a \"CD-Gestaltungselemente\" section banner, then the CD accent classes.\n  Flat `.gat-` single-class selectors, token-only values.\n\n  - `.gat-underline` \u2014 CD underline accent for inline text:\n    `border-bottom: var(--gat-border-width) solid var(--gat-color-accent)`\n    (magenta), `padding-bottom: var(--gat-space-1)`. Apply to inline spans.\n  - `.gat-highlight` \u2014 yellow marker highlight for inline text:\n    `background: var(--gat-color-highlight)` (yellow),\n    `color: var(--gat-color-text)` (anthracite \u2014 yellow+anthracite is a\n    high-contrast pair; never use white text here),\n    `padding: 0 var(--gat-space-1)`.\n  - `.gat-stoerer` \u2014 the tilted \"St\u00f6rer\" badge, pure CSS (D-6):\n    `display: inline-block`, `padding: var(--gat-space-2) var(--gat-space-4)`,\n    `border-radius: var(--gat-radius-sm)`,\n    `font-family: var(--gat-font-headline)`, `font-weight: 900`,\n    `line-height: var(--gat-leading-headline)`,\n    `transform: rotate(-6deg)`, `text-align: center`.\n  - `.gat-stoerer--gelb` \u2014 modifier: `background: var(--gat-color-highlight)`\n    (yellow) + `color: var(--gat-color-text)` (anthracite).\n  - `.gat-stoerer--magenta` \u2014 modifier: `background: var(--gat-color-accent)`\n    (magenta) + `color: var(--gat-color-on-primary)` (white \u2014 magenta is a dark\n    enough accent that white text reads; if uncertain keep white, it is the CD\n    accent-on-color convention).\n  Both St\u00f6rer modifiers are delivered (D-6 \u2014 consuming tool picks per context).\n\n  Final verification after writing: confirm the whole file is valid CSS, every\n  component value resolves to a `--gat-` token (no stray hex/px in component\n  bodies \u2014 the only permitted literals are the documented `vw` in any `clamp()`,\n  the `transform: rotate(-6deg)` angle, the logo `aspect-ratio`, the\n  `-webkit-mask` prefix, and the breakpoint rem-values inside `@media` queries).\n  German comments throughout. Do not modify `index.html`.\n  </action>\n  <verify>\n  <automated>cd /workspace/design-system && python3 -c \"\nimport re\ncss=open('design-system.css').read()\n# all CD-element classes present\nfor s in ['.gat-underline','.gat-highlight','.gat-stoerer','.gat-stoerer--gelb','.gat-stoerer--magenta']:\n    assert s in css, 'missing '+s\ndef body(sel):\n    m=re.search(re.escape(sel)+r'\\s*\\{([^}]*)\\}',css); return m.group(1) if m else ''\nassert 'rotate(' in body('.gat-stoerer'), 'stoerer not rotated'\nassert 'var(--gat-color-highlight)' in body('.gat-stoerer--gelb'), 'gelb modifier wrong'\nassert 'var(--gat-color-accent)' in body('.gat-stoerer--magenta'), 'magenta modifier wrong'\n# global: balanced braces\nassert css.count('{')==css.count('}'), 'unbalanced braces'\n# global: no naked tag selectors styling foreign markup (rough check: no top-level h1/body/* rules)\nassert not re.search(r'(^|\\n)\\s*(h[1-6]|body|\\*)\\s*\\{',css), 'naked tag selector found'\n# global: no hardcoded hex inside any .gat- component body\nfor m in re.finditer(r'(\\.gat-[A-Za-z0-9_-]+(?:\\s*,\\s*\\.gat-[A-Za-z0-9_-]+)*)\\s*\\{([^}]*)\\}',css):\n    assert not re.search(r'#[0-9a-fA-F]{3,6}\\b',m.group(2)), 'hardcoded hex in '+m.group(1)\nprint('OK')\n\" && python3 -c \"\n# CSS validity smoke check via cssutils if available, else brace/at-rule sanity\ntry:\n    import cssutils, logging\n    cssutils.log.setLevel(logging.CRITICAL)\n    cssutils.parseFile('design-system.css', validate=False)\n    print('CSS parses OK')\nexcept ImportError:\n    print('cssutils absent \u2014 brace check above is the gate')\n\"</automated>\n  </verify>\n  <done>\n  - `.gat-underline` (magenta), `.gat-highlight` (yellow + anthracite text) defined\n  - `.gat-stoerer` is a `transform: rotate()` badge with BOTH `--gelb` and `--magenta` modifiers (D-6)\n  - Whole file: balanced braces, no naked tag selectors, no hardcoded hex in any component body\n  - `index.html` unchanged\n  </done>\n</task>\n\n</tasks>\n\n<verification>\nAfter all tasks, run final checks from `/workspace/design-system/`:\n- Brace balance + no naked tag selectors + no hardcoded hex in component bodies\n  (the Task 6 Python check covers this for the whole file).\n- CSS parses cleanly (`cssutils` if installed, else the brace check is the gate).\n- Every public class from the OUTPUT CONTRACT in `<interfaces>` is present.\n- `@import` is the first CSS statement, above `:root`.\n- `design-system/assets/gruene-logo.svg` exists and is a valid SVG.\n- Spot-check WCAG contrast on text-on-surface pairings: dark-green+white (5,63:1),\n  light-green+anthracite (6,09:1), yellow+anthracite \u2014 all use the issue-#3\n  `on-*` tokens, which were already contrast-verified; no new pairing is introduced.\n- `index.html` is unchanged (issue #5 scope).\n</verification>\n\n<success_criteria>\nMaps 1:1 to ISSUE.md acceptance criteria:\n- Header, layout grid, typography classes, buttons and cards exist as CSS\n  components in `design-system.css` \u2014 Tasks 2-5.\n- Components use design tokens exclusively, no hardcoded colors/sizes \u2014 enforced\n  by the per-task no-hardcoded-hex checks and the supplementary token block\n  (Task 1) that closes the radius/border/container gap.\n- The CD rule \"text only on green surface\" is structurally encoded in the\n  text/card components \u2014 `.gat-header` (Task 2) and `.gat-card--primary/secondary`\n  (Task 5) always pair a green surface with the matching `on-*` token.\n- Components are responsive and JavaScript-free \u2014 `repeat(auto-fit, minmax())`,\n  `flex-wrap`, `clamp()`, and `max-width` media queries; no JS anywhere.\nLocked-decision traceability: D-1 `gat-` prefix (all tasks), D-2/D-4 logo asset\ncopied + CSS recolor (Tasks 1-2), D-3 `@import` fonts (Task 1), D-5 dark-green\nheader (Task 2), D-6 St\u00f6rer yellow + magenta variants (Task 6).\n</success_criteria>\n"}
+</script>
+
+<script>
+/* Report script — classic script only. No modules, no fetch, no imports. */
+(function () {
+  "use strict";
+  var dataEl = document.getElementById("artifact-source");
+  var target = document.getElementById("artifact-source-target");
+  if (dataEl && target) {
+    try {
+      target.textContent = JSON.parse(dataEl.textContent).source || "";
+    } catch (e) {
+      target.textContent = dataEl.textContent;
+    }
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el) { ev.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

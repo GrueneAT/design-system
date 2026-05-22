@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Provenance: SHA-256 of the source .md this page was generated from. -->
+<meta name="artifact-source-sha256" content="52577067b4417b482c07d2072ddb75ccff30ba00e06c7c2a26e1b96b0787efb3">
+<meta name="artifact-source-file" content="RESEARCH.md">
+<meta name="artifact-generated-at" content="2026-05-22">
+<!-- Which version of the design system this page was authored against. -->
+<meta name="design-system-version" content="ds-1">
+<title>Research: Kernkomponenten und Layout-System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://flomotlik.github.io/claude-code/design-system.css">
+</head>
+<body>
+<div class="page">
+
+<header class="row">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">#4</span>Research</p>
+  </div>
+  <div class="body">
+    <h1 class="masthead-title">Kernkomponenten und Layout-System</h1>
+    <p class="masthead-sub">Issue: core-components-layout &middot; Generated 2026-05-22</p>
+  </div>
+</header>
+
+<hr class="rule">
+
+<section class="row" id="strategy">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">01</span>Strategy</p>
+    <p class="margin-note">Read this first &mdash; the rest is detail.</p>
+  </div>
+  <div class="body">
+    <h2>Strategy summary</h2>
+    <p>Dieses Issue baut die Komponenten-Schicht des Gr&uuml;ne-AT Design
+       Systems auf eine bereits vollst&auml;ndige, stabile Token-Basis (31
+       <code>--gat-</code>-Properties aus Issue&nbsp;#3). Die Richtung:
+       <span class="mark mark-green">ein flacher, single-class
+       <code>gat-</code>-Komponenten-Layer unter dem bestehenden
+       <code>:root</code></span> &mdash; ausschlie&szlig;lich token-getrieben,
+       reines CSS, kein JavaScript.</p>
+    <ul class="points">
+      <li class="point">
+        <p class="point-claim">Token-Basis ist komplett &mdash; mit einer
+          L&uuml;cke.</p>
+        <p class="point-detail">Farben, Schriften, Typo-Skala, Zeilenabst&auml;nde
+          und Abst&auml;nde existieren und sind WCAG-kontrastgepr&uuml;ft. Es
+          fehlen Radius-, Border- und Container-Tokens &mdash; ein kleiner,
+          klar kommentierter Erg&auml;nzungsblock schlie&szlig;t sie.</p>
+      </li>
+      <li class="point is-risk">
+        <p class="point-claim">Das gelieferte Logo ist monochrom dunkelgr&uuml;n.</p>
+        <p class="point-detail">SVG mit einer einzigen F&uuml;llfarbe
+          <code>#2d793c</code> &mdash; auf einem dunkelgr&uuml;nen Header
+          unsichtbar. L&ouml;sung: Header dunkelgr&uuml;n, Logo per CSS auf
+          Wei&szlig; invertiert. Keine zweite Datei n&ouml;tig.</p>
+      </li>
+      <li class="point is-note">
+        <p class="point-claim">CD-Regel &bdquo;Text auf Gr&uuml;n&ldquo;
+          strukturell erzwingen.</p>
+        <p class="point-detail">Karten- und Header-Komponenten paaren immer
+          eine gr&uuml;ne Fl&auml;che mit dem passenden
+          <code>on-*</code>-Token.</p>
+      </li>
+    </ul>
+    <p><strong>Primary recommendation:</strong> CSS&nbsp;Grid f&uuml;rs
+       Seiten-/Container-Raster, Flexbox f&uuml;r komponenten-interne Achsen;
+       Responsivit&auml;t rein &uuml;ber <code>minmax()</code>/<code>clamp()</code>
+       plus wenige <code>max-width</code>-Breakpoints; St&ouml;rer als reines
+       <code>transform: rotate()</code>-Badge; Header dunkelgr&uuml;n mit
+       CSS-invertiertem Logo.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num is-green">31</div>
+        <div class="stat-label">Bestehende Tokens</div></div>
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Komponenten-Gruppen</div></div>
+      <div class="stat">
+        <div class="stat-num is-orange">3</div>
+        <div class="stat-label">Offene User-Fragen</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="flow">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">02</span>Flow</p>
+  </div>
+  <div class="body">
+    <h2>Task flow &amp; dependencies</h2>
+    <p>Empfohlener Aufbau-Pfad innerhalb von <code>design-system.css</code>
+       &mdash; vom Fundament zu den Komponenten:</p>
+    <div class="flow">
+      <div class="flow-node is-foundation">
+        <span class="n">Schritt 1</span>
+        <span class="t">Fonts &amp; Erg&auml;nzungs-Tokens</span>
+        <span class="d">Google-Fonts-@-Regel zuoberst; Radius/Border/Container als neue --gat-Tokens.</span>
+      </div>
+      <div class="flow-node is-foundation">
+        <span class="n">Schritt 2</span>
+        <span class="t">Layout-Raster</span>
+        <span class="d">gat-container, gat-grid, gat-section &mdash; Grid + Flexbox.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Schritt 3</span>
+        <span class="t">Typografie-Klassen</span>
+        <span class="d">Headline/Subline/Fliesstext mit CD-Zeilenabst&auml;nden.</span>
+      </div>
+      <div class="flow-node is-key">
+        <span class="n">Schritt 4</span>
+        <span class="t">Header &amp; Navigation</span>
+        <span class="d">Dunkelgr&uuml;ne Fl&auml;che, CSS-invertiertes Logo, CSS-Nav.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Schritt 5</span>
+        <span class="t">Buttons &amp; Karten</span>
+        <span class="d">Prim&auml;r/Sekund&auml;r; Karten erzwingen Text auf Gr&uuml;n.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Schritt 6</span>
+        <span class="t">CD-Gestaltungselemente</span>
+        <span class="d">Unterstreichung, Highlight, St&ouml;rer-Badge.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="decisions">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">03</span>Decisions</p>
+  </div>
+  <div class="body">
+    <h2>Key decisions &amp; options</h2>
+
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Raster-System: Grid vs. Flexbox</p>
+        <span class="lozenge is-chosen">Empfohlen</span>
+      </div>
+      <p class="decision-body">CSS&nbsp;Grid f&uuml;r das zweidimensionale
+        Seiten-/Container-Raster (<code>repeat(auto-fit, minmax())</code> bricht
+        ohne Media-Query um), Flexbox f&uuml;r eindimensionale Achsen
+        (Header-Zeile, Navigation, Button-Gruppen).</p>
+      <p class="decision-body rejected">Nur Flexbox &mdash; eindimensional;
+        echtes Spalten-Raster mit gleichen Zeilenh&ouml;hen braucht Grid.</p>
+    </div>
+
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Helle Logo-Variante</p>
+        <span class="lozenge is-open">Offen &mdash; User</span>
+      </div>
+      <p class="decision-body">Das gelieferte SVG ist monochrom
+        (<code>#2d793c</code>). Empfehlung: per CSS auf Wei&szlig; invertieren
+        (<code>mask</code> + <code>background-color</code>, oder
+        <code>filter: brightness(0) invert(1)</code>) &mdash; keine zweite
+        Datei n&ouml;tig.</p>
+      <p class="decision-body rejected">User um eine native helle SVG-Datei
+        bitten &mdash; w&auml;re Qualit&auml;tsverbesserung, aber nicht
+        erforderlich; blockiert unn&ouml;tig.</p>
+    </div>
+
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Header-Hintergrundfarbe</p>
+        <span class="lozenge is-open">Offen &mdash; User</span>
+      </div>
+      <p class="decision-body">Dunkelgr&uuml;n empfohlen: CD-konform
+        (&bdquo;Text auf Gr&uuml;n&ldquo;), Logo invertiert auf Wei&szlig;,
+        Text in <code>on-primary</code>.</p>
+      <p class="decision-body rejected">Wei&szlig;er Header &mdash; w&uuml;rde
+        Header-Text auf Wei&szlig; setzen und damit die CD-Grundregel
+        verletzen.</p>
+    </div>
+
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Erg&auml;nzende Tokens (Radius/Border/Container)</p>
+        <span class="lozenge is-note">Don&apos;t hand-roll</span>
+      </div>
+      <p class="decision-body">Issue&nbsp;#3 hat nur das CD-Vokabular
+        getokenisiert; Radius, Border-Width und Container-Breite fehlen. Statt
+        Werte hartzucodieren: kleiner, klar als &bdquo;Web-Erg&auml;nzung,
+        Issue&nbsp;#4&ldquo; kommentierter <code>--gat-</code>-Token-Block am
+        Ende des <code>:root</code> &mdash; bewahrt das Acceptance-Kriterium
+        &bdquo;keine hartcodierten Gr&ouml;&szlig;en&ldquo;.</p>
+    </div>
+
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">St&ouml;rer-Akzentfarbe</p>
+        <span class="lozenge is-open">Offen &mdash; User</span>
+      </div>
+      <p class="decision-body">Gelb (<code>highlight</code>) oder Magenta
+        (<code>accent</code>) &mdash; beide CD-konform. Der Plan kann beide als
+        Modifier anbieten (<code>.gat-stoerer--gelb</code> /
+        <code>--magenta</code>).</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="detail">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">04</span>Detail</p>
+  </div>
+  <div class="body">
+    <h2>Full detail</h2>
+    <details class="detail">
+      <summary>Show full artifact source
+        <span class="summary-hint">click to expand</span></summary>
+      <div class="detail-body">
+        <pre><code id="artifact-source-target"></code></pre>
+      </div>
+    </details>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="provenance">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">05</span>Provenance</p>
+  </div>
+  <div class="body">
+    <h2>Provenance</h2>
+    <p>Generated from the canonical <code>.md</code>. This HTML is never
+       hand-edited &mdash; if the <code>.md</code> changes, regenerate with
+       <code>/issue:view</code>.</p>
+    <footer class="footer">
+      <span>Source: <code>RESEARCH.md</code> &middot;
+        SHA-256 <code>52577067b4417b482c07d2072ddb75ccff30ba00e06c7c2a26e1b96b0787efb3</code></span>
+      <span>Generated 2026-05-22 &middot; design system ds-1</span>
+    </footer>
+  </div>
+</section>
+
+</div>
+
+<!-- Raw artifact source as DATA, never markup. See Section 6. -->
+<script type="application/json" id="artifact-source">
+{"source": "# Research: Kernkomponenten und Layout-System\n\n**Researched:** 2026-05-22\n**Issue:** core-components-layout (GitHub GrueneAT/design-system#4)\n**Confidence:** HIGH\n\n<user_constraints>\n## User Constraints (from CONTEXT.md)\n\n### Locked Decisions\n- **D-1 \u2014 Klassen-Prefix `gat-`.** Alle Komponenten-CSS-Klassen bekommen den\n  Prefix `gat-` (`.gat-header`, `.gat-btn`, `.gat-card`, \u2026). Konsistent mit den\n  `--gat-`-Tokens, kollisionssicher beim Einbinden in fremde Tools.\n- **D-2 \u2014 Logo-Asset geliefert.** Der User hat das Gr\u00fcne-Logo bereitgestellt\n  (`Gr\u00fcne Logo Bund dunkelgr\u00fcn RGB.svg` \u2014 valides Vektor-SVG 150\u00d7132 mit\n  viewBox, bevorzugte Web-Variante; `Gr\u00fcne Logo Bund dunkel.png` als\n  Raster-Fallback). Das SVG wird mit einem URL-sicheren Namen in einen\n  Asset-Ordner \u00fcbernommen (z. B. `assets/gruene-logo.svg`) und vom Header\n  referenziert. Header ist nicht mehr blockiert.\n- **D-3 \u2014 Schriften per `@import` in `design-system.css`.** Die Google Fonts\n  (Barlow Semi Condensed, Vollkorn) werden per `@import` direkt in\n  `design-system.css` geladen \u2014 jedes Tool, das die CSS verlinkt, erh\u00e4lt die\n  Schriften automatisch.\n\n### Claude's Discretion (Offene Punkte f\u00fcr Research)\n- CSS-Grid- vs. Flexbox-Ansatz f\u00fcr Grid/Container.\n- Umsetzung des \u201eSt\u00f6rer\" (rotiertes Badge) als reine CSS-Komponente.\n- Responsives Verhalten ohne JS (Breakpoints, Container-Verhalten).\n- Ob f\u00fcr gr\u00fcne Header-Hintergr\u00fcnde eine helle/wei\u00dfe Logo-Variante n\u00f6tig ist\n  (D-2 ausdr\u00fccklich an Research delegiert).\n- Exakte, aktuelle Google-Fonts-`@import`-URL (zu D-3).\n\n### Deferred Ideas (OUT OF SCOPE)\n- Style-Guide-Anzeige der Komponenten \u2014 Scope von Issue #5.\n- JavaScript jeglicher Art \u2014 ISSUE.md Acceptance: \u201eohne JavaScript nutzbar\".\n  Navigation = einfache CSS-Navigation, kein Hamburger-Men\u00fc.\n</user_constraints>\n\n## Summary\n\nDieses Issue baut die Komponenten-Schicht des Gr\u00fcne-AT Design Systems auf eine\nbereits vollst\u00e4ndige, stabile Token-Basis. Die Recherche hat das gesamte\n`:root`-Token-Set aus Issue #3 inventarisiert (31 `--gat-`-Properties: 14\nFarben, 3 Schriften, 6 Typo-Gr\u00f6\u00dfen, 2 Zeilenabst\u00e4nde, 6 Abst\u00e4nde) \u2014 die\nKomponenten d\u00fcrfen ausschlie\u00dflich darauf aufbauen. Ein erkennbares Token-Loch:\nes gibt **keine Radius-, Border-, Shadow- oder Breakpoint-Tokens** und kein\n`container`-Ma\u00df. Diese sind Web-Erg\u00e4nzungen, die das Komponenten-Issue\npragmatisch lokal l\u00f6sen muss; idealerweise als kleiner, klar kommentierter\nBlock zus\u00e4tzlicher `--gat-`-Tokens (Radius/Border/Container/Breakpoints) am\nEnde des `:root`, damit die Komponenten weiterhin token-getrieben bleiben und\ndas Acceptance-Kriterium \u201ekeine hartcodierten Gr\u00f6\u00dfen\" erf\u00fcllt ist.\n\nDie zentrale CD-Spannung ist das Logo: das gelieferte SVG ist **monochrom mit\neiner einzigen F\u00fcllfarbe `#2d793c`** (ein dunkles Gr\u00fcn) \u2014 auf einem\ndunkelgr\u00fcnen Header damit praktisch unsichtbar. Gleichzeitig verlangt die\nCD-Grundregel \u201eTypografie steht immer auf Gr\u00fcn\", dass Text auf einer gr\u00fcnen\nFl\u00e4che sitzt. Aufl\u00f6sung: Der **Header bekommt eine dunkelgr\u00fcne Fl\u00e4che** (CD-treu,\nText in `on-primary`/Wei\u00df), und das **Logo wird per CSS auf Wei\u00df invertiert** \u2014\nweil das SVG einfarbig ist, gen\u00fcgt daf\u00fcr `filter: brightness(0) invert(1)` auf\neinem `<img>` oder, sauberer, ein als `mask` eingebundenes SVG mit\n`background-color: var(--gat-color-weiss)`. So braucht der User **keine zweite\nLogo-Datei nachzuliefern**; eine echte helle SVG-Variante bleibt eine optionale\nsp\u00e4tere Qualit\u00e4tsverbesserung.\n\n**Primary recommendation:** Komponenten als flacher, single-class CSS-Layer\nunter dem `:root` erg\u00e4nzen; **CSS Grid** f\u00fcr das Seiten-/Container-Raster und\n**Flexbox** f\u00fcr eindimensionale Komponenten-interne Layouts (Header-Zeile,\nButton-Gruppen); Responsivit\u00e4t rein \u00fcber `max-width`-`@media`-Breakpoints plus\n`clamp()`/`minmax()`; \u201eSt\u00f6rer\" als reines `transform: rotate()`-Badge; Header\ndunkelgr\u00fcn mit CSS-invertiertem Logo. Ein kleiner erg\u00e4nzender Token-Block\n(Radius/Border/Container/Breakpoint) schlie\u00dft die Token-L\u00fccke.\n\n## Codebase Analysis\n\n### Relevant Code\n\n| File | Purpose | Last Modified | Relevance |\n|------|---------|---------------|-----------|\n| `/workspace/design-system/design-system.css` | Das kanonische Stylesheet. Enth\u00e4lt Datei-Header + vollst\u00e4ndigen `:root`-Token-Block aus Issue #3. Komponenten werden hier erg\u00e4nzt. | commit e29391c (Issue #3) | HOCH \u2014 direktes Editier-Ziel |\n| `/workspace/design-system/index.html` | Seiten-Skelett, verlinkt `design-system.css`. Inhaltliche Style-Guide-Ausarbeitung ist Issue #5. | commit 0178ed9 | MITTEL \u2014 zeigt Einbindungsmuster; nicht zu erweitern (Issue #5) |\n| `/workspace/Gr\u00fcne Logo Bund dunkelgr\u00fcn RGB.svg` | Geliefertes Logo-SVG. 150,32\u00d7132,07, viewBox gesetzt, 18 `<path>`, **eine einzige F\u00fcllfarbe `#2d793c`**. | geliefert 2026-05-13 | HOCH \u2014 Header-Asset; muss URL-sicher ins Repo kopiert werden |\n| `/workspace/Gr\u00fcne Logo Bund dunkel.png` | Raster-Fallback des Logos. | geliefert 2026-05-13 | NIEDRIG \u2014 SVG ist bevorzugt (D-2) |\n| `/workspace/design-system/README.md` | Beschreibt Einbindung per gehostetem `<link>`, Issue-Roadmap. | commit 8bd9baa | NIEDRIG \u2014 Kontext |\n\n**Hinweis Repo-Pfad:** Das aktive Design-System-Repo ist\n`/workspace/design-system/` (eigener Git-Klon, eigenes `.issues/`). Die\nIssue-Artefakte zu *diesem* Issue liegen jedoch unter\n`/workspace/.issues/core-components-layout/`. Die Edits gehen in\n`/workspace/design-system/design-system.css`.\n\n### Interfaces\n\nDer Token-Block aus Issue #3 ist der **Eingangs-Kontrakt** \u2014 die Komponenten\nreferenzieren ausschlie\u00dflich diese Properties. Exakte Inventur:\n\n<interfaces>\n/* === EINGANGS-KONTRAKT: bestehende Tokens (Issue #3) ===================== */\n/* Aus design-system.css :root \u2014 Komponenten d\u00fcrfen NUR diese verwenden.     */\n\n/* Farb-Primitive */\n--gat-color-dunkelgruen: #257639;\n--gat-color-hellgruen:   #56af31;\n--gat-color-gelb:        #ffed00;\n--gat-color-magenta:     #e6007e;\n--gat-color-weiss:       #ffffff;\n--gat-color-anthrazit:   #1d1d1b;\n\n/* Farb-Semantik (Aliase auf Primitive) */\n--gat-color-primary;       /* -> dunkelgruen */\n--gat-color-secondary;     /* -> hellgruen   */\n--gat-color-accent;        /* -> magenta     */\n--gat-color-highlight;     /* -> gelb        */\n--gat-color-text;          /* -> anthrazit   */\n--gat-color-surface;       /* -> weiss       */\n--gat-color-on-primary;    /* -> weiss   (Text auf Dunkelgr\u00fcn, Kontrast 5,63:1) */\n--gat-color-on-secondary;  /* -> anthrazit (Text auf Hellgr\u00fcn, Kontrast 6,09:1) */\n\n/* Schrift-Familien */\n--gat-font-headline;   /* 'Barlow Semi Condensed', sans-serif */\n--gat-font-copy;       /* 'Barlow Semi Condensed', sans-serif */\n--gat-font-emphasis;   /* 'Vollkorn', serif                    */\n\n/* Typo-Gr\u00f6\u00dfen (modulare Skala 1rem / Ratio 1,25) */\n--gat-text-h1: 2.441rem;\n--gat-text-h2: 1.953rem;\n--gat-text-h3: 1.563rem;\n--gat-text-subline: 1.25rem;\n--gat-text-copy: 1rem;\n--gat-text-small: 0.8rem;\n\n/* Zeilenabst\u00e4nde (einheitslose Multiplikatoren, direkt aus dem CD) */\n--gat-leading-headline: 0.9;\n--gat-leading-copy: 1.3;\n\n/* Abst\u00e4nde (Skala Basis 0,25rem) */\n--gat-space-1: 0.25rem;\n--gat-space-2: 0.5rem;\n--gat-space-3: 1rem;\n--gat-space-4: 1.5rem;\n--gat-space-5: 2rem;\n--gat-space-6: 3rem;\n\n\n/* === AUSGANGS-KONTRAKT: \u00f6ffentliche Komponenten-Klassen (Issue #4) ======= */\n/* Diese gat-*-Klassen sind der Kontrakt, auf den Issue #5 (Style Guide)     */\n/* und alle konsumierenden Gr\u00fcne-AT-Tools zugreifen. Stabile Namen \u2014         */\n/* Umbenennungen w\u00e4ren Breaking Changes.                                     */\n\n/* --- Erg\u00e4nzende Tokens (Web-Erg\u00e4nzung, neu in Issue #4, klar kommentiert) - */\n--gat-radius-sm;          /* kleine Rundung (Buttons, Badges)        */\n--gat-radius-md;          /* Karten-Rundung                          */\n--gat-border-width;       /* Standard-Strichst\u00e4rke (Sekund\u00e4r-Button) */\n--gat-container-max;      /* max. Inhaltsbreite, z. B. 72rem         */\n--gat-breakpoint-sm;      /* dokumentierender Kommentar (CSS @media   */\n--gat-breakpoint-md;      /*   kann keine var() im media-query lesen) */\n\n/* --- Layout / Seitenstruktur --- */\n.gat-container          /* zentrierter Inhalts-Container, max-width + Padding */\n.gat-grid               /* CSS-Grid-Raster (display:grid)                     */\n.gat-grid--2            /* 2-Spalten-Variante (responsive auf 1)              */\n.gat-grid--3            /* 3-Spalten-Variante (responsive auf 1)              */\n.gat-section            /* vertikaler Block mit CD-Abstandsrhythmus           */\n\n/* --- Header / Navigation --- */\n.gat-header             /* Seitenkopf, dunkelgr\u00fcne Fl\u00e4che, on-primary-Text    */\n.gat-header__inner      /* zentrierter Header-Inhalt (Flexbox-Zeile)          */\n.gat-header__logo       /* Logo-Wrapper, h\u00e4lt die CD-Schutzzone als padding   */\n.gat-header__logo img   /* invertiertes Logo (wei\u00df auf Dunkelgr\u00fcn)            */\n.gat-nav                /* Navigations-Container (Flexbox, wrap)              */\n.gat-nav__link          /* einzelner Navigationslink                          */\n.gat-nav__link--active  /* aktiver Zustand (CD-Unterstreichung)               */\n\n/* --- Typografie --- */\n.gat-headline           /* H1-Rolle: font-headline, text-h1, leading 0,9      */\n.gat-subline            /* Subline-Rolle: text-subline, leading 0,9           */\n.gat-fliesstext         /* Copy: font-copy, text-copy, leading 1,3            */\n.gat-emphasis           /* Hervorhebung/Zitat: font-emphasis (Vollkorn)       */\n\n/* --- Buttons --- */\n.gat-btn                /* Basis-Button (Layout, Padding, Radius)             */\n.gat-btn--primary       /* Prim\u00e4r: Fl\u00e4che dunkelgr\u00fcn, Text on-primary         */\n.gat-btn--secondary     /* Sekund\u00e4r: Outline, transparent, gr\u00fcner Rahmen      */\n\n/* --- Karten / Fl\u00e4chen --- */\n.gat-card               /* Karte auf gr\u00fcner Fl\u00e4che (CD: Text auf Gr\u00fcn)        */\n.gat-card--primary      /* dunkelgr\u00fcne Fl\u00e4che, on-primary-Text                */\n.gat-card--secondary    /* hellgr\u00fcne Fl\u00e4che, on-secondary-Text                */\n.gat-card__title        /* Karten-Headline                                    */\n.gat-card__body         /* Karten-Flie\u00dftext                                   */\n\n/* --- CD-Gestaltungselemente --- */\n.gat-underline          /* CD-Unterstreichung (z. B. magenta/gelb Akzent)     */\n.gat-highlight          /* Text-Hervorhebung (gelbe Marker-Fl\u00e4che)            */\n.gat-stoerer            /* rotiertes Badge/Sticker \u2014 transform: rotate()      */\n</interfaces>\n\n> Die `gat-*`-Klassennamen oben sind ein **Vorschlag** des Researchers \u2014 die\n> verbindliche Festlegung trifft der Plan. BEM-artige `__`/`--`-Modifier sind\n> empfohlen, weil sie kollisionssicher sind und ohne JS-Zustandslogik\n> auskommen. Der Plan darf die Liste verfeinern, muss aber den `gat-`-Prefix\n> (D-1) und die Token-only-Regel wahren.\n\n### Reusable Components\n- **Token-Set vollst\u00e4ndig** \u2014 Farben, Schriften, Typo-Skala, Zeilenabst\u00e4nde,\n  Abst\u00e4nde existieren und sind WCAG-kontrastgepr\u00fcft (`on-primary` 5,63:1,\n  `on-secondary` 6,09:1). Komponenten nie eigene Farbwerte rechnen.\n- **`on-primary` / `on-secondary`** bilden die CD-Regel \u201eText auf Gr\u00fcn\" bereits\n  ab: Dunkelgr\u00fcn-Fl\u00e4che \u2192 Wei\u00df-Text, Hellgr\u00fcn-Fl\u00e4che \u2192 Anthrazit-Text. Die\n  Karten-/Header-Komponenten paaren Fl\u00e4che und `on-*`-Token konsequent.\n- **Datei-Header** in `design-system.css` ist fertig und bleibt unver\u00e4ndert.\n\n### Potential Conflicts\n- **Token-L\u00fccke:** kein Radius/Border/Shadow/Container/Breakpoint-Token. Die\n  Komponenten brauchen mindestens Radius, Border-Width und eine Container-\n  Maximalbreite. L\u00f6sung: kleiner zus\u00e4tzlicher `--gat-`-Token-Block am Ende des\n  `:root`, klar als \u201eWeb-Erg\u00e4nzung, Issue #4\" kommentiert \u2014 bewahrt das\n  Acceptance-Kriterium \u201ekeine hartcodierten Gr\u00f6\u00dfen\".\n- **`@media` kann keine `var()` lesen:** Breakpoint-Werte k\u00f6nnen als Token\n  *dokumentiert*, aber im `@media`-Query nicht als `var()` referenziert werden.\n  Die Pixel-/rem-Werte stehen in den Media-Queries direkt; das Token dient nur\n  der Nachvollziehbarkeit. Im CSS so kommentieren.\n- **`index.html`:** ist Skelett; die sichtbare Demonstration der Komponenten\n  ist Issue #5 \u2014 `index.html` in diesem Issue NICHT mit Komponenten-Markup\n  f\u00fcllen (Scope-Grenze aus CONTEXT.md).\n- **Logo-Datei-Name:** Quelldatei hat Umlaut + Leerzeichen\n  (`Gr\u00fcne Logo Bund dunkelgr\u00fcn RGB.svg`). D-2 verlangt URL-sichere Kopie\n  (`assets/gruene-logo.svg`). Die Originaldatei liegt unter `/workspace/`, das\n  Repo unter `/workspace/design-system/` \u2014 Kopie ins Repo n\u00f6tig.\n\n## Standard Stack\n\n| \u201eLibrary\" | Version | Purpose | Why Standard | Confidence |\n|-----------|---------|---------|--------------|------------|\n| Reines CSS3 | \u2014 | Komponenten, Layout, Responsivit\u00e4t | ISSUE.md/CONTEXT: kein JS, kein Build-Schritt | HIGH |\n| CSS Grid | nativ | Seiten-/Container-Raster, mehrspaltige Layouts | Zweidimensionales Raster, `minmax()`/`auto-fit` l\u00f6st Responsivit\u00e4t ohne Media-Queries | HIGH |\n| Flexbox | nativ | Eindimensionale Layouts (Header-Zeile, Nav, Button-Gruppen) | Standard f\u00fcr lineare Achsen, `flex-wrap` f\u00fcr Umbruch ohne JS | HIGH |\n| `@import` Google Fonts | CSS2-API | Barlow Semi Condensed + Vollkorn laden | D-3 locked; CSS2-`@import` ist die aktuelle, von Google empfohlene Form | HIGH |\n| `clamp()` | nativ | fl\u00fcssige Typo-/Abstands-Skalierung | reduziert Breakpoint-Bedarf, voll browserunterst\u00fctzt | HIGH |\n\n### Verifizierte Google-Fonts-`@import`-URL (zu D-3)\n\nGegen die Google-Fonts-CSS2-API verifiziert (2026-05-22, Antwort enth\u00e4lt\ng\u00fcltige `@font-face`-Regeln). **Als erste Zeile von `design-system.css`**\n(`@import` muss vor allen anderen Regeln stehen, also vor dem Datei-Header-\nKommentar ist nicht n\u00f6tig, aber vor `:root`):\n\n```css\n@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,900&family=Vollkorn:ital,wght@0,400;0,600;0,700;1,400;1,900&display=swap');\n```\n\n- **Barlow Semi Condensed:** Gewichte 400/500/600/700/**900** (900 = \u201eBlack\",\n  deckt die \u201eUltra\"-Headlinerolle), normal + kursiv.\n- **Vollkorn:** Gewichte 400/600/700/**900**, normal + kursiv \u2014 **900 Italic =\n  \u201eBlack Italic\"**, die im CD genannte Hervorhebungsrolle.\n- `display=swap` vermeidet unsichtbaren Text w\u00e4hrend des Font-Ladens.\n\nDer Plan kann die Gewichtsliste straffen, falls eine Rolle ein Gewicht nicht\nbraucht \u2014 verwendet werden voraussichtlich Barlow 400 (Copy), 600/700\n(Subline/UI), 900 (Headline) und Vollkorn 400 + 900i (Emphasis).\n\n### Alternatives Considered\n\n| Instead of | Could Use | Tradeoff |\n|------------|-----------|----------|\n| CSS Grid f\u00fcrs Raster | nur Flexbox | Flexbox ist eindimensional; echtes Spalten-Raster mit gleichen Zeilenh\u00f6hen braucht Grid. Grid f\u00fcr 2D, Flexbox f\u00fcr 1D ist der Konsens. |\n| `@import` Fonts | `<link>` im HTML jeder Seite | D-3 schlie\u00dft das aus \u2014 `@import` zentralisiert die Schriften in der CSS. `@import` hat einen kleinen Ladenachteil, ist hier aber bewusst gew\u00e4hlt. |\n| Self-hosted Fonts | Google-Fonts-CDN | Self-hosting w\u00e4re datenschutzfreundlicher, aber CONTEXT/Issue #3 hat Google Fonts festgelegt; out of scope. |\n| `transform: rotate()` f\u00fcr St\u00f6rer | SVG-Grafik als Bild | Pure-CSS-Badge bleibt token-getrieben, skaliert mit Schrift, kein Asset. |\n\n## Don't Hand-Roll\n\n| Problem | Don't Build | Use Instead | Why |\n|---------|-------------|-------------|-----|\n| Responsives Mehrspalten-Raster | eigene Float-/`width`-Prozent-Logik | CSS Grid `repeat(auto-fit, minmax(\u2026, 1fr))` | Bricht ohne Media-Query automatisch um |\n| Fl\u00fcssige Schriftgr\u00f6\u00dfe | viele Breakpoint-Stufen | `clamp(min, vw, max)` | Eine Regel statt vieler Media-Queries |\n| Farb-/Kontrastwerte | neue HEX-Werte | bestehende `--gat-color-*`-Tokens | Acceptance: keine hartcodierten Farben; Kontrast schon gepr\u00fcft |\n| Helle Logo-Variante | User um zweite Datei bitten (Blocker) | CSS-Invertierung des einfarbigen SVG | Logo ist monochrom \u2014 `filter`/`mask` reicht, kein Asset n\u00f6tig |\n| Navigations-Zustand (aktiv/hover) | JS | CSS `:hover`/`:focus-visible` + `--active`-Modifier-Klasse | kein JS erlaubt |\n| Akkordeon/Mobile-Men\u00fc | JS-Hamburger | einfache umbrechende CSS-Nav (`flex-wrap`) | CONTEXT: \u201ekein Hamburger-Men\u00fc\" |\n\n## Architecture Patterns\n\n### Recommended Approach\n\n1. **Datei-Reihenfolge in `design-system.css`:** `@import` (ganz oben) \u2192\n   Datei-Header-Kommentar \u2192 `:root` (bestehende Tokens + neuer kleiner\n   Erg\u00e4nzungs-Token-Block) \u2192 Komponenten-Selektoren, gruppiert nach\n   Abschnitten mit Kommentar-Bannern (Layout \u2192 Header/Nav \u2192 Typografie \u2192\n   Buttons \u2192 Karten \u2192 CD-Elemente).\n2. **Flacher, single-class Komponenten-Layer.** Eine Klasse = eine Komponente,\n   BEM-artige `__`-Elemente und `--`-Modifier. Keine tiefe Selektor-\n   Verschachtelung, keine Element-Selektoren auf `body`/`h1` (das Stylesheet\n   wird in fremde Tools eingebunden \u2014 `gat-`-Prefix sch\u00fctzt nur Klassen, nicht\n   nackte Tag-Selektoren). Komponenten greifen nur auf `.gat-*`-Klassen.\n3. **Grid f\u00fcrs Seitenraster, Flexbox f\u00fcr Komponenten-interne Achsen.**\n   `.gat-container` = `max-width` + zentriert + seitliches Padding.\n   `.gat-grid` = `display: grid` mit `repeat(auto-fit, minmax())` \u2192\n   responsiv ohne Media-Query. Header-Zeile und Nav = Flexbox mit\n   `flex-wrap: wrap`.\n4. **Typografie token-treu.** `.gat-headline` nutzt `--gat-font-headline`,\n   `--gat-text-h1`, `line-height: var(--gat-leading-headline)` (0,9).\n   `.gat-fliesstext` nutzt `--gat-text-copy` + `--gat-leading-copy` (1,3).\n   Die CD-Zeilenabstandsfaktoren sind genau die `--gat-leading-*`-Tokens \u2014\n   direkt als `line-height` setzen.\n5. **CD-Regel \u201eText auf Gr\u00fcn\" strukturell erzwingen.** `.gat-card` und\n   `.gat-header` setzen immer Fl\u00e4che + passendes `on-*`-Token gemeinsam:\n   `--primary`-Variante = `background: var(--gat-color-primary)` +\n   `color: var(--gat-color-on-primary)`; `--secondary` analog mit Hellgr\u00fcn +\n   `on-secondary`. So kann eine Text-/Karten-Komponente gar nicht ohne gr\u00fcne\n   Fl\u00e4che existieren.\n6. **Header dunkelgr\u00fcn + invertiertes Logo.** `.gat-header` =\n   dunkelgr\u00fcne Fl\u00e4che, `on-primary`-Text. Das einfarbige Logo-SVG wird auf\n   Wei\u00df gebracht \u2014 empfohlen via CSS-`mask`:\n   `.gat-header__logo` mit\n   `background-color: var(--gat-color-weiss)`,\n   `-webkit-mask`/`mask: url(assets/gruene-logo.svg) no-repeat center / contain`.\n   Einfachere Alternative: `<img>` + `filter: brightness(0) invert(1)`. Beide\n   funktionieren, weil das SVG monochrom ist. Die Logo-`padding` der\n   `.gat-header__logo` bildet die CD-Schutzzone ab (M = 0,06 \u00d7 kurze Kante;\n   im Web als proportionales `padding` relativ zur Logo-H\u00f6he l\u00f6sen).\n7. **\u201eSt\u00f6rer\" als Pure-CSS-Badge.** `.gat-stoerer` = `display: inline-block`,\n   Fl\u00e4che (Gelb oder Magenta), `padding`, `--gat-radius-sm`,\n   `transform: rotate(-6deg)`, `font-headline` fett. Optional leichte\n   `box-shadow`. Keine Pseudo-Elemente n\u00f6tig; falls eine Sprechblasen-Ecke\n   gew\u00fcnscht ist, ginge ein `::after`-Dreieck \u2014 der Plan entscheidet.\n8. **CD-Gestaltungselemente:** `.gat-underline` als\n   `border-bottom`/`text-decoration` in Akzentfarbe; `.gat-highlight` als\n   `background: var(--gat-color-highlight)` (gelbe Marker-Fl\u00e4che) auf einem\n   Inline-Span \u2014 Achtung Kontrast: Anthrazit-Text auf Gelb.\n\n### Anti-Patterns to Avoid\n- **Nackte Tag-Selektoren** (`h1 {}`, `body {}`) \u2014 das Stylesheet wird in\n  fremde Tools eingebunden und w\u00fcrde deren Markup umstylen. Nur `.gat-*`.\n- **Hartcodierte Farben/Gr\u00f6\u00dfen** \u2014 Acceptance-Versto\u00df. Jeder Wert kommt aus\n  einem Token; fehlt ein Token (Radius/Container), zuerst Token erg\u00e4nzen.\n- **Wei\u00df-Text auf Hellgr\u00fcn** \u2014 f\u00e4llt durch den Kontrast (Issue #3 hat\n  `on-secondary` bewusst auf Anthrazit gelegt). Hellgr\u00fcn-Fl\u00e4chen nie mit\n  Wei\u00df-Text paaren.\n- **JS f\u00fcr Navigation/Interaktion** \u2014 verboten. Hover/Focus via CSS,\n  \u201eaktiv\" via Modifier-Klasse, die das konsumierende Tool setzt.\n- **`var()` in `@media`-Bedingungen** \u2014 funktioniert nicht. Breakpoint-Werte\n  direkt in die Media-Query schreiben, Token nur als Doku-Kommentar.\n- **Tiefe Verschachtelung / hohe Spezifit\u00e4t** \u2014 erschwert das \u00dcberschreiben in\n  konsumierenden Tools. Flache single-class Selektoren.\n\n## Common Pitfalls\n\n### Logo unsichtbar auf gr\u00fcnem Header\n**Was schiefgeht:** Das gelieferte SVG ist einfarbig `#2d793c` (dunkles Gr\u00fcn).\nAuf einer dunkelgr\u00fcnen `.gat-header`-Fl\u00e4che verschwindet es nahezu vollst\u00e4ndig.\n**Warum:** Es gibt nur die dunkle Logo-Variante (D-2), keine helle.\n**Vermeidung:** Logo per CSS auf Wei\u00df bringen \u2014 `mask` + `background-color`\n(sauberste L\u00f6sung) oder `filter: brightness(0) invert(1)` auf `<img>`. Funktion\nist garantiert, weil das SVG monochrom ist (eine einzige `fill`-Farbe).\n**Warnzeichen:** Logo \u201efehlt\" im Header-Screenshot; niedriger Kontrast.\n\n### Token-L\u00fccke (Radius/Border/Container) f\u00fchrt zu Hardcoding\n**Was schiefgeht:** Beim Bau von Buttons/Karten greift man reflexhaft zu\n`border-radius: 4px` \u2014 Acceptance-Versto\u00df \u201ekeine hartcodierten Gr\u00f6\u00dfen\".\n**Warum:** Issue #3 hat bewusst nur das CD-Vokabular getokenisiert; Radius etc.\nsind reine Web-Erg\u00e4nzungen und fehlen.\n**Vermeidung:** Zuerst einen kleinen, klar als \u201eWeb-Erg\u00e4nzung, Issue #4\"\nkommentierten `--gat-radius-*`/`--gat-border-width`/`--gat-container-max`-Block\nam Ende des `:root` erg\u00e4nzen, dann Komponenten darauf aufbauen.\n**Warnzeichen:** nackte `px`/`rem`-Literale in Komponenten-Regeln.\n\n### `@import`-Position\n**Was schiefgeht:** `@import` irgendwo in der Datei \u2192 der Browser ignoriert es.\n**Warum:** CSS verlangt, dass `@import` vor jeder anderen Regel (au\u00dfer\n`@charset` / `@layer`) steht.\n**Vermeidung:** Die Google-Fonts-`@import`-Zeile als allererste CSS-Anweisung,\noberhalb von `:root`. Der Datei-Header-Kommentar darf dar\u00fcber stehen\n(Kommentare z\u00e4hlen nicht).\n**Warnzeichen:** Schriften fallen auf `sans-serif`/`serif` zur\u00fcck.\n\n### CD-Zeilenabstand falsch interpretiert\n**Was schiefgeht:** Den CD-Faktor \u00d70,9 als zus\u00e4tzliche Multiplikation auf eine\nschon gesetzte `line-height` anwenden.\n**Warum:** `--gat-leading-headline` *ist* schon der Faktor 0,9.\n**Vermeidung:** `line-height: var(--gat-leading-headline)` direkt setzen \u2014\neinheitslos, CSS multipliziert mit der Schriftgr\u00f6\u00dfe. Nicht nochmal rechnen.\n**Warnzeichen:** sehr enge oder sehr weite Headlines.\n\n### Responsivit\u00e4t ohne JS\n**Was schiefgeht:** Versuch, Layout-Umbr\u00fcche per JS zu steuern (verboten).\n**Vermeidung:** `grid-template-columns: repeat(auto-fit, minmax(min, 1fr))`\nbricht selbst um; `flex-wrap: wrap` f\u00fcr Nav/Header; `clamp()` f\u00fcr fl\u00fcssige\nGr\u00f6\u00dfen; nur wenige `max-width`-Media-Queries f\u00fcr echte Layout-Wechsel.\n**Warnzeichen:** \u00fcberlaufender Inhalt auf schmalen Viewports.\n\n### Stylesheet-Bleed in konsumierende Tools\n**Was schiefgeht:** Das Design-System-CSS stylt das Markup fremder Tools um.\n**Warum:** nackte Tag-Selektoren / hohe Spezifit\u00e4t.\n**Vermeidung:** ausschlie\u00dflich `.gat-*`-Klassenselektoren, flach, niedrige\nSpezifit\u00e4t. Keine Resets, kein `* {}`.\n**Warnzeichen:** Beschwerden konsumierender Repos \u00fcber ver\u00e4nderte Darstellung.\n\n## Environment Availability\n\n| Dependency | Required By | Available | Version | Fallback |\n|------------|------------|-----------|---------|----------|\n| Browser CSS3 (Grid, Flexbox, `clamp()`, `mask`, custom props) | alle Komponenten | Ja \u2014 alle aktuellen Browser | \u2014 | `mask` braucht `-webkit-`-Prefix; `filter`-Variante als Logo-Fallback |\n| Google-Fonts-CSS2-API | `@import` der Schriften | Ja \u2014 URL 2026-05-22 verifiziert | CSS2 | Font-Stack-Fallback `sans-serif`/`serif` in den Tokens |\n| Build-/Tooling | \u2014 | nicht n\u00f6tig | \u2014 | reines CSS, kein Build (CONTEXT) |\n\nKein Environment-Probing n\u00f6tig: das Issue liefert eine statische CSS-Datei,\nkeine Laufzeitabh\u00e4ngigkeiten.\n\n## Project Constraints (from CLAUDE.md)\nKein workspace-`CLAUDE.md` und kein `.claude/skills/`-Verzeichnis im Repo\ngefunden. Aus dem persistenten Memory relevant:\n- **Keine KI-/Tool-Attribution** in Commits, Code, Dateinamen oder Kommentaren.\n- Alle CSS-Kommentare auf **Deutsch** (Konvention aus Issue #3, EXECUTION.md\n  Self-Check).\n- Bestehende Issue-Artefakte nie l\u00f6schen \u2014 archivieren.\n\n## Sources\n\n### HIGH confidence\n- `/workspace/design-system/design-system.css` \u2014 vollst\u00e4ndige Token-Inventur\n  (Codebase-Analyse).\n- `/workspace/design-system/.issues/archive/design-tokens-from-cd/`\n  (RESEARCH/CONTEXT/EXECUTION.md) \u2014 Token-Rationale, WCAG-Kontrastpr\u00fcfung.\n- `/workspace/Gr\u00fcne Logo Bund dunkelgr\u00fcn RGB.svg` \u2014 direkte Inspektion:\n  150,32\u00d7132,07, viewBox gesetzt, 18 Pfade, eine einzige F\u00fcllfarbe `#2d793c`.\n- Google-Fonts-CSS2-API \u2014 `@import`-URL am 2026-05-22 abgerufen, liefert\n  g\u00fcltige `@font-face`-Regeln f\u00fcr Barlow Semi Condensed (400\u2013900, i) und\n  Vollkorn (400\u2013900, i).\n- `/workspace/.issues/core-components-layout/{ISSUE,CONTEXT}.md` \u2014 Scope und\n  Locked Decisions.\n\n### MEDIUM confidence\n- CSS-Grid-vs-Flexbox-Empfehlung \u2014 etablierter Branchenkonsens (Grid = 2D,\n  Flexbox = 1D); nicht \u00fcber eine einzelne aktuelle Quelle verifiziert, aber\n  unstrittig.\n\n### LOW confidence (needs validation)\n- Genaue ben\u00f6tigte Font-Gewichtsliste \u2014 der Plan/die Umsetzung kann die\n  `@import`-URL straffen, sobald die Komponenten-Rollen festliegen.\n- Ob eine echte helle Logo-SVG-Variante sp\u00e4ter gew\u00fcnscht ist \u2014 Empfehlung:\n  CSS-Invertierung reicht; eine native helle Datei ist optionale sp\u00e4tere\n  Qualit\u00e4tsverbesserung (Entscheidung beim User).\n\n## Metadata\n**Confidence breakdown:**\n- Codebase / Token-Inventur: HIGH \u2014 vollst\u00e4ndige Datei gelesen.\n- Logo-Analyse: HIGH \u2014 SVG direkt inspiziert, monochrom best\u00e4tigt.\n- Google-Fonts-URL: HIGH \u2014 live verifiziert.\n- Grid/Flexbox-Entscheidung: MEDIUM-HIGH \u2014 Konsens, kein Streitpunkt.\n- Komponenten-Klassenliste: MEDIUM \u2014 Vorschlag, Plan finalisiert.\n\n**Research date:** 2026-05-22\n**Sub-agents used:** keine \u2014 Issue ist klein und gut abgegrenzt (eine statische\nCSS-Datei, vollst\u00e4ndig gelesene Codebase); direkte fokussierte Recherche statt\nparalleler Spezialisten.\n**Raw research files:** keine separaten Rohdateien \u2014 Befunde direkt\nsynthetisiert.\n\n## Open Questions (Entscheidungen f\u00fcr den User)\n1. **Helle Logo-Variante** \u2014 Research empfiehlt CSS-Invertierung des\n   einfarbigen SVG; eine native helle SVG-Datei ist nicht erforderlich, w\u00e4re\n   aber eine Qualit\u00e4tsverbesserung. Soll der User eine helle Variante\n   nachliefern oder gen\u00fcgt die CSS-L\u00f6sung? (Empfehlung: CSS-L\u00f6sung, keine\n   Blockade.)\n2. **Header-Hintergrundfarbe** \u2014 Empfehlung Dunkelgr\u00fcn (CD \u201eText auf Gr\u00fcn\",\n   Logo invertiert). Ein wei\u00dfer Header (Logo unver\u00e4ndert dunkelgr\u00fcn) w\u00e4re\n   CD-konform nur, wenn der Header-*Text* dann nicht auf Wei\u00df sitzt \u2014 was die\n   CD-Regel verletzt. Daher Dunkelgr\u00fcn empfohlen; best\u00e4tigen.\n3. **St\u00f6rer-Akzentfarbe** \u2014 Gelb (`highlight`) oder Magenta (`accent`)? Beide\n   CD-konform; der Plan kann beide Modifier anbieten (`.gat-stoerer--gelb` /\n   `--magenta`).\n"}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var dataEl = document.getElementById("artifact-source");
+  var target = document.getElementById("artifact-source-target");
+  if (dataEl && target) {
+    try {
+      target.textContent = JSON.parse(dataEl.textContent).source || "";
+    } catch (e) {
+      target.textContent = dataEl.textContent;
+    }
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el) { ev.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
