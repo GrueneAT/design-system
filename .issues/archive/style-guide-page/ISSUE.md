@@ -2,7 +2,7 @@
 id: ddh6g
 title: Sichtbarer Style Guide
 status: done
-ship_state: pr_open
+ship_state: merged
 priority: medium
 dependencies:
 - uq0vb
