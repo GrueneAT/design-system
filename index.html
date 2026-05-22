@@ -5,25 +5,1240 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grüne AT Design System</title>
   <link rel="stylesheet" href="design-system.css">
+  <style>
+    /*
+     * Doc-Chrome (CONTEXT D-2): ausschließlich Doku-Möbel — Farb-Swatches,
+     * Code-Blöcke, Demo-Rahmen, Do/Don't-Raster, Spacing-Balken, CD-Diagramme.
+     * Alle Klassen sind doc-präfixiert; KEINE gat-Klasse wird hier definiert
+     * oder überschrieben. Werte dürfen die eingebundenen --gat-*-Tokens nutzen.
+     */
+
+    /* Sanfter Scroll für den Anchor-TOC — rein per CSS, kein JavaScript. */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* design-system.css setzt bewusst keine Tag-Defaults — Body-Grundlayout
+       hier explizit setzen, sonst rendert die Seite serif und ohne Spacing. */
+    body {
+      margin: 0;
+      background: var(--gat-color-surface);
+      color: var(--gat-color-text);
+      font-family: var(--gat-font-copy);
+    }
+
+    /* Abschnitts-Anker: verhindert, dass der Anker-Sprung die Überschrift
+       hinter den Seitenkopf schiebt. */
+    [id] {
+      scroll-margin-top: var(--gat-space-5);
+    }
+
+    /* Wechselnder Abschnitts-Hintergrund für visuelle Gliederung. */
+    .doc-section-alt {
+      background: #f3f5f2;
+    }
+
+    /* Abstand zwischen Unterblöcken innerhalb eines Abschnitts. */
+    .doc-block {
+      margin-top: var(--gat-space-6);
+    }
+
+    .doc-block:first-of-type {
+      margin-top: var(--gat-space-4);
+    }
+
+    .doc-lead {
+      max-width: 44rem;
+    }
+
+    /* Farb-Swatch-Kachel: Farbfläche oben, Metadaten darunter. */
+    .doc-swatch {
+      border: 1px solid #d9ddd6;
+      border-radius: var(--gat-radius-md);
+      overflow: hidden;
+      background: var(--gat-color-surface);
+    }
+
+    .doc-swatch__chip {
+      height: 5rem;
+      border-bottom: 1px solid #d9ddd6;
+    }
+
+    .doc-swatch__meta {
+      padding: var(--gat-space-3);
+      display: flex;
+      flex-direction: column;
+      gap: var(--gat-space-1);
+      font-size: var(--gat-text-small);
+    }
+
+    .doc-swatch__hex {
+      font-weight: 700;
+    }
+
+    .doc-swatch__usage {
+      line-height: var(--gat-leading-copy);
+    }
+
+    /* Inline-Code und Code-Blöcke für Token-Namen und Markup-Beispiele. */
+    .doc-code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: var(--gat-text-small);
+      background: #ecefe9;
+      color: var(--gat-color-anthrazit);
+      border-radius: var(--gat-radius-sm);
+      padding: 0.1rem 0.35rem;
+    }
+
+    .doc-codeblock {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: var(--gat-text-small);
+      background: var(--gat-color-anthrazit);
+      color: #f3f5f2;
+      border-radius: var(--gat-radius-sm);
+      padding: var(--gat-space-3);
+      white-space: pre;
+      overflow-x: auto;
+      line-height: var(--gat-leading-copy);
+      margin: var(--gat-space-3) 0 0;
+    }
+
+    /* Komponenten-Demo: rahmt das live gerenderte Beispiel und den Code-Block. */
+    .doc-demo {
+      border: 1px solid #d9ddd6;
+      border-radius: var(--gat-radius-md);
+      margin-top: var(--gat-space-4);
+      background: var(--gat-color-surface);
+    }
+
+    .doc-demo__stage {
+      padding: var(--gat-space-5);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--gat-space-4);
+    }
+
+    .doc-demo__stage--green {
+      background: var(--gat-color-primary);
+    }
+
+    .doc-demo__caption {
+      padding: var(--gat-space-2) var(--gat-space-3);
+      border-top: 1px solid #d9ddd6;
+      background: #f3f5f2;
+      font-size: var(--gat-text-small);
+    }
+
+    .doc-demo .doc-codeblock {
+      margin: 0;
+      border-radius: 0 0 var(--gat-radius-md) var(--gat-radius-md);
+    }
+
+    /* Do/Don't-Raster für häufige Fehlpaarungen. */
+    .doc-dodont {
+      border-radius: var(--gat-radius-md);
+      padding: var(--gat-space-4);
+      border: var(--gat-border-width) solid;
+    }
+
+    .doc-dodont__label {
+      font-family: var(--gat-font-headline);
+      font-weight: 900;
+      font-size: var(--gat-text-subline);
+      margin: 0 0 var(--gat-space-2);
+    }
+
+    .doc-dodont--do {
+      border-color: var(--gat-color-secondary);
+      background: #eef6e9;
+    }
+
+    .doc-dodont--dont {
+      border-color: var(--gat-color-accent);
+      background: #fdeaf3;
+    }
+
+    /* Spacing-Balken: Breite entspricht dem Token-Wert. */
+    .doc-spacerow {
+      display: flex;
+      align-items: center;
+      gap: var(--gat-space-3);
+      margin-top: var(--gat-space-2);
+    }
+
+    .doc-spacebar {
+      height: 1rem;
+      background: var(--gat-color-secondary);
+      border-radius: var(--gat-radius-sm);
+      flex: none;
+    }
+
+    .doc-spacerow__label {
+      font-size: var(--gat-text-small);
+    }
+
+    /* Specimen-Reihe für die Typo-Größenskala. */
+    .doc-specimen {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: var(--gat-space-4);
+      padding: var(--gat-space-2) 0;
+      border-bottom: 1px solid #d9ddd6;
+    }
+
+    .doc-specimen__meta {
+      flex: none;
+      width: 14rem;
+      font-size: var(--gat-text-small);
+    }
+
+    /* Doku-Tabelle für Komponenten-Maße und Breakpoints. */
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--gat-space-3);
+      font-size: var(--gat-text-small);
+    }
+
+    .doc-table th,
+    .doc-table td {
+      text-align: left;
+      padding: var(--gat-space-2) var(--gat-space-3);
+      border-bottom: 1px solid #d9ddd6;
+      vertical-align: top;
+    }
+
+    .doc-table th {
+      font-family: var(--gat-font-headline);
+      font-weight: 700;
+    }
+
+    /* CD-Layout-Diagramme — reines CSS, kein Bild-Asset. */
+    .doc-diagram {
+      border: 1px solid #d9ddd6;
+      border-radius: var(--gat-radius-md);
+      padding: var(--gat-space-5);
+      background: var(--gat-color-surface);
+      margin-top: var(--gat-space-3);
+    }
+
+    .doc-diagram__protect {
+      display: inline-block;
+      padding: var(--gat-space-5);
+      border: var(--gat-border-width) dashed var(--gat-color-accent);
+      border-radius: var(--gat-radius-sm);
+    }
+
+    .doc-diagram__mark {
+      width: 4rem;
+      aspect-ratio: 150.32 / 132.07;
+      background-color: var(--gat-color-primary);
+      -webkit-mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+      mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+    }
+
+    .doc-diagram__logo-row {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--gat-space-5);
+      flex-wrap: wrap;
+    }
+
+    .doc-diagram__logo-print {
+      width: 6rem;
+      aspect-ratio: 150.32 / 132.07;
+      background-color: var(--gat-color-primary);
+      -webkit-mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+      mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+    }
+
+    .doc-diagram__logo-digital {
+      width: 5rem;
+      aspect-ratio: 150.32 / 132.07;
+      background-color: var(--gat-color-primary);
+      -webkit-mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+      mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+    }
+
+    .doc-diagram__caption {
+      font-size: var(--gat-text-small);
+      margin-top: var(--gat-space-2);
+    }
+
+    /* Platzhalter-Blöcke für die Raster-Demos. */
+    .doc-cell {
+      background: var(--gat-color-secondary);
+      color: var(--gat-color-on-secondary);
+      border-radius: var(--gat-radius-sm);
+      padding: var(--gat-space-3);
+      text-align: center;
+      font-family: var(--gat-font-headline);
+      font-weight: 700;
+    }
+
+    /* Notiz-/Hinweisbox. */
+    .doc-note {
+      border-left: var(--gat-border-width) solid var(--gat-color-highlight);
+      background: #fffbe0;
+      padding: var(--gat-space-3);
+      border-radius: 0 var(--gat-radius-sm) var(--gat-radius-sm) 0;
+      margin-top: var(--gat-space-3);
+      line-height: var(--gat-leading-copy);
+    }
+
+    .doc-footer {
+      background: var(--gat-color-anthrazit);
+      color: var(--gat-color-weiss);
+    }
+
+    .doc-footer a {
+      color: var(--gat-color-highlight);
+    }
+  </style>
 </head>
-<body>
-  <main>
-    <h1>Grüne AT Design System</h1>
-    <p>
-      Dies ist das gemeinsame Designsystem der Grünen Österreich. Es bündelt
-      Farben, Layout und UI-Bausteine aus dem grünen Corporate Design, damit
-      alle Grüne-AT-Repos und -Tools ein einheitliches Erscheinungsbild teilen.
-    </p>
-    <p>
-      Der vollständig ausgearbeitete Style Guide folgt in Issue #5. Aktuell ist
-      diese Seite ein Skelett; das verlinkte
-      <code>design-system.css</code> ist ein Platzhalter.
-    </p>
-    <p>
-      Verwandte Referenz: das persönliche Designsystem unter
-      <a href="https://flomotlik.github.io/claude-code/">flomotlik.github.io/claude-code</a>
-      diente als strukturelles Vorbild.
-    </p>
-  </main>
+<body id="top">
+
+  <!-- Seitenkopf: dogfooded echte gat-Header-/Nav-Komponenten. Die Navigation
+       IST der Anchor-TOC — sie ist gleichzeitig gerendertes Beispiel. -->
+  <header class="gat-header">
+    <div class="gat-header__inner">
+      <a class="gat-header__logo" href="#top" aria-label="Grüne AT Design System — Seitenanfang">
+        <span class="gat-header__logo-mark"></span>
+      </a>
+      <nav class="gat-nav" aria-label="Abschnittsnavigation">
+        <a class="gat-nav__link gat-nav__link--active" href="#farben">Farben</a>
+        <a class="gat-nav__link" href="#typografie">Typografie</a>
+        <a class="gat-nav__link" href="#layout">Layout</a>
+        <a class="gat-nav__link" href="#komponenten">Komponenten</a>
+        <a class="gat-nav__link" href="#cd-layout">CD-Layout</a>
+        <a class="gat-nav__link" href="#spezifikation">Spezifikation</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Einleitung -->
+  <section class="gat-section">
+    <div class="gat-container">
+      <h1 class="gat-headline">Grüne AT Design System</h1>
+      <p class="gat-subline">Sichtbarer Style Guide &amp; maschinenlesbare Spezifikation</p>
+      <p class="gat-fliesstext doc-lead">
+        Dieses Designsystem bündelt Farben, Typografie, Layout und UI-Bausteine
+        aus dem Corporate Design der Grünen Österreich, damit alle Grüne-AT-Repos
+        und -Tools ein einheitliches Erscheinungsbild teilen. Diese Seite
+        dokumentiert das vollständige Vokabular von
+        <span class="doc-code">design-system.css</span> &mdash; und nutzt es
+        dabei selbst: jeder Seitenkopf, jede Karte, jedes Raster ist mit den
+        echten <span class="doc-code">gat-</span>-Klassen gerendert, nicht
+        nachgebaut.
+      </p>
+      <p class="gat-fliesstext doc-lead">
+        Sie richtet sich an Menschen als Referenz und an LLMs als lesbare
+        Spezifikation. Der maschinenlesbare Teil steht im Abschnitt
+        <a href="#spezifikation">Spezifikation</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 1 — Farben                                                -->
+  <!-- ================================================================== -->
+  <section class="gat-section doc-section-alt" id="farben">
+    <div class="gat-container">
+      <h2 class="gat-headline">Farben</h2>
+      <p class="gat-fliesstext doc-lead">
+        Das Farbsystem besteht aus vier Marken-Primitiven (1:1 aus dem
+        CD-Quickguide), zwei neutralen Web-Ergänzungen und acht semantischen
+        Aliasen. Komponenten verweisen ausschließlich auf die Aliase &mdash; so
+        bleibt die Marken­farbe an einer Stelle änderbar.
+      </p>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Primitive</h3>
+        <p class="gat-fliesstext doc-lead">
+          Die vier Markenfarben des grünen Corporate Designs. Der HEX-Wert ist
+          maßgeblich.
+        </p>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-dunkelgruen);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-dunkelgruen</span>
+              <span class="doc-swatch__hex">#257639</span>
+              <span class="doc-swatch__usage">Primäre Markenfarbe (Dunkelgrün).</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-hellgruen);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-hellgruen</span>
+              <span class="doc-swatch__hex">#56af31</span>
+              <span class="doc-swatch__usage">Sekundäre Markenfarbe (Hellgrün).</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-gelb);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-gelb</span>
+              <span class="doc-swatch__hex">#ffed00</span>
+              <span class="doc-swatch__usage">Highlight-Farbe (Gelb).</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-magenta);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-magenta</span>
+              <span class="doc-swatch__hex">#e6007e</span>
+              <span class="doc-swatch__usage">Akzentfarbe (Magenta). HEX maßgeblich; das PDF-RGB ist inkonsistent.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Neutrals</h3>
+        <p class="gat-fliesstext doc-lead">
+          Web-Ergänzung &mdash; der CD-Quickguide definiert nur die vier
+          Markenfarben. Für Web-Text und -Hintergrund werden zwei Neutraltöne
+          ergänzt.
+        </p>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-weiss); box-shadow: inset 0 0 0 1px #d9ddd6;"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-weiss</span>
+              <span class="doc-swatch__hex">#ffffff</span>
+              <span class="doc-swatch__usage">Flächen / Text auf Grün.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-anthrazit);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-anthrazit</span>
+              <span class="doc-swatch__hex">#1d1d1b</span>
+              <span class="doc-swatch__usage">Dunkler Textton.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Semantische Aliase</h3>
+        <p class="gat-fliesstext doc-lead">
+          Acht rollenbasierte Aliase, die auf die Primitive bzw. Neutrals
+          verweisen. Komponenten nutzen ausschließlich diese Aliase.
+        </p>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-primary);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-primary</span>
+              <span class="doc-swatch__hex">&rarr; dunkelgruen (#257639)</span>
+              <span class="doc-swatch__usage">Primärfläche.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-secondary);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-secondary</span>
+              <span class="doc-swatch__hex">&rarr; hellgruen (#56af31)</span>
+              <span class="doc-swatch__usage">Sekundärfläche.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-accent);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-accent</span>
+              <span class="doc-swatch__hex">&rarr; magenta (#e6007e)</span>
+              <span class="doc-swatch__usage">Akzent &mdash; Unterstreichung, Störer.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-highlight);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-highlight</span>
+              <span class="doc-swatch__hex">&rarr; gelb (#ffed00)</span>
+              <span class="doc-swatch__usage">Hervorhebung / Nav-Unterstreichung.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-text);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-text</span>
+              <span class="doc-swatch__hex">&rarr; anthrazit (#1d1d1b)</span>
+              <span class="doc-swatch__usage">Standard-Textfarbe.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-surface); box-shadow: inset 0 0 0 1px #d9ddd6;"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-surface</span>
+              <span class="doc-swatch__hex">&rarr; weiss (#ffffff)</span>
+              <span class="doc-swatch__usage">Standard-Hintergrund.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-primary); color: var(--gat-color-on-primary); display: flex; align-items: center; justify-content: center; font-family: var(--gat-font-headline); font-weight: 900;">Aa</div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-on-primary</span>
+              <span class="doc-swatch__hex">&rarr; weiss (#ffffff)</span>
+              <span class="doc-swatch__usage">Text auf Dunkelgrün &mdash; Kontrast 5,63:1. Weiß-Text steht nur auf Dunkelgrün.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-secondary); color: var(--gat-color-on-secondary); display: flex; align-items: center; justify-content: center; font-family: var(--gat-font-headline); font-weight: 900;">Aa</div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-on-secondary</span>
+              <span class="doc-swatch__hex">&rarr; anthrazit (#1d1d1b)</span>
+              <span class="doc-swatch__usage">Text auf Hellgrün &mdash; Kontrast 6,09:1. Hellgrün und Gelb tragen Anthrazit-Text, nie Weiß.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 2 — Typografie                                            -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="typografie">
+    <div class="gat-container">
+      <h2 class="gat-headline">Typografie</h2>
+      <p class="gat-fliesstext doc-lead">
+        Drei Schrift-Tokens, eine modulare Größenskala (Basis 1rem, Ratio 1,25)
+        und zwei Zeilenabstands-Faktoren aus dem CD-Quickguide. Die Headline- und
+        Copy-Rolle nutzen Barlow Semi Condensed als freien Ersatz für das
+        kommerzielle Gotham Narrow.
+      </p>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Schrift-Tokens</h3>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <p style="font-family: var(--gat-font-headline); font-weight: 900; font-size: var(--gat-text-h3); margin: 0;">
+              Barlow Semi Condensed &mdash; Headline-Rolle
+            </p>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">--gat-font-headline</span> &middot;
+            <span class="doc-code">'Barlow Semi Condensed', sans-serif</span> &middot;
+            Headlines (CD: Gotham-Ultra-Ersatz)
+          </div>
+        </div>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <p style="font-family: var(--gat-font-copy); font-weight: 400; font-size: var(--gat-text-copy); margin: 0;">
+              Barlow Semi Condensed &mdash; Fließtext und UI-Beschriftungen.
+            </p>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">--gat-font-copy</span> &middot;
+            <span class="doc-code">'Barlow Semi Condensed', sans-serif</span> &middot;
+            Fließtext / UI
+          </div>
+        </div>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <p style="font-family: var(--gat-font-emphasis); font-style: italic; font-weight: 900; font-size: var(--gat-text-subline); margin: 0;">
+              Vollkorn &mdash; Hervorhebung und Zitat.
+            </p>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">--gat-font-emphasis</span> &middot;
+            <span class="doc-code">'Vollkorn', serif</span> &middot;
+            Hervorhebungen / Zitate
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Typo-Klassen (Live-Beispiele)</h3>
+        <p class="gat-fliesstext doc-lead">
+          Vier Textklassen, jeweils echt gerendert plus Markup. Sie setzen nur
+          Schrift, Größe, Zeilenabstand und Textfarbe &mdash; keine Fläche.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <h2 class="gat-headline">Gemeinsam für ein gutes Klima</h2>
+          </div>
+          <div class="doc-codeblock">&lt;h2 class="gat-headline"&gt;Gemeinsam für ein gutes Klima&lt;/h2&gt;</div>
+        </div>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <p class="gat-subline">Eine Subline fasst die Headline in einem Satz zusammen.</p>
+          </div>
+          <div class="doc-codeblock">&lt;p class="gat-subline"&gt;Eine Subline fasst die Headline in einem Satz zusammen.&lt;/p&gt;</div>
+        </div>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <p class="gat-fliesstext">
+              Fließtext trägt die ausführliche Information. Er nutzt den weiten
+              Copy-Zeilenabstand von 1,3, damit längere Absätze gut lesbar
+              bleiben &mdash; auch über mehrere Zeilen hinweg.
+            </p>
+          </div>
+          <div class="doc-codeblock">&lt;p class="gat-fliesstext"&gt;Fließtext trägt die ausführliche Information &hellip;&lt;/p&gt;</div>
+        </div>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <p class="gat-fliesstext" style="margin: 0;">
+              Ein Satz mit einer <em class="gat-emphasis">besonders betonten Stelle</em> im Vollkorn-Schnitt.
+            </p>
+          </div>
+          <div class="doc-codeblock">&lt;em class="gat-emphasis"&gt;besonders betonte Stelle&lt;/em&gt;</div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Größenskala</h3>
+        <p class="gat-fliesstext doc-lead">
+          Sechs Größen-Tokens als Specimen-Reihe. Die rem-Werte folgen einer
+          modularen Skala mit Ratio 1,25; die Pixel-Angaben gelten bei einer
+          Browser-Basis von 16&nbsp;px.
+        </p>
+        <div class="doc-block" style="margin-top: var(--gat-space-3);">
+          <div class="doc-specimen">
+            <div class="doc-specimen__meta">
+              <span class="doc-code">--gat-text-h1</span><br>2.441rem &middot; ~39&nbsp;px &middot; Headline (H1-Rolle)
+            </div>
+            <span style="font-family: var(--gat-font-headline); font-weight: 900; font-size: var(--gat-text-h1);">Beispieltext</span>
+          </div>
+          <div class="doc-specimen">
+            <div class="doc-specimen__meta">
+              <span class="doc-code">--gat-text-h2</span><br>1.953rem &middot; ~31&nbsp;px &middot; H2
+            </div>
+            <span style="font-family: var(--gat-font-headline); font-weight: 900; font-size: var(--gat-text-h2);">Beispieltext</span>
+          </div>
+          <div class="doc-specimen">
+            <div class="doc-specimen__meta">
+              <span class="doc-code">--gat-text-h3</span><br>1.563rem &middot; ~25&nbsp;px &middot; H3 / Karten-Titel
+            </div>
+            <span style="font-family: var(--gat-font-headline); font-weight: 900; font-size: var(--gat-text-h3);">Beispieltext</span>
+          </div>
+          <div class="doc-specimen">
+            <div class="doc-specimen__meta">
+              <span class="doc-code">--gat-text-subline</span><br>1.25rem &middot; ~20&nbsp;px &middot; Subline
+            </div>
+            <span style="font-family: var(--gat-font-headline); font-weight: 600; font-size: var(--gat-text-subline);">Beispieltext</span>
+          </div>
+          <div class="doc-specimen">
+            <div class="doc-specimen__meta">
+              <span class="doc-code">--gat-text-copy</span><br>1rem &middot; 16&nbsp;px &middot; Fließtext
+            </div>
+            <span style="font-family: var(--gat-font-copy); font-size: var(--gat-text-copy);">Beispieltext</span>
+          </div>
+          <div class="doc-specimen">
+            <div class="doc-specimen__meta">
+              <span class="doc-code">--gat-text-small</span><br>0.8rem &middot; ~13&nbsp;px &middot; Kleintext
+            </div>
+            <span style="font-family: var(--gat-font-copy); font-size: var(--gat-text-small);">Beispieltext</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Zeilenabstände</h3>
+        <p class="gat-fliesstext doc-lead">
+          Zwei einheitslose Multiplikatoren direkt aus dem CD-Quickguide. Sie
+          werden unverändert als <span class="doc-code">line-height</span>
+          gesetzt.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <p style="font-family: var(--gat-font-headline); font-weight: 900; font-size: var(--gat-text-h3); line-height: var(--gat-leading-headline); margin: 0;">
+              Enger Headline-Zeilenabstand<br>über mehrere Zeilen<br>für kompakte Schlagzeilen
+            </p>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">--gat-leading-headline</span> = 0,9 &middot;
+            Headline- und Subline-Zeilenabstand
+          </div>
+        </div>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <p style="font-family: var(--gat-font-copy); font-size: var(--gat-text-copy); line-height: var(--gat-leading-copy); margin: 0;">
+              Weiter Fließtext-Zeilenabstand<br>über mehrere Zeilen<br>für gut lesbare Absätze
+            </p>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">--gat-leading-copy</span> = 1,3 &middot;
+            Fließtext-Zeilenabstand
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 3 — Layout                                                -->
+  <!-- ================================================================== -->
+  <section class="gat-section doc-section-alt" id="layout">
+    <div class="gat-container">
+      <h2 class="gat-headline">Layout</h2>
+      <p class="gat-fliesstext doc-lead">
+        Fünf Layout-Klassen, sechs Abstands-Tokens, vier Komponenten-Maße und
+        zwei Breakpoint-Tokens. Die Rasterklassen brechen ohne Media-Query
+        selbsttätig um.
+      </p>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Layout-Klassen</h3>
+        <p class="gat-fliesstext doc-lead">
+          <span class="doc-code">.gat-container</span> begrenzt die Lesebreite
+          auf 72rem und zentriert den Inhalt mit seitlichem Padding &mdash; jeder
+          Abschnitt dieser Seite sitzt darin.
+          <span class="doc-code">.gat-section</span> setzt den vertikalen
+          CD-Abstandsrhythmus; auch dieser Abschnitt ist eine
+          <span class="doc-code">gat-section</span>.
+        </p>
+        <div class="doc-codeblock">&lt;section class="gat-section"&gt;
+  &lt;div class="gat-container"&gt; &hellip; &lt;/div&gt;
+&lt;/section&gt;</div>
+
+        <div class="doc-demo" style="margin-top: var(--gat-space-5);">
+          <div class="doc-demo__stage" style="display: block;">
+            <div class="gat-grid">
+              <div class="doc-cell">1</div>
+              <div class="doc-cell">2</div>
+              <div class="doc-cell">3</div>
+              <div class="doc-cell">4</div>
+            </div>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">.gat-grid</span> &mdash; responsives
+            auto-fit/minmax-Raster, bricht ohne Media-Query um.
+          </div>
+          <div class="doc-codeblock">&lt;div class="gat-grid"&gt; &hellip; N Kinder &hellip; &lt;/div&gt;</div>
+        </div>
+
+        <div class="doc-demo">
+          <div class="doc-demo__stage" style="display: block;">
+            <div class="gat-grid gat-grid--2">
+              <div class="doc-cell">1</div>
+              <div class="doc-cell">2</div>
+            </div>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">.gat-grid--2</span> &mdash; feste
+            2-Spalten-Variante, bricht unter 36rem auf eine Spalte um.
+          </div>
+          <div class="doc-codeblock">&lt;div class="gat-grid gat-grid--2"&gt; &hellip; &lt;/div&gt;</div>
+        </div>
+
+        <div class="doc-demo">
+          <div class="doc-demo__stage" style="display: block;">
+            <div class="gat-grid gat-grid--3">
+              <div class="doc-cell">1</div>
+              <div class="doc-cell">2</div>
+              <div class="doc-cell">3</div>
+            </div>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">.gat-grid--3</span> &mdash; feste
+            3-Spalten-Variante, bricht unter 36rem auf eine Spalte um.
+          </div>
+          <div class="doc-codeblock">&lt;div class="gat-grid gat-grid--3"&gt; &hellip; &lt;/div&gt;</div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Abstände</h3>
+        <p class="gat-fliesstext doc-lead">
+          Sechs Abstands-Tokens für eine konsistente Layout-Rhythmik, Basis
+          0,25rem. Die Balkenbreite entspricht dem Token-Wert.
+        </p>
+        <div class="doc-block" style="margin-top: var(--gat-space-3);">
+          <div class="doc-spacerow">
+            <span class="doc-spacebar" style="width: var(--gat-space-1);"></span>
+            <span class="doc-spacerow__label"><span class="doc-code">--gat-space-1</span> &middot; 0.25rem</span>
+          </div>
+          <div class="doc-spacerow">
+            <span class="doc-spacebar" style="width: var(--gat-space-2);"></span>
+            <span class="doc-spacerow__label"><span class="doc-code">--gat-space-2</span> &middot; 0.5rem</span>
+          </div>
+          <div class="doc-spacerow">
+            <span class="doc-spacebar" style="width: var(--gat-space-3);"></span>
+            <span class="doc-spacerow__label"><span class="doc-code">--gat-space-3</span> &middot; 1rem</span>
+          </div>
+          <div class="doc-spacerow">
+            <span class="doc-spacebar" style="width: var(--gat-space-4);"></span>
+            <span class="doc-spacerow__label"><span class="doc-code">--gat-space-4</span> &middot; 1.5rem</span>
+          </div>
+          <div class="doc-spacerow">
+            <span class="doc-spacebar" style="width: var(--gat-space-5);"></span>
+            <span class="doc-spacerow__label"><span class="doc-code">--gat-space-5</span> &middot; 2rem</span>
+          </div>
+          <div class="doc-spacerow">
+            <span class="doc-spacebar" style="width: var(--gat-space-6);"></span>
+            <span class="doc-spacerow__label"><span class="doc-code">--gat-space-6</span> &middot; 3rem</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Komponenten-Maße</h3>
+        <p class="gat-fliesstext doc-lead">
+          Vier Web-Maße, die die Komponenten brauchen &mdash; damit keine
+          Komponente harte px-/rem-Werte verwendet.
+        </p>
+        <table class="doc-table">
+          <thead>
+            <tr><th>Token</th><th>Wert</th><th>Verwendungszweck</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="doc-code">--gat-radius-sm</span></td>
+              <td>0.25rem</td>
+              <td>Kleine Rundung &mdash; Buttons, Badges.</td>
+            </tr>
+            <tr>
+              <td><span class="doc-code">--gat-radius-md</span></td>
+              <td>0.5rem</td>
+              <td>Karten-Rundung.</td>
+            </tr>
+            <tr>
+              <td><span class="doc-code">--gat-border-width</span></td>
+              <td>2px</td>
+              <td>Standard-Strichstärke &mdash; z.&nbsp;B. Sekundär-Button-Outline.</td>
+            </tr>
+            <tr>
+              <td><span class="doc-code">--gat-container-max</span></td>
+              <td>72rem</td>
+              <td>Maximale Inhaltsbreite.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="doc-block" style="margin-top: var(--gat-space-3);">
+          <div class="doc-demo__stage" style="background: var(--gat-color-surface); border: 1px solid #d9ddd6; border-radius: var(--gat-radius-md);">
+            <span style="display: inline-block; width: 4rem; height: 4rem; background: var(--gat-color-secondary); border-radius: var(--gat-radius-sm);"></span>
+            <span class="doc-code">radius-sm</span>
+            <span style="display: inline-block; width: 4rem; height: 4rem; background: var(--gat-color-secondary); border-radius: var(--gat-radius-md);"></span>
+            <span class="doc-code">radius-md</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Breakpoints</h3>
+        <p class="gat-fliesstext doc-lead">
+          Zwei Breakpoint-Tokens, ausschließlich zur Dokumentation.
+        </p>
+        <table class="doc-table">
+          <thead>
+            <tr><th>Token</th><th>Wert</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="doc-code">--gat-breakpoint-sm</span></td><td>36rem</td></tr>
+            <tr><td><span class="doc-code">--gat-breakpoint-md</span></td><td>48rem</td></tr>
+          </tbody>
+        </table>
+        <p class="gat-fliesstext doc-note">
+          Hinweis: <span class="doc-code">@media</span>-Bedingungen können kein
+          <span class="doc-code">var()</span> lesen. In
+          <span class="doc-code">design-system.css</span> stehen die rem-Werte
+          daher direkt in den Media-Queries; diese Tokens dienen rein der
+          Nachvollziehbarkeit.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 4 — Komponenten                                           -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="komponenten">
+    <div class="gat-container">
+      <h2 class="gat-headline">Komponenten</h2>
+      <p class="gat-fliesstext doc-lead">
+        Alle UI-Bausteine als live gerendertes Beispiel plus
+        HTML-Markup. Die Komponenten-Selektoren sind flach, einklassig und
+        <span class="doc-code">gat-</span>-präfixiert.
+      </p>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Header &amp; Navigation</h3>
+        <p class="gat-fliesstext doc-lead">
+          Der Seitenkopf ganz oben auf dieser Seite IST das Live-Beispiel für
+          <span class="doc-code">.gat-header</span>,
+          <span class="doc-code">.gat-header__inner</span>,
+          <span class="doc-code">.gat-header__logo</span>,
+          <span class="doc-code">.gat-header__logo-mark</span>,
+          <span class="doc-code">.gat-nav</span>,
+          <span class="doc-code">.gat-nav__link</span> und
+          <span class="doc-code">.gat-nav__link--active</span>. Das Logo-SVG ist
+          monochrom dunkelgrün und wird per CSS-Maske auf Weiß umgefärbt; die
+          Navigation bricht auf schmalen Viewports um statt ein Hamburger-Menü zu
+          nutzen. Der aktive Link trägt die dauerhafte gelbe Unterstreichung,
+          Hover und Tastatur-Fokus zeigen sie temporär.
+        </p>
+        <div class="doc-codeblock">&lt;header class="gat-header"&gt;
+  &lt;div class="gat-header__inner"&gt;
+    &lt;a class="gat-header__logo" href="#top"&gt;
+      &lt;span class="gat-header__logo-mark"&gt;&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;nav class="gat-nav"&gt;
+      &lt;a class="gat-nav__link gat-nav__link--active" href="#farben"&gt;Farben&lt;/a&gt;
+      &lt;a class="gat-nav__link" href="#typografie"&gt;Typografie&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Buttons</h3>
+        <p class="gat-fliesstext doc-lead">
+          Ein Basis-Button mit Pflicht-Modifier. <span class="doc-code">.gat-btn</span>
+          allein liefert nur Layout und Schrift &mdash; die Farbwelt kommt
+          immer über <span class="doc-code">--primary</span> oder
+          <span class="doc-code">--secondary</span>.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <a class="gat-btn gat-btn--primary" href="#komponenten">Primär-Aktion</a>
+            <a class="gat-btn gat-btn--secondary" href="#komponenten">Sekundär-Aktion</a>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">:hover</span> dunkelt den Primär-Button ab
+            bzw. füllt den Sekundär-Button dunkelgrün;
+            <span class="doc-code">:focus-visible</span> zeigt einen grünen
+            Outline &mdash; alles rein per CSS, kein JavaScript.
+          </div>
+          <div class="doc-codeblock">&lt;a class="gat-btn gat-btn--primary" href="#"&gt;Primär-Aktion&lt;/a&gt;
+&lt;a class="gat-btn gat-btn--secondary" href="#"&gt;Sekundär-Aktion&lt;/a&gt;</div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Karten</h3>
+        <p class="gat-fliesstext doc-lead">
+          <span class="doc-code">.gat-card</span> wird nie nackt verwendet
+          &mdash; immer mit <span class="doc-code">--primary</span> oder
+          <span class="doc-code">--secondary</span>. Titel und Body erben die
+          Textfarbe der Variante und sitzen so kontrastrichtig auf ihrer grünen
+          Fläche.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <article class="gat-card gat-card--primary" style="max-width: 22rem;">
+              <h3 class="gat-card__title">Primär-Karte</h3>
+              <p class="gat-card__body">Dunkelgrüne Fläche mit weißem Text &mdash; Kontrast 5,63:1.</p>
+            </article>
+            <article class="gat-card gat-card--secondary" style="max-width: 22rem;">
+              <h3 class="gat-card__title">Sekundär-Karte</h3>
+              <p class="gat-card__body">Hellgrüne Fläche mit Anthrazit-Text &mdash; Kontrast 6,09:1.</p>
+            </article>
+          </div>
+          <div class="doc-codeblock">&lt;article class="gat-card gat-card--primary"&gt;
+  &lt;h3 class="gat-card__title"&gt;Primär-Karte&lt;/h3&gt;
+  &lt;p class="gat-card__body"&gt;Dunkelgrüne Fläche mit weißem Text.&lt;/p&gt;
+&lt;/article&gt;
+
+&lt;article class="gat-card gat-card--secondary"&gt;
+  &lt;h3 class="gat-card__title"&gt;Sekundär-Karte&lt;/h3&gt;
+  &lt;p class="gat-card__body"&gt;Hellgrüne Fläche mit Anthrazit-Text.&lt;/p&gt;
+&lt;/article&gt;</div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">CD-Gestaltungselemente</h3>
+        <p class="gat-fliesstext doc-lead">
+          Vier Inline-Elemente aus dem Corporate Design: die Magenta-Unter­streichung,
+          die gelbe Hervorhebung und der gedrehte „Störer" in zwei Varianten.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage" style="display: block;">
+            <p class="gat-fliesstext" style="margin: 0;">
+              Ein Satz mit einer <span class="gat-underline">unterstrichenen Stelle</span>
+              und einer <mark class="gat-highlight">gelb hervorgehobenen Stelle</mark>.
+            </p>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">.gat-underline</span> &mdash;
+            Magenta-Unterstreichung; <span class="doc-code">.gat-highlight</span>
+            &mdash; gelbe Marker-Fläche mit Anthrazit-Text.
+          </div>
+          <div class="doc-codeblock">&lt;span class="gat-underline"&gt;unterstrichene Stelle&lt;/span&gt;
+&lt;mark class="gat-highlight"&gt;gelb hervorgehobene Stelle&lt;/mark&gt;</div>
+        </div>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <span class="gat-stoerer gat-stoerer--gelb">Neu!</span>
+            <span class="gat-stoerer gat-stoerer--magenta">Jetzt mitmachen</span>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">.gat-stoerer--gelb</span> &mdash; gelbe
+            Fläche, Anthrazit-Text; <span class="doc-code">.gat-stoerer--magenta</span>
+            &mdash; magenta Fläche, weißer Text. Beide leicht gedreht.
+          </div>
+          <div class="doc-codeblock">&lt;span class="gat-stoerer gat-stoerer--gelb"&gt;Neu!&lt;/span&gt;
+&lt;span class="gat-stoerer gat-stoerer--magenta"&gt;Jetzt mitmachen&lt;/span&gt;</div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Do &amp; Don't</h3>
+        <p class="gat-fliesstext doc-lead">
+          Die zwei häufigsten Fehlpaarungen &mdash; und wie es richtig aussieht.
+        </p>
+        <div class="gat-grid gat-grid--2">
+          <div class="doc-dodont doc-dodont--do">
+            <p class="doc-dodont__label">Richtig</p>
+            <article class="gat-card gat-card--secondary">
+              <h3 class="gat-card__title">Mit Varianten-Modifier</h3>
+              <p class="gat-card__body">
+                <span class="doc-code">.gat-card</span> trägt immer
+                <span class="doc-code">--primary</span> oder
+                <span class="doc-code">--secondary</span>; Anthrazit-Text auf
+                Hellgrün.
+              </p>
+            </article>
+          </div>
+          <div class="doc-dodont doc-dodont--dont">
+            <p class="doc-dodont__label">Falsch</p>
+            <p class="gat-fliesstext" style="margin: 0;">
+              <span class="doc-code">.gat-card</span> ohne Varianten-Modifier
+              &mdash; transparente Fläche, der Inhalt wirkt „kaputt". Und:
+              weißer Text auf Hellgrün oder Gelb fällt durch den Kontrast,
+              Hellgrün/Gelb tragen ausschließlich Anthrazit-Text.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 5 — CD-Layout-Prinzipien                                  -->
+  <!-- ================================================================== -->
+  <section class="gat-section doc-section-alt" id="cd-layout">
+    <div class="gat-container">
+      <h2 class="gat-headline">CD-Layout-Prinzipien</h2>
+      <p class="gat-fliesstext doc-lead">
+        Vier Grundregeln aus dem CD-Quickguide für das Zusammenspiel von Logo,
+        Schutzzone, Textabständen und Flächen. Sie sind formatabhängig und
+        bewusst <em class="gat-emphasis">nicht</em> als Tokens hinterlegt
+        &mdash; es gibt in <span class="doc-code">design-system.css</span> keinen
+        <span class="doc-code">--gat-*</span>-Wert für M oder das
+        Logo-Verhältnis. Sie werden hier als Prinzip dokumentiert.
+      </p>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Schutzzone M</h3>
+        <p class="gat-fliesstext doc-lead">
+          Rund um das Logo bleibt ein Freiraum frei von anderen Elementen. Das
+          Maß M = 0,06 &times; kurze Kante des Mediums. Auf einem A4-Hochformat
+          (kurze Kante 210&nbsp;mm) sind das rund 12,6&nbsp;mm.
+        </p>
+        <div class="doc-diagram">
+          <span class="doc-diagram__protect">
+            <span class="doc-diagram__mark"></span>
+          </span>
+          <p class="doc-diagram__caption">
+            Die gestrichelte Linie markiert die Schutzzone M rund um das Logo.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Logo-Verhältnis</h3>
+        <p class="gat-fliesstext doc-lead">
+          Die Logo-Größe leitet sich aus der Schutzzone M ab: 3 &times; M im
+          Print, 2,5 &times; M im Digitalen. So bleibt das Logo über alle
+          Formate hinweg proportional.
+        </p>
+        <div class="doc-diagram">
+          <div class="doc-diagram__logo-row">
+            <div>
+              <span class="doc-diagram__logo-print"></span>
+              <p class="doc-diagram__caption">Print &mdash; 3 &times; M</p>
+            </div>
+            <div>
+              <span class="doc-diagram__logo-digital"></span>
+              <p class="doc-diagram__caption">Digital &mdash; 2,5 &times; M</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Textabstand</h3>
+        <p class="gat-fliesstext doc-lead">
+          Der Abstand Headline&nbsp;&harr;&nbsp;Subline entspricht dem Abstand
+          Headline&nbsp;&harr;&nbsp;Copy und beträgt jeweils X &times; 2 &mdash;
+          X ist die Basiseinheit des jeweiligen Layouts.
+        </p>
+        <div class="doc-diagram">
+          <p style="font-family: var(--gat-font-headline); font-weight: 900; font-size: var(--gat-text-h3); margin: 0;">Headline</p>
+          <p style="border-left: var(--gat-border-width) solid var(--gat-color-accent); padding-left: var(--gat-space-2); margin: var(--gat-space-4) 0; font-size: var(--gat-text-small);">Abstand = X &times; 2</p>
+          <p style="font-family: var(--gat-font-headline); font-weight: 600; font-size: var(--gat-text-subline); margin: 0;">Subline</p>
+          <p style="border-left: var(--gat-border-width) solid var(--gat-color-accent); padding-left: var(--gat-space-2); margin: var(--gat-space-4) 0; font-size: var(--gat-text-small);">Abstand = X &times; 2</p>
+          <p style="font-family: var(--gat-font-copy); font-size: var(--gat-text-copy); margin: 0;">Fließtext &hellip;</p>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Typografie immer auf Grün</h3>
+        <p class="gat-fliesstext doc-lead">
+          Die zentrale CD-Grundregel: Typografie steht immer auf einer grünen
+          Fläche. <span class="doc-code">design-system.css</span> erzwingt das
+          strukturell &mdash; <span class="doc-code">.gat-header</span> und die
+          <span class="doc-code">.gat-card</span>-Varianten setzen Fläche und
+          den passenden <span class="doc-code">on-*</span>-Textton gemeinsam.
+        </p>
+        <div class="doc-diagram" style="background: var(--gat-color-primary);">
+          <p style="font-family: var(--gat-font-headline); font-weight: 900; font-size: var(--gat-text-h3); color: var(--gat-color-on-primary); margin: 0;">
+            Headline auf dunkelgrüner Fläche
+          </p>
+          <p style="font-family: var(--gat-font-copy); font-size: var(--gat-text-copy); color: var(--gat-color-on-primary); margin: var(--gat-space-2) 0 0;">
+            Weißer Text auf Dunkelgrün &mdash; Kontrast 5,63:1.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 6 — Maschinenlesbare Spezifikation                        -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="spezifikation">
+    <div class="gat-container">
+      <h2 class="gat-headline">Maschinenlesbare Spezifikation</h2>
+      <p class="gat-fliesstext doc-lead">
+        Der folgende Block ist die maschinenlesbare Fassung dieses Style Guides
+        &mdash; ein eingebetteter <span class="doc-code">&lt;script
+        type="application/json"&gt;</span>-Datenblock (kein ausführbares
+        JavaScript). Er enthält das geschlossene Vokabular: alle 22
+        <span class="doc-code">--gat-*</span>-Tokens, alle 22
+        <span class="doc-code">.gat-*</span>-Klassen und die Nutzungsregeln.
+      </p>
+      <p class="gat-fliesstext doc-lead">
+        LLMs und Tools können den Block über die <span class="doc-code">id</span>
+        <span class="doc-code">gat-design-spec</span> auslesen und als
+        verbindliche Spezifikation verwenden &mdash; ohne dieses CSS oder HTML
+        interpretieren zu müssen. Tokens sind nach
+        color/font/text/leading/space/size gruppiert; jeder Komponenten-Eintrag
+        nennt <span class="doc-code">purpose</span>,
+        <span class="doc-code">modifiers</span>,
+        <span class="doc-code">requires</span> und
+        <span class="doc-code">markup</span>.
+      </p>
+
+      <script type="application/json" id="gat-design-spec">
+{
+  "name": "Grüne AT Design System",
+  "version": "1.0",
+  "stylesheet": "https://grueneat.github.io/design-system/design-system.css",
+  "license": "CC BY 4.0",
+  "tokens": {
+    "color": {
+      "--gat-color-dunkelgruen": { "value": "#257639", "role": "primitive", "usage": "Primäre Markenfarbe (Dunkelgrün)." },
+      "--gat-color-hellgruen": { "value": "#56af31", "role": "primitive", "usage": "Sekundäre Markenfarbe (Hellgrün)." },
+      "--gat-color-gelb": { "value": "#ffed00", "role": "primitive", "usage": "Highlight-Farbe (Gelb)." },
+      "--gat-color-magenta": { "value": "#e6007e", "role": "primitive", "usage": "Akzentfarbe (Magenta); HEX maßgeblich." },
+      "--gat-color-weiss": { "value": "#ffffff", "role": "neutral", "usage": "Flächen / Text auf Grün." },
+      "--gat-color-anthrazit": { "value": "#1d1d1b", "role": "neutral", "usage": "Dunkler Textton." },
+      "--gat-color-primary": { "value": "#257639", "role": "alias", "aliasOf": "--gat-color-dunkelgruen", "usage": "Primärfläche." },
+      "--gat-color-secondary": { "value": "#56af31", "role": "alias", "aliasOf": "--gat-color-hellgruen", "usage": "Sekundärfläche." },
+      "--gat-color-accent": { "value": "#e6007e", "role": "alias", "aliasOf": "--gat-color-magenta", "usage": "Akzent — Unterstreichung, Störer." },
+      "--gat-color-highlight": { "value": "#ffed00", "role": "alias", "aliasOf": "--gat-color-gelb", "usage": "Hervorhebung / Nav-Unterstreichung." },
+      "--gat-color-text": { "value": "#1d1d1b", "role": "alias", "aliasOf": "--gat-color-anthrazit", "usage": "Standard-Textfarbe." },
+      "--gat-color-surface": { "value": "#ffffff", "role": "alias", "aliasOf": "--gat-color-weiss", "usage": "Standard-Hintergrund." },
+      "--gat-color-on-primary": { "value": "#ffffff", "role": "alias", "aliasOf": "--gat-color-weiss", "usage": "Text auf Dunkelgrün — Kontrast 5,63:1." },
+      "--gat-color-on-secondary": { "value": "#1d1d1b", "role": "alias", "aliasOf": "--gat-color-anthrazit", "usage": "Text auf Hellgrün — Kontrast 6,09:1." }
+    },
+    "font": {
+      "--gat-font-headline": { "value": "'Barlow Semi Condensed', sans-serif", "role": "font", "usage": "Headlines (CD: Gotham-Ultra-Ersatz)." },
+      "--gat-font-copy": { "value": "'Barlow Semi Condensed', sans-serif", "role": "font", "usage": "Fließtext / UI." },
+      "--gat-font-emphasis": { "value": "'Vollkorn', serif", "role": "font", "usage": "Hervorhebungen / Zitate." }
+    },
+    "text": {
+      "--gat-text-h1": { "value": "2.441rem", "role": "size", "usage": "Headline (H1-Rolle)." },
+      "--gat-text-h2": { "value": "1.953rem", "role": "size", "usage": "H2." },
+      "--gat-text-h3": { "value": "1.563rem", "role": "size", "usage": "H3 / Karten-Titel." },
+      "--gat-text-subline": { "value": "1.25rem", "role": "size", "usage": "Subline." },
+      "--gat-text-copy": { "value": "1rem", "role": "size", "usage": "Fließtext." },
+      "--gat-text-small": { "value": "0.8rem", "role": "size", "usage": "Kleintext." }
+    },
+    "leading": {
+      "--gat-leading-headline": { "value": "0.9", "role": "leading", "usage": "Headline-/Subline-Zeilenabstand." },
+      "--gat-leading-copy": { "value": "1.3", "role": "leading", "usage": "Fließtext-Zeilenabstand." }
+    },
+    "space": {
+      "--gat-space-1": { "value": "0.25rem", "role": "space", "usage": "Abstandsstufe 1." },
+      "--gat-space-2": { "value": "0.5rem", "role": "space", "usage": "Abstandsstufe 2." },
+      "--gat-space-3": { "value": "1rem", "role": "space", "usage": "Abstandsstufe 3." },
+      "--gat-space-4": { "value": "1.5rem", "role": "space", "usage": "Abstandsstufe 4." },
+      "--gat-space-5": { "value": "2rem", "role": "space", "usage": "Abstandsstufe 5." },
+      "--gat-space-6": { "value": "3rem", "role": "space", "usage": "Abstandsstufe 6." }
+    },
+    "size": {
+      "--gat-radius-sm": { "value": "0.25rem", "role": "size", "usage": "Kleine Rundung — Buttons, Badges." },
+      "--gat-radius-md": { "value": "0.5rem", "role": "size", "usage": "Karten-Rundung." },
+      "--gat-border-width": { "value": "2px", "role": "size", "usage": "Standard-Strichstärke." },
+      "--gat-container-max": { "value": "72rem", "role": "size", "usage": "Maximale Inhaltsbreite." },
+      "--gat-breakpoint-sm": { "value": "36rem", "role": "size", "usage": "Breakpoint klein — nur Dokumentation, @media kann kein var() lesen." },
+      "--gat-breakpoint-md": { "value": "48rem", "role": "size", "usage": "Breakpoint mittel — nur Dokumentation, @media kann kein var() lesen." }
+    }
+  },
+  "components": {
+    "gat-container": { "purpose": "Zentrierter Inhalts-Container, max-width 72rem, seitliches Padding.", "modifiers": [], "requires": "keiner", "markup": "<div class=\"gat-container\">...</div>" },
+    "gat-grid": { "purpose": "Responsives auto-fit/minmax-Raster, bricht ohne @media um.", "modifiers": ["gat-grid--2", "gat-grid--3"], "requires": "keiner; Modifier optional", "markup": "<div class=\"gat-grid\">...N Kinder...</div>" },
+    "gat-grid--2": { "purpose": "Feste 2-Spalten-Variante, bricht unter 36rem auf eine Spalte.", "modifiers": [], "requires": "mit gat-grid kombinieren", "markup": "<div class=\"gat-grid gat-grid--2\">...</div>" },
+    "gat-grid--3": { "purpose": "Feste 3-Spalten-Variante, bricht unter 36rem auf eine Spalte.", "modifiers": [], "requires": "mit gat-grid kombinieren", "markup": "<div class=\"gat-grid gat-grid--3\">...</div>" },
+    "gat-section": { "purpose": "Vertikaler Block mit CD-Abstandsrhythmus (padding-block space-6).", "modifiers": [], "requires": "keiner", "markup": "<section class=\"gat-section\">...</section>" },
+    "gat-header": { "purpose": "Seitenkopf auf Dunkelgrün, setzt Fläche und on-primary-Text.", "modifiers": [], "requires": "keiner", "markup": "<header class=\"gat-header\">...</header>" },
+    "gat-header__inner": { "purpose": "Zentrierte Header-Zeile (Flexbox, umbrechend).", "modifiers": [], "requires": "Kind von gat-header", "markup": "<div class=\"gat-header__inner\">...</div>" },
+    "gat-header__logo": { "purpose": "Logo-Wrapper; Padding bildet die CD-Schutzzone.", "modifiers": [], "requires": "Kind von gat-header__inner", "markup": "<a class=\"gat-header__logo\" href=\"#top\">...</a>" },
+    "gat-header__logo-mark": { "purpose": "Logo-Bildmarke; CSS-Maske färbt das SVG auf Weiß um.", "modifiers": [], "requires": "Kind von gat-header__logo", "markup": "<span class=\"gat-header__logo-mark\"></span>" },
+    "gat-nav": { "purpose": "Navigations-Container (Flexbox, umbrechend statt Hamburger).", "modifiers": [], "requires": "keiner", "markup": "<nav class=\"gat-nav\">...</nav>" },
+    "gat-nav__link": { "purpose": "Navigationslink; Hover/Fokus zeigt gelbe Unterstreichung.", "modifiers": ["gat-nav__link--active"], "requires": "Kind von gat-nav", "markup": "<a class=\"gat-nav__link\" href=\"#...\">...</a>" },
+    "gat-nav__link--active": { "purpose": "Aktiver Link — dauerhafte gelbe Unterstreichung.", "modifiers": [], "requires": "mit gat-nav__link kombinieren", "markup": "<a class=\"gat-nav__link gat-nav__link--active\" href=\"#...\">...</a>" },
+    "gat-headline": { "purpose": "Headline (H1-Rolle), Barlow Black 900.", "modifiers": [], "requires": "keiner", "markup": "<h1 class=\"gat-headline\">...</h1>" },
+    "gat-subline": { "purpose": "Subline, Barlow Semibold 600.", "modifiers": [], "requires": "keiner", "markup": "<p class=\"gat-subline\">...</p>" },
+    "gat-fliesstext": { "purpose": "Fließtext, Barlow Regular 400, Zeilenabstand 1,3.", "modifiers": [], "requires": "keiner", "markup": "<p class=\"gat-fliesstext\">...</p>" },
+    "gat-emphasis": { "purpose": "Hervorhebung/Zitat, Vollkorn Black-Kursiv.", "modifiers": [], "requires": "keiner", "markup": "<em class=\"gat-emphasis\">...</em>" },
+    "gat-btn": { "purpose": "Basis-Button (Layout, Padding, Rundung, Fokus-Outline).", "modifiers": ["gat-btn--primary", "gat-btn--secondary"], "requires": "ein Modifier ist Pflicht", "markup": "<a class=\"gat-btn gat-btn--primary\">...</a>" },
+    "gat-btn--primary": { "purpose": "Primär-Button: dunkelgrüne Fläche, weißer Text.", "modifiers": [], "requires": "mit gat-btn kombinieren", "markup": "<a class=\"gat-btn gat-btn--primary\">...</a>" },
+    "gat-btn--secondary": { "purpose": "Sekundär-Button: Outline-Stil, grüner Rahmen, füllt bei Hover.", "modifiers": [], "requires": "mit gat-btn kombinieren", "markup": "<a class=\"gat-btn gat-btn--secondary\">...</a>" },
+    "gat-card": { "purpose": "Basis-Karte (Layout, Padding, Rundung) — stets über Variante genutzt.", "modifiers": ["gat-card--primary", "gat-card--secondary"], "requires": "ein Varianten-Modifier ist Pflicht", "markup": "<article class=\"gat-card gat-card--primary\">...</article>" },
+    "gat-card--primary": { "purpose": "Primär-Karte: dunkelgrüne Fläche, weißer Text.", "modifiers": [], "requires": "mit gat-card kombinieren", "markup": "<article class=\"gat-card gat-card--primary\">...</article>" },
+    "gat-card--secondary": { "purpose": "Sekundär-Karte: hellgrüne Fläche, Anthrazit-Text.", "modifiers": [], "requires": "mit gat-card kombinieren", "markup": "<article class=\"gat-card gat-card--secondary\">...</article>" },
+    "gat-card__title": { "purpose": "Karten-Titel; erbt color der Variante.", "modifiers": [], "requires": "Kind von gat-card", "markup": "<h3 class=\"gat-card__title\">...</h3>" },
+    "gat-card__body": { "purpose": "Karten-Fließtext; erbt color der Variante.", "modifiers": [], "requires": "Kind von gat-card", "markup": "<p class=\"gat-card__body\">...</p>" },
+    "gat-underline": { "purpose": "CD-Unterstreichung in Magenta unter Inline-Text.", "modifiers": [], "requires": "keiner", "markup": "<span class=\"gat-underline\">...</span>" },
+    "gat-highlight": { "purpose": "Gelbe Marker-Fläche hinter Inline-Text.", "modifiers": [], "requires": "keiner", "markup": "<mark class=\"gat-highlight\">...</mark>" },
+    "gat-stoerer": { "purpose": "Störer — leicht gedrehtes Badge.", "modifiers": ["gat-stoerer--gelb", "gat-stoerer--magenta"], "requires": "ein Varianten-Modifier ist Pflicht", "markup": "<span class=\"gat-stoerer gat-stoerer--gelb\">...</span>" },
+    "gat-stoerer--gelb": { "purpose": "Störer-Variante: gelbe Fläche, Anthrazit-Text.", "modifiers": [], "requires": "mit gat-stoerer kombinieren", "markup": "<span class=\"gat-stoerer gat-stoerer--gelb\">...</span>" },
+    "gat-stoerer--magenta": { "purpose": "Störer-Variante: magenta Fläche, weißer Text.", "modifiers": [], "requires": "mit gat-stoerer kombinieren", "markup": "<span class=\"gat-stoerer gat-stoerer--magenta\">...</span>" }
+  },
+  "rules": [
+    "Typografie steht immer auf grüner Fläche (CD-Grundregel).",
+    "Komponenten-Selektoren sind flach, einklassig, .gat--präfixiert.",
+    "Keine nackten Tag-Selektoren — fremdes Markup darf nicht umgestylt werden.",
+    "Jeder Komponentenwert verweist auf ein --gat--Token.",
+    ".gat-card wird nie ohne Varianten-Modifier verwendet.",
+    "Weiß-Text wird nie auf Hellgrün/Gelb gepaart (Kontrast)."
+  ]
+}
+      </script>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="gat-section doc-footer">
+    <div class="gat-container">
+      <p class="gat-fliesstext" style="color: inherit;">
+        Grüne AT Design System &mdash; Lizenz CC BY 4.0 (Creative Commons
+        Attribution 4.0 International). Urheber: Die Grünen.
+      </p>
+      <p class="gat-fliesstext" style="color: inherit;">
+        Kanonische Adresse:
+        <a href="https://grueneat.github.io/design-system/">grueneat.github.io/design-system/</a>
+      </p>
+    </div>
+  </footer>
+
 </body>
 </html>

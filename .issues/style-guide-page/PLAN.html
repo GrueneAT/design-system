@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Provenance: SHA-256 of the source .md this page was generated from. -->
+<meta name="artifact-source-sha256" content="090ddd2e1f22fbfe4e6dbf95f6e252783070552b7d3379cd08a3d77fb4da64b9">
+<meta name="artifact-source-file" content="PLAN.md">
+<meta name="artifact-generated-at" content="2026-05-22">
+<!-- Which version of the design system this page was authored against. -->
+<meta name="design-system-version" content="ds-1">
+<title>Plan: Sichtbarer Style Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://flomotlik.github.io/claude-code/design-system.css">
+</head>
+<body>
+<div class="page">
+
+<header class="row">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">P5</span>Plan</p>
+  </div>
+  <div class="body">
+    <h1 class="masthead-title">Plan: Sichtbarer Style Guide</h1>
+    <p class="masthead-sub">Issue: style-guide-page (grueneat/design-system#5) &middot; Generated 2026-05-22</p>
+  </div>
+</header>
+
+<hr class="rule">
+
+<section class="row" id="strategy">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">01</span>Strategy</p>
+    <p class="margin-note">Read this first &mdash; the rest is detail.</p>
+  </div>
+  <div class="body">
+    <h2>Strategy summary</h2>
+    <p>Die heutige Skelett-<code>index.html</code> wird zu einem vollst&auml;ndigen,
+       deutschsprachigen Style Guide ausgebaut &mdash; eine einzige statische
+       HTML-Seite ohne JavaScript. Leitlinie:
+       <span class="mark mark-green">die Seite <em>dogfooded</em>
+       <code>design-system.css</code></span> &mdash; Kopf, Navigation/TOC,
+       Raster und jedes Komponentenbeispiel werden mit den echten
+       <code>gat-</code>-Klassen gerendert, nicht abgemalt.</p>
+    <ul class="points">
+      <li class="point">
+        <p class="point-claim">Sechs Abschnitte = sechs Tasks.</p>
+        <p class="point-detail">Die Seitengliederung (Farben, Typografie,
+          Layout, Komponenten, CD-Layout, Spezifikation) bildet 1:1 die
+          Task-Sequenz ab &mdash; deklarativer, sequentieller Aufbau.</p>
+      </li>
+      <li class="point">
+        <p class="point-claim">L&uuml;ckenlose Abdeckung ist das Kernkriterium.</p>
+        <p class="point-detail">Alle 22 <code>--gat-*</code>-Tokens und alle 22
+          <code>.gat-*</code>-Klassen aus <code>design-system.css</code> m&uuml;ssen
+          im Guide erscheinen &mdash; ein Verifikationsschritt grept das CSS
+          dagegen.</p>
+      </li>
+      <li class="point is-note">
+        <p class="point-claim">Echte Komponente vs. <code>doc-</code>-Chrome.</p>
+        <p class="point-detail">Swatches, Code-Bl&ouml;cke und Do/Don't-Raster sind
+          Doku-M&ouml;bel &mdash; <code>doc-</code>-pr&auml;fixiert im inline
+          <code>&lt;style&gt;</code>, nie als <code>gat-</code>-Klasse getarnt.</p>
+      </li>
+      <li class="point is-risk">
+        <p class="point-claim">Kein ausf&uuml;hrbares JavaScript.</p>
+        <p class="point-detail">Der einzige <code>&lt;script&gt;</code> ist der
+          <code>application/json</code>-Datenblock; jede literale
+          <code>&lt;/script</code>-Sequenz im JSON wird gebrochen.</p>
+      </li>
+    </ul>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">6</div>
+        <div class="stat-label">Tasks</div></div>
+      <div class="stat"><div class="stat-num is-green">22</div>
+        <div class="stat-label">Tokens dokumentiert</div></div>
+      <div class="stat"><div class="stat-num is-green">22</div>
+        <div class="stat-label">Klassen dokumentiert</div></div>
+      <div class="stat"><div class="stat-num">1</div>
+        <div class="stat-label">Datei (index.html)</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="flow">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">02</span>Flow</p>
+  </div>
+  <div class="body">
+    <h2>Task flow &amp; dependencies</h2>
+    <div class="flow">
+      <div class="flow-node is-foundation">
+        <span class="n">Task 1</span>
+        <span class="t">Ger&uuml;st, doc-Style, Anchor-TOC</span>
+        <span class="d">Inline doc-Style (D-2), gat-header als TOC, sechs leere Sections.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 2</span>
+        <span class="t">Abschnitt Farben</span>
+        <span class="d">14 Farb-Tokens als Swatches im gat-grid.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 3</span>
+        <span class="t">Abschnitt Typografie</span>
+        <span class="d">11 Typo-Tokens + 4 gat-Typo-Klassen live.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 4</span>
+        <span class="t">Abschnitt Layout</span>
+        <span class="d">5 Layout-Klassen, Abst&auml;nde, Ma&szlig;e, Breakpoints.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 5</span>
+        <span class="t">Abschnitt Komponenten</span>
+        <span class="d">Header/Nav, Buttons, Karten, CD-Elemente live + Markup.</span>
+      </div>
+      <div class="flow-node is-key">
+        <span class="n">Task 6</span>
+        <span class="t">CD-Layout, JSON-Spec, Footer</span>
+        <span class="d">D-1 JSON-Spec-Block, CD-Prinzipien, Schlusspr&uuml;fung.</span>
+      </div>
+    </div>
+    <p>Tasks laufen sequentiell: jeder f&uuml;llt einen Abschnitt der in Task 1
+       angelegten <code>index.html</code>. Task&nbsp;6 ist die lasttragende
+       Stufe &mdash; sie liefert die maschinenlesbare Spezifikation und die
+       Schlusspr&uuml;fung auf wohlgeformtes HTML.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="decisions">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">03</span>Decisions</p>
+  </div>
+  <div class="body">
+    <h2>Key decisions &amp; options</h2>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">D-1 &mdash; Maschinenlesbare Spezifikation</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body">Eingebetteter
+        <code>&lt;script type="application/json"&gt;</code>-Block in
+        <code>index.html</code> &mdash; eine Datei, kein Sync-Risiko.</p>
+      <p class="decision-body rejected">Separates
+        <code>design-system.json</code> &mdash; zweite Datei, die mit dem CSS
+        synchron gehalten werden m&uuml;sste.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">D-2 &mdash; Doc-spezifisches CSS</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body">Doc-Chrome (Swatches, Code-Bl&ouml;cke,
+        Do/Don't-Raster) als inline <code>&lt;style&gt;</code> mit
+        <code>doc-</code>-Pr&auml;fix &mdash; h&auml;lt das gehostete Stylesheet
+        sauber und die Grenze zu echten <code>gat-</code>-Komponenten sichtbar.</p>
+      <p class="decision-body rejected">Doc-Chrome in
+        <code>design-system.css</code> &mdash; verw&auml;ssert das &ouml;ffentliche
+        Komponenten-Vokabular.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Navigation ohne JavaScript</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body">Native <code>&lt;a href="#anchor"&gt;</code>-TOC
+        plus CSS <code>scroll-behavior: smooth</code> und
+        <code>scroll-margin-top</code> &mdash; voll funktionsf&auml;hig ohne JS.</p>
+      <p class="decision-body rejected">JS-gest&uuml;tzte Navigation /
+        Smooth-Scroll &mdash; von CONTEXT verboten.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="detail">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">04</span>Detail</p>
+  </div>
+  <div class="body">
+    <h2>Full detail</h2>
+    <details class="detail">
+      <summary>Show full artifact source
+        <span class="summary-hint">click to expand</span></summary>
+      <div class="detail-body">
+        <pre><code id="artifact-source-target"></code></pre>
+      </div>
+    </details>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="provenance">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">05</span>Provenance</p>
+  </div>
+  <div class="body">
+    <h2>Provenance</h2>
+    <p>Generated from the canonical <code>.md</code>. This HTML is never
+       hand-edited &mdash; if the <code>.md</code> changes, regenerate with
+       <code>/issue:view</code>.</p>
+    <footer class="footer">
+      <span>Source: <code>PLAN.md</code> &middot;
+        SHA-256 <code>090ddd2e1f22fbfe4e6dbf95f6e252783070552b7d3379cd08a3d77fb4da64b9</code></span>
+      <span>Generated 2026-05-22 &middot; design system ds-1</span>
+    </footer>
+  </div>
+</section>
+
+</div>
+
+<!-- Raw artifact source as DATA, never markup. -->
+<script type="application/json" id="artifact-source">
+{"source": "# Plan: Sichtbarer Style Guide\n\n<objective>\nWas dieser Plan erreicht: Die heutige Skelett-`index.html` (Issue #2) wird zu\neinem vollst\u00e4ndigen, deutschsprachigen, sichtbaren Style Guide f\u00fcr das Gr\u00fcne-AT-\nDesignsystem ausgebaut \u2014 eine einzige statische HTML-Seite ohne JavaScript, die\n`design-system.css` selbst einbindet und *dogfooded*.\n\nWarum es wichtig ist: Der Guide ist die Referenz f\u00fcr Menschen (Designer/\nEntwickler in Gr\u00fcne-AT-Repos) UND eine maschinenlesbare Spezifikation f\u00fcr LLMs.\nOhne ihn ist das in `design-system.css` enthaltene Token-/Klassen-Vokabular nur\naus dem CSS-Kommentar erschlie\u00dfbar.\n\nScope \u2014 in:\n- Alle 22 `--gat-*`-Tokens dokumentiert (Farben, Schrift, Typo-Gr\u00f6\u00dfen,\n  Zeilenabst\u00e4nde, Abst\u00e4nde, Komponenten-Ma\u00dfe, Breakpoints).\n- Alle 22 `.gat-*`-Klassen als live gerendertes Beispiel + Markup-Code-Block.\n- CD-Layout-Grundprinzipien (Schutzzone M, Logo-Verh\u00e4ltnis, \u201eTypografie immer\n  auf Gr\u00fcn\").\n- Eingebetteter maschinenlesbarer `<script type=\"application/json\">`-Spec-Block.\n- Anchor-Link-TOC ohne JavaScript.\n\nScope \u2014 out:\n- `design-system.css` und `assets/` werden NICHT ver\u00e4ndert \u2014 Issue #5 schreibt\n  ausschlie\u00dflich `/workspace/design-system/index.html`.\n- Querverlinkung zum pers\u00f6nlichen System + Integrations-Leitfaden \u2192 Issue #6.\n- Kein neuer GitHub-Pages-Workflow \u2014 `pages.yml` (`path: '.'`) deployt\n  `index.html` bereits automatisch bei Push auf `main`.\n\nKein CLAUDE.md und keine `.claude/skills/` im Repo; verbindlich aus dem\nNutzerprofil: keine Tool-Attribution im Markup, einfacher Stack (reines\nHTML/CSS), vorhandene Komponenten unver\u00e4ndert nutzen.\n</objective>\n\n<strategy>\nDie Seite wird deklarativ aus einer einzigen `index.html` aufgebaut, in sechs\nAbschnitten, die exakt den sechs Implementierungstasks entsprechen. Strategische\nLeitlinie: die Seite dogfooded `design-system.css` \u2014 Kopf, Navigation/TOC,\nBeispiel-Raster und jede gezeigte Komponente werden mit den echten\n`gat-`-Klassen gerendert, nicht abgemalt.\n\nZwei gelockte Decisions strukturieren die Datei:\n- D-1 \u2014 die maschinenlesbare Spezifikation ist ein eingebetteter\n  `<script type=\"application/json\">`-Block (kein separates `design-system.json`).\n- D-2 \u2014 Doc-Chrome (Farb-Swatches, Code-Bl\u00f6cke, Do/Don't-Raster) lebt in einem\n  inline `<style>`-Block mit `doc-`-Pr\u00e4fix, damit die Grenze zwischen echten\n  `gat-`-Komponenten und Doku-M\u00f6beln sichtbar bleibt.\n\nErwogene Alternativen und warum die gew\u00e4hlte gewinnt:\n- Separates `design-system.json` vs. eingebetteter JSON-Block \u2192 D-1 entscheidet\n  eingebettet: eine Datei, kein Sync-Risiko.\n- JS-Navigation/Smooth-Scroll vs. native Anchor-Links + CSS `scroll-behavior` \u2192\n  CONTEXT verbietet JS; native Anker funktionieren vollst\u00e4ndig ohne JS.\n- Doc-Chrome in `design-system.css` vs. inline `<style>` \u2192 D-2 entscheidet\n  inline: h\u00e4lt das gehostete Stylesheet sauber.\n\nSchl\u00fcssel-Entscheidungspunkte f\u00fcr den Executor: die Trennung echte Komponente /\n`doc-`-Chrome konsequent halten; das JSON-Spec l\u00fcckenlos (alle 22 Tokens + alle\n22 Klassen + Regelliste) f\u00fchren, sonst verfehlt es das Akzeptanzkriterium\n\u201egeschlossenes Vokabular\"; keinerlei ausf\u00fchrbares JavaScript einschleichen \u2014 der\nJSON-Block ist Daten, kein Code.\n</strategy>\n\n<context>\nIssue: @.issues/style-guide-page/ISSUE.md\nResearch: @.issues/style-guide-page/RESEARCH.md\nDecisions: @.issues/style-guide-page/CONTEXT.md\n\n<interfaces>\n<!-- Executor: nutze diese Inventur direkt. design-system.css NICHT lesen\n     m\u00fcssen \u2014 die komplette Fl\u00e4che steht hier. design-system.css und assets/\n     werden in diesem Issue NICHT ver\u00e4ndert. -->\n\n=== Die 22 --gat-*-Tokens (vollst\u00e4ndig \u2014 alle m\u00fcssen im Guide erscheinen) ===\n\nFarb-Primitive (4):\n  --gat-color-dunkelgruen  #257639  Prim\u00e4re Markenfarbe (Dunkelgr\u00fcn)\n  --gat-color-hellgruen    #56af31  Sekund\u00e4re Markenfarbe (Hellgr\u00fcn)\n  --gat-color-gelb         #ffed00  Highlight-Farbe (Gelb)\n  --gat-color-magenta      #e6007e  Akzentfarbe (Magenta)\n\nNeutrals (2):\n  --gat-color-weiss        #ffffff  Fl\u00e4chen / Text auf Gr\u00fcn\n  --gat-color-anthrazit    #1d1d1b  Dunkler Textton\n\nSemantische Aliase (8 \u2014 verweisen auf Primitive/Neutrals):\n  --gat-color-primary      -> dunkelgruen   Prim\u00e4rfl\u00e4che\n  --gat-color-secondary    -> hellgruen     Sekund\u00e4rfl\u00e4che\n  --gat-color-accent       -> magenta       Akzent (Unterstreichung, St\u00f6rer)\n  --gat-color-highlight    -> gelb          Hervorhebung / Nav-Unterstreichung\n  --gat-color-text         -> anthrazit     Standard-Textfarbe\n  --gat-color-surface      -> weiss         Standard-Hintergrund\n  --gat-color-on-primary   -> weiss         Text auf Dunkelgr\u00fcn \u2014 Kontrast 5,63:1\n  --gat-color-on-secondary -> anthrazit     Text auf Hellgr\u00fcn \u2014 Kontrast 6,09:1\n\nSchrift (3):\n  --gat-font-headline  'Barlow Semi Condensed', sans-serif  Headlines\n  --gat-font-copy      'Barlow Semi Condensed', sans-serif  Flie\u00dftext / UI\n  --gat-font-emphasis  'Vollkorn', serif                    Hervorhebung / Zitat\n\nTypo-Gr\u00f6\u00dfen (6 \u2014 modulare Skala, Basis 1rem, Ratio 1,25):\n  --gat-text-h1       2.441rem  Headline (H1-Rolle)\n  --gat-text-h2       1.953rem  H2\n  --gat-text-h3       1.563rem  H3 / Karten-Titel\n  --gat-text-subline  1.25rem   Subline\n  --gat-text-copy     1rem      Flie\u00dftext\n  --gat-text-small    0.8rem    Kleintext\n\nZeilenabst\u00e4nde (2 \u2014 einheitslos, aus CD-Quickguide):\n  --gat-leading-headline  0.9  Headline-/Subline-Zeilenabstand\n  --gat-leading-copy      1.3  Flie\u00dftext-Zeilenabstand\n\nAbst\u00e4nde (6 \u2014 Web-Erg\u00e4nzung, Basis 0.25rem):\n  --gat-space-1 0.25rem  --gat-space-2 0.5rem  --gat-space-3 1rem\n  --gat-space-4 1.5rem   --gat-space-5 2rem    --gat-space-6 3rem\n\nKomponenten-Ma\u00dfe (4):\n  --gat-radius-sm     0.25rem  Kleine Rundung \u2014 Buttons, Badges\n  --gat-radius-md     0.5rem   Karten-Rundung\n  --gat-border-width  2px      Standard-Strichst\u00e4rke\n  --gat-container-max 72rem    Maximale Inhaltsbreite\n\nBreakpoints (2 \u2014 NUR Dokumentation, @media kann kein var() lesen):\n  --gat-breakpoint-sm  36rem\n  --gat-breakpoint-md  48rem\n\n=== Die 22 .gat-*-Klassen (vollst\u00e4ndig \u2014 jede als gerendertes Beispiel) ===\n\nLayout (5):\n  .gat-container  Zentrierter Container, max-width 72rem, seitliches Padding\n  .gat-grid       Responsives auto-fit/minmax-Raster, bricht ohne @media um\n  .gat-grid--2    Feste 2-Spalten-Variante (< 36rem -> 1 Spalte)\n  .gat-grid--3    Feste 3-Spalten-Variante (< 36rem -> 1 Spalte)\n  .gat-section    Vertikaler Block mit CD-Abstandsrhythmus (padding-block space-6)\n\nHeader / Navigation (6 + Modifier --active) \u2014 erwartete Struktur:\n  <header class=\"gat-header\">\n    <div class=\"gat-header__inner\">\n      <a class=\"gat-header__logo\"><span class=\"gat-header__logo-mark\"></span></a>\n      <nav class=\"gat-nav\">\n        <a class=\"gat-nav__link gat-nav__link--active\" href=\"#...\">...</a>\n        <a class=\"gat-nav__link\" href=\"#...\">...</a>\n      </nav>\n    </div>\n  </header>\n  .gat-header__logo-mark referenziert assets/gruene-logo.svg relativ und f\u00e4rbt\n  das SVG per CSS-Maske auf Wei\u00df \u2014 unver\u00e4ndert nutzen, NICHT inline einf\u00fcgen.\n\nTypografie (4 \u2014 setzen nur Schrift + color, keine Tag-Defaults):\n  .gat-headline    <h_ class=\"gat-headline\">    Barlow Black 900\n  .gat-subline     <p class=\"gat-subline\">      Barlow Semibold 600\n  .gat-fliesstext  <p class=\"gat-fliesstext\">   Barlow Regular 400, Leading 1,3\n  .gat-emphasis    <em class=\"gat-emphasis\">    Vollkorn Black-Kursiv\n\nButtons (3 \u2014 Basis + Pflicht-Modifier):\n  .gat-btn .gat-btn--primary    <a class=\"gat-btn gat-btn--primary\">\n  .gat-btn .gat-btn--secondary  <a class=\"gat-btn gat-btn--secondary\">\n\nKarten (4 Block/Modifier + 2 Element-Klassen) \u2014 Basis IMMER mit Variante:\n  <article class=\"gat-card gat-card--primary\">\n    <h3 class=\"gat-card__title\">...</h3>\n    <p  class=\"gat-card__body\">...</p>\n  </article>\n  .gat-card  .gat-card--primary  .gat-card--secondary\n  .gat-card__title  .gat-card__body\n  WARNUNG: .gat-card ohne Varianten-Modifier rendert \u201ekaputt\" (transparenter\n  Grund) \u2014 jede Karte im Guide mit --primary oder --secondary zeigen.\n\nCD-Gestaltungselemente (5):\n  .gat-underline           <span class=\"gat-underline\">   Magenta-Unterstreichung\n  .gat-highlight           <mark class=\"gat-highlight\">    gelbe Marker-Fl\u00e4che\n  .gat-stoerer .gat-stoerer--gelb     <span ...>  gedrehtes Badge, gelb/Anthrazit\n  .gat-stoerer .gat-stoerer--magenta  <span ...>  gedrehtes Badge, magenta/wei\u00df\n\n=== Asset (read-only) ===\nassets/gruene-logo.svg : monochrom #2d793c, viewBox 0 0 150.32 132.07.\n\n=== D-1: maschinenlesbarer Spec-Block \u2014 Ziel-JSON-Form ===\n<script type=\"application/json\" id=\"gat-design-spec\">\n{\n  \"name\": \"Gr\u00fcne AT Design System\",\n  \"version\": \"1.0\",\n  \"stylesheet\": \"https://grueneat.github.io/design-system/design-system.css\",\n  \"license\": \"CC BY 4.0\",\n  \"tokens\": {\n    \"color\":   { \"--gat-color-dunkelgruen\": { \"value\": \"#257639\",\n                 \"role\": \"primitive\", \"usage\": \"Prim\u00e4re Markenfarbe\" }, ... },\n    \"font\":    { ... }, \"text\": { ... }, \"leading\": { ... },\n    \"space\":   { ... }, \"size\": { ... }\n  },\n  \"components\": {\n    \"gat-btn\": { \"purpose\": \"Basis-Button\",\n                 \"modifiers\": [\"gat-btn--primary\",\"gat-btn--secondary\"],\n                 \"requires\": \"ein Modifier ist Pflicht\",\n                 \"markup\": \"<a class=\\\"gat-btn gat-btn--primary\\\">...</a>\" },\n    ...\n  },\n  \"rules\": [\n    \"Typografie steht immer auf gr\u00fcner Fl\u00e4che (CD-Grundregel).\",\n    \"Komponenten-Selektoren sind flach, einklassig, .gat--pr\u00e4fixiert.\",\n    \"Keine nackten Tag-Selektoren \u2014 fremdes Markup darf nicht umgestylt werden.\",\n    \"Jeder Komponentenwert verweist auf ein --gat--Token.\",\n    \".gat-card wird nie ohne Varianten-Modifier verwendet.\",\n    \"Wei\u00df-Text wird nie auf Hellgr\u00fcn/Gelb gepaart (Kontrast).\"\n  ]\n}\n<\/script>\n</interfaces>\n\n<call_sites>\nSearched: `index.html`, `design-system.css`, `pages.yml`.\nSurfaces grepped: `.github/workflows/`, Repo-Root.\n\nFound:\n- .github/workflows/pages.yml \u2014 deployt `index.html` aus Repo-Root\n  (`path: '.'`, Trigger Push auf `main`) \u2014 OUT OF SCOPE: kein Workflow-Change\n  n\u00f6tig, der Plan \u00e4ndert nur `index.html`.\n\nDieses Issue f\u00fchrt keinen neuen CLI-Flag/Command/Script ein \u2014 keine weiteren\nCall-Sites.\n</call_sites>\n\nKey files:\n@design-system/index.html \u2014 DAS einzige Schreibziel; aktuell Skelett aus #2.\n@design-system/design-system.css \u2014 read-only; gesamte Inventur ist oben in\n  `<interfaces>` inlined, muss nicht erneut gelesen werden.\n@design-system/assets/gruene-logo.svg \u2014 read-only; vom Header per CSS-Maske\n  konsumiert.\n</context>\n\n<commit_format>\nFormat: conventional mit Issue-Prefix (`.issues/config.yaml`: format\nconventional, prefix true; branch `issue/5`).\nPattern: {source-id}: {type}({scope}): {description}\nBeispiel: 5: feat(style-guide): Farb- und Typografie-Abschnitte erg\u00e4nzen\nTypen: feat, fix, docs, chore. Keine Tool-Attribution im Commit.\n</commit_format>\n\n<tasks>\n\n<task type=\"auto\">\n  <name>Task 1: Seitenger\u00fcst, inline doc-Style und Anchor-TOC-Header</name>\n  <files>design-system/index.html</files>\n  <action>\n  Ersetze den Inhalt der bestehenden `index.html` (Skelett aus #2) durch das\n  Grundger\u00fcst des Style Guides. Behalte `<!DOCTYPE html>`, `<html lang=\"de\">`,\n  `<meta charset=\"UTF-8\">`, `<meta name=\"viewport\" ...>`, `<title>Gr\u00fcne AT\n  Design System</title>` und `<link rel=\"stylesheet\" href=\"design-system.css\">`.\n\n  F\u00fcge im `<head>`, NACH dem CSS-Link, einen inline `<style>`-Block ein (D-2 \u2014\n  ausschlie\u00dflich Doc-Chrome, alle Klassen mit `doc-`-Pr\u00e4fix). Dieser Block\n  enth\u00e4lt MINDESTENS:\n  - `html { scroll-behavior: smooth; }`\n  - `body` Grundlayout: Hintergrund (`--gat-color-surface`), Standard-Textfarbe\n    (`--gat-color-text`), `margin: 0`. `design-system.css` setzt KEINE\n    Tag-Defaults \u2014 ohne diese Regel rendert die Seite in Serifenschrift ohne\n    Spacing (siehe RESEARCH \u201eUngestyltes Doc-Grundger\u00fcst\").\n  - `[id] { scroll-margin-top: ... }` (oder eine `doc-anchor`-Klasse) auf den\n    Abschnitts-`id`s, damit der Anker-Sprung die \u00dcberschrift nicht hinter dem\n    Header versteckt.\n  - `doc-`-Klassen f\u00fcr: Swatch-Kachel + Swatch-Fl\u00e4che (`doc-swatch`,\n    `doc-swatch__chip`, `doc-swatch__meta`), Code-Block (`doc-code` \u2014\n    Monospace, dezenter Hintergrund, `white-space: pre`, `overflow-x: auto`),\n    Komponenten-Demo-Wrapper (`doc-demo` \u2014 rahmt live-Beispiel + Code-Block),\n    Do/Don't-Raster (`doc-dodont`, `doc-dodont--do`, `doc-dodont--dont`),\n    Spacing-Balken (`doc-spacebar`), CD-Layout-Diagramm (`doc-diagram`).\n  Doc-Chrome-Werte d\u00fcrfen `var(--gat-*)`-Tokens referenzieren (das Stylesheet\n  ist eingebunden). KEINE `gat-`-Klasse in diesem `<style>` neu definieren oder\n  \u00fcberschreiben.\n\n  Direkt nach `<body>`: den Seitenkopf mit den ECHTEN `gat-`-Klassen bauen\n  (Dogfooding) \u2014 `<header class=\"gat-header\">` > `<div class=\"gat-header__inner\">`\n  mit `<a class=\"gat-header__logo\" href=\"#top\"><span\n  class=\"gat-header__logo-mark\"></span></a>` und `<nav class=\"gat-nav\">`. Die\n  Nav IST der Anchor-TOC: je ein `<a class=\"gat-nav__link\" href=\"#...\">` pro\n  Abschnitt \u2014 `#farben`, `#typografie`, `#layout`, `#komponenten`, `#cd-layout`,\n  `#spezifikation`. Der erste Link tr\u00e4gt zus\u00e4tzlich `gat-nav__link--active`.\n\n  Lege die sechs leeren Abschnitts-Container an (in dieser Reihenfolge), jeweils\n  `<section class=\"gat-section\" id=\"...\">` mit `<div class=\"gat-container\">`\n  innen und einer `gat-`-Typo-\u00dcberschrift \u2014 die Tasks 2-6 f\u00fcllen sie. Schlie\u00dfe\n  mit `<footer class=\"gat-section\">` (Inhalt in Task 6). Logo NICHT inline\n  einf\u00fcgen \u2014 `.gat-header__logo-mark` l\u00e4dt `assets/gruene-logo.svg` per CSS.\n  Durchg\u00e4ngig deutschsprachig.\n  </action>\n  <verify>\n  <automated>python3 -c \"import html.parser,sys; h=open('/workspace/design-system/index.html',encoding='utf-8').read(); P=html.parser.HTMLParser; \\\nimport re; \\\nassert 'design-system.css' in h, 'CSS-Link fehlt'; \\\nassert h.count('<style')==1 and '<script' not in h.replace('application/json','') or True; \\\n[print('anchor', a, a in h) or sys.exit(1) for a in ['id=\\\"farben\\\"','id=\\\"typografie\\\"','id=\\\"layout\\\"','id=\\\"komponenten\\\"','id=\\\"cd-layout\\\"','id=\\\"spezifikation\\\"'] if a not in h]; \\\nassert 'gat-header' in h and 'gat-nav__link' in h, 'Header/TOC fehlt'; \\\nprint('OK Task1')\"</automated>\n  </verify>\n  <done>\n  - `index.html` enth\u00e4lt genau einen inline `<style>`-Block, ausschlie\u00dflich mit\n    `doc-`-pr\u00e4fixierten Klassen plus `html`/`body`/`[id]`-Regeln.\n  - `<header class=\"gat-header\">` mit `gat-nav` als Anchor-TOC; sechs\n    `gat-nav__link` zeigen auf die sechs Abschnitts-`id`s.\n  - Sechs leere `<section class=\"gat-section\">` mit den `id`s `farben`,\n    `typografie`, `layout`, `komponenten`, `cd-layout`, `spezifikation` plus ein\n    `<footer>` existieren.\n  - Datei ist wohlgeformtes HTML (balancierte Tags), `lang=\"de\"`.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 2: Abschnitt Farben \u2014 alle 14 Farb-Tokens als Swatches</name>\n  <files>design-system/index.html</files>\n  <action>\n  F\u00fclle `<section id=\"farben\">`. Dokumentiere ALLE 14 Farb-Tokens aus\n  `<interfaces>`: 4 Primitive, 2 Neutrals, 8 semantische Aliase. Gruppiere in\n  drei Unterbl\u00f6cken mit `gat-`-Typo-\u00dcberschriften (\u201ePrimitive\", \u201eNeutrals\",\n  \u201eSemantische Aliase\").\n\n  Jeder Token wird als Swatch-Kachel (`doc-swatch`) gezeigt: eine Farbfl\u00e4che\n  (`doc-swatch__chip`, Hintergrund via `var(--gat-color-...)` \u2014 also der echte\n  Token-Wert), darunter `doc-swatch__meta` mit Token-Name (in `doc-code`),\n  HEX-Wert und Verwendungszweck-Text. Bei Aliasen zus\u00e4tzlich angeben, auf\n  welches Primitive sie verweisen. Bei `--gat-color-on-primary` und\n  `--gat-color-on-secondary` die Kontrast-Notiz nennen (5,63:1 bzw. 6,09:1) und\n  das Beispiel kontrastrichtig paaren (siehe RESEARCH \u201eKontrast-Fehlpaarung\":\n  wei\u00dfer Text NUR auf Dunkelgr\u00fcn, Anthrazit auf Hellgr\u00fcn/Gelb).\n\n  Ordne die Swatches in einem responsiven Raster an \u2014 `<div class=\"gat-grid\">`\n  (Dogfooding der Layout-Komponente), die Swatch-Kacheln sind die Rasterkinder.\n  Werte 1:1 aus `<interfaces>` \u00fcbernehmen. Deutschsprachig.\n  </action>\n  <verify>\n  <automated>python3 -c \"h=open('/workspace/design-system/index.html',encoding='utf-8').read(); \\\ntoks=['--gat-color-dunkelgruen','--gat-color-hellgruen','--gat-color-gelb','--gat-color-magenta','--gat-color-weiss','--gat-color-anthrazit','--gat-color-primary','--gat-color-secondary','--gat-color-accent','--gat-color-highlight','--gat-color-text','--gat-color-surface','--gat-color-on-primary','--gat-color-on-secondary']; \\\nmissing=[t for t in toks if t not in h]; \\\nassert not missing, missing; \\\nassert '#257639' in h and '#e6007e' in h, 'HEX fehlt'; \\\nprint('OK Task2 \u2014 14 Farb-Tokens')\"</automated>\n  </verify>\n  <done>\n  - Alle 14 Farb-Tokens erscheinen namentlich im Abschnitt `#farben`.\n  - Jeder Token hat eine sichtbare Farbfl\u00e4che, HEX-Wert und Verwendungszweck.\n  - `on-primary`/`on-secondary` tragen die Kontrast-Notiz; kein Beispiel paart\n    wei\u00dfen Text auf Hellgr\u00fcn/Gelb.\n  - Das Swatch-Raster nutzt `gat-grid` (echte Komponente).\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 3: Abschnitt Typografie \u2014 Schrift, Gr\u00f6\u00dfenskala, Zeilenabst\u00e4nde</name>\n  <files>design-system/index.html</files>\n  <action>\n  F\u00fclle `<section id=\"typografie\">`. Dokumentiere ALLE 11 Typografie-Tokens:\n  3 Schrift-Tokens, 6 Typo-Gr\u00f6\u00dfen, 2 Zeilenabst\u00e4nde (aus `<interfaces>`).\n\n  Schrift-Tokens: pro Token (`--gat-font-headline`, `--gat-font-copy`,\n  `--gat-font-emphasis`) ein Live-Beispielsatz, gerendert in der jeweiligen\n  Schrift, plus Token-Name und Font-Stack-Wert.\n\n  Typo-Gr\u00f6\u00dfen: zeige `.gat-headline`, `.gat-subline`, `.gat-fliesstext`,\n  `.gat-emphasis` als live gerenderte Beispiele (echte Klassen, Dogfooding) \u2014\n  je ein deutscher Beispielsatz. Zus\u00e4tzlich die 6 Gr\u00f6\u00dfen-Tokens\n  (`--gat-text-h1` \u2026 `--gat-text-small`) als Specimen-Reihe mit Token-Name +\n  rem-Wert + Pixel-Hinweis sichtbar machen.\n\n  Zeilenabst\u00e4nde: `--gat-leading-headline` (0,9) und `--gat-leading-copy` (1,3)\n  mit kurzer Erkl\u00e4rung und je einem mehrzeiligen Beispiel, das den Unterschied\n  zeigt. Markup-Code-Bl\u00f6cke (`doc-code`, HTML-escaped) f\u00fcr die Typo-Klassen\n  beif\u00fcgen. Deutschsprachig.\n  </action>\n  <verify>\n  <automated>python3 -c \"h=open('/workspace/design-system/index.html',encoding='utf-8').read(); \\\ntoks=['--gat-font-headline','--gat-font-copy','--gat-font-emphasis','--gat-text-h1','--gat-text-h2','--gat-text-h3','--gat-text-subline','--gat-text-copy','--gat-text-small','--gat-leading-headline','--gat-leading-copy']; \\\ncls=['gat-headline','gat-subline','gat-fliesstext','gat-emphasis']; \\\nm=[x for x in toks+cls if x not in h]; \\\nassert not m, m; print('OK Task3 \u2014 11 Typo-Tokens + 4 Typo-Klassen')\"</automated>\n  </verify>\n  <done>\n  - Alle 11 Typografie-Tokens erscheinen namentlich im Abschnitt `#typografie`.\n  - `gat-headline`, `gat-subline`, `gat-fliesstext`, `gat-emphasis` sind als\n    live gerenderte Beispiele vorhanden.\n  - Die 6 Gr\u00f6\u00dfen-Tokens stehen als Specimen-Reihe mit rem-Werten.\n  - Zeilenabstands-Tokens sind mit Beispiel erkl\u00e4rt.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 4: Abschnitt Layout \u2014 Container, Raster, Section, Abst\u00e4nde, Ma\u00dfe</name>\n  <files>design-system/index.html</files>\n  <action>\n  F\u00fclle `<section id=\"layout\">`. Dokumentiere die 5 Layout-Klassen plus die\n  Abstands-, Komponenten-Ma\u00df- und Breakpoint-Tokens.\n\n  Layout-Klassen: `.gat-container`, `.gat-grid`, `.gat-grid--2`, `.gat-grid--3`,\n  `.gat-section` \u2014 jeweils kurz erkl\u00e4rt und, wo sinnvoll, als gerendertes\n  Beispiel. `gat-grid` / `--2` / `--3` mit je einem kleinen Demo-Raster (z. B.\n  nummerierte Platzhalter-Bl\u00f6cke) zeigen, dass die Spaltenzahl variiert und\n  ohne `@media` umbricht. Markup je in einem `doc-code`-Block.\n\n  Abst\u00e4nde: die 6 `--gat-space-*`-Tokens (0.25rem \u2026 3rem) als Balken-Demo \u2014\n  pro Token ein Balken (`doc-spacebar`), dessen Breite/H\u00f6he dem Token-Wert\n  entspricht, plus Name und Wert.\n\n  Komponenten-Ma\u00dfe: `--gat-radius-sm`, `--gat-radius-md`, `--gat-border-width`,\n  `--gat-container-max` als Tabelle/Liste mit Wert und Verwendungszweck;\n  Rundungen optional als kleines visuelles Beispiel.\n\n  Breakpoints: `--gat-breakpoint-sm` (36rem) und `--gat-breakpoint-md` (48rem)\n  als reine Doku-Notiz dokumentieren \u2014 mit dem Hinweis, dass `@media` kein\n  `var()` lesen kann und diese Tokens daher nur dokumentarisch sind.\n  Deutschsprachig.\n  </action>\n  <verify>\n  <automated>python3 -c \"h=open('/workspace/design-system/index.html',encoding='utf-8').read(); \\\ntoks=['--gat-space-1','--gat-space-2','--gat-space-3','--gat-space-4','--gat-space-5','--gat-space-6','--gat-radius-sm','--gat-radius-md','--gat-border-width','--gat-container-max','--gat-breakpoint-sm','--gat-breakpoint-md']; \\\ncls=['gat-container','gat-grid','gat-grid--2','gat-grid--3','gat-section']; \\\nm=[x for x in toks+cls if x not in h]; \\\nassert not m, m; print('OK Task4 \u2014 12 Tokens + 5 Layout-Klassen')\"</automated>\n  </verify>\n  <done>\n  - Alle 6 `--gat-space-*`-Tokens als Balken-Demo, alle 4 Komponenten-Ma\u00df-Tokens\n    und beide Breakpoint-Tokens erscheinen im Abschnitt `#layout`.\n  - Die 5 Layout-Klassen sind dokumentiert; `gat-grid`/`--2`/`--3` haben ein\n    gerendertes Demo-Raster.\n  - Breakpoints tragen den \u201e@media kann kein var()\"-Hinweis.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 5: Abschnitt Komponenten \u2014 Header/Nav, Buttons, Karten, CD-Elemente</name>\n  <files>design-system/index.html</files>\n  <action>\n  F\u00fclle `<section id=\"komponenten\">`. Zeige ALLE verbleibenden 13\n  `gat-`-Komponenten-Klassen (Header/Nav 6 + Modifier, Buttons 3, Karten 4+2\n  Element, CD-Elemente 5) \u2014 jede als LIVE gerendertes Beispiel PLUS Markup in\n  einem `doc-code`-Block. Pro Komponente ein `doc-demo`-Wrapper: oben das echte\n  gerenderte Element, darunter der HTML-escapte Markup-Quelltext (`&lt;`/`&gt;`).\n\n  Header / Navigation: erkl\u00e4re, dass der Seitenkopf oben auf der Seite (aus\n  Task 1) bereits das Live-Beispiel f\u00fcr `.gat-header`, `.gat-header__inner`,\n  `.gat-header__logo`, `.gat-header__logo-mark`, `.gat-nav`, `.gat-nav__link`\n  und `.gat-nav__link--active` IST \u2014 verweise darauf und zeige den\n  Markup-Block. Damit gelten diese 7 Klassen als dokumentiert.\n\n  Buttons: `.gat-btn .gat-btn--primary` und `.gat-btn .gat-btn--secondary` als\n  `<a>`-Elemente gerendert; Hinweis auf den `:hover`/`:focus`-Zustand (gelbe\n  Unterstreichung bzw. F\u00fcllung) als Text \u2014 kein JS. Hinweis, dass `.gat-btn`\n  nie ohne Modifier verwendet wird.\n\n  Karten: `.gat-card gat-card--primary` und `.gat-card gat-card--secondary`,\n  jeweils mit `.gat-card__title` und `.gat-card__body`. WARNUNG umsetzen: jede\n  Karte tr\u00e4gt einen Varianten-Modifier \u2014 niemals nacktes `.gat-card`.\n  Kontrastrichtig: `--primary` -> wei\u00dfer Text, `--secondary` -> Anthrazit.\n\n  CD-Elemente: `.gat-underline` (`<span>`), `.gat-highlight` (`<mark>`),\n  `.gat-stoerer .gat-stoerer--gelb` und `.gat-stoerer .gat-stoerer--magenta`\n  (`<span>`) \u2014 je inline in einem Beispielsatz gerendert.\n\n  Optional ein `doc-dodont`-Do/Don't-Raster f\u00fcr die h\u00e4ufigsten Fehlpaarungen\n  (z. B. `.gat-card` ohne Variante; wei\u00dfer Text auf Hellgr\u00fcn). Deutschsprachig.\n  </action>\n  <verify>\n  <automated>python3 -c \"h=open('/workspace/design-system/index.html',encoding='utf-8').read(); \\\ncls=['gat-header','gat-header__inner','gat-header__logo','gat-header__logo-mark','gat-nav','gat-nav__link','gat-nav__link--active','gat-btn','gat-btn--primary','gat-btn--secondary','gat-card','gat-card--primary','gat-card--secondary','gat-card__title','gat-card__body','gat-underline','gat-highlight','gat-stoerer','gat-stoerer--gelb','gat-stoerer--magenta']; \\\nm=[c for c in cls if c not in h]; \\\nassert not m, m; \\\nassert '&lt;' in h and '&gt;' in h, 'Markup-Code-Block nicht HTML-escaped'; \\\nprint('OK Task5 \u2014 alle Komponenten-Klassen')\"</automated>\n  </verify>\n  <done>\n  - Alle 22 `.gat-*`-Klassen erscheinen jetzt insgesamt im Dokument (7\n    Header/Nav, 5 Layout aus Task 4, 4 Typo aus Task 3, 3 Button, 6 Karte, 5\n    CD-Element \u2014 Doppelnennung erlaubt).\n  - Jede Komponente in `#komponenten` hat ein live gerendertes Beispiel und\n    einen HTML-escapten Markup-Code-Block.\n  - Keine Karte ohne Varianten-Modifier; keine kontrastwidrige Paarung.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 6: CD-Layout-Prinzipien, JSON-Spec, Footer und Schlusspr\u00fcfung</name>\n  <files>design-system/index.html</files>\n  <action>\n  F\u00fclle `<section id=\"cd-layout\">`, `<section id=\"spezifikation\">` und den\n  `<footer>`.\n\n  CD-Layout-Prinzipien (`#cd-layout`): erkl\u00e4re als Flie\u00dftext + einfache\n  CSS-Diagramme (`doc-diagram` \u2014 KEIN Bild-Asset):\n  - Schutzzone M = 0,06 \u00d7 kurze Kante des Mediums.\n  - Logo-Gr\u00f6\u00dfe = 3\u00d7M (Print) bzw. 2,5\u00d7M (Digital).\n  - Textabstand: Headline\u2194Subline = Headline\u2194Copy = X \u00d7 2.\n  - \u201eTypografie steht immer auf gr\u00fcner Fl\u00e4che\" \u2014 die CD-Grundregel.\n  Hinweis aufnehmen, dass f\u00fcr M und das Logo-Verh\u00e4ltnis bewusst KEIN\n  `--gat-*`-Token existiert (nur CSS-Kommentar) \u2014 daher als Prinzip, nicht als\n  Token-Tabelle dokumentiert.\n\n  Maschinenlesbare Spezifikation (`#spezifikation`, D-1): zuerst eine\n  menschenlesbare deutsche Einleitung \u2014 was der Block enth\u00e4lt und dass LLMs ihn\n  als geschlossene Spezifikation lesen k\u00f6nnen. Dann der EINGEBETTETE\n  `<script type=\"application/json\" id=\"gat-design-spec\">`-Block in der Form aus\n  `<interfaces>`. Der Block MUSS l\u00fcckenlos sein:\n  - `tokens`: ALLE 22 Tokens, gruppiert color/font/text/leading/space/size \u2014\n    je Token `value`, `role`, `usage` (bei Aliasen `role` \u201ealias\" + Verweis).\n  - `components`: ALLE 22 `gat-`-Klassen \u2014 je Eintrag `purpose`, `modifiers`,\n    `requires`, `markup`.\n  - `rules`: die geschlossene Regelliste aus `<interfaces>`.\n  WICHTIG (RESEARCH \u201eMaschinenlesbarer Block bricht das Markup\"): der Inhalt\n  muss valides JSON sein; jede literale `<\/script`-Sequenz im JSON zu\n  `<\\/script` brechen; Anf\u00fchrungszeichen in `markup`-Strings als `\\\"`. Dies ist\n  der EINZIGE erlaubte `<script>` \u2014 kein ausf\u00fchrbares JavaScript auf der Seite.\n\n  Footer: `<footer class=\"gat-section\">` mit Lizenz \u201eCC BY 4.0\" und kanonischer\n  URL `grueneat.github.io/design-system/`. KEINE Tool-Attribution, kein \u201eclaude\"\n  o. \u00e4. im Markup.\n\n  Schlusspr\u00fcfung in der Datei: stelle sicher, dass das Dokument wohlgeformt ist\n  und der JSON-Block valide JSON enth\u00e4lt.\n  </action>\n  <verify>\n  <automated>python3 -c \"\nimport re,json,sys\nh=open('/workspace/design-system/index.html',encoding='utf-8').read()\n# wohlgeformtes HTML (balancierte Tags)\nfrom html.parser import HTMLParser\nVOID={'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}\nclass B(HTMLParser):\n  def __init__(s): super().__init__(); s.st=[]; s.bad=False\n  def handle_starttag(s,t,a):\n    if t not in VOID: s.st.append(t)\n  def handle_endtag(s,t):\n    if t in VOID: return\n    if s.st and s.st[-1]==t: s.st.pop()\n    elif t in s.st:\n      while s.st and s.st.pop()!=t: pass\n    else: s.bad=True\nb=B(); b.feed(h)\nassert not b.bad and not b.st, 'HTML-Tags unbalanciert'\n# genau ein <script>, und dieses ist application/json (kein JS-Logik)\nscripts=re.findall(r'<script([^>]*)>(.*?)<\/script>',h,re.S|re.I)\nassert len(scripts)==1, ('Erwartet genau 1 <script>, gefunden %d'%len(scripts))\nattrs,body=scripts[0]\nassert 'application/json' in attrs, 'Der <script> ist nicht type=application/json'\njson.loads(body)  # valides JSON oder Exception\n# CSS verlinkt, kein zweites Stylesheet aus dem Netz\nassert h.count('design-system.css')>=1\nprint('OK Task6 \u2014 wohlgeformtes HTML, valides JSON-Spec, kein ausfuehrbares JS')\n\"</automated>\n  </verify>\n  <done>\n  - `#cd-layout` erkl\u00e4rt Schutzzone M (0,06 \u00d7 kurze Kante), Logo-Verh\u00e4ltnis\n    (3\u00d7M / 2,5\u00d7M), Textabstand X\u00d72 und \u201eTypografie immer auf Gr\u00fcn\".\n  - `#spezifikation` enth\u00e4lt genau einen `<script type=\"application/json\">`-Block\n    mit validem JSON: alle 22 Tokens, alle 22 Komponenten, die Regelliste.\n  - Auf der Seite existiert KEIN `<script>` mit ausf\u00fchrbarer Logik.\n  - Footer nennt Lizenz CC BY 4.0 und kanonische URL, ohne Tool-Attribution.\n  - `index.html` ist wohlgeformtes HTML.\n  </done>\n</task>\n\n</tasks>\n\n<verification>\nNach allen Tasks gegen `/workspace/design-system/index.html` ausf\u00fchren:\n\n1. Wohlgeformtes HTML (balancierte Tags) und genau ein `<script>`, dieser\n   `type=\"application/json\"` mit validem JSON \u2014 der Task-6-Verify-Block deckt das ab.\n\n2. L\u00fcckenlosigkeit der Token-/Klassen-Abdeckung \u2014 jeder `--gat-*`-Token und\n   jede `.gat-*`-Klasse aus `design-system.css` kommt im Guide vor:\n   ```bash\n   python3 - <<'PY'\n   import re\n   css=open('/workspace/design-system/design-system.css',encoding='utf-8').read()\n   h=open('/workspace/design-system/index.html',encoding='utf-8').read()\n   toks=sorted(set(re.findall(r'--gat-[a-z0-9-]+',css)))\n   cls=sorted(set(re.findall(r'\\.(gat-[a-z0-9_-]+)',css)))\n   mt=[t for t in toks if t not in h]\n   mc=[c for c in cls if c not in h]\n   assert not mt, ('Fehlende Tokens: %s'%mt)\n   assert not mc, ('Fehlende Klassen: %s'%mc)\n   print('OK \u2014 %d Tokens + %d Klassen vollstaendig dokumentiert'%(len(toks),len(cls)))\n   PY\n   ```\n\n3. Dogfooding: `index.html` verlinkt `design-system.css` und nutzt echte\n   `gat-`-Klassen (`gat-header`, `gat-section`, `gat-grid` u. a.).\n\n4. Kein JavaScript: der einzige `<script>` ist der `application/json`-Datenblock.\n\n5. GitHub-Pages: keine Aktion n\u00f6tig \u2014 `pages.yml` (`path: '.'`) deployt\n   `index.html` bei Push auf `main`.\n</verification>\n\n<success_criteria>\nBildet die Akzeptanzkriterien aus ISSUE.md 1:1 ab:\n- AK \u201ezeigt alle Farben, Typografie-Stufen und Komponenten mit gerenderten\n  Beispielen\" \u2192 Tasks 2-5: alle 14 Farb-Tokens, alle 11 Typo-Tokens, alle 22\n  `gat-`-Klassen als Live-Beispiel; Verifikationsschritt 2 pr\u00fcft L\u00fcckenlosigkeit.\n- AK \u201everwendet selbst das `design-system.css` (Dogfooding)\" \u2192 Task 1 verlinkt\n  das CSS; Kopf, TOC, Raster und Komponentenbeispiele nutzen echte\n  `gat-`-Klassen (Verifikationsschritt 3).\n- AK \u201emaschinenlesbarer Spezifikationsteil (geschlossenes Vokabular, Regeln)\" \u2192\n  Task 6: eingebetteter `<script type=\"application/json\">`-Block mit allen 22\n  Tokens, allen 22 Komponenten und der Regelliste (D-1).\n- AK \u201e\u00fcber GitHub Pages erreichbar\" \u2192 bestehender `pages.yml`-Workflow deployt\n  `index.html` aus dem Repo-Root; kein Workflow-Change n\u00f6tig.\n- Decision D-1 erf\u00fcllt (Task 6 \u2014 eingebetteter JSON-Block, kein separates File).\n- Decision D-2 erf\u00fcllt (Task 1 \u2014 inline `<style>` mit `doc-`-Pr\u00e4fix).\n- Deferred eingehalten: keine Querverlinkung zum pers\u00f6nlichen System / kein\n  Integrations-Leitfaden; `design-system.css` und `assets/` unver\u00e4ndert.\n</success_criteria>\n"}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var dataEl = document.getElementById("artifact-source");
+  var target = document.getElementById("artifact-source-target");
+  if (dataEl && target) {
+    try {
+      target.textContent = JSON.parse(dataEl.textContent).source || "";
+    } catch (e) {
+      target.textContent = dataEl.textContent;
+    }
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el) { ev.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
