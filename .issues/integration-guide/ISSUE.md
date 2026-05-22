@@ -2,6 +2,7 @@
 id: ryhv5
 title: Integrations-Leitfaden und Querverlinkung
 status: done
+ship_state: pr_open
 priority: medium
 dependencies:
 - ddh6g
