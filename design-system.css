@@ -386,3 +386,44 @@
   font-size: var(--gat-text-copy);
   line-height: var(--gat-leading-copy);
 }
+
+/* === CD-Gestaltungselemente ============================================== */
+
+/* CD-Unterstreichung — Akzent unter Inline-Text, in Magenta. */
+.gat-underline {
+  border-bottom: var(--gat-border-width) solid var(--gat-color-accent);
+  padding-bottom: var(--gat-space-1);
+}
+
+/* Hervorhebung — gelbe Marker-Fläche hinter Inline-Text. Gelb + Anthrazit ist
+   ein kontraststarkes Paar; nie mit Weiß-Text kombinieren. */
+.gat-highlight {
+  background: var(--gat-color-highlight);
+  color: var(--gat-color-text);
+  padding: 0 var(--gat-space-1);
+}
+
+/* „Störer" — leicht gedrehtes Badge, reines CSS (CONTEXT D-6). Der
+   rotate-Winkel ist eine bewusste gestalterische Konstante. */
+.gat-stoerer {
+  display: inline-block;
+  padding: var(--gat-space-2) var(--gat-space-4);
+  border-radius: var(--gat-radius-sm);
+  font-family: var(--gat-font-headline);
+  font-weight: 900;
+  line-height: var(--gat-leading-headline);
+  text-align: center;
+  transform: rotate(-6deg);
+}
+
+/* Störer-Variante Gelb — gelbe Fläche, Anthrazit-Text. */
+.gat-stoerer--gelb {
+  background: var(--gat-color-highlight);
+  color: var(--gat-color-text);
+}
+
+/* Störer-Variante Magenta — magenta Fläche, weißer Text. */
+.gat-stoerer--magenta {
+  background: var(--gat-color-accent);
+  color: var(--gat-color-on-primary);
+}
