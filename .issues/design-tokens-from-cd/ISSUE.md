@@ -2,6 +2,7 @@
 id: d2gfp
 title: Design-Tokens aus dem Grüne-AT Corporate Design
 status: done
+ship_state: pr_open
 priority: high
 dependencies:
 - lnwdl
