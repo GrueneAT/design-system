@@ -245,3 +245,48 @@
 .gat-nav__link--active {
   border-bottom-color: var(--gat-color-highlight);
 }
+
+/* === Typografie ========================================================== */
+
+/* Die CD-Zeilenabstandsfaktoren SIND bereits die --gat-leading--Tokens (0,9
+   bzw. 1,3) — sie werden direkt einheitslos als line-height gesetzt und nicht
+   erneut multipliziert.
+   Hinweis CD-Regel „Text nur auf Grün": die Typo-Klassen setzen ausschließlich
+   color (Anthrazit-Textton) und keinen Hintergrund. Die Paarung mit einer
+   grünen Fläche erzwingen strukturell .gat-header und .gat-card. */
+
+/* Headline (H1-Rolle) — Barlow in Black (900), das CD-„Ultra"-Pendant. */
+.gat-headline {
+  font-family: var(--gat-font-headline);
+  font-weight: 900;
+  font-size: var(--gat-text-h1);
+  line-height: var(--gat-leading-headline);
+  color: var(--gat-color-text);
+}
+
+/* Subline — Barlow halbfett, enger CD-Headline-Zeilenabstand. */
+.gat-subline {
+  font-family: var(--gat-font-headline);
+  font-weight: 600;
+  font-size: var(--gat-text-subline);
+  line-height: var(--gat-leading-headline);
+  color: var(--gat-color-text);
+}
+
+/* Fließtext — Barlow regular, weiter CD-Copy-Zeilenabstand (1,3). */
+.gat-fliesstext {
+  font-family: var(--gat-font-copy);
+  font-weight: 400;
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-color-text);
+}
+
+/* Hervorhebung/Zitat — Vollkorn in Black-Kursiv, die CD-Hervorhebungsrolle. */
+.gat-emphasis {
+  font-family: var(--gat-font-emphasis);
+  font-style: italic;
+  font-weight: 900;
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-color-text);
+}
