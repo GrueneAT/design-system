@@ -314,6 +314,7 @@
         <a class="gat-nav__link" href="#komponenten">Komponenten</a>
         <a class="gat-nav__link" href="#cd-layout">CD-Layout</a>
         <a class="gat-nav__link" href="#spezifikation">Spezifikation</a>
+        <a class="gat-nav__link" href="#einbindung">Einbindung</a>
       </nav>
     </div>
   </header>
@@ -1223,6 +1224,47 @@
   ]
 }
       </script>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 7 — Einbindung in eigene Tools                            -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="einbindung">
+    <div class="gat-container">
+      <h2 class="gat-headline">Einbindung in eigene Tools</h2>
+      <p class="gat-fliesstext doc-lead">
+        Ein konsumierendes Grüne-AT-Tool bindet das gehostete Stylesheet mit
+        einem einzigen <span class="doc-code">&lt;link&gt;</span> im
+        <span class="doc-code">&lt;head&gt;</span> ein. Damit erhält es
+        automatisch die zentral gepflegten <span class="doc-code">--gat-*</span>-Tokens
+        und alle <span class="doc-code">gat-</span>-Komponenten.
+      </p>
+      <div class="doc-codeblock">&lt;link rel="stylesheet" href="https://grueneat.github.io/design-system/design-system.css"&gt;</div>
+
+      <p class="gat-fliesstext doc-lead">
+        Wichtig: <span class="doc-code">design-system.css</span> setzt bewusst
+        keine Tag-Defaults &mdash; es stylt also kein
+        <span class="doc-code">body</span> und keine sonstigen HTML-Elemente
+        direkt. Eine konsumierende Seite muss ihr body-Grundlayout selbst
+        setzen (<span class="doc-code">margin</span>,
+        <span class="doc-code">background</span>,
+        <span class="doc-code">color</span> und
+        <span class="doc-code">font-family</span> aus den
+        <span class="doc-code">--gat-*</span>-Tokens), sonst rendert sie in der
+        Standardschrift und ohne Hintergrund.
+      </p>
+
+      <p class="gat-fliesstext doc-lead">
+        Ein vollständiges, lauffähiges Minimal-Beispiel liegt unter
+        <a href="examples/minimal.html">examples/minimal.html</a> &mdash; es
+        zeigt die Einbindung, das body-Grundlayout und den Einsatz echter
+        <span class="doc-code">gat-</span>-Komponenten. Konsumierende Tools
+        verlinken stets dieselbe URL und erhalten damit immer den aktuellen
+        Stand; alle nennenswerten Änderungen &mdash; insbesondere Breaking
+        Changes &mdash; sind in der
+        <a href="CHANGELOG.md">CHANGELOG.md</a> dokumentiert.
+      </p>
     </div>
   </section>
 
