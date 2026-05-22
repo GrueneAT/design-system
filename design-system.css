@@ -341,3 +341,48 @@
   background: var(--gat-color-primary);
   color: var(--gat-color-on-primary);
 }
+
+/* === Karten / Flächen ==================================================== */
+
+/* Die Karten erzwingen die CD-Grundregel „Typografie steht immer auf grüner
+   Fläche" strukturell: jede Variante paart eine grüne Fläche mit dem passenden
+   on--Textton. */
+
+/* Basis-Karte — nur Layout, Padding und Rundung. Eine Karte wird stets über
+   eine grüne Variante genutzt, daher hier keine eigene Fläche. */
+.gat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gat-space-3);
+  padding: var(--gat-space-5);
+  border-radius: var(--gat-radius-md);
+}
+
+/* Primär-Karte — dunkelgrüne Fläche, weißer Text (Kontrast 5,63:1). */
+.gat-card--primary {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
+
+/* Sekundär-Karte — hellgrüne Fläche, Anthrazit-Text (Kontrast 6,09:1).
+   Weiß auf Hellgrün fiele durch den Kontrast und wird nie gepaart. */
+.gat-card--secondary {
+  background: var(--gat-color-secondary);
+  color: var(--gat-color-on-secondary);
+}
+
+/* Karten-Headline — erbt bewusst die color der Variante, damit der Text immer
+   korrekt auf seiner grünen Fläche sitzt; keine eigene Textfarbe setzen. */
+.gat-card__title {
+  font-family: var(--gat-font-headline);
+  font-weight: 900;
+  font-size: var(--gat-text-h3);
+  line-height: var(--gat-leading-headline);
+}
+
+/* Karten-Fließtext — erbt ebenfalls die color der Variante. */
+.gat-card__body {
+  font-family: var(--gat-font-copy);
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+}
