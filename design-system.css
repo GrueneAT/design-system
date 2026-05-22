@@ -290,3 +290,54 @@
   line-height: var(--gat-leading-copy);
   color: var(--gat-color-text);
 }
+
+/* === Buttons ============================================================= */
+
+/* Basis-Button — Layout, Padding, Rundung und Schrift. Die Farbwelt liefern
+   die Modifier --primary / --secondary. */
+.gat-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gat-space-2);
+  padding: var(--gat-space-2) var(--gat-space-4);
+  border: var(--gat-border-width) solid transparent;
+  border-radius: var(--gat-radius-sm);
+  font-family: var(--gat-font-copy);
+  font-weight: 700;
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Sichtbarer Tastatur-Fokus — grüner Outline, rein per CSS. */
+.gat-btn:focus-visible {
+  outline: var(--gat-border-width) solid var(--gat-color-primary);
+  outline-offset: var(--gat-space-1);
+}
+
+/* Primär-Button — dunkelgrüne Fläche, weißer Text (Kontrast 5,63:1). */
+.gat-btn--primary {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
+
+/* Hover dunkelt die Fläche relativ ab — brightness führt keine neue Farbe
+   ein, der Wert bleibt token-getrieben. */
+.gat-btn--primary:hover {
+  filter: brightness(0.92);
+}
+
+/* Sekundär-Button — Outline-Stil: transparente Fläche, grüner Rahmen. */
+.gat-btn--secondary {
+  background: transparent;
+  color: var(--gat-color-primary);
+  border-color: var(--gat-color-primary);
+}
+
+/* Hover füllt die Fläche dunkelgrün und setzt den Text auf Weiß. */
+.gat-btn--secondary:hover {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
