@@ -2,7 +2,7 @@
 id: uq0vb
 title: Kernkomponenten und Layout-System
 status: done
-ship_state: pr_open
+ship_state: merged
 priority: medium
 dependencies:
 - d2gfp
