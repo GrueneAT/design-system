@@ -1,7 +1,7 @@
 ---
 id: ddh6g
 title: Sichtbarer Style Guide
-status: open
+status: done
 priority: medium
 dependencies:
 - uq0vb
