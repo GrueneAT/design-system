@@ -1,7 +1,7 @@
 ---
 id: uq0vb
 title: Kernkomponenten und Layout-System
-status: open
+status: done
 priority: medium
 dependencies:
 - d2gfp
