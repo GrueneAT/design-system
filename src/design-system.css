@@ -203,12 +203,72 @@
 
     --gat-web-shadow:        0 1px 2px rgba(31,38,28,.05),
                              0 4px 14px rgba(31,38,28,.05);
+    --gat-web-shadow-elevated: 0 6px 24px rgba(31,38,28,.18),
+                               0 2px 6px rgba(31,38,28,.08);
     --gat-web-page-max:      min(2040px, 94vw);
     --gat-web-radius-control: var(--radius-gat-web-control);
     --gat-web-radius-card:    var(--radius-gat-web-card);
     --gat-web-focus-ring:    0 0 0 3px color-mix(in srgb,
                                        var(--gat-web-green) 38%, transparent);
     --gat-web-focus-offset:  2px;
+
+    /* === v2.1 — Modal ====================================================== */
+    --gat-web-modal-bg:       var(--gat-web-surface);
+    --gat-web-modal-backdrop: rgba(31,38,28,.55);
+    --gat-web-modal-shadow:   var(--gat-web-shadow-elevated);
+    --gat-web-modal-radius:   var(--gat-web-radius-card);
+
+    /* === v2.1 — Callout-Modifier ===========================================
+       Semantische Hinweis-Familie. Token-Trios: bg / border / text. */
+    --gat-web-callout-info-bg:     var(--gat-web-green-tint);
+    --gat-web-callout-info-border: var(--gat-web-green-deep);
+    --gat-web-callout-info-text:   var(--gat-web-text);
+
+    --gat-web-callout-warn-bg:     #fdf3d2;
+    --gat-web-callout-warn-border: #b78a1c;
+    --gat-web-callout-warn-text:   #5a4308;
+
+    --gat-web-callout-error-bg:     #fbe5dc;
+    --gat-web-callout-error-border: #b3401e;
+    --gat-web-callout-error-text:   #6b2410;
+
+    --gat-web-callout-success-bg:     #e2efd9;
+    --gat-web-callout-success-border: var(--gat-web-green);
+    --gat-web-callout-success-text:   #1f4d27;
+
+    --gat-web-callout-legal-bg:     #eceef0;
+    --gat-web-callout-legal-border: #6b6f63;
+    --gat-web-callout-legal-text:   var(--gat-web-text);
+
+    /* === v2.1 — Tag-Modifier ===============================================
+       Gleiche semantische Familie wie Callout, aber kompaktere Werte und
+       eigenstaendige Tokens (keine Wiederverwendung — Padding/Schrift duerfen
+       sich von Callout unterscheiden, ohne Tokens umfaerben zu muessen). */
+    --gat-web-tag-ok-bg:        #e2efd9;
+    --gat-web-tag-ok-text:      #1f4d27;
+    --gat-web-tag-warn-bg:      #fdf3d2;
+    --gat-web-tag-warn-text:    #5a4308;
+    --gat-web-tag-error-bg:     #fbe5dc;
+    --gat-web-tag-error-text:   #6b2410;
+    --gat-web-tag-neutral-bg:   var(--gat-web-surface-sunk);
+    --gat-web-tag-neutral-text: var(--gat-web-text-soft);
+    --gat-web-tag-info-bg:      var(--gat-web-green-tint);
+    --gat-web-tag-info-text:    var(--gat-web-green-deep);
+
+    /* === v2.1 — Form-Primitives ============================================
+       Tokens fuer die .gat-input-Familie. Konsumenten ueberschreiben einzelne
+       Tokens, ohne die Komponenten-Selektoren zu duplizieren. */
+    --gat-web-input-bg:             var(--gat-web-surface);
+    --gat-web-input-border:         var(--gat-web-hairline);
+    --gat-web-input-border-focus:   var(--gat-web-green-deep);
+    --gat-web-input-border-invalid: #b3401e;
+    --gat-web-input-text:           var(--gat-web-text);
+    --gat-web-input-placeholder:    var(--gat-web-text-mute);
+    --gat-web-input-radius:         var(--gat-web-radius-control);
+    --gat-web-input-padding-x:      0.7rem;
+    --gat-web-input-padding-y:      0.5rem;
+    --gat-web-input-disabled-bg:    var(--gat-web-surface-sunk);
+    --gat-web-input-disabled-text:  var(--gat-web-text-mute);
   }
 }
 
@@ -841,6 +901,399 @@
   color: var(--gat-color-weiss);
 }
 
+/* === v2.1 — Form-Primitives =============================================
+   Eingabe-Bausteine fuer Datenwerkzeuge. Strikt additiv: keine v2.0-Klasse
+   wird umgedeutet. Konsumenten bauen Verhalten (Validierung, Submit) selbst;
+   das DS liefert nur die Optik plus States. Native HTML-Elemente bekommen
+   die Klasse direkt; keine "wrapper"-Pflicht ausser dem optionalen .gat-field. */
+
+.gat-input,
+.gat-select,
+.gat-textarea {
+  display: block;
+  width: 100%;
+  font-family: var(--gat-font-copy);
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-web-input-text);
+  background: var(--gat-web-input-bg);
+  border: 1px solid var(--gat-web-input-border);
+  border-radius: var(--gat-web-input-radius);
+  padding: var(--gat-web-input-padding-y) var(--gat-web-input-padding-x);
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.gat-input:hover,
+.gat-select:hover,
+.gat-textarea:hover {
+  border-color: color-mix(in srgb, var(--gat-web-green-deep) 50%,
+                          var(--gat-web-input-border));
+}
+
+.gat-input::placeholder,
+.gat-textarea::placeholder {
+  color: var(--gat-web-input-placeholder);
+  opacity: 1;
+}
+
+.gat-input:focus-visible,
+.gat-select:focus-visible,
+.gat-textarea:focus-visible {
+  outline: none;
+  border-color: var(--gat-web-input-border-focus);
+  box-shadow: var(--gat-web-focus-ring);
+}
+
+.gat-input:disabled,
+.gat-select:disabled,
+.gat-textarea:disabled {
+  background: var(--gat-web-input-disabled-bg);
+  color: var(--gat-web-input-disabled-text);
+  cursor: not-allowed;
+}
+
+.gat-input[readonly],
+.gat-textarea[readonly] {
+  background: var(--gat-web-surface-sunk);
+  color: var(--gat-web-text-soft);
+}
+
+.gat-input[aria-invalid="true"],
+.gat-input.is-invalid,
+.gat-select[aria-invalid="true"],
+.gat-select.is-invalid,
+.gat-textarea[aria-invalid="true"],
+.gat-textarea.is-invalid {
+  border-color: var(--gat-web-input-border-invalid);
+}
+
+.gat-input[aria-invalid="true"]:focus-visible,
+.gat-input.is-invalid:focus-visible,
+.gat-select[aria-invalid="true"]:focus-visible,
+.gat-select.is-invalid:focus-visible,
+.gat-textarea[aria-invalid="true"]:focus-visible,
+.gat-textarea.is-invalid:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb,
+              var(--gat-web-input-border-invalid) 28%, transparent);
+}
+
+.gat-textarea {
+  min-height: calc(var(--gat-web-input-padding-y) * 2 + 4.5em);
+  resize: vertical;
+}
+
+/* Select bekommt einen dezenten Chevron-Indikator und ein bisschen Platz
+   rechts, damit der eingebaute UA-Pfeil nicht den Text ueberlappt. SVG ist
+   inline-base64-frei via data:URI; Konsumenten ueberschreiben background-
+   image, wenn sie ein eigenes Icon brauchen. */
+.gat-select {
+  appearance: none;
+  padding-right: calc(var(--gat-web-input-padding-x) + 1.25rem);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%235e6358' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1.5l5 5 5-5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right var(--gat-web-input-padding-x) center;
+  background-size: 0.75rem 0.5rem;
+}
+
+/* Checkbox + Radio: native Inputs mit eigener Optik via accent-color.
+   Erlaubt Konsumenten, die nativen Defaults beizubehalten, ohne JS-Replace. */
+.gat-checkbox,
+.gat-radio {
+  appearance: auto;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0;
+  accent-color: var(--gat-web-green-deep);
+  cursor: pointer;
+}
+
+.gat-checkbox:disabled,
+.gat-radio:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.gat-checkbox:focus-visible,
+.gat-radio:focus-visible {
+  outline: 2px solid var(--gat-web-green-deep);
+  outline-offset: var(--gat-web-focus-offset, 2px);
+}
+
+/* Label-Layout fuer Checkbox/Radio + Group-Wrapper.
+   Konsumenten wickeln eine Checkbox/Radio in .gat-check; mehrere Radios
+   sammeln sie in .gat-radio-group (vertikale Liste). */
+.gat-check {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--gat-space-2);
+  font-family: var(--gat-font-copy);
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-web-text);
+  cursor: pointer;
+}
+
+.gat-check > input { margin-top: 0.2em; flex: none; }
+
+.gat-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gat-space-2);
+}
+
+.gat-radio-group--inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--gat-space-3);
+}
+
+/* Range — entsaettigter Slider. Track + Thumb folgen den Web-Tokens. */
+.gat-range {
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.gat-range:focus-visible { outline: none; }
+
+.gat-range::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--gat-web-hairline);
+  border-radius: 999px;
+}
+
+.gat-range::-moz-range-track {
+  height: 4px;
+  background: var(--gat-web-hairline);
+  border-radius: 999px;
+}
+
+.gat-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: var(--gat-web-green-deep);
+  border: 2px solid var(--gat-web-surface);
+  margin-top: -0.45rem;
+  box-shadow: 0 1px 3px rgba(31,38,28,.18);
+}
+
+.gat-range::-moz-range-thumb {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: var(--gat-web-green-deep);
+  border: 2px solid var(--gat-web-surface);
+  box-shadow: 0 1px 3px rgba(31,38,28,.18);
+}
+
+.gat-range:focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--gat-web-focus-ring);
+}
+
+.gat-range:focus-visible::-moz-range-thumb {
+  box-shadow: var(--gat-web-focus-ring);
+}
+
+/* Field-Wrapper: Label oben, Hint klein darunter, Error rot. Hilfssache —
+   das DS erzwingt keinen Wrapper, aber bietet ihn fuer kompakte Layouts an. */
+.gat-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 32rem;
+}
+
+.gat-field__label {
+  font-family: var(--gat-font-copy);
+  font-weight: 600;
+  font-size: var(--gat-text-copy);
+  color: var(--gat-web-text);
+}
+
+.gat-field__hint {
+  font-size: var(--gat-text-small);
+  color: var(--gat-web-text-soft);
+  line-height: var(--gat-leading-copy);
+}
+
+.gat-field__error {
+  font-size: var(--gat-text-small);
+  color: var(--gat-web-input-border-invalid);
+  line-height: var(--gat-leading-copy);
+}
+
+/* === v2.1 — Modal / Dialog ================================================
+   Opt-in-Klasse fuer natives <dialog>. Der Konsument liefert das Markup und
+   die Open/Close-Logik (showModal()/close()), das DS liefert Backdrop,
+   Schatten, Radius und das Sub-Element-Layout. */
+
+.gat-modal {
+  background: var(--gat-web-modal-bg);
+  color: var(--gat-web-text);
+  border: none;
+  border-radius: var(--gat-web-modal-radius);
+  box-shadow: var(--gat-web-modal-shadow);
+  padding: 0;
+  max-width: min(40rem, 92vw);
+  width: 100%;
+}
+
+.gat-modal::backdrop {
+  background: var(--gat-web-modal-backdrop);
+}
+
+.gat-modal--blur::backdrop {
+  backdrop-filter: blur(3px);
+}
+
+.gat-modal--wide { max-width: min(64rem, 94vw); }
+.gat-modal--narrow { max-width: min(28rem, 90vw); }
+
+.gat-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gat-space-3);
+  padding: var(--gat-space-3) var(--gat-space-4);
+  border-bottom: 1px solid var(--gat-web-hairline);
+}
+
+.gat-modal__title {
+  font-family: var(--gat-font-headline);
+  font-weight: 700;
+  font-size: var(--gat-text-h3);
+  line-height: var(--gat-leading-headline);
+  color: var(--gat-web-text);
+  margin: 0;
+}
+
+.gat-modal__close {
+  flex: none;
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--gat-web-text-soft);
+  border-radius: var(--gat-web-radius-control);
+  padding: 0.2rem 0.55rem;
+  line-height: 1;
+  font-size: 1.25rem;
+}
+
+.gat-modal__close:hover {
+  background: var(--gat-web-surface-sunk);
+  color: var(--gat-web-text);
+}
+
+.gat-modal__close:focus-visible {
+  outline: 2px solid var(--gat-web-green-deep);
+  outline-offset: var(--gat-web-focus-offset, 2px);
+}
+
+.gat-modal__body {
+  padding: var(--gat-space-3) var(--gat-space-4);
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.gat-modal__body > :first-child { margin-top: 0; }
+.gat-modal__body > :last-child  { margin-bottom: 0; }
+
+.gat-modal__actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--gat-space-2);
+  padding: var(--gat-space-3) var(--gat-space-4);
+  border-top: 1px solid var(--gat-web-hairline);
+  background: var(--gat-web-modal-bg);
+  border-radius: 0 0 var(--gat-web-modal-radius) var(--gat-web-modal-radius);
+}
+
+/* === v2.1 — Callout-Modifier ============================================
+   .gat-callout existiert seit v2.0 mit dem grünen Linksrand. Die Modifier
+   tauschen Bg/Border/Text durch die semantische Token-Familie. .--info ist
+   explizit als Default-Stil notiert (visuell identisch zum unbenannten
+   .gat-callout, aber semantisch eindeutig). */
+
+.gat-callout--info {
+  background: var(--gat-web-callout-info-bg);
+  border-left-color: var(--gat-web-callout-info-border);
+  color: var(--gat-web-callout-info-text);
+}
+
+.gat-callout--warn {
+  background: var(--gat-web-callout-warn-bg);
+  border-left-color: var(--gat-web-callout-warn-border);
+  color: var(--gat-web-callout-warn-text);
+}
+
+.gat-callout--error,
+.gat-callout--danger {
+  background: var(--gat-web-callout-error-bg);
+  border-left-color: var(--gat-web-callout-error-border);
+  color: var(--gat-web-callout-error-text);
+}
+
+.gat-callout--success {
+  background: var(--gat-web-callout-success-bg);
+  border-left-color: var(--gat-web-callout-success-border);
+  color: var(--gat-web-callout-success-text);
+}
+
+.gat-callout--legal {
+  background: var(--gat-web-callout-legal-bg);
+  border-left-color: var(--gat-web-callout-legal-border);
+  color: var(--gat-web-callout-legal-text);
+}
+
+/* Optionaler Icon-Slot: kein Bild-Asset, nur Container. Konsumenten
+   platzieren ein SVG (oder einen Buchstaben) hinein. */
+.gat-callout__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 0.45em;
+  flex: none;
+  vertical-align: -0.2em;
+}
+
+.gat-callout__icon > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* === v2.1 — Tag-Modifier (semantisch) ====================================
+   v2.0 hatte --neutral / --info / --pflicht / --risiko. v2.1 ergaenzt die
+   semantische Familie --ok/--success, --warn, --error/--danger. --neutral
+   und --info bleiben werteweise unveraendert (Konsumenten, die heute schon
+   `.gat-tag--neutral` setzen, sehen keinen Unterschied). */
+
+.gat-tag--ok,
+.gat-tag--success {
+  background: var(--gat-web-tag-ok-bg);
+  color: var(--gat-web-tag-ok-text);
+}
+
+.gat-tag--warn {
+  background: var(--gat-web-tag-warn-bg);
+  color: var(--gat-web-tag-warn-text);
+}
+
+.gat-tag--error,
+.gat-tag--danger {
+  background: var(--gat-web-tag-error-bg);
+  color: var(--gat-web-tag-error-text);
+}
+
 /* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
    Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
    Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
@@ -918,6 +1371,148 @@
   color: var(--gat-color-anthrazit);
 }
 
+/* HC fuer v2.1 Form-Primitives. Anthrazit + Gelb + Magenta-Fehler. */
+
+.gat-mode-hc .gat-input,
+.gat-mode-hc .gat-select,
+.gat-mode-hc .gat-textarea {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-input::placeholder,
+.gat-mode-hc .gat-textarea::placeholder {
+  color: color-mix(in srgb, var(--gat-color-gelb) 70%, transparent);
+}
+
+.gat-mode-hc .gat-input:focus-visible,
+.gat-mode-hc .gat-select:focus-visible,
+.gat-mode-hc .gat-textarea:focus-visible {
+  border-color: var(--gat-color-gelb);
+  box-shadow: 0 0 0 3px color-mix(in srgb,
+              var(--gat-color-gelb) 50%, transparent);
+}
+
+.gat-mode-hc .gat-input:disabled,
+.gat-mode-hc .gat-select:disabled,
+.gat-mode-hc .gat-textarea:disabled {
+  background: color-mix(in srgb, var(--gat-color-anthrazit) 70%, black);
+  color: color-mix(in srgb, var(--gat-color-gelb) 50%, transparent);
+}
+
+.gat-mode-hc .gat-input[aria-invalid="true"],
+.gat-mode-hc .gat-input.is-invalid,
+.gat-mode-hc .gat-select[aria-invalid="true"],
+.gat-mode-hc .gat-select.is-invalid,
+.gat-mode-hc .gat-textarea[aria-invalid="true"],
+.gat-mode-hc .gat-textarea.is-invalid {
+  border-color: var(--gat-color-magenta);
+}
+
+.gat-mode-hc .gat-select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%23ffed00' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1.5l5 5 5-5'/></svg>");
+}
+
+.gat-mode-hc .gat-checkbox,
+.gat-mode-hc .gat-radio {
+  accent-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-check,
+.gat-mode-hc .gat-field__label {
+  color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-field__hint {
+  color: color-mix(in srgb, var(--gat-color-gelb) 80%, transparent);
+}
+
+.gat-mode-hc .gat-field__error {
+  color: var(--gat-color-magenta);
+}
+
+.gat-mode-hc .gat-range::-webkit-slider-runnable-track {
+  background: color-mix(in srgb, var(--gat-color-gelb) 30%, transparent);
+}
+.gat-mode-hc .gat-range::-moz-range-track {
+  background: color-mix(in srgb, var(--gat-color-gelb) 30%, transparent);
+}
+.gat-mode-hc .gat-range::-webkit-slider-thumb {
+  background: var(--gat-color-gelb);
+  border-color: var(--gat-color-anthrazit);
+}
+.gat-mode-hc .gat-range::-moz-range-thumb {
+  background: var(--gat-color-gelb);
+  border-color: var(--gat-color-anthrazit);
+}
+
+/* HC fuer v2.1 Modal. */
+
+.gat-mode-hc .gat-modal {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border: 2px solid var(--gat-color-gelb);
+  box-shadow: none;
+}
+
+.gat-mode-hc .gat-modal::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.gat-mode-hc .gat-modal__head,
+.gat-mode-hc .gat-modal__actions {
+  border-color: var(--gat-color-gelb);
+  background: var(--gat-color-anthrazit);
+}
+
+.gat-mode-hc .gat-modal__title,
+.gat-mode-hc .gat-modal__close {
+  color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-modal__close:hover {
+  background: color-mix(in srgb, var(--gat-color-gelb) 14%, transparent);
+  color: var(--gat-color-gelb);
+}
+
+/* HC fuer v2.1 Callout-Modifier. */
+
+.gat-mode-hc .gat-callout--info,
+.gat-mode-hc .gat-callout--warn,
+.gat-mode-hc .gat-callout--error,
+.gat-mode-hc .gat-callout--danger,
+.gat-mode-hc .gat-callout--success,
+.gat-mode-hc .gat-callout--legal {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-left-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-callout--warn,
+.gat-mode-hc .gat-callout--error,
+.gat-mode-hc .gat-callout--danger {
+  border-left-color: var(--gat-color-magenta);
+}
+
+/* HC fuer v2.1 Tag-Modifier (--ok/--success/--warn/--error/--danger). */
+
+.gat-mode-hc .gat-tag--ok,
+.gat-mode-hc .gat-tag--success,
+.gat-mode-hc .gat-tag--warn,
+.gat-mode-hc .gat-tag--error,
+.gat-mode-hc .gat-tag--danger {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border: 1px solid var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-tag--error,
+.gat-mode-hc .gat-tag--danger {
+  border-color: var(--gat-color-magenta);
+  color: var(--gat-color-magenta);
+}
+
 /* === Patterns =============================================================
    Übergreifende A11y- und Druck-Regeln. Konsumenten konfigurieren
    --gat-web-focus-ring/--gat-web-focus-offset bei Bedarf, der Rest greift
@@ -928,7 +1523,8 @@
 .gat-tag:focus-visible,
 .gat-tab:focus-visible,
 .gat-switch-btn:focus-visible,
-.gat-header__brand:focus-visible {
+.gat-header__brand:focus-visible,
+.gat-modal__close:focus-visible {
   outline: 2px solid var(--gat-web-green-deep);
   outline-offset: var(--gat-web-focus-offset, 2px);
   box-shadow: var(--gat-web-focus-ring);
@@ -974,6 +1570,16 @@
   tr { break-inside: avoid; }
   thead { display: table-header-group; }
   h1, h2, h3, .gat-headline, .gat-subline { break-after: avoid; }
+  .gat-modal { display: none; }
+  .gat-callout,
+  .gat-callout--info,
+  .gat-callout--warn,
+  .gat-callout--error,
+  .gat-callout--danger,
+  .gat-callout--success,
+  .gat-callout--legal {
+    break-inside: avoid;
+  }
   * {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;

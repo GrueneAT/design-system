@@ -85,6 +85,56 @@
           Anthrazit-Text. Für jede Karte ist ein Varianten-Modifier Pflicht.
         </p>
       </article>
+
+      <!-- v2.1: Callout-Variant (warn). -->
+      <aside class="gat-callout gat-callout--warn" style="margin-top: var(--gat-space-4);">
+        <p class="gat-fliesstext" style="margin: 0;">
+          <strong>Hinweis:</strong> Dies ist ein Warnungs-Callout aus v2.1 —
+          eine von fünf semantischen Varianten (info, warn, error, success,
+          legal).
+        </p>
+      </aside>
+
+      <!-- v2.1: Form-Block mit Field-Wrapper. -->
+      <form class="gat-field" style="margin-top: var(--gat-space-4); max-width: 26rem;"
+            onsubmit="event.preventDefault(); alert('Vielen Dank für die Eingabe.');">
+        <label class="gat-field__label" for="kontakt-email">E-Mail-Adresse</label>
+        <input class="gat-input" id="kontakt-email" type="email" required
+               placeholder="name@example.at">
+        <span class="gat-field__hint">
+          Wir melden uns innerhalb von 48 Stunden.
+        </span>
+        <p style="margin-top: var(--gat-space-3);">
+          <button class="gat-btn gat-btn--primary" type="submit">Abschicken</button>
+        </p>
+      </form>
+
+      <!-- v2.1: Modal-Demo. -->
+      <p style="margin-top: var(--gat-space-4);">
+        <button type="button" class="gat-btn gat-btn--secondary"
+                onclick="document.getElementById('beispiel-modal').showModal()">
+          Mehr erfahren
+        </button>
+      </p>
+
+      <dialog class="gat-modal" id="beispiel-modal">
+        <div class="gat-modal__head">
+          <h2 class="gat-modal__title">Mehr Information</h2>
+          <button type="button" class="gat-modal__close" aria-label="Schließen"
+                  onclick="this.closest('dialog').close()">×</button>
+        </div>
+        <div class="gat-modal__body">
+          <p class="gat-fliesstext" style="margin: 0;">
+            Ein Dialog aus dem Design-System. Esc oder der Schließen-Knopf
+            beenden ihn. Inhalt und Verhalten liefert die konsumierende Seite
+            — das DS liefert nur Backdrop, Schatten und Layout.
+          </p>
+        </div>
+        <div class="gat-modal__actions">
+          <button type="button" class="gat-btn gat-btn--secondary"
+                  onclick="this.closest('dialog').close()">Schließen</button>
+        </div>
+      </dialog>
     </div>
   </section>
 
