@@ -240,6 +240,21 @@
     --gat-web-callout-legal-border: #6b6f63;
     --gat-web-callout-legal-text:   var(--gat-web-text);
 
+    /* === v2.1 — Tag-Modifier ===============================================
+       Gleiche semantische Familie wie Callout, aber kompaktere Werte und
+       eigenstaendige Tokens (keine Wiederverwendung — Padding/Schrift duerfen
+       sich von Callout unterscheiden, ohne Tokens umfaerben zu muessen). */
+    --gat-web-tag-ok-bg:        #e2efd9;
+    --gat-web-tag-ok-text:      #1f4d27;
+    --gat-web-tag-warn-bg:      #fdf3d2;
+    --gat-web-tag-warn-text:    #5a4308;
+    --gat-web-tag-error-bg:     #fbe5dc;
+    --gat-web-tag-error-text:   #6b2410;
+    --gat-web-tag-neutral-bg:   var(--gat-web-surface-sunk);
+    --gat-web-tag-neutral-text: var(--gat-web-text-soft);
+    --gat-web-tag-info-bg:      var(--gat-web-green-tint);
+    --gat-web-tag-info-text:    var(--gat-web-green-deep);
+
     /* === v2.1 — Form-Primitives ============================================
        Tokens fuer die .gat-input-Familie. Konsumenten ueberschreiben einzelne
        Tokens, ohne die Komponenten-Selektoren zu duplizieren. */
@@ -1256,6 +1271,29 @@
   display: block;
 }
 
+/* === v2.1 — Tag-Modifier (semantisch) ====================================
+   v2.0 hatte --neutral / --info / --pflicht / --risiko. v2.1 ergaenzt die
+   semantische Familie --ok/--success, --warn, --error/--danger. --neutral
+   und --info bleiben werteweise unveraendert (Konsumenten, die heute schon
+   `.gat-tag--neutral` setzen, sehen keinen Unterschied). */
+
+.gat-tag--ok,
+.gat-tag--success {
+  background: var(--gat-web-tag-ok-bg);
+  color: var(--gat-web-tag-ok-text);
+}
+
+.gat-tag--warn {
+  background: var(--gat-web-tag-warn-bg);
+  color: var(--gat-web-tag-warn-text);
+}
+
+.gat-tag--error,
+.gat-tag--danger {
+  background: var(--gat-web-tag-error-bg);
+  color: var(--gat-web-tag-error-text);
+}
+
 /* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
    Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
    Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
@@ -1455,6 +1493,24 @@
 .gat-mode-hc .gat-callout--error,
 .gat-mode-hc .gat-callout--danger {
   border-left-color: var(--gat-color-magenta);
+}
+
+/* HC fuer v2.1 Tag-Modifier (--ok/--success/--warn/--error/--danger). */
+
+.gat-mode-hc .gat-tag--ok,
+.gat-mode-hc .gat-tag--success,
+.gat-mode-hc .gat-tag--warn,
+.gat-mode-hc .gat-tag--error,
+.gat-mode-hc .gat-tag--danger {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border: 1px solid var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-tag--error,
+.gat-mode-hc .gat-tag--danger {
+  border-color: var(--gat-color-magenta);
+  color: var(--gat-color-magenta);
 }
 
 /* === Patterns =============================================================
