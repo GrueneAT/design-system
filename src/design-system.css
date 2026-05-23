@@ -246,9 +246,13 @@
 
 /* === Header / Navigation ================================================= */
 
+/* Weiße Brandbar mit grüner Akzentlinie — Web-Auslegung. Konsumenten, die
+   die v1.x-Dunkelgrün-Optik beibehalten möchten, setzen zusätzlich
+   .gat-header--dunkel (siehe weiter unten). */
 .gat-header {
-  background: var(--gat-color-primary);
-  color: var(--gat-color-on-primary);
+  background: var(--gat-web-surface);
+  border-bottom: 3px solid var(--gat-web-green);
+  box-shadow: 0 1px 3px rgba(31,38,28,.06);
 }
 
 .gat-header__inner {
@@ -256,24 +260,85 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: var(--gat-space-4);
-  max-width: var(--gat-container-max);
+  gap: var(--gat-space-3);
+  max-width: var(--gat-web-page-max);
   margin-inline: auto;
-  padding: var(--gat-space-4);
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+  padding-block: 0.85rem;
+}
+
+.gat-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
 }
 
 .gat-header__logo {
-  display: inline-block;
-  padding: var(--gat-space-3);
+  height: 56px;
+  width: auto;
+  display: block;
 }
 
-.gat-header__logo-mark {
-  display: block;
-  width: 2.5rem;
-  aspect-ratio: 150.32 / 132.07;
-  background-color: var(--gat-color-weiss);
-  -webkit-mask: url('assets/gruene-logo.svg') no-repeat center / contain;
-  mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+.gat-header__wordmark {
+  font-family: var(--gat-font-headline);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--gat-web-text);
+  letter-spacing: 0.01em;
+}
+
+.gat-header__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.gat-header__nav-list a {
+  font-family: var(--gat-font-headline);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--gat-web-green-deep);
+  text-decoration: none;
+}
+
+.gat-header__nav-list a:hover {
+  text-decoration: underline;
+}
+
+.gat-header__nav-current {
+  border-bottom: 2px solid var(--gat-web-green);
+  padding-bottom: 2px;
+}
+
+@media (max-width: 30rem) {
+  .gat-header__logo {
+    height: 46px;
+  }
+  .gat-header__wordmark {
+    font-size: 1.25rem;
+  }
+}
+
+/* Opt-in für v1.x-Optik — dunkelgrüne Brandbar wie pre-2.0. */
+.gat-header--dunkel {
+  background: var(--gat-color-primary);
+  border-bottom: none;
+  color: var(--gat-color-on-primary);
+  box-shadow: none;
+}
+
+.gat-header--dunkel .gat-header__wordmark {
+  color: var(--gat-color-weiss);
+}
+
+.gat-header--dunkel .gat-header__nav-list a {
+  color: var(--gat-color-weiss);
 }
 
 .gat-nav {

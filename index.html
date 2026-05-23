@@ -301,20 +301,24 @@
 <body id="top">
 
   <!-- Seitenkopf: dogfooded echte gat-Header-/Nav-Komponenten. Die Navigation
-       IST der Anchor-TOC — sie ist gleichzeitig gerendertes Beispiel. -->
+       IST der Anchor-TOC — sie ist gleichzeitig gerendertes Beispiel.
+       Weiße Brandbar (v2.0); v1.x-Optik via .gat-header--dunkel. -->
   <header class="gat-header">
     <div class="gat-header__inner">
-      <a class="gat-header__logo" href="#top" aria-label="Grüne AT Design System — Seitenanfang">
-        <span class="gat-header__logo-mark"></span>
+      <a class="gat-header__brand" href="#top" aria-label="Grüne AT Design System — Seitenanfang">
+        <img class="gat-header__logo" src="assets/gruene-logo.svg" alt="Die Grünen">
+        <span class="gat-header__wordmark">Design System</span>
       </a>
-      <nav class="gat-nav" aria-label="Abschnittsnavigation">
-        <a class="gat-nav__link gat-nav__link--active" href="#farben">Farben</a>
-        <a class="gat-nav__link" href="#typografie">Typografie</a>
-        <a class="gat-nav__link" href="#layout">Layout</a>
-        <a class="gat-nav__link" href="#komponenten">Komponenten</a>
-        <a class="gat-nav__link" href="#cd-layout">CD-Layout</a>
-        <a class="gat-nav__link" href="#spezifikation">Spezifikation</a>
-        <a class="gat-nav__link" href="#einbindung">Einbindung</a>
+      <nav class="gat-header__nav" aria-label="Abschnittsnavigation">
+        <ul class="gat-header__nav-list">
+          <li><a class="gat-header__nav-current" href="#farben">Farben</a></li>
+          <li><a href="#typografie">Typografie</a></li>
+          <li><a href="#layout">Layout</a></li>
+          <li><a href="#komponenten">Komponenten</a></li>
+          <li><a href="#cd-layout">CD-Layout</a></li>
+          <li><a href="#spezifikation">Spezifikation</a></li>
+          <li><a href="#einbindung">Einbindung</a></li>
+        </ul>
       </nav>
     </div>
   </header>
@@ -1065,27 +1069,59 @@
       <div class="doc-block">
         <h3 class="gat-subline">Header &amp; Navigation</h3>
         <p class="gat-fliesstext doc-lead">
-          Der Seitenkopf ganz oben auf dieser Seite IST das Live-Beispiel für
+          Der Seitenkopf ganz oben auf dieser Seite IST das Live-Beispiel für die
+          weiße Brandbar:
           <span class="doc-code">.gat-header</span>,
           <span class="doc-code">.gat-header__inner</span>,
-          <span class="doc-code">.gat-header__logo</span>,
-          <span class="doc-code">.gat-header__logo-mark</span>,
-          <span class="doc-code">.gat-nav</span>,
-          <span class="doc-code">.gat-nav__link</span> und
-          <span class="doc-code">.gat-nav__link--active</span>. Das Logo-SVG ist
-          monochrom dunkelgrün und wird per CSS-Maske auf Weiß umgefärbt; die
-          Navigation bricht auf schmalen Viewports um statt ein Hamburger-Menü zu
-          nutzen. Der aktive Link trägt die dauerhafte gelbe Unterstreichung,
-          Hover und Tastatur-Fokus zeigen sie temporär.
+          <span class="doc-code">.gat-header__brand</span>,
+          <span class="doc-code">.gat-header__logo</span> (echtes
+          <span class="doc-code">&lt;img&gt;</span>),
+          <span class="doc-code">.gat-header__wordmark</span>,
+          <span class="doc-code">.gat-header__nav-list</span> und
+          <span class="doc-code">.gat-header__nav-current</span>. Eine schmale
+          grüne Akzentlinie sitzt am unteren Rand; die Navigation bricht auf
+          schmalen Viewports um statt ein Hamburger-Menü zu nutzen.
         </p>
+        <p class="gat-fliesstext doc-lead">
+          v1.x-Konsumenten, die die dunkelgrüne Brandbar beibehalten möchten,
+          ergänzen den Opt-in-Modifier
+          <span class="doc-code">.gat-header--dunkel</span> &mdash; gleiches
+          Markup, dunkler Hintergrund, weißer Text.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage" style="display: block;">
+            <header class="gat-header gat-header--dunkel" style="border-radius: var(--gat-radius-md); overflow: hidden;">
+              <div class="gat-header__inner">
+                <a class="gat-header__brand" href="#komponenten">
+                  <span class="gat-header__wordmark">Design System (dunkel)</span>
+                </a>
+                <nav class="gat-header__nav" aria-label="Demo">
+                  <ul class="gat-header__nav-list">
+                    <li><a href="#komponenten">Start</a></li>
+                    <li><a href="#komponenten">Beispiel</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </header>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">.gat-header.gat-header--dunkel</span> &mdash;
+            opt-in für die v1.x-Optik (dunkelgrüne Brandbar, weißer Text).
+          </div>
+        </div>
         <div class="doc-codeblock">&lt;header class="gat-header"&gt;
   &lt;div class="gat-header__inner"&gt;
-    &lt;a class="gat-header__logo" href="#top"&gt;
-      &lt;span class="gat-header__logo-mark"&gt;&lt;/span&gt;
+    &lt;a class="gat-header__brand" href="#top"&gt;
+      &lt;img class="gat-header__logo"
+           src="https://grueneat.github.io/design-system/assets/gruene-logo.svg"
+           alt="Die Grünen"&gt;
+      &lt;span class="gat-header__wordmark"&gt;Tool-Name&lt;/span&gt;
     &lt;/a&gt;
-    &lt;nav class="gat-nav"&gt;
-      &lt;a class="gat-nav__link gat-nav__link--active" href="#farben"&gt;Farben&lt;/a&gt;
-      &lt;a class="gat-nav__link" href="#typografie"&gt;Typografie&lt;/a&gt;
+    &lt;nav class="gat-header__nav" aria-label="Hauptnavigation"&gt;
+      &lt;ul class="gat-header__nav-list"&gt;
+        &lt;li&gt;&lt;a class="gat-header__nav-current" href="#start"&gt;Start&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#kontakt"&gt;Kontakt&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
     &lt;/nav&gt;
   &lt;/div&gt;
 &lt;/header&gt;</div>
