@@ -1,7 +1,7 @@
 ---
 id: cjpfs
 title: Rueckflusskandidaten aus gemeindefinanzen-Web-Adaption (Iter 1-18)
-status: open
+status: done
 priority: medium
 labels:
 - discovery
