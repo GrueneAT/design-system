@@ -519,3 +519,116 @@
   background: var(--gat-color-accent);
   color: var(--gat-color-on-primary);
 }
+
+/* === Datenwerkzeug-Komponenten ============================================
+   Panels rahmen Inhaltsblöcke; Metric-Cards zeigen einzelne Kennzahlen mit
+   semantischer Akzentlinie. Beide nutzen die Web-Schicht. */
+
+.gat-panel {
+  display: block;
+  background: var(--gat-web-surface);
+  border: 1px solid var(--gat-web-hairline);
+  border-radius: var(--gat-web-radius-card);
+  box-shadow: var(--gat-web-shadow);
+  margin: var(--gat-space-4) 0;
+  overflow: hidden;
+}
+
+.gat-panel__head {
+  padding: var(--gat-space-3) var(--gat-space-3) var(--gat-space-2);
+  border-bottom: 1px solid var(--gat-web-hairline);
+}
+
+.gat-panel__head h3 {
+  margin: 0;
+}
+
+.gat-panel__note {
+  margin: var(--gat-space-1) 0 0;
+  font-size: var(--gat-text-small);
+  color: var(--gat-web-text-soft);
+  max-width: 70rem;
+}
+
+.gat-panel__head-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gat-space-3);
+}
+
+.gat-panel__head-row > h3 {
+  flex: 1 1 auto;
+}
+
+.gat-panel__body {
+  padding: var(--gat-space-3);
+}
+
+.gat-panel__body--table {
+  padding: 0;
+}
+
+.gat-panel__body > :first-child { margin-top: 0; }
+.gat-panel__body > :last-child  { margin-bottom: 0; }
+
+.gat-panel:fullscreen {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--gat-web-surface);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.gat-panel:fullscreen > .gat-panel__head { flex: none; }
+
+.gat-panel:fullscreen > .gat-panel__body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.gat-metric-card {
+  position: relative;
+  background: var(--gat-web-surface);
+  border: 1px solid var(--gat-web-hairline);
+  border-radius: var(--gat-web-radius-card);
+  box-shadow: var(--gat-web-shadow);
+  padding: var(--gat-space-3);
+  overflow: hidden;
+}
+
+.gat-metric-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--gat-metric-accent, var(--gat-web-green));
+}
+
+.gat-metric-card--ertrag  { --gat-metric-accent: var(--gat-web-chart-1); }
+.gat-metric-card--aufwand { --gat-metric-accent: var(--gat-web-chart-5); }
+.gat-metric-card--netto   { --gat-metric-accent: var(--gat-web-chart-7); }
+
+.gat-metric-card--hero {
+  background: var(--gat-web-green-tint);
+  --gat-metric-accent: var(--gat-web-green-deep);
+}
+
+.gat-metric-card__num {
+  font-size: var(--gat-text-h2);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  color: var(--gat-web-text);
+}
+
+.gat-metric-card__label {
+  font-size: var(--gat-text-small);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--gat-web-text-soft);
+}

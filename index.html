@@ -1252,6 +1252,92 @@
   </section>
 
   <!-- ================================================================== -->
+  <!-- Abschnitt 4b — Datenwerkzeug-Komponenten                            -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="datenwerkzeug" style="background: var(--gat-web-bg);">
+    <div class="gat-container">
+      <h2 class="gat-headline">Datenwerkzeug-Komponenten</h2>
+      <p class="gat-fliesstext doc-lead">
+        Bausteine für Tools mit langen Lesestrecken (Tabellen, Diagramme,
+        Auswertungen). Sie nutzen die <span class="doc-code">--gat-web-*</span>-
+        Schicht und stehen optisch deutlich ruhiger als die Marken-Karten.
+      </p>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Metric-Cards</h3>
+        <p class="gat-fliesstext doc-lead">
+          Einzelne Kennzahlen, mit semantischer Akzentlinie obenauf.
+          Vier Varianten: <span class="doc-code">--hero</span> (grüne
+          Tönung), <span class="doc-code">--ertrag</span>,
+          <span class="doc-code">--aufwand</span>,
+          <span class="doc-code">--netto</span>.
+        </p>
+        <div class="gat-grid">
+          <article class="gat-metric-card gat-metric-card--hero">
+            <div class="gat-metric-card__label">Nettoergebnis 2026</div>
+            <div class="gat-metric-card__num">+312 k €</div>
+          </article>
+          <article class="gat-metric-card gat-metric-card--ertrag">
+            <div class="gat-metric-card__label">Ertrag VA</div>
+            <div class="gat-metric-card__num">8,2 Mio €</div>
+          </article>
+          <article class="gat-metric-card gat-metric-card--aufwand">
+            <div class="gat-metric-card__label">Aufwand VA</div>
+            <div class="gat-metric-card__num">7,9 Mio €</div>
+          </article>
+          <article class="gat-metric-card gat-metric-card--netto">
+            <div class="gat-metric-card__label">Δ Plan/Ist</div>
+            <div class="gat-metric-card__num">−54 k €</div>
+          </article>
+        </div>
+        <div class="doc-codeblock">&lt;article class="gat-metric-card gat-metric-card--hero"&gt;
+  &lt;div class="gat-metric-card__label"&gt;Nettoergebnis 2026&lt;/div&gt;
+  &lt;div class="gat-metric-card__num"&gt;+312 k €&lt;/div&gt;
+&lt;/article&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Panel</h3>
+        <p class="gat-fliesstext doc-lead">
+          Rahmen für einen Inhaltsblock mit Kopf, Body und optionaler Note.
+          Body bekommt Padding; der Modifier
+          <span class="doc-code">__body--table</span> hebt das Padding für
+          randlose Tabellen wieder auf.
+        </p>
+        <section class="gat-panel">
+          <header class="gat-panel__head">
+            <div class="gat-panel__head-row">
+              <h3>Gemeindefinanzen 2026 — Voranschlag</h3>
+              <span class="doc-code">.gat-panel</span>
+            </div>
+            <p class="gat-panel__note">
+              Hinweis: alle Werte sind Demo-Daten. Real-Werte werden vom
+              Konsumenten-Tool nachgeladen.
+            </p>
+          </header>
+          <div class="gat-panel__body">
+            <p class="gat-fliesstext">
+              Der Body-Teil ist die Bühne für den eigentlichen Inhalt:
+              Tabellen, Diagramme, Listen, alles. Erstes und letztes Kind
+              werden automatisch ohne zusätzlichen Außenabstand gerendert.
+            </p>
+          </div>
+        </section>
+        <div class="doc-codeblock">&lt;section class="gat-panel"&gt;
+  &lt;header class="gat-panel__head"&gt;
+    &lt;div class="gat-panel__head-row"&gt;
+      &lt;h3&gt;Titel&lt;/h3&gt;
+      &lt;span&gt;Aktion&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;p class="gat-panel__note"&gt;Optionale Note.&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;div class="gat-panel__body"&gt;Body-Inhalt&lt;/div&gt;
+&lt;/section&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
   <!-- Abschnitt 5 — CD-Layout-Prinzipien                                  -->
   <!-- ================================================================== -->
   <section class="gat-section doc-section-alt" id="cd-layout">
