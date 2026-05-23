@@ -1,4 +1,181 @@
-# Migration v1.x → v2.0
+# Migration
+
+Die Anleitung gliedert sich nach Release. Konsumenten lesen den Abschnitt
+zu dem Sprung, der gerade ansteht — alle früheren Hinweise gelten weiter.
+
+- [v2.0 → v2.1](#v20--v21) — strikt additiv, keine Breaking Changes.
+- [v1.x → v2.0](#v1x--v20) — Major, optische Änderungen am Header und
+  am Hellgrün-Wert.
+
+---
+
+## v2.0 → v2.1
+
+**Strikt additiv. Konsumenten brauchen nichts zu ändern.** v2.1 ergänzt
+vier Komponentenfamilien und die zugehörigen Web-Tokens; alle v2.0-Token
+und -Klassen bleiben werteweise unverändert. Wer aktuell `.gat-callout`,
+`.gat-tag--neutral` oder `.gat-tag--info` setzt, sieht weiterhin denselben
+Stil — die neuen Modifier sind reine Ergänzung.
+
+### Was Konsumenten **nicht** ändern müssen
+
+- CSS-URL bleibt:
+  `https://grueneat.github.io/design-system/design-system.css`
+- Alle v2.0-Klassen, Tokens und Selektoren bleiben unverändert.
+- Kein `npm install` auf Konsumenten-Seite, kein Build-Schritt.
+- Optik bestehender Pages bleibt identisch — `.gat-callout` ohne Modifier
+  rendert visuell weiter wie v2.0 (= info).
+
+### Was Konsumenten **neu nutzen können**
+
+#### Form-Primitives — `.gat-input`-Familie
+
+Strikt additiv. Native HTML-Elemente bekommen die Klasse direkt; das DS
+liefert Optik plus States (default / hover / focus-visible / disabled /
+readonly / invalid). Verhalten (Validierung, Submit) baut der Konsument
+selbst.
+
+```html
+<div class="gat-field">
+  <label class="gat-field__label" for="email">E-Mail-Adresse</label>
+  <input class="gat-input" id="email" type="email"
+         placeholder="name@example.at">
+  <span class="gat-field__hint">Wir nutzen die Adresse nur für Rückfragen.</span>
+</div>
+```
+
+Weitere Elemente:
+
+- `.gat-select`, `.gat-textarea`, `.gat-range` — gleiche Klassen-Optik.
+- `.gat-checkbox`, `.gat-radio` — native Inputs mit `accent-color`.
+- `.gat-check` — Inline-Label-Wrapper für Checkbox/Radio.
+- `.gat-radio-group` (`--inline` für horizontale Anordnung) — Group-
+  Wrapper für mehrere Radios.
+
+**Invalid-State** wird per `aria-invalid="true"` oder `.is-invalid`
+ausgelöst. Beide Schreibweisen funktionieren parallel; `aria-invalid`
+ist die a11y-vorzugsweise.
+
+**Token-Familie** (alle überschreibbar):
+`--gat-web-input-bg`, `-border`, `-border-focus`, `-border-invalid`,
+`-text`, `-placeholder`, `-radius`, `-padding-x`, `-padding-y`,
+`-disabled-bg`, `-disabled-text`.
+
+#### Modal — `.gat-modal` über natives `<dialog>`
+
+Opt-in-Klasse für das native `<dialog>`-Element. Esc und Backdrop-Klick
+schließen das Dialog ohne weiteren Code; der Konsument ruft `showModal()`
+zum Öffnen und `.close()` zum programmatischen Schließen auf.
+
+```html
+<button type="button" onclick="document.getElementById('m').showModal()">
+  Öffnen
+</button>
+
+<dialog class="gat-modal" id="m">
+  <div class="gat-modal__head">
+    <h2 class="gat-modal__title">Titel</h2>
+    <button type="button" class="gat-modal__close" aria-label="Schließen"
+            onclick="this.closest('dialog').close()">×</button>
+  </div>
+  <div class="gat-modal__body">
+    <p>Inhalt des Modals.</p>
+  </div>
+  <div class="gat-modal__actions">
+    <button type="button" class="gat-btn gat-btn--secondary"
+            onclick="this.closest('dialog').close()">Abbrechen</button>
+    <button type="button" class="gat-btn gat-btn--primary"
+            onclick="this.closest('dialog').close()">Bestätigen</button>
+  </div>
+</dialog>
+```
+
+**Modifier**: `.gat-modal--blur` (Backdrop-Blur), `--wide`, `--narrow`.
+
+**Empfohlenes Pattern für Backdrop-Click-Close**:
+
+```js
+dialog.addEventListener('click', (e) => {
+  const r = dialog.getBoundingClientRect();
+  if (e.clientX < r.left || e.clientX > r.right ||
+      e.clientY < r.top  || e.clientY > r.bottom) {
+    dialog.close();
+  }
+});
+```
+
+**Fokus-Trap** liefert `<dialog>` mit `showModal()` nativ — kein eigener
+Trap-Code nötig.
+
+**Token-Familie**: `--gat-web-modal-bg`, `-backdrop`, `-shadow`, `-radius`.
+
+#### Callout-Modifier (semantisch)
+
+```html
+<aside class="gat-callout gat-callout--warn">…</aside>
+<aside class="gat-callout gat-callout--error">…</aside>
+<aside class="gat-callout gat-callout--success">…</aside>
+<aside class="gat-callout gat-callout--legal">…</aside>
+```
+
+`.gat-callout--info` ist visuell identisch zum unbenannten
+`.gat-callout`, aber semantisch eindeutig. `.gat-callout--danger` ist
+ein Alias für `--error`.
+
+Optionaler Icon-Slot:
+
+```html
+<aside class="gat-callout gat-callout--warn">
+  <p><span class="gat-callout__icon"><!-- SVG --></span>
+     <strong>Warnung:</strong> …</p>
+</aside>
+```
+
+Das DS liefert **keine** Icons — der Konsument inseriert ein eigenes
+SVG (oder einen Buchstaben).
+
+**Token-Familie**:
+`--gat-web-callout-{info,warn,error,success,legal}-{bg,border,text}`.
+
+#### Tag-Modifier (semantisch)
+
+```html
+<span class="gat-tag gat-tag--ok">OK</span>
+<span class="gat-tag gat-tag--success">Erfolg</span>
+<span class="gat-tag gat-tag--warn">Warnung</span>
+<span class="gat-tag gat-tag--error">Fehler</span>
+<span class="gat-tag gat-tag--danger">Danger</span>
+```
+
+`.gat-tag--success` ist Alias für `--ok`; `--danger` Alias für `--error`.
+Die bestehenden Modifier `--neutral`, `--info`, `--pflicht`, `--risiko`
+bleiben unverändert.
+
+**Token-Familie**:
+`--gat-web-tag-{ok,warn,error,neutral,info}-{bg,text}`.
+
+### HC-Modus
+
+Alle neuen Komponenten haben HC-Pendants. Wer `.gat-mode-hc` auf `<body>`
+setzt, bekommt:
+
+- Form-Inputs auf Anthrazit + Gelb-Border, Magenta-Border für `invalid`.
+- Modal auf Anthrazit-Fläche mit Gelb-Rahmen, kein Schatten.
+- Callout-Varianten alle auf Anthrazit + Gelb; warn/error/danger mit
+  Magenta-Linksrand.
+- Tag-Varianten alle auf Anthrazit + Gelb-Border; error/danger mit
+  Magenta-Border und -Text.
+
+### Folgewellen (nicht Teil von v2.1)
+
+- **v2.2** geplant: `.gat-table`, `.gat-dropzone`, `.gat-toast`,
+  `.gat-toolbar`.
+- **v2.3** geplant: `.gat-chip`, `.gat-combobox`, `.gat-breadcrumb`,
+  `.gat-prose`, `.gat-step-indicator`.
+
+---
+
+## v1.x → v2.0
 
 v2.0 ist ein Major-Release: das Stylesheet ist jetzt Tailwind-v4-gebaut,
 und ein paar Werte/Markups ändern sich sichtbar. Die `<link>`-URL bleibt

@@ -12,6 +12,70 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-05-23
+
+**Minor Release.** Strikt additiv — keine Breaking Changes. Ergänzt vier
+Komponentenfamilien (Form-Primitives, Modal, Callout-Modifier,
+Tag-Modifier) plus die zugehörige Web-Token-Familie. Alle v2.0-Token und
+-Klassen bleiben werteweise unverändert; bestehende Konsumenten brauchen
+nichts zu ändern. Hintergrund siehe Cross-Repo-Audit
+(`.issues/m6dhz-…/notes/SYNTHESIS.md`).
+
+### Added
+
+- **Form-Primitives** (`.gat-input`, `.gat-select`, `.gat-textarea`,
+  `.gat-checkbox`, `.gat-radio`, `.gat-range`) mit States default /
+  hover / focus-visible / disabled / readonly / invalid
+  (`aria-invalid="true"` oder `.is-invalid`).
+- `.gat-field` mit Subelementen `__label`, `__hint`, `__error` —
+  optionaler Wrapper für Label-Layout. `.gat-check` als Inline-Label
+  für Checkbox/Radio; `.gat-radio-group` (`--inline` für horizontale
+  Anordnung) als Group-Wrapper.
+- **Modal**: opt-in-Klasse `.gat-modal` für das native
+  `<dialog>`-Element, mit Subelementen `__head` / `__title` / `__close`
+  / `__body` / `__actions` (Sticky-Footer). Modifier `--blur`
+  (Backdrop-Blur), `--wide`, `--narrow`. Keine DS-JS-Logik —
+  Konsumenten rufen `showModal()`/`close()` selbst auf; Esc und
+  Backdrop-Klick schließen nativ.
+- **Callout-Modifier** (semantische Familie): `.gat-callout--info`
+  (Default-Stil, neu explizit), `--warn`, `--error` / `--danger`,
+  `--success`, `--legal`. Optionales Subelement
+  `.gat-callout__icon` als reiner Slot.
+- **Tag-Modifier** (semantische Ergänzung): `.gat-tag--ok` /
+  `--success`, `--warn`, `--error` / `--danger`. Die bestehenden
+  `--neutral` / `--info` / `--pflicht` / `--risiko` bleiben
+  unverändert.
+- HC-Variant (`.gat-mode-hc`) für alle neuen Komponenten —
+  Anthrazit + Gelb + Magenta-Fehlerfarbe.
+- Print-Rules: `.gat-modal { display: none }`; `break-inside: avoid`
+  auf allen Callout-Varianten.
+- Style-Guide (`index.html`): neue Sections „Formulare" und „Modal";
+  erweiterte „Callout"- und „Tag"-Sections mit allen Varianten.
+- `examples/minimal.html`: zusätzlicher Form-Block, Callout-Variant
+  und Modal-Demo.
+
+### Token-Notes
+
+- Neue Token-Familie `--gat-web-input-*` (bg, border, border-focus,
+  border-invalid, text, placeholder, radius, padding-x, padding-y,
+  disabled-bg, disabled-text).
+- Neue Token-Familie `--gat-web-modal-*` (bg, backdrop, shadow,
+  radius) plus globaler Helfer `--gat-web-shadow-elevated`.
+- Neue Token-Familie `--gat-web-callout-{info,warn,error,success,
+  legal}-{bg,border,text}` — fünfteilige semantische Trios.
+- Neue Token-Familie `--gat-web-tag-{ok,warn,error,neutral,info}-{bg,
+  text}` — eigenständig von Callout, weil Padding/Schrift abweichen
+  können.
+- Alle v2.0-Token (`--gat-color-*`, `--gat-web-*`-Bestand) bleiben
+  werteweise unverändert.
+
+### Migration
+
+Strikt additiv. Konsumenten, die heute schon `.gat-callout` oder
+`.gat-tag--neutral`/`.gat-tag--info` nutzen, sehen keinen Unterschied.
+Wer die neuen Komponenten nutzen möchte, findet Schritt-für-Schritt-
+Hinweise in [MIGRATION.md](MIGRATION.md) — Abschnitt „v2.0 → v2.1".
+
 ## [2.0.0] - 2026-05-23
 
 **Major Release.** Das DS ist nun Tailwind-v4-gebaut, mit additiver
