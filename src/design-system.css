@@ -73,6 +73,38 @@
   --text-gat-subline: 1.25rem;
   --text-gat-copy:    1rem;
   --text-gat-small:   0.8rem;
+
+  /* === Web-Schicht — entsättigte, web-taugliche Auslegung ================
+     Zusätzlich zur Marken-Schicht. Konsumenten wählen, was sie binden:
+     Marken-Tokens (--gat-color-*) für Plakat-/Druck-Tools, Web-Tokens
+     (--gat-web-*) für Datenwerkzeuge mit langen Lesestrecken. */
+  --color-gat-web-bg:           #f3f5f0;
+  --color-gat-web-surface:      #ffffff;
+  --color-gat-web-surface-sunk: #f7f9f4;
+  --color-gat-web-hairline:     #e1e4db;
+  --color-gat-web-text:         #23271f;
+  --color-gat-web-text-soft:    #5e6358;
+  --color-gat-web-text-mute:    #6b6f63;
+  --color-gat-web-clay-text:    #9c5a38;
+  --color-gat-web-green-deep:   #2c6e40;
+  --color-gat-web-green:        #4a8a52;
+  --color-gat-web-green-tint:   #e7efe3;
+  --color-gat-web-yellow:       #ecd64a;
+
+  /* 8-Ton-Chart-Palette — kategorial, niedrige Sättigung. Semantische
+     Rollen in der Doku. Reihenfolge identisch zu gat-charts.js PALETTE. */
+  --color-gat-web-chart-1: #3f7d4f; /* Erträge / primär grün */
+  --color-gat-web-chart-2: #6ba368; /* Personal-Alt / sekundär grün */
+  --color-gat-web-chart-3: #4f93a0; /* Personal / Teal */
+  --color-gat-web-chart-4: #c9a24b; /* Sachaufwand / Ocker */
+  --color-gat-web-chart-5: #b9744f; /* Aufwand / Risiko / Terrakotta */
+  --color-gat-web-chart-6: #9c5b7d; /* Transfers / Pflaume */
+  --color-gat-web-chart-7: #5d6b8a; /* Nettoergebnis / Schiefer */
+  --color-gat-web-chart-8: #8a8f7d; /* Sonstige / neutrales Olivgrau */
+
+  /* Web-Radien — flacher als Marken-Radien, weil Datenwerkzeug-Optik */
+  --radius-gat-web-control: 6px;
+  --radius-gat-web-card:    10px;
 }
 
 /* ========================================================================= *
@@ -137,6 +169,39 @@
     /* Breakpoints — nur zur Doku, @media kann kein var() lesen */
     --gat-breakpoint-sm: 36rem;
     --gat-breakpoint-md: 48rem;
+
+    /* === Web-Schicht-Aliase ============================================
+       Konsumenten-stabile Namen für die entsättigte Web-Auslegung. */
+    --gat-web-bg:           var(--color-gat-web-bg);
+    --gat-web-surface:      var(--color-gat-web-surface);
+    --gat-web-surface-sunk: var(--color-gat-web-surface-sunk);
+    --gat-web-hairline:     var(--color-gat-web-hairline);
+    --gat-web-text:         var(--color-gat-web-text);
+    --gat-web-text-soft:    var(--color-gat-web-text-soft);
+    --gat-web-text-mute:    var(--color-gat-web-text-mute);
+    --gat-web-clay-text:    var(--color-gat-web-clay-text);
+    --gat-web-green-deep:   var(--color-gat-web-green-deep);
+    --gat-web-green:        var(--color-gat-web-green);
+    --gat-web-green-tint:   var(--color-gat-web-green-tint);
+    --gat-web-yellow:       var(--color-gat-web-yellow);
+
+    --gat-web-chart-1: var(--color-gat-web-chart-1);
+    --gat-web-chart-2: var(--color-gat-web-chart-2);
+    --gat-web-chart-3: var(--color-gat-web-chart-3);
+    --gat-web-chart-4: var(--color-gat-web-chart-4);
+    --gat-web-chart-5: var(--color-gat-web-chart-5);
+    --gat-web-chart-6: var(--color-gat-web-chart-6);
+    --gat-web-chart-7: var(--color-gat-web-chart-7);
+    --gat-web-chart-8: var(--color-gat-web-chart-8);
+
+    --gat-web-shadow:        0 1px 2px rgba(31,38,28,.05),
+                             0 4px 14px rgba(31,38,28,.05);
+    --gat-web-page-max:      min(2040px, 94vw);
+    --gat-web-radius-control: var(--radius-gat-web-control);
+    --gat-web-radius-card:    var(--radius-gat-web-card);
+    --gat-web-focus-ring:    0 0 0 3px color-mix(in srgb,
+                                       var(--gat-web-green) 38%, transparent);
+    --gat-web-focus-offset:  2px;
   }
 }
 

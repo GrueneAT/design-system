@@ -501,6 +501,211 @@
   </section>
 
   <!-- ================================================================== -->
+  <!-- Abschnitt 1b — Web-Layer-Tokens                                     -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="web-tokens">
+    <div class="gat-container">
+      <h2 class="gat-headline">Web-Layer-Tokens</h2>
+      <p class="gat-fliesstext doc-lead">
+        Eine additive, entsättigte Schicht für Datenwerkzeuge mit langen
+        Lesestrecken (Tabellen, Diagramme, Auswertungen). Die Marken-Tokens
+        bleiben unverändert; Konsumenten wählen, welche Schicht sie binden.
+        Alle Werte stehen unter <span class="doc-code">--gat-web-*</span>.
+      </p>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Flächen &amp; Trennlinien</h3>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-bg);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#f3f5f0</span>
+              <span class="doc-code">--gat-web-bg</span>
+              <span class="doc-swatch__usage">Seiten-Hintergrund.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-surface);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#ffffff</span>
+              <span class="doc-code">--gat-web-surface</span>
+              <span class="doc-swatch__usage">Kartenfläche / Panel.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-surface-sunk);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#f7f9f4</span>
+              <span class="doc-code">--gat-web-surface-sunk</span>
+              <span class="doc-swatch__usage">Vertiefte Fläche (Tag-Hintergrund, Filter-Leisten).</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-hairline);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#e1e4db</span>
+              <span class="doc-code">--gat-web-hairline</span>
+              <span class="doc-swatch__usage">Trennlinien / Rahmen / Gitter.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Text-Töne (Web-Auslegung)</h3>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-text);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#23271f</span>
+              <span class="doc-code">--gat-web-text</span>
+              <span class="doc-swatch__usage">Standard-Textfarbe.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-text-soft);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#5e6358</span>
+              <span class="doc-code">--gat-web-text-soft</span>
+              <span class="doc-swatch__usage">Sekundär-Text, Sublines.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-text-mute);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#6b6f63</span>
+              <span class="doc-code">--gat-web-text-mute</span>
+              <span class="doc-swatch__usage">Schwächste Textebene; AA auf allen drei Surfaces.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-clay-text);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#9c5a38</span>
+              <span class="doc-code">--gat-web-clay-text</span>
+              <span class="doc-swatch__usage">Akzent-Text (Hinweise, Pflicht). AA auf Weiß: 5.34.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Web-Grüns &amp; Gelb</h3>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-green-deep);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#2c6e40</span>
+              <span class="doc-code">--gat-web-green-deep</span>
+              <span class="doc-swatch__usage">Akzent dunkel, Fokus-Ring, primäre Marken-Akzente.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-green);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#4a8a52</span>
+              <span class="doc-code">--gat-web-green</span>
+              <span class="doc-swatch__usage">Akzent mittel; Header-Linie, Aktiv-Indikatoren.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-green-tint);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#e7efe3</span>
+              <span class="doc-code">--gat-web-green-tint</span>
+              <span class="doc-swatch__usage">Sanfte grüne Fläche (Callouts, Hero, Hover).</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-yellow);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#ecd64a</span>
+              <span class="doc-code">--gat-web-yellow</span>
+              <span class="doc-swatch__usage">Web-tauglicher Gelb-Akzent (entsättigt vs. Marken-Gelb).</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">8-Ton-Chart-Palette</h3>
+        <p class="gat-fliesstext doc-lead">
+          Kategoriale Palette für Datenvisualisierung. Niedrige Sättigung
+          für lange Lesestrecken, semantisch belegt. Identische Reihenfolge
+          in <span class="doc-code">gat-charts.js</span> als
+          <span class="doc-code">PALETTE</span>.
+        </p>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-1);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#3f7d4f</span>
+              <span class="doc-code">--gat-web-chart-1</span>
+              <span class="doc-swatch__usage">Erträge / primär grün.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-2);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#6ba368</span>
+              <span class="doc-code">--gat-web-chart-2</span>
+              <span class="doc-swatch__usage">Personal-Alt / sekundär grün.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-3);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#4f93a0</span>
+              <span class="doc-code">--gat-web-chart-3</span>
+              <span class="doc-swatch__usage">Personal / Teal.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-4);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#c9a24b</span>
+              <span class="doc-code">--gat-web-chart-4</span>
+              <span class="doc-swatch__usage">Sachaufwand / Ocker.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-5);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#b9744f</span>
+              <span class="doc-code">--gat-web-chart-5</span>
+              <span class="doc-swatch__usage">Aufwand / Risiko / Terrakotta.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-6);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#9c5b7d</span>
+              <span class="doc-code">--gat-web-chart-6</span>
+              <span class="doc-swatch__usage">Transfers / Pflaume.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-7);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#5d6b8a</span>
+              <span class="doc-code">--gat-web-chart-7</span>
+              <span class="doc-swatch__usage">Nettoergebnis / Schiefer.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-8);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#8a8f7d</span>
+              <span class="doc-code">--gat-web-chart-8</span>
+              <span class="doc-swatch__usage">Sonstige / neutrales Olivgrau.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
   <!-- Abschnitt 2 — Typografie                                            -->
   <!-- ================================================================== -->
   <section class="gat-section" id="typografie">
