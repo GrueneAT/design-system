@@ -1649,6 +1649,118 @@
   </section>
 
   <!-- ================================================================== -->
+  <!-- Abschnitt 4f — Diagramme (gat-charts.js)                             -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="diagramme">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Diagramme</h2>
+        <p>
+          Chart-Palette und ECharts-Helfer als ES-Modul. Konsumenten
+          importieren das Modul direkt von der Pages-URL — kein npm,
+          kein Build-Schritt, kein Vendoring. ECharts selbst bringen
+          Konsumenten via eigenem CDN-Import mit.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Chart-Palette</h3>
+        <p class="gat-fliesstext doc-lead">
+          Acht kategoriale Farben für Datenvisualisierung — identische
+          Reihenfolge in CSS (<span class="doc-code">--gat-web-chart-1..8</span>)
+          und JS (<span class="doc-code">PALETTE[0..7]</span>). Die
+          Swatches sind direkt aus dem Token-Layer gerendert.
+        </p>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-1);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#3f7d4f</span>
+              <span class="doc-code">PALETTE[0]</span>
+              <span class="doc-swatch__usage">Erträge / primär grün.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-2);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#6ba368</span>
+              <span class="doc-code">PALETTE[1]</span>
+              <span class="doc-swatch__usage">Personal-Alt / sekundär grün.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-3);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#4f93a0</span>
+              <span class="doc-code">PALETTE[2]</span>
+              <span class="doc-swatch__usage">Personal / Teal.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-4);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#c9a24b</span>
+              <span class="doc-code">PALETTE[3]</span>
+              <span class="doc-swatch__usage">Sachaufwand / Ocker.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-5);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#b9744f</span>
+              <span class="doc-code">PALETTE[4]</span>
+              <span class="doc-swatch__usage">Aufwand / Risiko.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-6);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#9c5b7d</span>
+              <span class="doc-code">PALETTE[5]</span>
+              <span class="doc-swatch__usage">Transfers.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-7);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#5d6b8a</span>
+              <span class="doc-code">PALETTE[6]</span>
+              <span class="doc-swatch__usage">Nettoergebnis.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-8);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#8a8f7d</span>
+              <span class="doc-code">PALETTE[7]</span>
+              <span class="doc-swatch__usage">Sonstige.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Import-Beispiel</h3>
+        <p class="gat-fliesstext doc-lead">
+          Das Modul <span class="doc-code">gat-charts.js</span> wird vom
+          Pages-Workflow als statische Datei mitgeliefert. Konsumenten
+          importieren es direkt aus dem Konsumenten-JS:
+        </p>
+        <div class="doc-codeblock">import {
+  PALETTE, INK, LABEL_SIZE, AXIS_SIZE,
+  BAR_MAX_DICHT, BAR_MAX_WEIT,
+  tip, legende, grid, planIstLegende
+} from 'https://grueneat.github.io/design-system/gat-charts.js';</div>
+        <p class="gat-fliesstext doc-lead">
+          ECharts selbst wird unabhängig vom Konsumenten geladen (eigener
+          CDN-Import). Das DS bündelt ECharts bewusst nicht, um
+          Vendoring zu vermeiden und Versions-Drift zu erlauben.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
   <!-- Abschnitt 5 — CD-Layout-Prinzipien                                  -->
   <!-- ================================================================== -->
   <section class="gat-section doc-section-alt" id="cd-layout">
