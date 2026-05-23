@@ -1,5 +1,378 @@
 /*
- * Grüne AT Design System — Tailwind-Eingang
- * Build: npm run build  ->  ../design-system.css
+ * Grüne AT Design System
+ * -----------------------
+ * Gemeinsames Stylesheet für alle Grüne-AT-Repos und -Tools.
+ * Stellt konsistente Farben, Typografie und Abstände aus dem grünen
+ * Corporate Design bereit.
+ *
+ * Diese Datei ist der Tailwind-v4-Eingang. Der Build (`npm run build`)
+ * rendert sie nach `../design-system.css` im Repo-Root. Konsumenten binden
+ * nur das gerenderte Stylesheet via Pages-URL ein.
+ *
+ * Kanonische URL:
+ *   https://grueneat.github.io/design-system/design-system.css
+ *
+ * Lizenz: CC BY 4.0 (Creative Commons Attribution 4.0 International).
+ * Urheber: Die Grünen.
  */
+
+/* Schriften: Barlow Semi Condensed + Vollkorn werden direkt hier per @import
+   geladen, damit jedes konsumierende Tool die Schriften automatisch erhält.
+   @import muss vor allen anderen Regeln stehen — der Datei-Header-Kommentar
+   darüber zählt nicht als Regel. Gewichte auf die tatsächlich von den
+   Komponenten genutzten Schnitte reduziert: Barlow 400 (Copy), 600/700/800
+   (Subline/UI/Headline), 900 (Stoerer) inkl. Kursiv; Vollkorn 400 und
+   900-Kursiv (Hervorhebung). */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,900&family=Vollkorn:ital,wght@0,400;0,900&display=swap');
+
 @import "tailwindcss";
+
+/* ========================================================================= *
+ * TOKENS — Tailwind v4 @theme                                                 *
+ * Tokens stehen unter Tailwind-Namespace-Präfixen (--color-, --spacing-,      *
+ * --text-, --font-, --radius-). Tailwind emittiert sie automatisch unter      *
+ * :root; der @layer-base-Alias-Block (weiter unten) spiegelt sie auf die      *
+ * konsumenten-stabilen --gat-*-Namen.                                         *
+ * ========================================================================= */
+
+@theme {
+  /* === Marken-Farben — 1:1 aus dem CD-Quickguide ========================= */
+  --color-gat-dunkelgruen: #257639;
+  --color-gat-hellgruen:   #56af31;
+  --color-gat-gelb:        #ffed00;
+  --color-gat-magenta:     #e6007e; /* HEX maßgeblich, PDF-RGB 225/0/120 inkonsistent */
+
+  /* Neutrals — Web-Ergänzung (Weiß + dunkler Textton) */
+  --color-gat-weiss:     #ffffff;
+  --color-gat-anthrazit: #1d1d1b;
+
+  /* === Abstände — modulare Skala, Basis 0.25rem ========================== */
+  --spacing-gat-1: 0.25rem;
+  --spacing-gat-2: 0.5rem;
+  --spacing-gat-3: 1rem;
+  --spacing-gat-4: 1.5rem;
+  --spacing-gat-5: 2rem;
+  --spacing-gat-6: 3rem;
+
+  /* === Radien ============================================================ */
+  --radius-gat-sm: 0.25rem;
+  --radius-gat-md: 0.5rem;
+
+  /* === Schrift =========================================================== */
+  --font-gat-headline: 'Barlow Semi Condensed', sans-serif;
+  --font-gat-copy:     'Barlow Semi Condensed', sans-serif;
+  --font-gat-emphasis: 'Vollkorn', serif;
+
+  /* === Typo-Skala — Basis 1rem, Ratio 1,25 =============================== */
+  --text-gat-h1:      2.441rem;
+  --text-gat-h2:      1.953rem;
+  --text-gat-h3:      1.563rem;
+  --text-gat-subline: 1.25rem;
+  --text-gat-copy:    1rem;
+  --text-gat-small:   0.8rem;
+}
+
+/* ========================================================================= *
+ * KONSUMENTEN-STABILE ALIASES                                                 *
+ * Der ganze v1.x-Namensraum --gat-* zeigt auf die Tailwind-emittierten         *
+ * Werte. Komponenten referenzieren --gat-*; die Namen ändern sich in 2.0       *
+ * nicht. Werte können sich in einzelnen Tasks ändern, ohne dass Konsumenten    *
+ * etwas umbenennen müssen.                                                    *
+ * ========================================================================= */
+
+@layer base {
+  :root {
+    /* Marken-Farben */
+    --gat-color-dunkelgruen: var(--color-gat-dunkelgruen);
+    --gat-color-hellgruen:   var(--color-gat-hellgruen);
+    --gat-color-gelb:        var(--color-gat-gelb);
+    --gat-color-magenta:     var(--color-gat-magenta);
+    --gat-color-weiss:       var(--color-gat-weiss);
+    --gat-color-anthrazit:   var(--color-gat-anthrazit);
+
+    /* Semantische Aliase */
+    --gat-color-primary:      var(--gat-color-dunkelgruen);
+    --gat-color-secondary:    var(--gat-color-hellgruen);
+    --gat-color-accent:       var(--gat-color-magenta);
+    --gat-color-highlight:    var(--gat-color-gelb);
+    --gat-color-text:         var(--gat-color-anthrazit);
+    --gat-color-surface:      var(--gat-color-weiss);
+    --gat-color-on-primary:   var(--gat-color-weiss);    /* Text auf Dunkelgrün */
+    --gat-color-on-secondary: var(--gat-color-anthrazit); /* Text auf Hellgrün — Weiß auf Hellgrün fiele durch den Kontrast */
+
+    /* Schrift */
+    --gat-font-headline: var(--font-gat-headline);
+    --gat-font-copy:     var(--font-gat-copy);
+    --gat-font-emphasis: var(--font-gat-emphasis);
+
+    /* Typo-Skala */
+    --gat-text-h1:      var(--text-gat-h1);
+    --gat-text-h2:      var(--text-gat-h2);
+    --gat-text-h3:      var(--text-gat-h3);
+    --gat-text-subline: var(--text-gat-subline);
+    --gat-text-copy:    var(--text-gat-copy);
+    --gat-text-small:   var(--text-gat-small);
+
+    /* Zeilenabstände — Multiplikatoren aus dem CD-Quickguide */
+    --gat-leading-headline: 0.9;
+    --gat-leading-copy:     1.3;
+
+    /* Abstände */
+    --gat-space-1: var(--spacing-gat-1);
+    --gat-space-2: var(--spacing-gat-2);
+    --gat-space-3: var(--spacing-gat-3);
+    --gat-space-4: var(--spacing-gat-4);
+    --gat-space-5: var(--spacing-gat-5);
+    --gat-space-6: var(--spacing-gat-6);
+
+    /* Radien & Layout-Maße */
+    --gat-radius-sm:     var(--radius-gat-sm);
+    --gat-radius-md:     var(--radius-gat-md);
+    --gat-border-width:  2px;
+    --gat-container-max: 72rem;
+
+    /* Breakpoints — nur zur Doku, @media kann kein var() lesen */
+    --gat-breakpoint-sm: 36rem;
+    --gat-breakpoint-md: 48rem;
+  }
+}
+
+/* ========================================================================= *
+ * KOMPONENTEN                                                                 *
+ * Flache, einklassige Selektoren mit dem Prefix .gat- — keine nackten          *
+ * Tag-Selektoren. Jeder Wert verweist auf ein --gat--Token.                    *
+ * ========================================================================= */
+
+/* === Layout / Seitenstruktur ============================================= */
+
+.gat-container {
+  max-width: var(--gat-container-max);
+  margin-inline: auto;
+  padding-inline: var(--gat-space-4);
+}
+
+.gat-grid {
+  display: grid;
+  gap: var(--gat-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.gat-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.gat-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 36rem) {
+  .gat-grid--2,
+  .gat-grid--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gat-section {
+  padding-block: var(--gat-space-6);
+}
+
+/* === Header / Navigation ================================================= */
+
+.gat-header {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
+
+.gat-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--gat-space-4);
+  max-width: var(--gat-container-max);
+  margin-inline: auto;
+  padding: var(--gat-space-4);
+}
+
+.gat-header__logo {
+  display: inline-block;
+  padding: var(--gat-space-3);
+}
+
+.gat-header__logo-mark {
+  display: block;
+  width: 2.5rem;
+  aspect-ratio: 150.32 / 132.07;
+  background-color: var(--gat-color-weiss);
+  -webkit-mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+  mask: url('assets/gruene-logo.svg') no-repeat center / contain;
+}
+
+.gat-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gat-space-4);
+  align-items: center;
+}
+
+.gat-nav__link {
+  font-family: var(--gat-font-copy);
+  font-weight: 600;
+  color: inherit;
+  text-decoration: none;
+  padding-bottom: var(--gat-space-1);
+  border-bottom: var(--gat-border-width) solid transparent;
+}
+
+.gat-nav__link:hover,
+.gat-nav__link:focus-visible {
+  border-bottom-color: var(--gat-color-highlight);
+}
+
+.gat-nav__link--active {
+  border-bottom-color: var(--gat-color-highlight);
+}
+
+/* === Typografie ========================================================== */
+
+.gat-headline {
+  font-family: var(--gat-font-headline);
+  font-weight: 900;
+  font-size: var(--gat-text-h1);
+  line-height: var(--gat-leading-headline);
+  color: var(--gat-color-text);
+}
+
+.gat-subline {
+  font-family: var(--gat-font-headline);
+  font-weight: 600;
+  font-size: var(--gat-text-subline);
+  line-height: var(--gat-leading-headline);
+  color: var(--gat-color-text);
+}
+
+.gat-fliesstext {
+  font-family: var(--gat-font-copy);
+  font-weight: 400;
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-color-text);
+}
+
+.gat-emphasis {
+  font-family: var(--gat-font-emphasis);
+  font-style: italic;
+  font-weight: 900;
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-color-text);
+}
+
+/* === Buttons ============================================================= */
+
+.gat-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gat-space-2);
+  padding: var(--gat-space-2) var(--gat-space-4);
+  border: var(--gat-border-width) solid transparent;
+  border-radius: var(--gat-radius-sm);
+  font-family: var(--gat-font-copy);
+  font-weight: 700;
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.gat-btn:focus-visible {
+  outline: var(--gat-border-width) solid var(--gat-color-primary);
+  outline-offset: var(--gat-space-1);
+}
+
+.gat-btn--primary {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
+
+.gat-btn--primary:hover {
+  filter: brightness(0.92);
+}
+
+.gat-btn--secondary {
+  background: transparent;
+  color: var(--gat-color-primary);
+  border-color: var(--gat-color-primary);
+}
+
+.gat-btn--secondary:hover {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
+
+/* === Karten / Flächen ==================================================== */
+
+.gat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gat-space-3);
+  padding: var(--gat-space-5);
+  border-radius: var(--gat-radius-md);
+}
+
+.gat-card--primary {
+  background: var(--gat-color-primary);
+  color: var(--gat-color-on-primary);
+}
+
+.gat-card--secondary {
+  background: var(--gat-color-secondary);
+  color: var(--gat-color-on-secondary);
+}
+
+.gat-card__title {
+  font-family: var(--gat-font-headline);
+  font-weight: 900;
+  font-size: var(--gat-text-h3);
+  line-height: var(--gat-leading-headline);
+}
+
+.gat-card__body {
+  font-family: var(--gat-font-copy);
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+}
+
+/* === CD-Gestaltungselemente ============================================== */
+
+.gat-underline {
+  border-bottom: var(--gat-border-width) solid var(--gat-color-accent);
+  padding-bottom: var(--gat-space-1);
+}
+
+.gat-highlight {
+  background: var(--gat-color-highlight);
+  color: var(--gat-color-text);
+  padding: 0 var(--gat-space-1);
+}
+
+.gat-stoerer {
+  display: inline-block;
+  padding: var(--gat-space-2) var(--gat-space-4);
+  border-radius: var(--gat-radius-sm);
+  font-family: var(--gat-font-headline);
+  font-weight: 900;
+  line-height: var(--gat-leading-headline);
+  text-align: center;
+  transform: rotate(-6deg);
+}
+
+.gat-stoerer--gelb {
+  background: var(--gat-color-highlight);
+  color: var(--gat-color-text);
+}
+
+.gat-stoerer--magenta {
+  background: var(--gat-color-accent);
+  color: var(--gat-color-on-primary);
+}
