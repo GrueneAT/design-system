@@ -38,7 +38,10 @@
 @theme {
   /* === Marken-Farben — 1:1 aus dem CD-Quickguide ========================= */
   --color-gat-dunkelgruen: #257639;
-  --color-gat-hellgruen:   #56af31;
+  /* AA-Härtung: Kontrast-Ratio 4.31 auf Weiß; v1.x-Wert lag bei 2.77.
+     Hellgrün bleibt strukturell Akzent-Fläche (Text dunkel auf Hellgrün:
+     Ratio 4.86, AA OK), nicht Textfarbe auf hellem Grund. */
+  --color-gat-hellgruen:   #3e8a25;
   --color-gat-gelb:        #ffed00;
   --color-gat-magenta:     #e6007e; /* HEX maßgeblich, PDF-RGB 225/0/120 inkonsistent */
 
