@@ -917,3 +917,79 @@
   background: var(--gat-color-gelb);
   color: var(--gat-color-anthrazit);
 }
+
+/* === Patterns =============================================================
+   Übergreifende A11y- und Druck-Regeln. Konsumenten konfigurieren
+   --gat-web-focus-ring/--gat-web-focus-offset bei Bedarf, der Rest greift
+   automatisch. */
+
+.gat-btn:focus-visible,
+.gat-skiplink:focus-visible,
+.gat-tag:focus-visible,
+.gat-tab:focus-visible,
+.gat-switch-btn:focus-visible,
+.gat-header__brand:focus-visible {
+  outline: 2px solid var(--gat-web-green-deep);
+  outline-offset: var(--gat-web-focus-offset, 2px);
+  box-shadow: var(--gat-web-focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+  .gat-no-print { display: none !important; }
+  .gat-header {
+    background: #ffffff;
+    border-bottom: 1px solid #000000;
+    box-shadow: none;
+  }
+  .gat-header__nav { display: none; }
+  .gat-panel,
+  .gat-metric-card {
+    box-shadow: none;
+    border: 1px solid #999999;
+    break-inside: avoid;
+  }
+  .gat-metric-card--hero { background: #ffffff; }
+  .gat-metric-card::before { display: none; }
+  .gat-section-head,
+  .gat-panel__head {
+    break-inside: avoid;
+    break-after: avoid;
+  }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; }
+  thead { display: table-header-group; }
+  h1, h2, h3, .gat-headline, .gat-subline { break-after: avoid; }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* Konventions-Klasse für fixierten Header. Konsumenten ergänzen die
+   passende scroll-padding-top auf <html>, damit Anker-Sprünge nicht
+   hinter dem Header landen. */
+.gat-header--fixed {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.gat-header--fixed > * {
+  pointer-events: auto;
+}

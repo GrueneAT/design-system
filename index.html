@@ -1577,6 +1577,78 @@
   </section>
 
   <!-- ================================================================== -->
+  <!-- Abschnitt 4e — Patterns (Fokus, Reduced-Motion, Print, Fixed-Header) -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="patterns" style="background: var(--gat-web-bg);">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Patterns</h2>
+        <p>
+          Übergreifende A11y- und Druck-Regeln, die für alle DS-Komponenten
+          gleichzeitig greifen. Konsumenten passen nur die Tokens an, falls
+          überhaupt nötig — der Rest läuft automatisch.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">:focus-visible</h3>
+        <p class="gat-fliesstext doc-lead">
+          Ein gemeinsamer Fokus-Ring liegt auf allen interaktiven
+          DS-Elementen (Buttons, Skiplink, Tag, Tab, Switch-btn,
+          Header-Brand-Link). Konsumenten verändern bei Bedarf
+          <span class="doc-code">--gat-web-focus-ring</span> und
+          <span class="doc-code">--gat-web-focus-offset</span> — der Selektor-
+          Block bleibt unverändert.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">prefers-reduced-motion</h3>
+        <p class="gat-fliesstext doc-lead">
+          Wenn das OS oder der Browser die Bewegungs-Reduktion eingestellt
+          haben, werden alle Transitions und Animationen auf 0.01ms
+          gekürzt — Konsumenten brauchen nichts zu tun. Testbar in den
+          Entwickler-Tools per „Emulate CSS media feature
+          prefers-reduced-motion".
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">@media print</h3>
+        <p class="gat-fliesstext doc-lead">
+          Eine zusammenhängende Druck-Stylesheet sorgt für saubere Ausdrucke:
+          Weißer Hintergrund, schwarzer Text, Header ohne Schatten/Nav,
+          Panels und Metric-Cards mit Hairline-Rand statt Schatten, keine
+          Akzent-Linie obenauf, intelligente
+          <span class="doc-code">break-inside</span>-Regeln für Tabellen
+          und Headings. Bedienelemente, die im Druck nicht erscheinen
+          sollen, bekommen die Klasse
+          <span class="doc-code">.gat-no-print</span>.
+        </p>
+        <div class="doc-codeblock">&lt;div class="gat-tabbar gat-no-print"&gt;...&lt;/div&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">.gat-header--fixed</h3>
+        <p class="gat-fliesstext doc-lead">
+          Konvention für einen klebrigen Seitenkopf:
+          <span class="doc-code">position: fixed</span> auf
+          <span class="doc-code">.gat-header</span>,
+          <span class="doc-code">pointer-events: none</span> am Header und
+          <span class="doc-code">: auto</span> an seinen Kindern, damit Klicks
+          „durch" den Header auf darunter liegende Elemente fallen können
+          wenn die Maus den freien Platz im Header trifft. Konsumenten
+          ergänzen eine zur Header-Höhe passende
+          <span class="doc-code">scroll-padding-top</span>:
+        </p>
+        <div class="doc-codeblock">html {
+  scroll-padding-top: 80px;
+}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
   <!-- Abschnitt 5 — CD-Layout-Prinzipien                                  -->
   <!-- ================================================================== -->
   <section class="gat-section doc-section-alt" id="cd-layout">
