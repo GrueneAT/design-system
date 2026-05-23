@@ -1357,6 +1357,70 @@
   </section>
 
   <!-- ================================================================== -->
+  <!-- Abschnitt 4c — Steuerungselemente (Tabs / Switcher)                -->
+  <!-- ================================================================== -->
+  <section class="gat-section doc-section-alt" id="steuerungselemente">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Steuerungselemente</h2>
+        <p>
+          Tabs und Switcher zum Navigieren zwischen Inhalts-Sichten oder
+          Filter-Ebenen. Konsumenten attachen JS-Listener, die die
+          <span class="doc-code">.is-active</span>-Klasse zwischen den
+          Buttons umschalten — das DS liefert nur die Optik.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Tabs</h3>
+        <p class="gat-fliesstext doc-lead">
+          Folder-Tab-Optik mit Inset-Schatten als aktive Markierung.
+          Tab-Mindestgröße <span class="doc-code">1.08rem</span> für gute
+          Lesbarkeit auch im Datenwerkzeug-Kontext.
+        </p>
+        <div role="tablist" class="gat-tabbar">
+          <button type="button" class="gat-tab is-active">Übersicht</button>
+          <button type="button" class="gat-tab">Erträge</button>
+          <button type="button" class="gat-tab">Aufwendungen</button>
+        </div>
+        <div class="gat-tab-panel is-active" style="padding: var(--gat-space-3); background: var(--gat-web-surface); border: 1px solid var(--gat-web-hairline); border-top: none; border-radius: 0 0 var(--gat-web-radius-card) var(--gat-web-radius-card);">
+          <p class="gat-fliesstext" style="margin: 0;">
+            Inhalt des aktiven Tab-Panels. Ein Einblend-Keyframe
+            (<span class="doc-code">gat-tab-panel-ein</span>) macht den
+            Wechsel weniger abrupt; <span class="doc-code">prefers-reduced-
+            motion</span> reduziert ihn automatisch.
+          </p>
+        </div>
+        <div class="doc-codeblock">&lt;div role="tablist" class="gat-tabbar"&gt;
+  &lt;button class="gat-tab is-active"&gt;Übersicht&lt;/button&gt;
+  &lt;button class="gat-tab"&gt;Erträge&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class="gat-tab-panel is-active"&gt;...&lt;/div&gt;
+&lt;div class="gat-tab-panel"&gt;...&lt;/div&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Switcher</h3>
+        <p class="gat-fliesstext doc-lead">
+          Ruhige Segment-Gruppe für Filter- und Modus-Auswahlen.
+          Mindestgröße <span class="doc-code">0.98rem</span>.
+        </p>
+        <div class="gat-switcher">
+          <span class="gat-switcher__label">Zeitraum</span>
+          <button type="button" class="gat-switch-btn">2024</button>
+          <button type="button" class="gat-switch-btn">2025</button>
+          <button type="button" class="gat-switch-btn is-active">2026</button>
+        </div>
+        <div class="doc-codeblock">&lt;div class="gat-switcher"&gt;
+  &lt;span class="gat-switcher__label"&gt;Zeitraum&lt;/span&gt;
+  &lt;button class="gat-switch-btn"&gt;2024&lt;/button&gt;
+  &lt;button class="gat-switch-btn is-active"&gt;2026&lt;/button&gt;
+&lt;/div&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
   <!-- Abschnitt 4b — Datenwerkzeug-Komponenten                            -->
   <!-- ================================================================== -->
   <section class="gat-section" id="datenwerkzeug" style="background: var(--gat-web-bg);">

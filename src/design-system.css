@@ -726,3 +726,110 @@
   outline: 3px solid var(--gat-color-highlight);
   outline-offset: -3px;
 }
+
+/* === Steuerungselemente ===================================================
+   Tabbar mit Folder-Tab-Optik (Inset-Schatten als aktive Markierung) und
+   Segment-Switcher (Toggle-Gruppen). Konsumenten attachen JS-Listener,
+   die die .is-active-Klasse zwischen den Buttons umschalten. */
+
+.gat-tabbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+  border-bottom: 1px solid var(--gat-web-hairline);
+}
+
+.gat-tab {
+  font: inherit;
+  font-size: 1.08rem;
+  cursor: pointer;
+  padding: 0.62rem 1.2rem;
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: transparent;
+  color: var(--gat-web-text-soft);
+  border-radius: var(--gat-web-radius-control)
+                 var(--gat-web-radius-control) 0 0;
+  margin-bottom: -1px;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+
+.gat-tab:hover {
+  color: var(--gat-web-text);
+  background: color-mix(in srgb, var(--gat-web-green) 9%, transparent);
+}
+
+.gat-tab.is-active {
+  background: var(--gat-web-surface);
+  border-color: var(--gat-web-hairline);
+  color: var(--gat-web-green-deep);
+  font-weight: 700;
+  box-shadow: inset 0 -3px 0 var(--gat-web-green-deep);
+}
+
+/* Reiter sitzt bündig an der Kante — negativer Fokus-Offset */
+.gat-tab { --gat-web-focus-offset: -2px; }
+
+.gat-tab-panel { display: none; }
+
+.gat-tab-panel.is-active {
+  display: block;
+  animation: gat-tab-panel-ein 0.18s ease-out;
+}
+
+@keyframes gat-tab-panel-ein {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.gat-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.55rem;
+  align-items: baseline;
+}
+
+.gat-switcher__label {
+  font-size: 0.82rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--gat-web-text-soft);
+  margin-right: 0.35rem;
+}
+
+.gat-switch-btn {
+  font: inherit;
+  font-size: 0.98rem;
+  cursor: pointer;
+  padding: 0.42rem 1rem;
+  border: 1px solid var(--gat-web-hairline);
+  background: var(--gat-web-surface);
+  color: var(--gat-web-text);
+  border-radius: var(--gat-web-radius-control);
+  line-height: 1.2;
+  transition: background 0.15s, border-color 0.15s, color 0.15s,
+              transform 0.1s;
+}
+
+.gat-switch-btn:hover {
+  border-color: var(--gat-web-green);
+  background: var(--gat-web-green-tint);
+}
+
+.gat-switch-btn:not(.is-active):active {
+  background: color-mix(in srgb, var(--gat-web-green) 22%, white);
+  transform: translateY(1px);
+}
+
+.gat-switch-btn.is-active {
+  background: var(--gat-web-green-deep);
+  border-color: var(--gat-web-green-deep);
+  color: var(--gat-color-weiss);
+  font-weight: 600;
+}
+
+.gat-switch-btn.is-active:hover {
+  background: var(--gat-web-green-deep);
+  color: var(--gat-color-weiss);
+}
