@@ -1,0 +1,5 @@
+/*
+ * Grüne AT Design System — Tailwind-Eingang
+ * Build: npm run build  ->  ../design-system.css
+ */
+@import "tailwindcss";
