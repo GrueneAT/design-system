@@ -300,24 +300,34 @@
 </head>
 <body id="top">
 
+  <!-- Skip-Link: erstes interaktives Element für Tastatur-Nutzer.
+       Sichtbar erst beim Fokussieren (Tab-Taste). -->
+  <a class="gat-skiplink" href="#main">Direkt zum Inhalt</a>
+
   <!-- Seitenkopf: dogfooded echte gat-Header-/Nav-Komponenten. Die Navigation
-       IST der Anchor-TOC — sie ist gleichzeitig gerendertes Beispiel. -->
+       IST der Anchor-TOC — sie ist gleichzeitig gerendertes Beispiel.
+       Weiße Brandbar (v2.0); v1.x-Optik via .gat-header--dunkel. -->
   <header class="gat-header">
     <div class="gat-header__inner">
-      <a class="gat-header__logo" href="#top" aria-label="Grüne AT Design System — Seitenanfang">
-        <span class="gat-header__logo-mark"></span>
+      <a class="gat-header__brand" href="#top" aria-label="Grüne AT Design System — Seitenanfang">
+        <img class="gat-header__logo" src="assets/gruene-logo.svg" alt="Die Grünen">
+        <span class="gat-header__wordmark">Design System</span>
       </a>
-      <nav class="gat-nav" aria-label="Abschnittsnavigation">
-        <a class="gat-nav__link gat-nav__link--active" href="#farben">Farben</a>
-        <a class="gat-nav__link" href="#typografie">Typografie</a>
-        <a class="gat-nav__link" href="#layout">Layout</a>
-        <a class="gat-nav__link" href="#komponenten">Komponenten</a>
-        <a class="gat-nav__link" href="#cd-layout">CD-Layout</a>
-        <a class="gat-nav__link" href="#spezifikation">Spezifikation</a>
-        <a class="gat-nav__link" href="#einbindung">Einbindung</a>
+      <nav class="gat-header__nav" aria-label="Abschnittsnavigation">
+        <ul class="gat-header__nav-list">
+          <li><a class="gat-header__nav-current" href="#farben">Farben</a></li>
+          <li><a href="#typografie">Typografie</a></li>
+          <li><a href="#layout">Layout</a></li>
+          <li><a href="#komponenten">Komponenten</a></li>
+          <li><a href="#cd-layout">CD-Layout</a></li>
+          <li><a href="#spezifikation">Spezifikation</a></li>
+          <li><a href="#einbindung">Einbindung</a></li>
+        </ul>
       </nav>
     </div>
   </header>
+
+  <main id="main">
 
   <!-- Einleitung -->
   <section class="gat-section">
@@ -493,6 +503,211 @@
               <span class="doc-code">--gat-color-on-secondary</span>
               <span class="doc-swatch__hex">&rarr; anthrazit (#1d1d1b)</span>
               <span class="doc-swatch__usage">Text auf Hellgrün &mdash; Kontrast 6,09:1. Hellgrün und Gelb tragen Anthrazit-Text, nie Weiß.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 1b — Web-Layer-Tokens                                     -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="web-tokens">
+    <div class="gat-container">
+      <h2 class="gat-headline">Web-Layer-Tokens</h2>
+      <p class="gat-fliesstext doc-lead">
+        Eine additive, entsättigte Schicht für Datenwerkzeuge mit langen
+        Lesestrecken (Tabellen, Diagramme, Auswertungen). Die Marken-Tokens
+        bleiben unverändert; Konsumenten wählen, welche Schicht sie binden.
+        Alle Werte stehen unter <span class="doc-code">--gat-web-*</span>.
+      </p>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Flächen &amp; Trennlinien</h3>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-bg);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#f3f5f0</span>
+              <span class="doc-code">--gat-web-bg</span>
+              <span class="doc-swatch__usage">Seiten-Hintergrund.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-surface);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#ffffff</span>
+              <span class="doc-code">--gat-web-surface</span>
+              <span class="doc-swatch__usage">Kartenfläche / Panel.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-surface-sunk);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#f7f9f4</span>
+              <span class="doc-code">--gat-web-surface-sunk</span>
+              <span class="doc-swatch__usage">Vertiefte Fläche (Tag-Hintergrund, Filter-Leisten).</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-hairline);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#e1e4db</span>
+              <span class="doc-code">--gat-web-hairline</span>
+              <span class="doc-swatch__usage">Trennlinien / Rahmen / Gitter.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Text-Töne (Web-Auslegung)</h3>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-text);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#23271f</span>
+              <span class="doc-code">--gat-web-text</span>
+              <span class="doc-swatch__usage">Standard-Textfarbe.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-text-soft);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#5e6358</span>
+              <span class="doc-code">--gat-web-text-soft</span>
+              <span class="doc-swatch__usage">Sekundär-Text, Sublines.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-text-mute);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#6b6f63</span>
+              <span class="doc-code">--gat-web-text-mute</span>
+              <span class="doc-swatch__usage">Schwächste Textebene; AA auf allen drei Surfaces.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-clay-text);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#9c5a38</span>
+              <span class="doc-code">--gat-web-clay-text</span>
+              <span class="doc-swatch__usage">Akzent-Text (Hinweise, Pflicht). AA auf Weiß: 5.34.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Web-Grüns &amp; Gelb</h3>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-green-deep);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#2c6e40</span>
+              <span class="doc-code">--gat-web-green-deep</span>
+              <span class="doc-swatch__usage">Akzent dunkel, Fokus-Ring, primäre Marken-Akzente.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-green);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#4a8a52</span>
+              <span class="doc-code">--gat-web-green</span>
+              <span class="doc-swatch__usage">Akzent mittel; Header-Linie, Aktiv-Indikatoren.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-green-tint);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#e7efe3</span>
+              <span class="doc-code">--gat-web-green-tint</span>
+              <span class="doc-swatch__usage">Sanfte grüne Fläche (Callouts, Hero, Hover).</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-yellow);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#ecd64a</span>
+              <span class="doc-code">--gat-web-yellow</span>
+              <span class="doc-swatch__usage">Web-tauglicher Gelb-Akzent (entsättigt vs. Marken-Gelb).</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">8-Ton-Chart-Palette</h3>
+        <p class="gat-fliesstext doc-lead">
+          Kategoriale Palette für Datenvisualisierung. Niedrige Sättigung
+          für lange Lesestrecken, semantisch belegt. Identische Reihenfolge
+          in <span class="doc-code">gat-charts.js</span> als
+          <span class="doc-code">PALETTE</span>.
+        </p>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-1);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#3f7d4f</span>
+              <span class="doc-code">--gat-web-chart-1</span>
+              <span class="doc-swatch__usage">Erträge / primär grün.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-2);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#6ba368</span>
+              <span class="doc-code">--gat-web-chart-2</span>
+              <span class="doc-swatch__usage">Personal-Alt / sekundär grün.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-3);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#4f93a0</span>
+              <span class="doc-code">--gat-web-chart-3</span>
+              <span class="doc-swatch__usage">Personal / Teal.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-4);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#c9a24b</span>
+              <span class="doc-code">--gat-web-chart-4</span>
+              <span class="doc-swatch__usage">Sachaufwand / Ocker.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-5);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#b9744f</span>
+              <span class="doc-code">--gat-web-chart-5</span>
+              <span class="doc-swatch__usage">Aufwand / Risiko / Terrakotta.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-6);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#9c5b7d</span>
+              <span class="doc-code">--gat-web-chart-6</span>
+              <span class="doc-swatch__usage">Transfers / Pflaume.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-7);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#5d6b8a</span>
+              <span class="doc-code">--gat-web-chart-7</span>
+              <span class="doc-swatch__usage">Nettoergebnis / Schiefer.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-8);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#8a8f7d</span>
+              <span class="doc-code">--gat-web-chart-8</span>
+              <span class="doc-swatch__usage">Sonstige / neutrales Olivgrau.</span>
             </div>
           </div>
         </div>
@@ -860,27 +1075,59 @@
       <div class="doc-block">
         <h3 class="gat-subline">Header &amp; Navigation</h3>
         <p class="gat-fliesstext doc-lead">
-          Der Seitenkopf ganz oben auf dieser Seite IST das Live-Beispiel für
+          Der Seitenkopf ganz oben auf dieser Seite IST das Live-Beispiel für die
+          weiße Brandbar:
           <span class="doc-code">.gat-header</span>,
           <span class="doc-code">.gat-header__inner</span>,
-          <span class="doc-code">.gat-header__logo</span>,
-          <span class="doc-code">.gat-header__logo-mark</span>,
-          <span class="doc-code">.gat-nav</span>,
-          <span class="doc-code">.gat-nav__link</span> und
-          <span class="doc-code">.gat-nav__link--active</span>. Das Logo-SVG ist
-          monochrom dunkelgrün und wird per CSS-Maske auf Weiß umgefärbt; die
-          Navigation bricht auf schmalen Viewports um statt ein Hamburger-Menü zu
-          nutzen. Der aktive Link trägt die dauerhafte gelbe Unterstreichung,
-          Hover und Tastatur-Fokus zeigen sie temporär.
+          <span class="doc-code">.gat-header__brand</span>,
+          <span class="doc-code">.gat-header__logo</span> (echtes
+          <span class="doc-code">&lt;img&gt;</span>),
+          <span class="doc-code">.gat-header__wordmark</span>,
+          <span class="doc-code">.gat-header__nav-list</span> und
+          <span class="doc-code">.gat-header__nav-current</span>. Eine schmale
+          grüne Akzentlinie sitzt am unteren Rand; die Navigation bricht auf
+          schmalen Viewports um statt ein Hamburger-Menü zu nutzen.
         </p>
+        <p class="gat-fliesstext doc-lead">
+          v1.x-Konsumenten, die die dunkelgrüne Brandbar beibehalten möchten,
+          ergänzen den Opt-in-Modifier
+          <span class="doc-code">.gat-header--dunkel</span> &mdash; gleiches
+          Markup, dunkler Hintergrund, weißer Text.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage" style="display: block;">
+            <header class="gat-header gat-header--dunkel" style="border-radius: var(--gat-radius-md); overflow: hidden;">
+              <div class="gat-header__inner">
+                <a class="gat-header__brand" href="#komponenten">
+                  <span class="gat-header__wordmark">Design System (dunkel)</span>
+                </a>
+                <nav class="gat-header__nav" aria-label="Demo">
+                  <ul class="gat-header__nav-list">
+                    <li><a href="#komponenten">Start</a></li>
+                    <li><a href="#komponenten">Beispiel</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </header>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">.gat-header.gat-header--dunkel</span> &mdash;
+            opt-in für die v1.x-Optik (dunkelgrüne Brandbar, weißer Text).
+          </div>
+        </div>
         <div class="doc-codeblock">&lt;header class="gat-header"&gt;
   &lt;div class="gat-header__inner"&gt;
-    &lt;a class="gat-header__logo" href="#top"&gt;
-      &lt;span class="gat-header__logo-mark"&gt;&lt;/span&gt;
+    &lt;a class="gat-header__brand" href="#top"&gt;
+      &lt;img class="gat-header__logo"
+           src="https://grueneat.github.io/design-system/assets/gruene-logo.svg"
+           alt="Die Grünen"&gt;
+      &lt;span class="gat-header__wordmark"&gt;Tool-Name&lt;/span&gt;
     &lt;/a&gt;
-    &lt;nav class="gat-nav"&gt;
-      &lt;a class="gat-nav__link gat-nav__link--active" href="#farben"&gt;Farben&lt;/a&gt;
-      &lt;a class="gat-nav__link" href="#typografie"&gt;Typografie&lt;/a&gt;
+    &lt;nav class="gat-header__nav" aria-label="Hauptnavigation"&gt;
+      &lt;ul class="gat-header__nav-list"&gt;
+        &lt;li&gt;&lt;a class="gat-header__nav-current" href="#start"&gt;Start&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#kontakt"&gt;Kontakt&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
     &lt;/nav&gt;
   &lt;/div&gt;
 &lt;/header&gt;</div>
@@ -1006,6 +1253,509 @@
             </p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 4a — Inhalts-Komponenten                                   -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="inhaltskomponenten">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Inhalts-Komponenten</h2>
+        <p>
+          Strukturelle Bausteine für lange Lesestrecken: Hinweise,
+          Abschnitts-Köpfe, Hero-Streifen, Tags und der Skip-Link.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Callout</h3>
+        <p class="gat-fliesstext doc-lead">
+          Hinweis-Panel mit grünem Linksrand; bündelt zusätzliche
+          Erläuterungen oder Hinweise zu einem Abschnitt.
+        </p>
+        <aside class="gat-callout">
+          <p class="gat-fliesstext" style="margin: 0;">
+            <strong>Hinweis:</strong> Hellgrün bleibt strukturell
+            Akzent-Fläche, nicht Textfarbe auf hellem Grund — siehe
+            <span class="doc-code">MIGRATION.md</span>.
+          </p>
+        </aside>
+        <div class="doc-codeblock">&lt;aside class="gat-callout"&gt;
+  &lt;p&gt;Inhalt des Hinweises.&lt;/p&gt;
+&lt;/aside&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Section-Head</h3>
+        <p class="gat-fliesstext doc-lead">
+          Kopf eines Inhalts-Abschnitts mit Subline. Erzwingt einheitliches
+          Spacing zwischen Titel, Lead und folgendem Inhalt.
+        </p>
+        <div class="gat-section-head" style="background: var(--gat-web-surface); border: 1px solid var(--gat-web-hairline); border-radius: var(--gat-web-radius-card); padding: var(--gat-space-3);">
+          <h2 class="gat-headline" style="font-size: var(--gat-text-h2);">Demo-Abschnitt</h2>
+          <p>Erklärungs-Lead unter dem Titel. Max-Breite begrenzt den Lesefluss.</p>
+        </div>
+        <div class="doc-codeblock">&lt;div class="gat-section-head"&gt;
+  &lt;h2&gt;Demo-Abschnitt&lt;/h2&gt;
+  &lt;p&gt;Erklärungs-Lead.&lt;/p&gt;
+&lt;/div&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Hero</h3>
+        <p class="gat-fliesstext doc-lead">
+          Hero-Streifen am Seitenanfang einer Inhalts-Seite, mit Titel und
+          größerem Intro-Text.
+        </p>
+        <header class="gat-hero" style="background: var(--gat-web-green-tint); padding: var(--gat-space-4); border-radius: var(--gat-web-radius-card);">
+          <h1 class="gat-hero__title gat-headline" style="font-size: var(--gat-text-h2);">Demo-Hero</h1>
+          <p class="gat-hero__intro">
+            Ein einleitender Absatz im Hero-Stil: größer als Fließtext,
+            web-tauglicher Text-Soft-Ton, weiche Max-Breite.
+          </p>
+        </header>
+        <div class="doc-codeblock">&lt;header class="gat-hero"&gt;
+  &lt;h1 class="gat-hero__title"&gt;Titel&lt;/h1&gt;
+  &lt;p class="gat-hero__intro"&gt;Einleitung.&lt;/p&gt;
+&lt;/header&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Tag</h3>
+        <p class="gat-fliesstext doc-lead">
+          Pill/Badge für Status, Kategorien oder Meta-Informationen. Vier
+          Modifier: <span class="doc-code">--neutral</span>,
+          <span class="doc-code">--info</span>,
+          <span class="doc-code">--pflicht</span>,
+          <span class="doc-code">--risiko</span>.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <span class="gat-tag gat-tag--neutral">Neutral</span>
+            <span class="gat-tag gat-tag--info">Info</span>
+            <span class="gat-tag gat-tag--pflicht">Pflichtfeld</span>
+            <span class="gat-tag gat-tag--risiko">Risiko</span>
+          </div>
+          <div class="doc-codeblock">&lt;span class="gat-tag gat-tag--info"&gt;Info&lt;/span&gt;</div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Skiplink</h3>
+        <p class="gat-fliesstext doc-lead">
+          Erstes interaktives Element der Seite; wird beim Fokussieren
+          (Tab-Taste) sichtbar und springt zum Hauptinhalt. Auf dieser
+          Seite ist er als allererstes Body-Element gesetzt — beim Laden
+          der Seite einmal <kbd>Tab</kbd> drücken, um den Skiplink zu sehen.
+        </p>
+        <div class="doc-codeblock">&lt;a class="gat-skiplink" href="#main"&gt;Direkt zum Inhalt&lt;/a&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 4c — Steuerungselemente (Tabs / Switcher)                -->
+  <!-- ================================================================== -->
+  <section class="gat-section doc-section-alt" id="steuerungselemente">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Steuerungselemente</h2>
+        <p>
+          Tabs und Switcher zum Navigieren zwischen Inhalts-Sichten oder
+          Filter-Ebenen. Konsumenten attachen JS-Listener, die die
+          <span class="doc-code">.is-active</span>-Klasse zwischen den
+          Buttons umschalten — das DS liefert nur die Optik.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Tabs</h3>
+        <p class="gat-fliesstext doc-lead">
+          Folder-Tab-Optik mit Inset-Schatten als aktive Markierung.
+          Tab-Mindestgröße <span class="doc-code">1.08rem</span> für gute
+          Lesbarkeit auch im Datenwerkzeug-Kontext.
+        </p>
+        <div role="tablist" class="gat-tabbar">
+          <button type="button" class="gat-tab is-active">Übersicht</button>
+          <button type="button" class="gat-tab">Erträge</button>
+          <button type="button" class="gat-tab">Aufwendungen</button>
+        </div>
+        <div class="gat-tab-panel is-active" style="padding: var(--gat-space-3); background: var(--gat-web-surface); border: 1px solid var(--gat-web-hairline); border-top: none; border-radius: 0 0 var(--gat-web-radius-card) var(--gat-web-radius-card);">
+          <p class="gat-fliesstext" style="margin: 0;">
+            Inhalt des aktiven Tab-Panels. Ein Einblend-Keyframe
+            (<span class="doc-code">gat-tab-panel-ein</span>) macht den
+            Wechsel weniger abrupt; <span class="doc-code">prefers-reduced-
+            motion</span> reduziert ihn automatisch.
+          </p>
+        </div>
+        <div class="doc-codeblock">&lt;div role="tablist" class="gat-tabbar"&gt;
+  &lt;button class="gat-tab is-active"&gt;Übersicht&lt;/button&gt;
+  &lt;button class="gat-tab"&gt;Erträge&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class="gat-tab-panel is-active"&gt;...&lt;/div&gt;
+&lt;div class="gat-tab-panel"&gt;...&lt;/div&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Switcher</h3>
+        <p class="gat-fliesstext doc-lead">
+          Ruhige Segment-Gruppe für Filter- und Modus-Auswahlen.
+          Mindestgröße <span class="doc-code">0.98rem</span>.
+        </p>
+        <div class="gat-switcher">
+          <span class="gat-switcher__label">Zeitraum</span>
+          <button type="button" class="gat-switch-btn">2024</button>
+          <button type="button" class="gat-switch-btn">2025</button>
+          <button type="button" class="gat-switch-btn is-active">2026</button>
+        </div>
+        <div class="doc-codeblock">&lt;div class="gat-switcher"&gt;
+  &lt;span class="gat-switcher__label"&gt;Zeitraum&lt;/span&gt;
+  &lt;button class="gat-switch-btn"&gt;2024&lt;/button&gt;
+  &lt;button class="gat-switch-btn is-active"&gt;2026&lt;/button&gt;
+&lt;/div&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 4b — Datenwerkzeug-Komponenten                            -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="datenwerkzeug" style="background: var(--gat-web-bg);">
+    <div class="gat-container">
+      <h2 class="gat-headline">Datenwerkzeug-Komponenten</h2>
+      <p class="gat-fliesstext doc-lead">
+        Bausteine für Tools mit langen Lesestrecken (Tabellen, Diagramme,
+        Auswertungen). Sie nutzen die <span class="doc-code">--gat-web-*</span>-
+        Schicht und stehen optisch deutlich ruhiger als die Marken-Karten.
+      </p>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Metric-Cards</h3>
+        <p class="gat-fliesstext doc-lead">
+          Einzelne Kennzahlen, mit semantischer Akzentlinie obenauf.
+          Vier Varianten: <span class="doc-code">--hero</span> (grüne
+          Tönung), <span class="doc-code">--ertrag</span>,
+          <span class="doc-code">--aufwand</span>,
+          <span class="doc-code">--netto</span>.
+        </p>
+        <div class="gat-grid">
+          <article class="gat-metric-card gat-metric-card--hero">
+            <div class="gat-metric-card__label">Nettoergebnis 2026</div>
+            <div class="gat-metric-card__num">+312 k €</div>
+          </article>
+          <article class="gat-metric-card gat-metric-card--ertrag">
+            <div class="gat-metric-card__label">Ertrag VA</div>
+            <div class="gat-metric-card__num">8,2 Mio €</div>
+          </article>
+          <article class="gat-metric-card gat-metric-card--aufwand">
+            <div class="gat-metric-card__label">Aufwand VA</div>
+            <div class="gat-metric-card__num">7,9 Mio €</div>
+          </article>
+          <article class="gat-metric-card gat-metric-card--netto">
+            <div class="gat-metric-card__label">Δ Plan/Ist</div>
+            <div class="gat-metric-card__num">−54 k €</div>
+          </article>
+        </div>
+        <div class="doc-codeblock">&lt;article class="gat-metric-card gat-metric-card--hero"&gt;
+  &lt;div class="gat-metric-card__label"&gt;Nettoergebnis 2026&lt;/div&gt;
+  &lt;div class="gat-metric-card__num"&gt;+312 k €&lt;/div&gt;
+&lt;/article&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Panel</h3>
+        <p class="gat-fliesstext doc-lead">
+          Rahmen für einen Inhaltsblock mit Kopf, Body und optionaler Note.
+          Body bekommt Padding; der Modifier
+          <span class="doc-code">__body--table</span> hebt das Padding für
+          randlose Tabellen wieder auf.
+        </p>
+        <section class="gat-panel">
+          <header class="gat-panel__head">
+            <div class="gat-panel__head-row">
+              <h3>Gemeindefinanzen 2026 — Voranschlag</h3>
+              <span class="doc-code">.gat-panel</span>
+            </div>
+            <p class="gat-panel__note">
+              Hinweis: alle Werte sind Demo-Daten. Real-Werte werden vom
+              Konsumenten-Tool nachgeladen.
+            </p>
+          </header>
+          <div class="gat-panel__body">
+            <p class="gat-fliesstext">
+              Der Body-Teil ist die Bühne für den eigentlichen Inhalt:
+              Tabellen, Diagramme, Listen, alles. Erstes und letztes Kind
+              werden automatisch ohne zusätzlichen Außenabstand gerendert.
+            </p>
+          </div>
+        </section>
+        <div class="doc-codeblock">&lt;section class="gat-panel"&gt;
+  &lt;header class="gat-panel__head"&gt;
+    &lt;div class="gat-panel__head-row"&gt;
+      &lt;h3&gt;Titel&lt;/h3&gt;
+      &lt;span&gt;Aktion&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;p class="gat-panel__note"&gt;Optionale Note.&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;div class="gat-panel__body"&gt;Body-Inhalt&lt;/div&gt;
+&lt;/section&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 4d — Hoher Kontrast (gat-mode-hc)                         -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="hoher-kontrast">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Hoher Kontrast (gat-mode-hc)</h2>
+        <p>
+          Eine zugängliche High-Contrast-Variante über die Tailwind-v4
+          Custom-Variant <span class="doc-code">gat-mode-hc</span>. Aktiviert
+          wird sie durch Setzen der Klasse
+          <span class="doc-code">.gat-mode-hc</span> auf
+          <span class="doc-code">&lt;body&gt;</span> oder einem Ancestor.
+          Das DS liefert die Variant und Komponenten-Overrides; der
+          Toggle-Knopf ist Konsumenten-Sache.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Demo-Toggle (nur in dieser Doku-Seite)</h3>
+        <p class="gat-fliesstext doc-lead">
+          Der Knopf hier setzt
+          <span class="doc-code">document.body.classList.toggle('gat-mode-hc')</span>
+          per Klick. Wenn aktiv, schaltet die gesamte Seite auf
+          Anthrazit + Gelb + Magenta-Akzent um.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <button type="button"
+                    id="hc-toggle"
+                    class="gat-btn gat-btn--secondary"
+                    aria-pressed="false"
+                    onclick="var p=this.getAttribute('aria-pressed')==='true';this.setAttribute('aria-pressed',(!p).toString());document.body.classList.toggle('gat-mode-hc',!p);">
+              Hoher Kontrast
+            </button>
+          </div>
+          <div class="doc-demo__caption">
+            Konsumenten bauen ihren eigenen Knopf in ihrer Brandbar &mdash;
+            das DS liefert nur die Variant. Snippet siehe
+            <span class="doc-code">MIGRATION.md</span>.
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Komponenten-Overrides</h3>
+        <p class="gat-fliesstext doc-lead">
+          Folgende DS-Komponenten werden in
+          <span class="doc-code">gat-mode-hc</span> automatisch umgestylt:
+          <span class="doc-code">.gat-header</span>,
+          <span class="doc-code">.gat-callout</span>,
+          <span class="doc-code">.gat-panel</span>,
+          <span class="doc-code">.gat-metric-card</span>,
+          <span class="doc-code">.gat-btn--primary/--secondary</span>,
+          <span class="doc-code">.gat-tag--*</span>,
+          <span class="doc-code">.gat-tab.is-active</span>,
+          <span class="doc-code">.gat-switch-btn.is-active</span>,
+          <span class="doc-code">.gat-skiplink</span>.
+        </p>
+        <div class="doc-codeblock">/* Konsumenten-Snippet: Toggle-Knopf in der eigenen Brandbar */
+&lt;button type="button"
+        aria-pressed="false"
+        onclick="this.setAttribute('aria-pressed',
+                 document.body.classList.toggle('gat-mode-hc'))"&gt;
+  Hoher Kontrast
+&lt;/button&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 4e — Patterns (Fokus, Reduced-Motion, Print, Fixed-Header) -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="patterns" style="background: var(--gat-web-bg);">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Patterns</h2>
+        <p>
+          Übergreifende A11y- und Druck-Regeln, die für alle DS-Komponenten
+          gleichzeitig greifen. Konsumenten passen nur die Tokens an, falls
+          überhaupt nötig — der Rest läuft automatisch.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">:focus-visible</h3>
+        <p class="gat-fliesstext doc-lead">
+          Ein gemeinsamer Fokus-Ring liegt auf allen interaktiven
+          DS-Elementen (Buttons, Skiplink, Tag, Tab, Switch-btn,
+          Header-Brand-Link). Konsumenten verändern bei Bedarf
+          <span class="doc-code">--gat-web-focus-ring</span> und
+          <span class="doc-code">--gat-web-focus-offset</span> — der Selektor-
+          Block bleibt unverändert.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">prefers-reduced-motion</h3>
+        <p class="gat-fliesstext doc-lead">
+          Wenn das OS oder der Browser die Bewegungs-Reduktion eingestellt
+          haben, werden alle Transitions und Animationen auf 0.01ms
+          gekürzt — Konsumenten brauchen nichts zu tun. Testbar in den
+          Entwickler-Tools per „Emulate CSS media feature
+          prefers-reduced-motion".
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">@media print</h3>
+        <p class="gat-fliesstext doc-lead">
+          Eine zusammenhängende Druck-Stylesheet sorgt für saubere Ausdrucke:
+          Weißer Hintergrund, schwarzer Text, Header ohne Schatten/Nav,
+          Panels und Metric-Cards mit Hairline-Rand statt Schatten, keine
+          Akzent-Linie obenauf, intelligente
+          <span class="doc-code">break-inside</span>-Regeln für Tabellen
+          und Headings. Bedienelemente, die im Druck nicht erscheinen
+          sollen, bekommen die Klasse
+          <span class="doc-code">.gat-no-print</span>.
+        </p>
+        <div class="doc-codeblock">&lt;div class="gat-tabbar gat-no-print"&gt;...&lt;/div&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">.gat-header--fixed</h3>
+        <p class="gat-fliesstext doc-lead">
+          Konvention für einen klebrigen Seitenkopf:
+          <span class="doc-code">position: fixed</span> auf
+          <span class="doc-code">.gat-header</span>,
+          <span class="doc-code">pointer-events: none</span> am Header und
+          <span class="doc-code">: auto</span> an seinen Kindern, damit Klicks
+          „durch" den Header auf darunter liegende Elemente fallen können
+          wenn die Maus den freien Platz im Header trifft. Konsumenten
+          ergänzen eine zur Header-Höhe passende
+          <span class="doc-code">scroll-padding-top</span>:
+        </p>
+        <div class="doc-codeblock">html {
+  scroll-padding-top: 80px;
+}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 4f — Diagramme (gat-charts.js)                             -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="diagramme">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Diagramme</h2>
+        <p>
+          Chart-Palette und ECharts-Helfer als ES-Modul. Konsumenten
+          importieren das Modul direkt von der Pages-URL — kein npm,
+          kein Build-Schritt, kein Vendoring. ECharts selbst bringen
+          Konsumenten via eigenem CDN-Import mit.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Chart-Palette</h3>
+        <p class="gat-fliesstext doc-lead">
+          Acht kategoriale Farben für Datenvisualisierung — identische
+          Reihenfolge in CSS (<span class="doc-code">--gat-web-chart-1..8</span>)
+          und JS (<span class="doc-code">PALETTE[0..7]</span>). Die
+          Swatches sind direkt aus dem Token-Layer gerendert.
+        </p>
+        <div class="gat-grid">
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-1);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#3f7d4f</span>
+              <span class="doc-code">PALETTE[0]</span>
+              <span class="doc-swatch__usage">Erträge / primär grün.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-2);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#6ba368</span>
+              <span class="doc-code">PALETTE[1]</span>
+              <span class="doc-swatch__usage">Personal-Alt / sekundär grün.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-3);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#4f93a0</span>
+              <span class="doc-code">PALETTE[2]</span>
+              <span class="doc-swatch__usage">Personal / Teal.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-4);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#c9a24b</span>
+              <span class="doc-code">PALETTE[3]</span>
+              <span class="doc-swatch__usage">Sachaufwand / Ocker.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-5);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#b9744f</span>
+              <span class="doc-code">PALETTE[4]</span>
+              <span class="doc-swatch__usage">Aufwand / Risiko.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-6);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#9c5b7d</span>
+              <span class="doc-code">PALETTE[5]</span>
+              <span class="doc-swatch__usage">Transfers.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-7);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#5d6b8a</span>
+              <span class="doc-code">PALETTE[6]</span>
+              <span class="doc-swatch__usage">Nettoergebnis.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-web-chart-8);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-swatch__hex">#8a8f7d</span>
+              <span class="doc-code">PALETTE[7]</span>
+              <span class="doc-swatch__usage">Sonstige.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Import-Beispiel</h3>
+        <p class="gat-fliesstext doc-lead">
+          Das Modul <span class="doc-code">gat-charts.js</span> wird vom
+          Pages-Workflow als statische Datei mitgeliefert. Konsumenten
+          importieren es direkt aus dem Konsumenten-JS:
+        </p>
+        <div class="doc-codeblock">import {
+  PALETTE, INK, LABEL_SIZE, AXIS_SIZE,
+  BAR_MAX_DICHT, BAR_MAX_WEIT,
+  tip, legende, grid, planIstLegende
+} from 'https://grueneat.github.io/design-system/gat-charts.js';</div>
+        <p class="gat-fliesstext doc-lead">
+          ECharts selbst wird unabhängig vom Konsumenten geladen (eigener
+          CDN-Import). Das DS bündelt ECharts bewusst nicht, um
+          Vendoring zu vermeiden und Versions-Drift zu erlauben.
+        </p>
       </div>
     </div>
   </section>
@@ -1267,6 +2017,8 @@
       </p>
     </div>
   </section>
+
+  </main>
 
   <!-- Footer -->
   <footer class="gat-section doc-footer">

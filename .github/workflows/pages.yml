@@ -25,6 +25,18 @@ jobs:
       - name: Repository auschecken
         uses: actions/checkout@v6
 
+      - name: Node einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Dependencies installieren
+        run: npm ci
+
+      - name: design-system.css bauen
+        run: npm run build
+
       - name: Pages konfigurieren
         uses: actions/configure-pages@v6
 

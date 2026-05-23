@@ -1,0 +1,14 @@
+{
+  "name": "design-system",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Grüne AT Design System",
+  "scripts": {
+    "build": "tailwindcss -i ./src/design-system.css -o ./design-system.css --minify",
+    "watch": "tailwindcss -i ./src/design-system.css -o ./design-system.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
+  }
+}
