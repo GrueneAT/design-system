@@ -300,6 +300,10 @@
 </head>
 <body id="top">
 
+  <!-- Skip-Link: erstes interaktives Element für Tastatur-Nutzer.
+       Sichtbar erst beim Fokussieren (Tab-Taste). -->
+  <a class="gat-skiplink" href="#main">Direkt zum Inhalt</a>
+
   <!-- Seitenkopf: dogfooded echte gat-Header-/Nav-Komponenten. Die Navigation
        IST der Anchor-TOC — sie ist gleichzeitig gerendertes Beispiel.
        Weiße Brandbar (v2.0); v1.x-Optik via .gat-header--dunkel. -->
@@ -322,6 +326,8 @@
       </nav>
     </div>
   </header>
+
+  <main id="main">
 
   <!-- Einleitung -->
   <section class="gat-section">
@@ -1252,6 +1258,105 @@
   </section>
 
   <!-- ================================================================== -->
+  <!-- Abschnitt 4a — Inhalts-Komponenten                                   -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="inhaltskomponenten">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Inhalts-Komponenten</h2>
+        <p>
+          Strukturelle Bausteine für lange Lesestrecken: Hinweise,
+          Abschnitts-Köpfe, Hero-Streifen, Tags und der Skip-Link.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Callout</h3>
+        <p class="gat-fliesstext doc-lead">
+          Hinweis-Panel mit grünem Linksrand; bündelt zusätzliche
+          Erläuterungen oder Hinweise zu einem Abschnitt.
+        </p>
+        <aside class="gat-callout">
+          <p class="gat-fliesstext" style="margin: 0;">
+            <strong>Hinweis:</strong> Hellgrün bleibt strukturell
+            Akzent-Fläche, nicht Textfarbe auf hellem Grund — siehe
+            <span class="doc-code">MIGRATION.md</span>.
+          </p>
+        </aside>
+        <div class="doc-codeblock">&lt;aside class="gat-callout"&gt;
+  &lt;p&gt;Inhalt des Hinweises.&lt;/p&gt;
+&lt;/aside&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Section-Head</h3>
+        <p class="gat-fliesstext doc-lead">
+          Kopf eines Inhalts-Abschnitts mit Subline. Erzwingt einheitliches
+          Spacing zwischen Titel, Lead und folgendem Inhalt.
+        </p>
+        <div class="gat-section-head" style="background: var(--gat-web-surface); border: 1px solid var(--gat-web-hairline); border-radius: var(--gat-web-radius-card); padding: var(--gat-space-3);">
+          <h2 class="gat-headline" style="font-size: var(--gat-text-h2);">Demo-Abschnitt</h2>
+          <p>Erklärungs-Lead unter dem Titel. Max-Breite begrenzt den Lesefluss.</p>
+        </div>
+        <div class="doc-codeblock">&lt;div class="gat-section-head"&gt;
+  &lt;h2&gt;Demo-Abschnitt&lt;/h2&gt;
+  &lt;p&gt;Erklärungs-Lead.&lt;/p&gt;
+&lt;/div&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Hero</h3>
+        <p class="gat-fliesstext doc-lead">
+          Hero-Streifen am Seitenanfang einer Inhalts-Seite, mit Titel und
+          größerem Intro-Text.
+        </p>
+        <header class="gat-hero" style="background: var(--gat-web-green-tint); padding: var(--gat-space-4); border-radius: var(--gat-web-radius-card);">
+          <h1 class="gat-hero__title gat-headline" style="font-size: var(--gat-text-h2);">Demo-Hero</h1>
+          <p class="gat-hero__intro">
+            Ein einleitender Absatz im Hero-Stil: größer als Fließtext,
+            web-tauglicher Text-Soft-Ton, weiche Max-Breite.
+          </p>
+        </header>
+        <div class="doc-codeblock">&lt;header class="gat-hero"&gt;
+  &lt;h1 class="gat-hero__title"&gt;Titel&lt;/h1&gt;
+  &lt;p class="gat-hero__intro"&gt;Einleitung.&lt;/p&gt;
+&lt;/header&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Tag</h3>
+        <p class="gat-fliesstext doc-lead">
+          Pill/Badge für Status, Kategorien oder Meta-Informationen. Vier
+          Modifier: <span class="doc-code">--neutral</span>,
+          <span class="doc-code">--info</span>,
+          <span class="doc-code">--pflicht</span>,
+          <span class="doc-code">--risiko</span>.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <span class="gat-tag gat-tag--neutral">Neutral</span>
+            <span class="gat-tag gat-tag--info">Info</span>
+            <span class="gat-tag gat-tag--pflicht">Pflichtfeld</span>
+            <span class="gat-tag gat-tag--risiko">Risiko</span>
+          </div>
+          <div class="doc-codeblock">&lt;span class="gat-tag gat-tag--info"&gt;Info&lt;/span&gt;</div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Skiplink</h3>
+        <p class="gat-fliesstext doc-lead">
+          Erstes interaktives Element der Seite; wird beim Fokussieren
+          (Tab-Taste) sichtbar und springt zum Hauptinhalt. Auf dieser
+          Seite ist er als allererstes Body-Element gesetzt — beim Laden
+          der Seite einmal <kbd>Tab</kbd> drücken, um den Skiplink zu sehen.
+        </p>
+        <div class="doc-codeblock">&lt;a class="gat-skiplink" href="#main"&gt;Direkt zum Inhalt&lt;/a&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
   <!-- Abschnitt 4b — Datenwerkzeug-Komponenten                            -->
   <!-- ================================================================== -->
   <section class="gat-section" id="datenwerkzeug" style="background: var(--gat-web-bg);">
@@ -1594,6 +1699,8 @@
       </p>
     </div>
   </section>
+
+  </main>
 
   <!-- Footer -->
   <footer class="gat-section doc-footer">

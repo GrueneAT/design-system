@@ -632,3 +632,97 @@
   text-transform: uppercase;
   color: var(--gat-web-text-soft);
 }
+
+/* === Inhalts-Komponenten ==================================================
+   Strukturelle Bausteine für längere Lesestrecken: Hinweise, Abschnitts-
+   Köpfe, Hero-Streifen, Tags und der Skip-Link. */
+
+.gat-callout {
+  background: var(--gat-web-green-tint);
+  border-left: 4px solid var(--gat-web-green-deep);
+  border-radius: 0 var(--gat-web-radius-card) var(--gat-web-radius-card) 0;
+  padding: var(--gat-space-3) var(--gat-space-4);
+  margin: var(--gat-space-3) 0;
+  max-width: 70rem;
+  color: var(--gat-web-text);
+}
+
+.gat-callout > :first-child { margin-top: 0; }
+.gat-callout > :last-child  { margin-bottom: 0; }
+
+.gat-section-head { margin-bottom: var(--gat-space-4); }
+
+.gat-section-head h2 { margin-bottom: var(--gat-space-2); }
+
+.gat-section-head p {
+  margin: 0;
+  max-width: 70rem;
+  color: var(--gat-web-text-soft);
+}
+
+.gat-hero { margin: var(--gat-space-5) 0; }
+
+.gat-hero__title { margin: 0; }
+
+.gat-hero__intro {
+  margin: var(--gat-space-2) 0 0;
+  font-size: var(--gat-text-subline);
+  line-height: var(--gat-leading-copy);
+  max-width: 70rem;
+  color: var(--gat-web-text-soft);
+}
+
+.gat-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  font-family: var(--gat-font-copy);
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.gat-tag--neutral {
+  background: var(--gat-web-surface-sunk);
+  color: var(--gat-web-text-soft);
+}
+
+.gat-tag--info {
+  background: var(--gat-web-green-tint);
+  color: var(--gat-web-green-deep);
+}
+
+.gat-tag--pflicht {
+  background: color-mix(in srgb, var(--gat-web-green-deep) 14%, white);
+  color: var(--gat-web-green-deep);
+}
+
+.gat-tag--risiko {
+  background: color-mix(in srgb, var(--gat-web-clay-text) 14%, white);
+  color: var(--gat-web-clay-text);
+}
+
+.gat-skiplink {
+  position: fixed;
+  top: -200%;
+  left: 0;
+  z-index: 999;
+  background: var(--gat-web-green-deep);
+  color: var(--gat-color-weiss);
+  padding: var(--gat-space-2) var(--gat-space-3);
+  text-decoration: none;
+  font-family: var(--gat-font-copy);
+  font-weight: 700;
+  border-radius: 0 0 var(--gat-web-radius-control) 0;
+  transition: top 0.12s ease-out;
+}
+
+.gat-skiplink:focus { top: 0; }
+
+.gat-skiplink:focus-visible {
+  outline: 3px solid var(--gat-color-highlight);
+  outline-offset: -3px;
+}
