@@ -305,7 +305,7 @@
 
 .gat-headline {
   font-family: var(--gat-font-headline);
-  font-weight: 900;
+  font-weight: 800;
   font-size: var(--gat-text-h1);
   line-height: var(--gat-leading-headline);
   color: var(--gat-color-text);
@@ -317,6 +317,16 @@
   font-size: var(--gat-text-subline);
   line-height: var(--gat-leading-headline);
   color: var(--gat-color-text);
+}
+
+/* Deutsche Komposita brechen sauber — Headline-Klassen, neue Hero-/
+   Section-Head-/Panel-Header-Klassen (Tasks 7/8) erben das Verhalten. */
+.gat-headline,
+.gat-subline,
+.gat-section-head h2,
+.gat-hero__title,
+.gat-panel__head h3 {
+  hyphens: auto;
 }
 
 .gat-fliesstext {
@@ -400,7 +410,7 @@
 
 .gat-card__title {
   font-family: var(--gat-font-headline);
-  font-weight: 900;
+  font-weight: 700;
   font-size: var(--gat-text-h3);
   line-height: var(--gat-leading-headline);
 }
