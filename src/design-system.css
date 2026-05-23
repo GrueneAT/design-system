@@ -218,6 +218,28 @@
     --gat-web-modal-shadow:   var(--gat-web-shadow-elevated);
     --gat-web-modal-radius:   var(--gat-web-radius-card);
 
+    /* === v2.1 — Callout-Modifier ===========================================
+       Semantische Hinweis-Familie. Token-Trios: bg / border / text. */
+    --gat-web-callout-info-bg:     var(--gat-web-green-tint);
+    --gat-web-callout-info-border: var(--gat-web-green-deep);
+    --gat-web-callout-info-text:   var(--gat-web-text);
+
+    --gat-web-callout-warn-bg:     #fdf3d2;
+    --gat-web-callout-warn-border: #b78a1c;
+    --gat-web-callout-warn-text:   #5a4308;
+
+    --gat-web-callout-error-bg:     #fbe5dc;
+    --gat-web-callout-error-border: #b3401e;
+    --gat-web-callout-error-text:   #6b2410;
+
+    --gat-web-callout-success-bg:     #e2efd9;
+    --gat-web-callout-success-border: var(--gat-web-green);
+    --gat-web-callout-success-text:   #1f4d27;
+
+    --gat-web-callout-legal-bg:     #eceef0;
+    --gat-web-callout-legal-border: #6b6f63;
+    --gat-web-callout-legal-text:   var(--gat-web-text);
+
     /* === v2.1 — Form-Primitives ============================================
        Tokens fuer die .gat-input-Familie. Konsumenten ueberschreiben einzelne
        Tokens, ohne die Komponenten-Selektoren zu duplizieren. */
@@ -1178,6 +1200,62 @@
   border-radius: 0 0 var(--gat-web-modal-radius) var(--gat-web-modal-radius);
 }
 
+/* === v2.1 — Callout-Modifier ============================================
+   .gat-callout existiert seit v2.0 mit dem grünen Linksrand. Die Modifier
+   tauschen Bg/Border/Text durch die semantische Token-Familie. .--info ist
+   explizit als Default-Stil notiert (visuell identisch zum unbenannten
+   .gat-callout, aber semantisch eindeutig). */
+
+.gat-callout--info {
+  background: var(--gat-web-callout-info-bg);
+  border-left-color: var(--gat-web-callout-info-border);
+  color: var(--gat-web-callout-info-text);
+}
+
+.gat-callout--warn {
+  background: var(--gat-web-callout-warn-bg);
+  border-left-color: var(--gat-web-callout-warn-border);
+  color: var(--gat-web-callout-warn-text);
+}
+
+.gat-callout--error,
+.gat-callout--danger {
+  background: var(--gat-web-callout-error-bg);
+  border-left-color: var(--gat-web-callout-error-border);
+  color: var(--gat-web-callout-error-text);
+}
+
+.gat-callout--success {
+  background: var(--gat-web-callout-success-bg);
+  border-left-color: var(--gat-web-callout-success-border);
+  color: var(--gat-web-callout-success-text);
+}
+
+.gat-callout--legal {
+  background: var(--gat-web-callout-legal-bg);
+  border-left-color: var(--gat-web-callout-legal-border);
+  color: var(--gat-web-callout-legal-text);
+}
+
+/* Optionaler Icon-Slot: kein Bild-Asset, nur Container. Konsumenten
+   platzieren ein SVG (oder einen Buchstaben) hinein. */
+.gat-callout__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 0.45em;
+  flex: none;
+  vertical-align: -0.2em;
+}
+
+.gat-callout__icon > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 /* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
    Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
    Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
@@ -1360,6 +1438,25 @@
   color: var(--gat-color-gelb);
 }
 
+/* HC fuer v2.1 Callout-Modifier. */
+
+.gat-mode-hc .gat-callout--info,
+.gat-mode-hc .gat-callout--warn,
+.gat-mode-hc .gat-callout--error,
+.gat-mode-hc .gat-callout--danger,
+.gat-mode-hc .gat-callout--success,
+.gat-mode-hc .gat-callout--legal {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-left-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-callout--warn,
+.gat-mode-hc .gat-callout--error,
+.gat-mode-hc .gat-callout--danger {
+  border-left-color: var(--gat-color-magenta);
+}
+
 /* === Patterns =============================================================
    Übergreifende A11y- und Druck-Regeln. Konsumenten konfigurieren
    --gat-web-focus-ring/--gat-web-focus-offset bei Bedarf, der Rest greift
@@ -1418,6 +1515,15 @@
   thead { display: table-header-group; }
   h1, h2, h3, .gat-headline, .gat-subline { break-after: avoid; }
   .gat-modal { display: none; }
+  .gat-callout,
+  .gat-callout--info,
+  .gat-callout--warn,
+  .gat-callout--error,
+  .gat-callout--danger,
+  .gat-callout--success,
+  .gat-callout--legal {
+    break-inside: avoid;
+  }
   * {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
