@@ -203,12 +203,20 @@
 
     --gat-web-shadow:        0 1px 2px rgba(31,38,28,.05),
                              0 4px 14px rgba(31,38,28,.05);
+    --gat-web-shadow-elevated: 0 6px 24px rgba(31,38,28,.18),
+                               0 2px 6px rgba(31,38,28,.08);
     --gat-web-page-max:      min(2040px, 94vw);
     --gat-web-radius-control: var(--radius-gat-web-control);
     --gat-web-radius-card:    var(--radius-gat-web-card);
     --gat-web-focus-ring:    0 0 0 3px color-mix(in srgb,
                                        var(--gat-web-green) 38%, transparent);
     --gat-web-focus-offset:  2px;
+
+    /* === v2.1 — Modal ====================================================== */
+    --gat-web-modal-bg:       var(--gat-web-surface);
+    --gat-web-modal-backdrop: rgba(31,38,28,.55);
+    --gat-web-modal-shadow:   var(--gat-web-shadow-elevated);
+    --gat-web-modal-radius:   var(--gat-web-radius-card);
 
     /* === v2.1 — Form-Primitives ============================================
        Tokens fuer die .gat-input-Familie. Konsumenten ueberschreiben einzelne
@@ -1080,6 +1088,96 @@
   line-height: var(--gat-leading-copy);
 }
 
+/* === v2.1 — Modal / Dialog ================================================
+   Opt-in-Klasse fuer natives <dialog>. Der Konsument liefert das Markup und
+   die Open/Close-Logik (showModal()/close()), das DS liefert Backdrop,
+   Schatten, Radius und das Sub-Element-Layout. */
+
+.gat-modal {
+  background: var(--gat-web-modal-bg);
+  color: var(--gat-web-text);
+  border: none;
+  border-radius: var(--gat-web-modal-radius);
+  box-shadow: var(--gat-web-modal-shadow);
+  padding: 0;
+  max-width: min(40rem, 92vw);
+  width: 100%;
+}
+
+.gat-modal::backdrop {
+  background: var(--gat-web-modal-backdrop);
+}
+
+.gat-modal--blur::backdrop {
+  backdrop-filter: blur(3px);
+}
+
+.gat-modal--wide { max-width: min(64rem, 94vw); }
+.gat-modal--narrow { max-width: min(28rem, 90vw); }
+
+.gat-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gat-space-3);
+  padding: var(--gat-space-3) var(--gat-space-4);
+  border-bottom: 1px solid var(--gat-web-hairline);
+}
+
+.gat-modal__title {
+  font-family: var(--gat-font-headline);
+  font-weight: 700;
+  font-size: var(--gat-text-h3);
+  line-height: var(--gat-leading-headline);
+  color: var(--gat-web-text);
+  margin: 0;
+}
+
+.gat-modal__close {
+  flex: none;
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--gat-web-text-soft);
+  border-radius: var(--gat-web-radius-control);
+  padding: 0.2rem 0.55rem;
+  line-height: 1;
+  font-size: 1.25rem;
+}
+
+.gat-modal__close:hover {
+  background: var(--gat-web-surface-sunk);
+  color: var(--gat-web-text);
+}
+
+.gat-modal__close:focus-visible {
+  outline: 2px solid var(--gat-web-green-deep);
+  outline-offset: var(--gat-web-focus-offset, 2px);
+}
+
+.gat-modal__body {
+  padding: var(--gat-space-3) var(--gat-space-4);
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.gat-modal__body > :first-child { margin-top: 0; }
+.gat-modal__body > :last-child  { margin-bottom: 0; }
+
+.gat-modal__actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--gat-space-2);
+  padding: var(--gat-space-3) var(--gat-space-4);
+  border-top: 1px solid var(--gat-web-hairline);
+  background: var(--gat-web-modal-bg);
+  border-radius: 0 0 var(--gat-web-modal-radius) var(--gat-web-modal-radius);
+}
+
 /* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
    Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
    Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
@@ -1233,6 +1331,35 @@
   border-color: var(--gat-color-anthrazit);
 }
 
+/* HC fuer v2.1 Modal. */
+
+.gat-mode-hc .gat-modal {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border: 2px solid var(--gat-color-gelb);
+  box-shadow: none;
+}
+
+.gat-mode-hc .gat-modal::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.gat-mode-hc .gat-modal__head,
+.gat-mode-hc .gat-modal__actions {
+  border-color: var(--gat-color-gelb);
+  background: var(--gat-color-anthrazit);
+}
+
+.gat-mode-hc .gat-modal__title,
+.gat-mode-hc .gat-modal__close {
+  color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-modal__close:hover {
+  background: color-mix(in srgb, var(--gat-color-gelb) 14%, transparent);
+  color: var(--gat-color-gelb);
+}
+
 /* === Patterns =============================================================
    Übergreifende A11y- und Druck-Regeln. Konsumenten konfigurieren
    --gat-web-focus-ring/--gat-web-focus-offset bei Bedarf, der Rest greift
@@ -1243,7 +1370,8 @@
 .gat-tag:focus-visible,
 .gat-tab:focus-visible,
 .gat-switch-btn:focus-visible,
-.gat-header__brand:focus-visible {
+.gat-header__brand:focus-visible,
+.gat-modal__close:focus-visible {
   outline: 2px solid var(--gat-web-green-deep);
   outline-offset: var(--gat-web-focus-offset, 2px);
   box-shadow: var(--gat-web-focus-ring);
@@ -1289,6 +1417,7 @@
   tr { break-inside: avoid; }
   thead { display: table-header-group; }
   h1, h2, h3, .gat-headline, .gat-subline { break-after: avoid; }
+  .gat-modal { display: none; }
   * {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
