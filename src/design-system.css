@@ -27,6 +27,13 @@
 
 @import "tailwindcss";
 
+/* High-Contrast-Modus als Tailwind-v4 Custom-Variant. Konsumenten können
+   `gat-mode-hc:bg-...` Utilities nutzen; das DS liefert zusätzlich
+   handgeschriebene Overrides für alle .gat-*-Komponenten. Aktiviert wird der
+   Modus durch Setzen der .gat-mode-hc-Klasse auf <body> oder einem Ancestor
+   (Toggle-Knopf baut der Konsument selbst, siehe MIGRATION.md). */
+@custom-variant gat-mode-hc (&:where(.gat-mode-hc, .gat-mode-hc *));
+
 /* ========================================================================= *
  * TOKENS — Tailwind v4 @theme                                                 *
  * Tokens stehen unter Tailwind-Namespace-Präfixen (--color-, --spacing-,      *
@@ -832,4 +839,81 @@
 .gat-switch-btn.is-active:hover {
   background: var(--gat-web-green-deep);
   color: var(--gat-color-weiss);
+}
+
+/* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
+   Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
+   Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
+   Marken-Tokens, keine neuen --gat-*-hc-Tokens nötig. */
+
+.gat-mode-hc body,
+.gat-mode-hc {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-header {
+  background: var(--gat-color-anthrazit);
+  border-bottom-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-header__wordmark,
+.gat-mode-hc .gat-header__nav-list a {
+  color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-callout {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-left-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-panel,
+.gat-mode-hc .gat-metric-card {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-metric-card__num,
+.gat-mode-hc .gat-metric-card__label {
+  color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-btn--primary {
+  background: var(--gat-color-gelb);
+  color: var(--gat-color-anthrazit);
+  border-color: var(--gat-color-anthrazit);
+}
+
+.gat-mode-hc .gat-btn--secondary {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-tag--neutral,
+.gat-mode-hc .gat-tag--info,
+.gat-mode-hc .gat-tag--pflicht,
+.gat-mode-hc .gat-tag--risiko {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border: 1px solid var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-tab.is-active {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  box-shadow: inset 0 -3px 0 var(--gat-color-magenta);
+}
+
+.gat-mode-hc .gat-switch-btn.is-active {
+  background: var(--gat-color-gelb);
+  color: var(--gat-color-anthrazit);
+  border-color: var(--gat-color-anthrazit);
+}
+
+.gat-mode-hc .gat-skiplink {
+  background: var(--gat-color-gelb);
+  color: var(--gat-color-anthrazit);
 }

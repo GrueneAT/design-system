@@ -1507,6 +1507,76 @@
   </section>
 
   <!-- ================================================================== -->
+  <!-- Abschnitt 4d — Hoher Kontrast (gat-mode-hc)                         -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="hoher-kontrast">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Hoher Kontrast (gat-mode-hc)</h2>
+        <p>
+          Eine zugängliche High-Contrast-Variante über die Tailwind-v4
+          Custom-Variant <span class="doc-code">gat-mode-hc</span>. Aktiviert
+          wird sie durch Setzen der Klasse
+          <span class="doc-code">.gat-mode-hc</span> auf
+          <span class="doc-code">&lt;body&gt;</span> oder einem Ancestor.
+          Das DS liefert die Variant und Komponenten-Overrides; der
+          Toggle-Knopf ist Konsumenten-Sache.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Demo-Toggle (nur in dieser Doku-Seite)</h3>
+        <p class="gat-fliesstext doc-lead">
+          Der Knopf hier setzt
+          <span class="doc-code">document.body.classList.toggle('gat-mode-hc')</span>
+          per Klick. Wenn aktiv, schaltet die gesamte Seite auf
+          Anthrazit + Gelb + Magenta-Akzent um.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <button type="button"
+                    id="hc-toggle"
+                    class="gat-btn gat-btn--secondary"
+                    aria-pressed="false"
+                    onclick="var p=this.getAttribute('aria-pressed')==='true';this.setAttribute('aria-pressed',(!p).toString());document.body.classList.toggle('gat-mode-hc',!p);">
+              Hoher Kontrast
+            </button>
+          </div>
+          <div class="doc-demo__caption">
+            Konsumenten bauen ihren eigenen Knopf in ihrer Brandbar &mdash;
+            das DS liefert nur die Variant. Snippet siehe
+            <span class="doc-code">MIGRATION.md</span>.
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Komponenten-Overrides</h3>
+        <p class="gat-fliesstext doc-lead">
+          Folgende DS-Komponenten werden in
+          <span class="doc-code">gat-mode-hc</span> automatisch umgestylt:
+          <span class="doc-code">.gat-header</span>,
+          <span class="doc-code">.gat-callout</span>,
+          <span class="doc-code">.gat-panel</span>,
+          <span class="doc-code">.gat-metric-card</span>,
+          <span class="doc-code">.gat-btn--primary/--secondary</span>,
+          <span class="doc-code">.gat-tag--*</span>,
+          <span class="doc-code">.gat-tab.is-active</span>,
+          <span class="doc-code">.gat-switch-btn.is-active</span>,
+          <span class="doc-code">.gat-skiplink</span>.
+        </p>
+        <div class="doc-codeblock">/* Konsumenten-Snippet: Toggle-Knopf in der eigenen Brandbar */
+&lt;button type="button"
+        aria-pressed="false"
+        onclick="this.setAttribute('aria-pressed',
+                 document.body.classList.toggle('gat-mode-hc'))"&gt;
+  Hoher Kontrast
+&lt;/button&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
   <!-- Abschnitt 5 — CD-Layout-Prinzipien                                  -->
   <!-- ================================================================== -->
   <section class="gat-section doc-section-alt" id="cd-layout">
