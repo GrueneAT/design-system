@@ -122,6 +122,9 @@
   /* Web-Radien — flacher als Marken-Radien, weil Datenwerkzeug-Optik */
   --radius-gat-web-control: 6px;
   --radius-gat-web-card:    10px;
+  /* v2.1.1: Mini-Tier zwischen control (6px) und nothing — fuer Lozenges,
+     Mini-Chips, Inline-Tags, schmale Indikatoren. */
+  --radius-gat-web-mini:    4px;
 }
 
 /* ========================================================================= *
@@ -220,6 +223,7 @@
     --gat-web-page-max:      min(2040px, 94vw);
     --gat-web-radius-control: var(--radius-gat-web-control);
     --gat-web-radius-card:    var(--radius-gat-web-card);
+    --gat-web-radius-mini:    var(--radius-gat-web-mini);
     --gat-web-focus-ring:    0 0 0 3px color-mix(in srgb,
                                        var(--gat-web-green) 38%, transparent);
     --gat-web-focus-offset:  2px;
@@ -797,7 +801,11 @@
   align-items: center;
   gap: 0.35em;
   padding: 0.15em 0.6em;
-  border-radius: 999px;
+  /* v2.1.1: Wechsel von 999px (Pill) auf 4px (Mini-Lozenge) — passt
+     besser zu Inline-Tags in Tabellen und dichten Listen; Pill-Form ist
+     weiter ueber `.gat-tag { border-radius: 999px; }` opt-in fuer
+     Konsumenten, die die alte Optik brauchen. */
+  border-radius: var(--gat-web-radius-mini);
   font-family: var(--gat-font-copy);
   font-weight: 600;
   font-size: 0.85rem;
