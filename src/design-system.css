@@ -45,6 +45,13 @@
 @theme {
   /* === Marken-Farben — 1:1 aus dem CD-Quickguide ========================= */
   --color-gat-dunkelgruen: #257639;
+  /* v2.1.1: vertiefte Dunkelgrün-Variante für Opacity-Stacking. Bei
+     Konsumenten, die `color: var(--gat-color-dunkelgruen); opacity: 0.8`
+     o.ä. setzen, fällt der Default-Wert (#257639) durch WCAG-AA
+     (effektive Ratio ~3.77). Die -strong-Variante (#005538) bleibt auch
+     unter 80% Opacity AA-konform; voll-opaker Marken-Default bleibt
+     #257639. */
+  --color-gat-dunkelgruen-strong: #005538;
   /* AA-Härtung: Kontrast-Ratio 4.31 auf Weiß; v1.x-Wert lag bei 2.77.
      Hellgrün bleibt strukturell Akzent-Fläche (Text dunkel auf Hellgrün:
      Ratio 4.86, AA OK), nicht Textfarbe auf hellem Grund. */
@@ -125,12 +132,13 @@
 @layer base {
   :root {
     /* Marken-Farben */
-    --gat-color-dunkelgruen: var(--color-gat-dunkelgruen);
-    --gat-color-hellgruen:   var(--color-gat-hellgruen);
-    --gat-color-gelb:        var(--color-gat-gelb);
-    --gat-color-magenta:     var(--color-gat-magenta);
-    --gat-color-weiss:       var(--color-gat-weiss);
-    --gat-color-anthrazit:   var(--color-gat-anthrazit);
+    --gat-color-dunkelgruen:        var(--color-gat-dunkelgruen);
+    --gat-color-dunkelgruen-strong: var(--color-gat-dunkelgruen-strong);
+    --gat-color-hellgruen:          var(--color-gat-hellgruen);
+    --gat-color-gelb:               var(--color-gat-gelb);
+    --gat-color-magenta:            var(--color-gat-magenta);
+    --gat-color-weiss:              var(--color-gat-weiss);
+    --gat-color-anthrazit:          var(--color-gat-anthrazit);
 
     /* Semantische Aliase */
     --gat-color-primary:      var(--gat-color-dunkelgruen);
