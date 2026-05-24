@@ -45,6 +45,13 @@
 @theme {
   /* === Marken-Farben — 1:1 aus dem CD-Quickguide ========================= */
   --color-gat-dunkelgruen: #257639;
+  /* v2.1.1: vertiefte Dunkelgrün-Variante für Opacity-Stacking. Bei
+     Konsumenten, die `color: var(--gat-color-dunkelgruen); opacity: 0.8`
+     o.ä. setzen, fällt der Default-Wert (#257639) durch WCAG-AA
+     (effektive Ratio ~3.77). Die -strong-Variante (#005538) bleibt auch
+     unter 80% Opacity AA-konform; voll-opaker Marken-Default bleibt
+     #257639. */
+  --color-gat-dunkelgruen-strong: #005538;
   /* AA-Härtung: Kontrast-Ratio 4.31 auf Weiß; v1.x-Wert lag bei 2.77.
      Hellgrün bleibt strukturell Akzent-Fläche (Text dunkel auf Hellgrün:
      Ratio 4.86, AA OK), nicht Textfarbe auf hellem Grund. */
@@ -80,6 +87,9 @@
   --text-gat-subline: 1.25rem;
   --text-gat-copy:    1rem;
   --text-gat-small:   0.8rem;
+  /* v2.1.1: micro-Tier (11px) fuer dichten Caption-Kontext — Glossar-
+     Sub-Labels, Tabellenfusszeilen, Meta-Tags. Nicht fuer Lese-Text. */
+  --text-gat-micro:   0.6875rem;
 
   /* === Web-Schicht — entsättigte, web-taugliche Auslegung ================
      Zusätzlich zur Marken-Schicht. Konsumenten wählen, was sie binden:
@@ -112,6 +122,9 @@
   /* Web-Radien — flacher als Marken-Radien, weil Datenwerkzeug-Optik */
   --radius-gat-web-control: 6px;
   --radius-gat-web-card:    10px;
+  /* v2.1.1: Mini-Tier zwischen control (6px) und nothing — fuer Lozenges,
+     Mini-Chips, Inline-Tags, schmale Indikatoren. */
+  --radius-gat-web-mini:    4px;
 }
 
 /* ========================================================================= *
@@ -125,12 +138,13 @@
 @layer base {
   :root {
     /* Marken-Farben */
-    --gat-color-dunkelgruen: var(--color-gat-dunkelgruen);
-    --gat-color-hellgruen:   var(--color-gat-hellgruen);
-    --gat-color-gelb:        var(--color-gat-gelb);
-    --gat-color-magenta:     var(--color-gat-magenta);
-    --gat-color-weiss:       var(--color-gat-weiss);
-    --gat-color-anthrazit:   var(--color-gat-anthrazit);
+    --gat-color-dunkelgruen:        var(--color-gat-dunkelgruen);
+    --gat-color-dunkelgruen-strong: var(--color-gat-dunkelgruen-strong);
+    --gat-color-hellgruen:          var(--color-gat-hellgruen);
+    --gat-color-gelb:               var(--color-gat-gelb);
+    --gat-color-magenta:            var(--color-gat-magenta);
+    --gat-color-weiss:              var(--color-gat-weiss);
+    --gat-color-anthrazit:          var(--color-gat-anthrazit);
 
     /* Semantische Aliase */
     --gat-color-primary:      var(--gat-color-dunkelgruen);
@@ -154,6 +168,7 @@
     --gat-text-subline: var(--text-gat-subline);
     --gat-text-copy:    var(--text-gat-copy);
     --gat-text-small:   var(--text-gat-small);
+    --gat-text-micro:   var(--text-gat-micro);
 
     /* Zeilenabstände — Multiplikatoren aus dem CD-Quickguide */
     --gat-leading-headline: 0.9;
@@ -208,6 +223,7 @@
     --gat-web-page-max:      min(2040px, 94vw);
     --gat-web-radius-control: var(--radius-gat-web-control);
     --gat-web-radius-card:    var(--radius-gat-web-card);
+    --gat-web-radius-mini:    var(--radius-gat-web-mini);
     --gat-web-focus-ring:    0 0 0 3px color-mix(in srgb,
                                        var(--gat-web-green) 38%, transparent);
     --gat-web-focus-offset:  2px;
@@ -269,6 +285,11 @@
     --gat-web-input-padding-y:      0.5rem;
     --gat-web-input-disabled-bg:    var(--gat-web-surface-sunk);
     --gat-web-input-disabled-text:  var(--gat-web-text-mute);
+
+    /* v2.1.1 — Touch-Target-Floor (WCAG 2.5.5 AAA / 2.5.8 AA, 44px).
+       Konsumenten ueberschreiben diesen Token, wenn sie auf reinen
+       Pointer-Geraeten flachere Inputs wollen — Default ist barrierearm. */
+    --gat-web-input-min-h: 44px;
   }
 }
 
@@ -406,6 +427,42 @@
 
 .gat-header--dunkel .gat-header__nav-list a {
   color: var(--gat-color-weiss);
+}
+
+/* v2.1.1 — Kompakt-Modifier fuer search-first-Layouts.
+   Default-Header umbricht .gat-header__inner ab >5 Kindern in eine zweite
+   Reihe (flex-wrap:wrap). Mit .gat-header--kompakt bleibt alles auf einer
+   Zeile: kein wrap, reduziertes Padding, truncate erlaubt auf den
+   Sub-Elementen (min-width: 0 + overflow:hidden + ellipsis). Konsumenten
+   mit knapper Brandbar + Search-Trigger + Nav nutzen den Modifier;
+   bestehende .gat-header-Konsumenten bleiben unveraendert. */
+.gat-header--kompakt .gat-header__inner {
+  flex-wrap: nowrap;
+  gap: var(--gat-space-2);
+  padding-block: var(--gat-space-2);
+  padding-inline: clamp(0.75rem, 3vw, 1.75rem);
+}
+
+.gat-header--kompakt .gat-header__brand {
+  min-width: 0;
+  gap: 0.5rem;
+}
+
+.gat-header--kompakt .gat-header__wordmark {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gat-header--kompakt .gat-header__nav,
+.gat-header--kompakt .gat-header__nav-list {
+  min-width: 0;
+  flex-wrap: nowrap;
+}
+
+.gat-header--kompakt .gat-header__nav-list a {
+  white-space: nowrap;
 }
 
 .gat-nav {
@@ -744,7 +801,11 @@
   align-items: center;
   gap: 0.35em;
   padding: 0.15em 0.6em;
-  border-radius: 999px;
+  /* v2.1.1: Wechsel von 999px (Pill) auf 4px (Mini-Lozenge) — passt
+     besser zu Inline-Tags in Tabellen und dichten Listen; Pill-Form ist
+     weiter ueber `.gat-tag { border-radius: 999px; }` opt-in fuer
+     Konsumenten, die die alte Optik brauchen. */
+  border-radius: var(--gat-web-radius-mini);
   font-family: var(--gat-font-copy);
   font-weight: 600;
   font-size: 0.85rem;
@@ -770,6 +831,23 @@
 .gat-tag--risiko {
   background: color-mix(in srgb, var(--gat-web-clay-text) 14%, white);
   color: var(--gat-web-clay-text);
+}
+
+/* v2.1.1 — Search-Highlight-Atom. Browser-Default fuer <mark> ist ein
+   greller Gelb-Ton, der mit der Marken-Palette beisst. Wir resetten
+   natives <mark> per :where()-Selektor auf DS-konforme Optik (Spezifitaet
+   bleibt (0,0,0), so dass Konsumenten ohne !important ueberschreiben
+   koennen) und liefern .gat-mark als explizites Atom fuer Span-Wrapping
+   in Render-Pipelines (Pagefind, On-Page-Search). */
+:where(mark),
+.gat-mark {
+  background: color-mix(in srgb, var(--gat-color-gelb) 55%, white);
+  color: var(--gat-color-text);
+  padding: 0 0.15em;
+  border-radius: 0.15em;
+  /* Erbt Font-Weight vom Parent — Treffer-Optik soll Lesefluss nicht
+     stoeren, nur den Treffer visuell heben. */
+  font-weight: inherit;
 }
 
 .gat-skiplink {
@@ -920,6 +998,10 @@
   border: 1px solid var(--gat-web-input-border);
   border-radius: var(--gat-web-input-radius);
   padding: var(--gat-web-input-padding-y) var(--gat-web-input-padding-x);
+  /* v2.1.1 — WCAG-Touch-Target-Floor (44px). Padding bleibt unveraendert,
+     min-height greift nur, wenn der gerenderte Wert sonst niedriger waere
+     — Konsumenten mit dichter Optik koennen den Token ueberschreiben. */
+  min-height: var(--gat-web-input-min-h, 44px);
   transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
 }
 
@@ -1252,6 +1334,18 @@
   color: var(--gat-web-callout-legal-text);
 }
 
+/* v2.1.1 — Optionaler Lead-Slot fuer „Hinweis:" / „Wichtig:" /
+   „Hinweise zum Rechtsstand:"-Prefixe vor dem eigentlichen Callout-Body.
+   Ersetzt das manuelle <strong>-Vorhaengen. Fett + dezenter Bottom-
+   Spacing, damit der Folgeabsatz visuell zusammengehoert. */
+.gat-callout__lead {
+  display: block;
+  font-weight: 700;
+  margin-bottom: var(--gat-space-1);
+  /* Erbt color vom Callout — der Lead-Slot soll innerhalb jeder
+     semantischen Variante mitlaufen, ohne eigene Token-Trios zu brauchen. */
+}
+
 /* Optionaler Icon-Slot: kein Bild-Asset, nur Container. Konsumenten
    platzieren ein SVG (oder einen Buchstaben) hinein. */
 .gat-callout__icon {
@@ -1511,6 +1605,14 @@
 .gat-mode-hc .gat-tag--danger {
   border-color: var(--gat-color-magenta);
   color: var(--gat-color-magenta);
+}
+
+/* HC fuer v2.1.1 .gat-mark — invertiert (Gelb auf Anthrazit), damit der
+   Treffer in der HC-Palette weiter sichtbar bleibt. */
+.gat-mode-hc :where(mark),
+.gat-mode-hc .gat-mark {
+  background: var(--gat-color-gelb);
+  color: var(--gat-color-anthrazit);
 }
 
 /* === Patterns =============================================================

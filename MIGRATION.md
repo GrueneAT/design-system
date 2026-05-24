@@ -3,9 +3,137 @@
 Die Anleitung gliedert sich nach Release. Konsumenten lesen den Abschnitt
 zu dem Sprung, der gerade ansteht — alle früheren Hinweise gelten weiter.
 
+- [v2.1.0 → v2.1.1](#v210--v211) — Patch, strikt additiv plus zwei
+  Mini-Visual-Anpassungen (Tag-Rundung, Input-Touch-Floor).
 - [v2.0 → v2.1](#v20--v21) — strikt additiv, keine Breaking Changes.
 - [v1.x → v2.0](#v1x--v20) — Major, optische Änderungen am Header und
   am Hellgrün-Wert.
+
+---
+
+## v2.1.0 → v2.1.1
+
+**Patch Release. Konsumenten brauchen nichts zu ändern.** Acht Folge-
+befunde aus den vier v2.1-Konsumenten-Migrationen (Gemeindeordnung,
+personenwahl, bildgenerator, gemeindefinanzen, vorlagen). Strikt patch-
+kompatibel: keine Token-/Klassen-Umbenennung, kein Behavior-Bruch.
+
+### Was Konsumenten **nicht** ändern müssen
+
+- CSS-URL bleibt:
+  `https://grueneat.github.io/design-system/design-system.css`
+- Alle v2.0/v2.1-Token, -Klassen und -Selektoren bleiben unverändert.
+- Bestehende `.gat-callout`, `.gat-tag`, `.gat-input`, `.gat-header`
+  rendern weiterhin korrekt — die neuen Bausteine sind reine Ergänzung.
+
+### Sichtbare Anpassungen (Patch-Toleranz)
+
+1. **`.gat-tag` ist jetzt eine Mini-Lozenge statt Pill.** Die Rundung
+   wechselt von `border-radius: 999px` (Pill) auf
+   `var(--gat-web-radius-mini)` (4 px). Passt besser zu Inline-Tags in
+   dichten Tabellen und Listen. Wer die alte Pill-Form behalten möchte,
+   ergänzt lokal:
+
+   ```css
+   .gat-tag { border-radius: 999px; }
+   ```
+
+2. **Form-Inputs sind auf Touch-Geräten mind. 44 px hoch.**
+   `.gat-input`, `.gat-select`, `.gat-textarea` erhalten
+   `min-height: var(--gat-web-input-min-h, 44px)` als Default —
+   WCAG 2.5.5 (AAA) / 2.5.8 (AA). Das v2.1-Padding bleibt unverändert;
+   die Inputs werden nur größer, nie kleiner. Konsumenten mit dichter
+   Pointer-Optik (Desktop-only-Tools) überschreiben den Token:
+
+   ```css
+   :root { --gat-web-input-min-h: 36px; }
+   ```
+
+### Was Konsumenten **neu nutzen können**
+
+#### Neue Tokens
+
+| Token | Wert | Verwendung |
+|-------|------|------------|
+| `--gat-color-dunkelgruen-strong` | `#005538` | Opacity-Stacking-tauglich. Bei `color: var(--gat-color-dunkelgruen-strong); opacity: 0.8` bleibt AA-Kontrast erhalten (der Default `--gat-color-dunkelgruen` ist für voll-opake Verwendung optimiert). |
+| `--gat-text-micro` | `0.6875rem` (~11 px) | Dichter Caption-Kontext — Glossar-Sub-Labels, Tabellenfußzeilen, Meta-Tags. Nicht für Lese-Text. |
+| `--gat-web-radius-mini` | `4px` | Mini-Lozenge-Rundung. Lücke zwischen `--gat-web-radius-control` (6 px) und nothing geschlossen. |
+| `--gat-web-input-min-h` | `44px` | WCAG-Touch-Target-Floor für Form-Inputs. |
+
+#### Neuer Header-Modifier — `.gat-header--kompakt`
+
+Search-first-Layout-Variante. Erzwingt eine einreihige Brandbar mit
+kleinerem Padding und Text-Truncation. Sinnvoll, wenn Brandbar +
+Search-Trigger + Nav den Standard-Header in eine zweite Reihe brechen
+würde.
+
+```html
+<header class="gat-header gat-header--kompakt">
+  <div class="gat-header__inner">
+    <a class="gat-header__brand" href="#top">…</a>
+    <nav class="gat-header__nav">…</nav>
+  </div>
+</header>
+```
+
+Default-`.gat-header` bleibt unverändert (`flex-wrap: wrap`).
+
+#### Neues Atom — `.gat-mark` plus `<mark>`-Reset
+
+Search-Highlight-Optik für Pagefind-Excerpts und On-Page-Search.
+Natives `<mark>` wird per `:where(mark)`-Selektor mit Spezifität (0,0,0)
+auf DS-konforme Optik gebracht (entsättigtes Gelb + Anthrazit-Text);
+Konsumenten können ohne `!important` überschreiben.
+
+```html
+<p>Treffer-Excerpt mit <mark>Suchbegriff</mark>.</p>
+<p>Oder explizit per Klasse: <span class="gat-mark">Suchbegriff</span>.</p>
+```
+
+HC-Variant: in `.gat-mode-hc` invertiert auf Gelb-auf-Anthrazit.
+
+#### Neuer Callout-Slot — `.gat-callout__lead`
+
+Optionaler Lead-Slot für kurze Prefix-Labels („Hinweis:", „Wichtig:",
+„Hinweise zum Rechtsstand:"). Fett, dezenter Bottom-Spacing zum
+Folgeabsatz. Ersetzt das manuelle `<strong>` am Absatzanfang.
+
+```html
+<aside class="gat-callout gat-callout--info">
+  <span class="gat-callout__lead">Hinweis:</span>
+  <p>Inhalt des Hinweises.</p>
+</aside>
+```
+
+### Body-Font Override
+
+Der DS setzt `body { font-family: 'Barlow Semi Condensed', sans-serif }`
+über die Komponenten-Klassen (`.gat-fliesstext`, `.gat-headline`, …).
+In manchen Konsumenten-Stacks mit Tailwind-Layout-Metriken (z. B.
+Gemeindeordnung) bricht die kondensierte Schrift Hero-Heading-
+Berechnungen (clippt bei 375 px), weil Tailwind seine intrinsischen
+Linienhöhen auf die Standard-System-Sans rechnet.
+
+**Wann nötig:** wenn der eigene Tool-Stack Layout-Math auf
+`font-family: ui-sans-serif, system-ui, …` aufbaut und die
+Heading-Box-Berechnungen mit Barlow Semi Condensed unterhalb von
+375 px-Viewports clippen.
+
+**Override-Snippet** (im Konsumenten-CSS, nach der DS-`<link>`):
+
+```css
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+               'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+/* DS-Komponenten-Klassen behalten Barlow — sie setzen font-family
+   explizit. Nur das nackte <body> (Tailwind-Layout-Math) bekommt die
+   System-Sans zurück. */
+```
+
+**Wann nicht nötig:** für gruene.at-Stil-Konsumenten (gemeindefinanzen,
+bildgenerator, vorlagen), die die Barlow-Optik gewollt durchziehen.
+Default bleibt absichtlich Barlow Semi Condensed.
 
 ---
 

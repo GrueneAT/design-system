@@ -12,6 +12,88 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-05-24
+
+**Patch Release.** Acht Folgebefunde aus den vier Konsumenten-Migrationen
+auf v2.1 (Gemeindeordnung, personenwahl, bildgenerator, gemeindefinanzen,
+vorlagen). Strikt patch-kompatibel: keine Breaking Changes, keine
+Token-/Klassen-Umbenennung. Bestehende Konsumenten ziehen den Patch
+automatisch beim nächsten CDN-Refresh. Quelldokumentation:
+`.issues/pm5dd-…/ISSUE.md`.
+
+### Added
+
+- **Token `--gat-color-dunkelgruen-strong`** (`#005538`) — vertiefte
+  Dunkelgrün-Variante für Opacity-Stacking-Use-Cases. Bei
+  `color: var(--gat-color-dunkelgruen); opacity: 0.8` fällt der
+  Default-Wert durch WCAG-AA; die `-strong`-Variante bleibt auch unter
+  80 % Opacity AA-konform. Voll-opaker Marken-Default bleibt unverändert
+  `--gat-color-dunkelgruen` (`#257639`). Befund: Gemeindeordnung Phase 0
+  (axe-core auf Live-Seiten).
+- **Token `--gat-text-micro`** (`0.6875rem`, ~11 px) — micro-Tier für
+  dichten Caption-Kontext (Glossar-Sub-Labels, Tabellenfußzeilen,
+  Meta-Tags). Nicht für Lese-Text. Befund: Gemeindeordnung Phase 2.
+- **Token `--gat-web-radius-mini`** (`4px`) — Mini-Lozenge-Rundung
+  zwischen `--gat-web-radius-control` (6 px) und nothing. Für Inline-
+  Tags, Chips, schmale Indikatoren. Befund: Gemeindeordnung Phase 2.
+- **Token `--gat-web-input-min-h`** (`44px`) — WCAG-Touch-Target-Floor,
+  wird auf `.gat-input`/`.gat-select`/`.gat-textarea` als `min-height`
+  angewandt. Konsumenten mit dichter Pointer-Optik überschreiben den
+  Token nach unten. Befund: personenwahl Phase 2.
+- **`.gat-header--kompakt` Modifier** — search-first-Layout-Variante des
+  Headers: `flex-wrap: nowrap`, reduziertes Padding, `min-width: 0` mit
+  Text-Truncation auf Wordmark und Nav. Bestehende `.gat-header`-
+  Konsumenten unbetroffen. Befund: Gemeindeordnung Phase 2.
+- **`.gat-mark` Atom** (plus `:where(mark)`-Reset) — Search-Highlight-
+  Optik für Pagefind-Excerpts und On-Page-Search. Natives `<mark>` wird
+  per Selektor mit Spezifität (0,0,0) auf DS-konforme Optik gebracht
+  (entsättigtes Gelb + Text-Anthrazit, `padding 0 .15em`, `border-radius
+  .15em`), ohne Konsumenten-Overrides zu blockieren. Klasse
+  `.gat-mark` für explizites Span-Wrapping in JS-Render-Pipelines.
+  Befund: Gemeindeordnung Phase 2.
+- **`.gat-callout__lead` Subelement** — optionaler Lead-Slot für kurze
+  Prefix-Labels („Hinweis:", „Wichtig:", „Hinweise zum Rechtsstand:").
+  Fett, dezenter Bottom-Spacing zum Folgeabsatz. Ersetzt das manuelle
+  `<strong>` am Absatzanfang. Befund: Gemeindeordnung Phase 2.
+- HC-Variant (`.gat-mode-hc`) für `.gat-mark` — Gelb-auf-Anthrazit, der
+  Treffer bleibt in der HC-Palette sichtbar.
+
+### A11y
+
+- **Touch-Target-Floor auf Form-Inputs**: `.gat-input`, `.gat-select`,
+  `.gat-textarea` bekommen `min-height: var(--gat-web-input-min-h, 44px)`
+  als Default. Das v2.1-Padding bleibt unverändert; `min-height` greift
+  nur, wenn der gerenderte Wert sonst unter 44 px läge. Damit erfüllt
+  das DS WCAG 2.5.5 (AAA) und 2.5.8 (AA) ohne lokale Patches in
+  Konsumenten-Repos.
+
+### Changed
+
+- **`.gat-tag` Rundung**: wechselt von `border-radius: 999px` (Pill) auf
+  `var(--gat-web-radius-mini)` (4 px). Passt besser zu Inline-Tags in
+  dichten Tabellen und Listen. Konsumenten, die die Pill-Form behalten
+  wollen, setzen lokal `.gat-tag { border-radius: 999px; }` — kein
+  Behavior-Bruch, nur Mini-Visual-Drift innerhalb des
+  Patch-Toleranz-Bereichs.
+
+### Token-Notes
+
+- Alle v2.0/v2.1-Token (`--gat-color-*`, `--gat-web-*`-Bestand) bleiben
+  werteweise unverändert. v2.1.1 ergänzt vier neue Tokens und einen
+  Modifier; nichts wird umbenannt, nichts entfernt.
+
+### Migration
+
+Strikt additiv. Konsumenten ziehen v2.1.1 automatisch beim nächsten
+CDN-Refresh. Zwei sichtbare Änderungen sind im Patch-Toleranz-Bereich:
+- `.gat-tag` ist jetzt eine Mini-Lozenge statt Pill (kosmetisch).
+- Form-Inputs sind auf Touch-Geräten mind. 44 px hoch (A11y, abwärts-
+  kompatibel: Inputs können nur größer werden).
+
+Vollständige Migration und Body-Font-Override-Snippet (Befund 8 aus
+Gemeindeordnung Phase 0): siehe `MIGRATION.md` Abschnitt
+„v2.1.0 → v2.1.1".
+
 ## [2.1.0] - 2026-05-23
 
 **Minor Release.** Strikt additiv — keine Breaking Changes. Ergänzt vier

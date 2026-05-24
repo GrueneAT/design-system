@@ -383,6 +383,14 @@
             </div>
           </div>
           <div class="doc-swatch">
+            <div class="doc-swatch__chip" style="background: var(--gat-color-dunkelgruen-strong);"></div>
+            <div class="doc-swatch__meta">
+              <span class="doc-code">--gat-color-dunkelgruen-strong</span>
+              <span class="doc-swatch__hex">#005538</span>
+              <span class="doc-swatch__usage">v2.1.1: vertiefte Variante für Opacity-Stacking (bleibt AA bei <span class="doc-code">opacity: 0.8</span>). Voll-opaker Marken-Default ist weiterhin <span class="doc-code">--gat-color-dunkelgruen</span>.</span>
+            </div>
+          </div>
+          <div class="doc-swatch">
             <div class="doc-swatch__chip" style="background: var(--gat-color-hellgruen);"></div>
             <div class="doc-swatch__meta">
               <span class="doc-code">--gat-color-hellgruen</span>
@@ -852,7 +860,18 @@
             </div>
             <span style="font-family: var(--gat-font-copy); font-size: var(--gat-text-small);">Beispieltext</span>
           </div>
+          <div class="doc-specimen">
+            <div class="doc-specimen__meta">
+              <span class="doc-code">--gat-text-micro</span><br>0.6875rem &middot; ~11&nbsp;px &middot; Caption (v2.1.1)
+            </div>
+            <span style="font-family: var(--gat-font-copy); font-size: var(--gat-text-micro);">Beispieltext</span>
+          </div>
         </div>
+        <p class="gat-fliesstext doc-note">
+          <span class="doc-code">--gat-text-micro</span> (v2.1.1) ist
+          ausschließlich für dichten Caption-Kontext — Glossar-Sub-Labels,
+          Tabellenfußzeilen, Meta-Tags. Nicht für Lese-Text verwenden.
+        </p>
       </div>
 
       <div class="doc-block">
@@ -997,8 +1016,10 @@
       <div class="doc-block">
         <h3 class="gat-subline">Komponenten-Maße</h3>
         <p class="gat-fliesstext doc-lead">
-          Vier Web-Maße, die die Komponenten brauchen &mdash; damit keine
-          Komponente harte px-/rem-Werte verwendet.
+          Komponenten-Maße &mdash; damit keine Komponente harte px-/rem-Werte
+          verwendet. v2.1.1 ergänzt zwei Web-Token-Lücken
+          (<span class="doc-code">--gat-web-radius-mini</span>,
+          <span class="doc-code">--gat-web-input-min-h</span>).
         </p>
         <table class="doc-table">
           <thead>
@@ -1024,6 +1045,26 @@
               <td><span class="doc-code">--gat-container-max</span></td>
               <td>72rem</td>
               <td>Maximale Inhaltsbreite.</td>
+            </tr>
+            <tr>
+              <td><span class="doc-code">--gat-web-radius-mini</span></td>
+              <td>4px</td>
+              <td>v2.1.1 &mdash; Mini-Lozenge-Rundung für Inline-Tags und Chips. <span class="doc-code">.gat-tag</span> nutzt diesen Wert seit v2.1.1 (war 999px Pill in v2.0/v2.1).</td>
+            </tr>
+            <tr>
+              <td><span class="doc-code">--gat-web-radius-control</span></td>
+              <td>6px</td>
+              <td>Formular-/Control-Rundung &mdash; Inputs, Select, Buttons.</td>
+            </tr>
+            <tr>
+              <td><span class="doc-code">--gat-web-radius-card</span></td>
+              <td>10px</td>
+              <td>Card- und Panel-Rundung &mdash; Modal, Panel, Callout-rechts.</td>
+            </tr>
+            <tr>
+              <td><span class="doc-code">--gat-web-input-min-h</span></td>
+              <td>44px</td>
+              <td>v2.1.1 &mdash; WCAG-Touch-Target-Floor auf <span class="doc-code">.gat-input</span>/<span class="doc-code">.gat-select</span>/<span class="doc-code">.gat-textarea</span>. Konsumenten mit dichter Pointer-Optik überschreiben den Token nach unten.</td>
             </tr>
           </tbody>
         </table>
@@ -1133,6 +1174,46 @@
     &lt;/nav&gt;
   &lt;/div&gt;
 &lt;/header&gt;</div>
+
+        <div class="doc-block" style="margin-top: var(--gat-space-4);">
+          <h4 class="gat-subline" style="font-size: var(--gat-text-copy);">Kompakt-Modifier (v2.1.1)</h4>
+          <p class="gat-fliesstext doc-lead">
+            <span class="doc-code">.gat-header--kompakt</span> erzwingt eine
+            einreihige Brandbar mit kleinerem Padding und Text-Truncation
+            (<span class="doc-code">flex-wrap: nowrap</span>,
+            <span class="doc-code">min-width: 0</span> auf den Sub-Elementen).
+            Sinnvoll für search-first-Layouts mit Brandbar + Search-Trigger +
+            Nav, wenn die Standard-Header in eine zweite Reihe umbrechen würde.
+          </p>
+          <div class="doc-demo">
+            <div class="doc-demo__stage" style="display: block;">
+              <header class="gat-header gat-header--kompakt" style="border-radius: var(--gat-radius-md); overflow: hidden;">
+                <div class="gat-header__inner">
+                  <a class="gat-header__brand" href="#komponenten">
+                    <span class="gat-header__wordmark">Sehr lange Tool-Bezeichnung mit Suffix</span>
+                  </a>
+                  <nav class="gat-header__nav" aria-label="Demo">
+                    <ul class="gat-header__nav-list">
+                      <li><a href="#komponenten">Start</a></li>
+                      <li><a href="#komponenten">Suche</a></li>
+                      <li><a href="#komponenten">Über</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </header>
+            </div>
+            <div class="doc-demo__caption">
+              <span class="doc-code">.gat-header.gat-header--kompakt</span> &mdash;
+              alles auf einer Zeile; Wordmark trunciert bei knappem Platz.
+            </div>
+          </div>
+          <div class="doc-codeblock">&lt;header class="gat-header gat-header--kompakt"&gt;
+  &lt;div class="gat-header__inner"&gt;
+    &lt;a class="gat-header__brand"&gt;…&lt;/a&gt;
+    &lt;nav class="gat-header__nav"&gt;…&lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</div>
+        </div>
       </div>
 
       <div class="doc-block">
@@ -1348,6 +1429,34 @@
             </p>
           </aside>
         </div>
+
+        <div class="doc-block" style="margin-top: var(--gat-space-4);">
+          <h4 class="gat-subline" style="font-size: var(--gat-text-copy);">Mit Lead-Slot (v2.1.1)</h4>
+          <p class="gat-fliesstext doc-lead">
+            Optionales Subelement <span class="doc-code">.gat-callout__lead</span>
+            für kurze Prefix-Labels („Hinweis:", „Wichtig:", „Hinweise zum
+            Rechtsstand:"). Ersetzt das manuelle <span class="doc-code">&lt;strong&gt;</span>
+            am Absatzanfang — eigenes Subelement, fett, dezenter Bottom-Spacing.
+          </p>
+          <aside class="gat-callout gat-callout--info">
+            <span class="gat-callout__lead">Hinweis:</span>
+            <p class="gat-fliesstext" style="margin: 0;">
+              Allgemeine Information mit explizitem Lead-Prefix. Visuell
+              kompakter zusammen als zwei <span class="doc-code">&lt;p&gt;</span>-Absätze.
+            </p>
+          </aside>
+          <aside class="gat-callout gat-callout--legal">
+            <span class="gat-callout__lead">Hinweise zum Rechtsstand:</span>
+            <p class="gat-fliesstext" style="margin: 0;">
+              Eignet sich für längere Disclaimer-Prefixe, in der Legal-Variante
+              optisch ruhig.
+            </p>
+          </aside>
+          <div class="doc-codeblock">&lt;aside class="gat-callout gat-callout--info"&gt;
+  &lt;span class="gat-callout__lead"&gt;Hinweis:&lt;/span&gt;
+  &lt;p&gt;Inhalt des Hinweises.&lt;/p&gt;
+&lt;/aside&gt;</div>
+        </div>
       </div>
 
       <div class="doc-block">
@@ -1388,7 +1497,7 @@
       <div class="doc-block">
         <h3 class="gat-subline">Tag</h3>
         <p class="gat-fliesstext doc-lead">
-          Pill/Badge für Status, Kategorien oder Meta-Informationen. v2.0
+          Lozenge-Badge für Status, Kategorien oder Meta-Informationen. v2.0
           brachte <span class="doc-code">--neutral</span>,
           <span class="doc-code">--info</span>,
           <span class="doc-code">--pflicht</span>,
@@ -1397,6 +1506,11 @@
           <span class="doc-code">--ok</span>/<span class="doc-code">--success</span>,
           <span class="doc-code">--warn</span>,
           <span class="doc-code">--error</span>/<span class="doc-code">--danger</span>.
+          v2.1.1 wechselt die Rundung von Pill (999px) auf
+          <span class="doc-code">--gat-web-radius-mini</span> (4px) &mdash;
+          passt besser zu Inline-Tags in dichten Tabellen. Wer die alte
+          Pill-Form will, setzt lokal
+          <span class="doc-code">.gat-tag { border-radius: 999px; }</span>.
         </p>
         <div class="doc-demo">
           <div class="doc-demo__stage">
@@ -1438,6 +1552,44 @@
           der Seite einmal <kbd>Tab</kbd> drücken, um den Skiplink zu sehen.
         </p>
         <div class="doc-codeblock">&lt;a class="gat-skiplink" href="#main"&gt;Direkt zum Inhalt&lt;/a&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Mark (v2.1.1)</h3>
+        <p class="gat-fliesstext doc-lead">
+          Search-Highlight-Atom für Pagefind-Excerpts, On-Page-Search-Treffer
+          oder hervorgehobene Token. Der Browser-Default für
+          <span class="doc-code">&lt;mark&gt;</span> ist ein greller Highlighter,
+          der mit der Marken-Palette beißt &mdash; v2.1.1 resettet natives
+          <span class="doc-code">&lt;mark&gt;</span> per
+          <span class="doc-code">:where(mark)</span>-Selektor (Spezifität (0,0,0),
+          ohne Sieg überschreibbar) auf eine DS-konforme Optik und liefert
+          parallel die explizite Klasse <span class="doc-code">.gat-mark</span>
+          für Span-Wrapping in JS-Render-Pipelines.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage" style="display: block;">
+            <p class="gat-fliesstext" style="margin: 0;">
+              Treffer in einer Excerpt-Zeile, automatisch via nativem
+              <mark>Pagefind</mark>-Markup &mdash; oder explizit per Klasse
+              im <span class="gat-mark">JS-Render-Pipeline</span>-Span.
+            </p>
+          </div>
+          <div class="doc-demo__caption">
+            Natives <span class="doc-code">&lt;mark&gt;</span> und
+            <span class="doc-code">.gat-mark</span> sind visuell identisch &mdash;
+            beide nutzen <span class="doc-code">--gat-color-gelb</span>
+            (entsättigt via <span class="doc-code">color-mix</span>) und
+            <span class="doc-code">--gat-color-text</span>.
+          </div>
+          <div class="doc-codeblock">&lt;p&gt;Treffer-Excerpt mit &lt;mark&gt;Suchbegriff&lt;/mark&gt;.&lt;/p&gt;
+&lt;p&gt;Oder explizit: &lt;span class="gat-mark"&gt;Suchbegriff&lt;/span&gt;.&lt;/p&gt;</div>
+        </div>
+        <p class="gat-fliesstext doc-note">
+          HC-Pendant: in <span class="doc-code">.gat-mode-hc</span> wird der
+          Treffer auf Gelb-auf-Anthrazit gespiegelt — bleibt sichtbar in der
+          HC-Palette.
+        </p>
       </div>
     </div>
   </section>
