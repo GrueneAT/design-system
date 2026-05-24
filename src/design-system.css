@@ -825,6 +825,23 @@
   color: var(--gat-web-clay-text);
 }
 
+/* v2.1.1 — Search-Highlight-Atom. Browser-Default fuer <mark> ist ein
+   greller Gelb-Ton, der mit der Marken-Palette beisst. Wir resetten
+   natives <mark> per :where()-Selektor auf DS-konforme Optik (Spezifitaet
+   bleibt (0,0,0), so dass Konsumenten ohne !important ueberschreiben
+   koennen) und liefern .gat-mark als explizites Atom fuer Span-Wrapping
+   in Render-Pipelines (Pagefind, On-Page-Search). */
+:where(mark),
+.gat-mark {
+  background: color-mix(in srgb, var(--gat-color-gelb) 55%, white);
+  color: var(--gat-color-text);
+  padding: 0 0.15em;
+  border-radius: 0.15em;
+  /* Erbt Font-Weight vom Parent — Treffer-Optik soll Lesefluss nicht
+     stoeren, nur den Treffer visuell heben. */
+  font-weight: inherit;
+}
+
 .gat-skiplink {
   position: fixed;
   top: -200%;
@@ -1568,6 +1585,14 @@
 .gat-mode-hc .gat-tag--danger {
   border-color: var(--gat-color-magenta);
   color: var(--gat-color-magenta);
+}
+
+/* HC fuer v2.1.1 .gat-mark — invertiert (Gelb auf Anthrazit), damit der
+   Treffer in der HC-Palette weiter sichtbar bleibt. */
+.gat-mode-hc :where(mark),
+.gat-mode-hc .gat-mark {
+  background: var(--gat-color-gelb);
+  color: var(--gat-color-anthrazit);
 }
 
 /* === Patterns =============================================================
