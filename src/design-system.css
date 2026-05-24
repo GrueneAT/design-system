@@ -290,6 +290,18 @@
        Konsumenten ueberschreiben diesen Token, wenn sie auf reinen
        Pointer-Geraeten flachere Inputs wollen — Default ist barrierearm. */
     --gat-web-input-min-h: 44px;
+
+    /* === v2.2 — Tabelle (.gat-table) ======================================
+       Tokens fuer die Datentabelle. Trio aus Head-Bg, Stripe-Bg,
+       Hover-Bg, plus eine Border-Farbe fuer Zell-Hairlines. Sticky-Head
+       und Sticky-Col nutzen den Surface-Token fuer den Hintergrund —
+       beim Scrollen darf nichts „durchscheinen". */
+    --gat-web-table-head-bg:    var(--gat-web-surface-sunk);
+    --gat-web-table-row-stripe: color-mix(in srgb,
+                                          var(--gat-web-green-tint) 50%,
+                                          var(--gat-web-surface));
+    --gat-web-table-row-hover:  var(--gat-web-green-tint);
+    --gat-web-table-border:     var(--gat-web-hairline);
   }
 }
 
@@ -1388,6 +1400,169 @@
   color: var(--gat-web-tag-error-text);
 }
 
+/* === v2.2 — Tabelle (.gat-table) ==========================================
+   Datentabelle mit Sticky-Head, optionalem Zebra, Compact-/Dense-Varianten,
+   numerischer Spalten-Helper-Klasse und einer Sticky-erste-Spalte-Variante
+   fuer breite Vergleichstabellen. Das DS liefert die Optik; Sortierung
+   und Selektion implementiert der Konsument via JS und schaltet die
+   Funktionsklassen .is-active / .is-selected. */
+
+.gat-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--gat-font-copy);
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-web-text);
+  background: var(--gat-web-surface);
+}
+
+.gat-table th,
+.gat-table td {
+  padding: var(--gat-space-2) var(--gat-space-3);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--gat-web-table-border);
+}
+
+.gat-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--gat-web-table-head-bg);
+  font-family: var(--gat-font-headline);
+  font-weight: 700;
+  font-size: var(--gat-text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gat-web-text-soft);
+  border-bottom: 2px solid var(--gat-web-table-border);
+}
+
+.gat-table tfoot td {
+  background: var(--gat-web-surface-sunk);
+  font-weight: 600;
+  border-top: 2px solid var(--gat-web-table-border);
+  border-bottom: none;
+}
+
+.gat-table tbody tr:hover {
+  background: var(--gat-web-table-row-hover);
+}
+
+/* Zebra — alternierende Zeilenhintergruende. Stripe liegt UNTER dem
+   Hover-Bg in der Kaskade, weil die Hover-Regel staerker greift. */
+.gat-table--zebra tbody tr:nth-child(even) {
+  background: var(--gat-web-table-row-stripe);
+}
+
+.gat-table--zebra tbody tr:nth-child(even):hover {
+  background: var(--gat-web-table-row-hover);
+}
+
+/* Compact — reduziertes Zellpadding fuer dichte Listen. */
+.gat-table--compact th,
+.gat-table--compact td {
+  padding: var(--gat-space-1) var(--gat-space-2);
+}
+
+/* Dense — Micro-Schrift fuer datenreiche Tabellen (Glossar-Sub-Labels,
+   Vergleichstabellen). Nutzt --gat-text-micro aus v2.1.1. */
+.gat-table--dense {
+  font-size: var(--gat-text-micro);
+}
+
+.gat-table--dense th,
+.gat-table--dense td {
+  padding: var(--gat-space-1) var(--gat-space-2);
+}
+
+/* Sticky erste Spalte — fuer breite Vergleichstabellen mit Reihen-Labels
+   in Spalte 1. Wirkt nur in Kombination mit .gat-table-scroll, weil der
+   horizontale Scroll-Container die Sticky-Anker setzt. */
+.gat-table--sticky-col tbody td:first-child,
+.gat-table--sticky-col tfoot td:first-child,
+.gat-table--sticky-col thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--gat-web-surface);
+}
+
+.gat-table--sticky-col thead th:first-child {
+  /* Head + Sticky-Col ueberkreuzen sich — der head-Bg gewinnt. */
+  z-index: 3;
+  background: var(--gat-web-table-head-bg);
+}
+
+.gat-table--sticky-col.gat-table--zebra tbody tr:nth-child(even) td:first-child {
+  background: var(--gat-web-table-row-stripe);
+}
+
+/* Numerische Spalte — rechtsbuendig + tabellarische Ziffern. */
+.gat-table__num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Sortierbare Spalten-Helper — Cursor, Padding fuer Pfeil-Slot,
+   .is-active-State fuer aktiv-sortierte Spalte. Pfeil ist als
+   CSS-Pseudo gerendert (kein Bild-Asset, kein DS-JS). */
+.gat-table__sortable {
+  cursor: pointer;
+  user-select: none;
+  padding-right: 1.5em;
+  position: relative;
+}
+
+.gat-table__sortable::after {
+  content: "";
+  position: absolute;
+  right: 0.6em;
+  top: 50%;
+  width: 0.55em;
+  height: 0.55em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-65%) rotate(45deg);
+  opacity: 0.3;
+}
+
+.gat-table__sortable:hover::after,
+.gat-table__sortable:focus-visible::after {
+  opacity: 0.7;
+}
+
+.gat-table__sortable.is-active::after {
+  opacity: 1;
+  color: var(--gat-web-green-deep);
+}
+
+.gat-table__sortable.is-active.is-desc::after {
+  transform: translateY(-35%) rotate(-135deg);
+}
+
+/* Scrollbarer Wrapper — horizontaler Scroll fuer breite Tabellen.
+   Setzt die Tabelle innen auf min-width 100% (Default), Konsumenten
+   geben bei breitem Inhalt z. B. min-width: 60rem auf das innere
+   <table> per Inline-Style oder eigener Klasse. */
+.gat-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--gat-web-radius-card);
+  border: 1px solid var(--gat-web-table-border);
+}
+
+.gat-table-scroll > .gat-table {
+  min-width: 100%;
+}
+
+/* Sticky-Head braucht den Scroll-Container als Scroll-Anker. Wenn die
+   Tabelle ohne Wrapper im Seitenfluss steht, klebt der Head am
+   Viewport-Top (Default-Verhalten). */
+
 /* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
    Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
    Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
@@ -1613,6 +1788,57 @@
 .gat-mode-hc .gat-mark {
   background: var(--gat-color-gelb);
   color: var(--gat-color-anthrazit);
+}
+
+/* HC fuer v2.2 .gat-table — Anthrazit auf Gelb, kein Zebra (zu unruhig
+   in der HC-Palette). Sticky-Head und Sticky-Col behalten ihre Logik,
+   tauschen nur Farben. */
+
+.gat-mode-hc .gat-table {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-table th,
+.gat-mode-hc .gat-table td {
+  border-bottom-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-table thead th {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-bottom: 2px solid var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-table tfoot td {
+  background: color-mix(in srgb, var(--gat-color-anthrazit) 70%, black);
+  color: var(--gat-color-gelb);
+  border-top-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-table tbody tr:hover {
+  background: color-mix(in srgb, var(--gat-color-gelb) 18%, var(--gat-color-anthrazit));
+}
+
+.gat-mode-hc .gat-table--zebra tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--gat-color-gelb) 8%, var(--gat-color-anthrazit));
+}
+
+.gat-mode-hc .gat-table--sticky-col tbody td:first-child,
+.gat-mode-hc .gat-table--sticky-col tfoot td:first-child {
+  background: var(--gat-color-anthrazit);
+}
+
+.gat-mode-hc .gat-table--sticky-col thead th:first-child {
+  background: var(--gat-color-anthrazit);
+}
+
+.gat-mode-hc .gat-table__sortable.is-active::after {
+  color: var(--gat-color-magenta);
+}
+
+.gat-mode-hc .gat-table-scroll {
+  border-color: var(--gat-color-gelb);
 }
 
 /* === Patterns =============================================================
