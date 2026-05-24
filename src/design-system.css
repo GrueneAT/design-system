@@ -1326,6 +1326,18 @@
   color: var(--gat-web-callout-legal-text);
 }
 
+/* v2.1.1 — Optionaler Lead-Slot fuer „Hinweis:" / „Wichtig:" /
+   „Hinweise zum Rechtsstand:"-Prefixe vor dem eigentlichen Callout-Body.
+   Ersetzt das manuelle <strong>-Vorhaengen. Fett + dezenter Bottom-
+   Spacing, damit der Folgeabsatz visuell zusammengehoert. */
+.gat-callout__lead {
+  display: block;
+  font-weight: 700;
+  margin-bottom: var(--gat-space-1);
+  /* Erbt color vom Callout — der Lead-Slot soll innerhalb jeder
+     semantischen Variante mitlaufen, ohne eigene Token-Trios zu brauchen. */
+}
+
 /* Optionaler Icon-Slot: kein Bild-Asset, nur Container. Konsumenten
    platzieren ein SVG (oder einen Buchstaben) hinein. */
 .gat-callout__icon {
