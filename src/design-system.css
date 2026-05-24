@@ -338,6 +338,16 @@
 
     --gat-web-toaster-position-bottom: 1.25rem;
     --gat-web-toaster-position-right:  1.25rem;
+
+    /* === v2.2 — Toolbar (.gat-toolbar) ====================================
+       Sticky Action-Bar fuer Massen-Aktionen. Default sticky am
+       unteren Viewport-Rand; Variante --top kippt nach oben. Subtle
+       Shadow als Elevation, nicht als Marken-Effekt. */
+    --gat-web-toolbar-bg:        var(--gat-web-surface);
+    --gat-web-toolbar-border:    var(--gat-web-hairline);
+    --gat-web-toolbar-shadow:    0 -2px 8px rgba(31,38,28,.08);
+    --gat-web-toolbar-padding-x: var(--gat-space-3);
+    --gat-web-toolbar-padding-y: var(--gat-space-2);
   }
 }
 
@@ -1798,6 +1808,50 @@
   outline-offset: 2px;
 }
 
+/* === v2.2 — Toolbar (.gat-toolbar) ========================================
+   Sticky Action-Bar fuer Massen-Aktionen und Selektions-Operationen.
+   Default sticky am unteren Viewport-Rand; .--top kippt nach oben.
+   Flex-Layout mit Wrap, subtle Shadow als Elevation. */
+
+.gat-toolbar {
+  position: sticky;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gat-space-3);
+  padding: var(--gat-web-toolbar-padding-y) var(--gat-web-toolbar-padding-x);
+  background: var(--gat-web-toolbar-bg);
+  border-top: 1px solid var(--gat-web-toolbar-border);
+  box-shadow: var(--gat-web-toolbar-shadow);
+}
+
+.gat-toolbar--top {
+  bottom: auto;
+  top: 0;
+  border-top: none;
+  border-bottom: 1px solid var(--gat-web-toolbar-border);
+  /* Schatten dreht — Elevation kommt jetzt von unten. */
+  box-shadow: 0 2px 8px rgba(31,38,28,.08);
+}
+
+.gat-toolbar__count {
+  font-family: var(--gat-font-headline);
+  font-weight: 700;
+  font-size: var(--gat-text-copy);
+  color: var(--gat-web-text);
+  margin-right: auto;
+}
+
+.gat-toolbar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gat-space-2);
+  margin-left: auto;
+}
+
 /* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
    Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
    Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
@@ -2119,6 +2173,24 @@
 .gat-mode-hc .gat-toast--warn,
 .gat-mode-hc .gat-toast--error {
   border-left-color: var(--gat-color-magenta);
+}
+
+/* HC fuer v2.2 .gat-toolbar — Anthrazit + Gelb-Border, Magenta-Schatten
+   verzichtet (Schatten in HC unsichtbar). */
+
+.gat-mode-hc .gat-toolbar {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-color: var(--gat-color-gelb);
+  box-shadow: 0 -1px 0 var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-toolbar--top {
+  box-shadow: 0 1px 0 var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-toolbar__count {
+  color: var(--gat-color-gelb);
 }
 
 /* === Patterns =============================================================
