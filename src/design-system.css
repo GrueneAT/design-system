@@ -290,6 +290,64 @@
        Konsumenten ueberschreiben diesen Token, wenn sie auf reinen
        Pointer-Geraeten flachere Inputs wollen — Default ist barrierearm. */
     --gat-web-input-min-h: 44px;
+
+    /* === v2.2 — Tabelle (.gat-table) ======================================
+       Tokens fuer die Datentabelle. Trio aus Head-Bg, Stripe-Bg,
+       Hover-Bg, plus eine Border-Farbe fuer Zell-Hairlines. Sticky-Head
+       und Sticky-Col nutzen den Surface-Token fuer den Hintergrund —
+       beim Scrollen darf nichts „durchscheinen". */
+    --gat-web-table-head-bg:    var(--gat-web-surface-sunk);
+    --gat-web-table-row-stripe: color-mix(in srgb,
+                                          var(--gat-web-green-tint) 50%,
+                                          var(--gat-web-surface));
+    --gat-web-table-row-hover:  var(--gat-web-green-tint);
+    --gat-web-table-border:     var(--gat-web-hairline);
+
+    /* === v2.2 — Dropzone (.gat-dropzone) ==================================
+       Token-Quartett aus Border (idle/hover/dragover) + Bg-Trio
+       (idle/dragover/error). Idle ist gestrichelt, dragover gefuellt;
+       der Stilwechsel passiert ueber die Border-Farbe und den Bg-Token. */
+    --gat-web-dropzone-border:           var(--gat-web-hairline);
+    --gat-web-dropzone-border-hover:     var(--gat-web-green);
+    --gat-web-dropzone-border-dragover:  var(--gat-web-green-deep);
+    --gat-web-dropzone-bg-idle:          var(--gat-web-surface-sunk);
+    --gat-web-dropzone-bg-dragover:      var(--gat-web-green-tint);
+    --gat-web-dropzone-bg-error:         var(--gat-web-callout-error-bg);
+
+    /* === v2.2 — Toast / Toaster (.gat-toast, .gat-toaster) ================
+       Vier semantische Farbtrios (bg/border/text) — gleiche Familie wie
+       Callout, aber eigenstaendige Tokens, damit Toast-Padding/-Optik
+       sich unabhaengig entwickeln kann. Die Toaster-Position ist als
+       override-bare Tokens herausgezogen, damit Konsumenten den
+       Container ohne CSS-Override umpositionieren koennen. */
+    --gat-web-toast-info-bg:        var(--gat-web-green-tint);
+    --gat-web-toast-info-border:    var(--gat-web-green-deep);
+    --gat-web-toast-info-text:      var(--gat-web-text);
+
+    --gat-web-toast-success-bg:     #e2efd9;
+    --gat-web-toast-success-border: var(--gat-web-green);
+    --gat-web-toast-success-text:   #1f4d27;
+
+    --gat-web-toast-warn-bg:        #fdf3d2;
+    --gat-web-toast-warn-border:    #b78a1c;
+    --gat-web-toast-warn-text:      #5a4308;
+
+    --gat-web-toast-error-bg:       #fbe5dc;
+    --gat-web-toast-error-border:   #b3401e;
+    --gat-web-toast-error-text:     #6b2410;
+
+    --gat-web-toaster-position-bottom: 1.25rem;
+    --gat-web-toaster-position-right:  1.25rem;
+
+    /* === v2.2 — Toolbar (.gat-toolbar) ====================================
+       Sticky Action-Bar fuer Massen-Aktionen. Default sticky am
+       unteren Viewport-Rand; Variante --top kippt nach oben. Subtle
+       Shadow als Elevation, nicht als Marken-Effekt. */
+    --gat-web-toolbar-bg:        var(--gat-web-surface);
+    --gat-web-toolbar-border:    var(--gat-web-hairline);
+    --gat-web-toolbar-shadow:    0 -2px 8px rgba(31,38,28,.08);
+    --gat-web-toolbar-padding-x: var(--gat-space-3);
+    --gat-web-toolbar-padding-y: var(--gat-space-2);
   }
 }
 
@@ -1388,6 +1446,412 @@
   color: var(--gat-web-tag-error-text);
 }
 
+/* === v2.2 — Tabelle (.gat-table) ==========================================
+   Datentabelle mit Sticky-Head, optionalem Zebra, Compact-/Dense-Varianten,
+   numerischer Spalten-Helper-Klasse und einer Sticky-erste-Spalte-Variante
+   fuer breite Vergleichstabellen. Das DS liefert die Optik; Sortierung
+   und Selektion implementiert der Konsument via JS und schaltet die
+   Funktionsklassen .is-active / .is-selected. */
+
+.gat-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--gat-font-copy);
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-web-text);
+  background: var(--gat-web-surface);
+}
+
+.gat-table th,
+.gat-table td {
+  padding: var(--gat-space-2) var(--gat-space-3);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--gat-web-table-border);
+}
+
+.gat-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--gat-web-table-head-bg);
+  font-family: var(--gat-font-headline);
+  font-weight: 700;
+  font-size: var(--gat-text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gat-web-text-soft);
+  border-bottom: 2px solid var(--gat-web-table-border);
+}
+
+.gat-table tfoot td {
+  background: var(--gat-web-surface-sunk);
+  font-weight: 600;
+  border-top: 2px solid var(--gat-web-table-border);
+  border-bottom: none;
+}
+
+.gat-table tbody tr:hover {
+  background: var(--gat-web-table-row-hover);
+}
+
+/* Zebra — alternierende Zeilenhintergruende. Stripe liegt UNTER dem
+   Hover-Bg in der Kaskade, weil die Hover-Regel staerker greift. */
+.gat-table--zebra tbody tr:nth-child(even) {
+  background: var(--gat-web-table-row-stripe);
+}
+
+.gat-table--zebra tbody tr:nth-child(even):hover {
+  background: var(--gat-web-table-row-hover);
+}
+
+/* Compact — reduziertes Zellpadding fuer dichte Listen. */
+.gat-table--compact th,
+.gat-table--compact td {
+  padding: var(--gat-space-1) var(--gat-space-2);
+}
+
+/* Dense — Micro-Schrift fuer datenreiche Tabellen (Glossar-Sub-Labels,
+   Vergleichstabellen). Nutzt --gat-text-micro aus v2.1.1. */
+.gat-table--dense {
+  font-size: var(--gat-text-micro);
+}
+
+.gat-table--dense th,
+.gat-table--dense td {
+  padding: var(--gat-space-1) var(--gat-space-2);
+}
+
+/* Sticky erste Spalte — fuer breite Vergleichstabellen mit Reihen-Labels
+   in Spalte 1. Wirkt nur in Kombination mit .gat-table-scroll, weil der
+   horizontale Scroll-Container die Sticky-Anker setzt. */
+.gat-table--sticky-col tbody td:first-child,
+.gat-table--sticky-col tfoot td:first-child,
+.gat-table--sticky-col thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--gat-web-surface);
+}
+
+.gat-table--sticky-col thead th:first-child {
+  /* Head + Sticky-Col ueberkreuzen sich — der head-Bg gewinnt. */
+  z-index: 3;
+  background: var(--gat-web-table-head-bg);
+}
+
+.gat-table--sticky-col.gat-table--zebra tbody tr:nth-child(even) td:first-child {
+  background: var(--gat-web-table-row-stripe);
+}
+
+/* Numerische Spalte — rechtsbuendig + tabellarische Ziffern. */
+.gat-table__num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Sortierbare Spalten-Helper — Cursor, Padding fuer Pfeil-Slot,
+   .is-active-State fuer aktiv-sortierte Spalte. Pfeil ist als
+   CSS-Pseudo gerendert (kein Bild-Asset, kein DS-JS). */
+.gat-table__sortable {
+  cursor: pointer;
+  user-select: none;
+  padding-right: 1.5em;
+  position: relative;
+}
+
+.gat-table__sortable::after {
+  content: "";
+  position: absolute;
+  right: 0.6em;
+  top: 50%;
+  width: 0.55em;
+  height: 0.55em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-65%) rotate(45deg);
+  opacity: 0.3;
+}
+
+.gat-table__sortable:hover::after,
+.gat-table__sortable:focus-visible::after {
+  opacity: 0.7;
+}
+
+.gat-table__sortable.is-active::after {
+  opacity: 1;
+  color: var(--gat-web-green-deep);
+}
+
+.gat-table__sortable.is-active.is-desc::after {
+  transform: translateY(-35%) rotate(-135deg);
+}
+
+/* Scrollbarer Wrapper — horizontaler Scroll fuer breite Tabellen.
+   Setzt die Tabelle innen auf min-width 100% (Default), Konsumenten
+   geben bei breitem Inhalt z. B. min-width: 60rem auf das innere
+   <table> per Inline-Style oder eigener Klasse. */
+.gat-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--gat-web-radius-card);
+  border: 1px solid var(--gat-web-table-border);
+}
+
+.gat-table-scroll > .gat-table {
+  min-width: 100%;
+}
+
+/* Sticky-Head braucht den Scroll-Container als Scroll-Anker. Wenn die
+   Tabelle ohne Wrapper im Seitenfluss steht, klebt der Head am
+   Viewport-Top (Default-Verhalten). */
+
+/* === v2.2 — Dropzone (.gat-dropzone) ======================================
+   Datei-Upload-Zone mit Idle-/Hover-/Dragover-/Error-State. Das DS
+   liefert die visuelle Optik; Drag/Drop-Listener implementiert der
+   Konsument und toggelt .is-dragover bzw. .is-error. */
+
+.gat-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gat-space-2);
+  padding: var(--gat-space-5) var(--gat-space-4);
+  border: 2px dashed var(--gat-web-dropzone-border);
+  border-radius: var(--gat-web-radius-card);
+  background: var(--gat-web-dropzone-bg-idle);
+  color: var(--gat-web-text);
+  text-align: center;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.gat-dropzone:hover {
+  border-color: var(--gat-web-dropzone-border-hover);
+}
+
+.gat-dropzone.is-dragover {
+  border-style: solid;
+  border-color: var(--gat-web-dropzone-border-dragover);
+  background: var(--gat-web-dropzone-bg-dragover);
+}
+
+.gat-dropzone.is-error {
+  border-color: var(--gat-web-input-border-invalid);
+  background: var(--gat-web-dropzone-bg-error);
+  color: var(--gat-web-callout-error-text);
+}
+
+.gat-dropzone__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--gat-web-text-soft);
+}
+
+.gat-dropzone__icon > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.gat-dropzone__label {
+  font-family: var(--gat-font-headline);
+  font-weight: 700;
+  font-size: var(--gat-text-subline);
+  line-height: var(--gat-leading-headline);
+  margin: 0;
+}
+
+.gat-dropzone__hint {
+  font-size: var(--gat-text-small);
+  color: var(--gat-web-text-mute);
+  margin: 0;
+}
+
+.gat-dropzone__trigger {
+  margin-top: var(--gat-space-2);
+}
+
+/* === v2.2 — Toast / Toaster (.gat-toast, .gat-toaster) ====================
+   Notification-Family. Der Toaster ist der fix-positionierte Container,
+   der Toast die einzelne Nachricht. Vier Schwere-Varianten via Modifier.
+   Slide-in-Animation respektiert prefers-reduced-motion (faellt auf
+   reinen Opacity-Fade zurueck). Auto-dismiss ist Konsumenten-Logik. */
+
+.gat-toaster {
+  position: fixed;
+  bottom: var(--gat-web-toaster-position-bottom);
+  right: var(--gat-web-toaster-position-right);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gat-space-2);
+  max-width: min(28rem, calc(100vw - 2 * var(--gat-web-toaster-position-right)));
+  pointer-events: none;
+}
+
+.gat-toaster > .gat-toast {
+  pointer-events: auto;
+}
+
+@keyframes gat-toast-in {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gat-toast-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.gat-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gat-space-2);
+  padding: var(--gat-space-2) var(--gat-space-3);
+  border-radius: var(--gat-web-radius-card);
+  border-left: 4px solid var(--gat-web-toast-info-border);
+  background: var(--gat-web-toast-info-bg);
+  color: var(--gat-web-toast-info-text);
+  box-shadow: var(--gat-web-shadow-elevated);
+  animation: gat-toast-in 0.22s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gat-toast {
+    animation: gat-toast-fade 0.18s ease-out;
+  }
+}
+
+.gat-toast--info {
+  background: var(--gat-web-toast-info-bg);
+  border-left-color: var(--gat-web-toast-info-border);
+  color: var(--gat-web-toast-info-text);
+}
+
+.gat-toast--success {
+  background: var(--gat-web-toast-success-bg);
+  border-left-color: var(--gat-web-toast-success-border);
+  color: var(--gat-web-toast-success-text);
+}
+
+.gat-toast--warn {
+  background: var(--gat-web-toast-warn-bg);
+  border-left-color: var(--gat-web-toast-warn-border);
+  color: var(--gat-web-toast-warn-text);
+}
+
+.gat-toast--error {
+  background: var(--gat-web-toast-error-bg);
+  border-left-color: var(--gat-web-toast-error-border);
+  color: var(--gat-web-toast-error-text);
+}
+
+.gat-toast__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  margin-top: 0.1rem;
+}
+
+.gat-toast__icon > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.gat-toast__body {
+  flex: 1;
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+}
+
+.gat-toast__body > :first-child { margin-top: 0; }
+.gat-toast__body > :last-child  { margin-bottom: 0; }
+
+.gat-toast__close {
+  flex: none;
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  color: inherit;
+  border-radius: var(--gat-web-radius-control);
+  padding: 0.1rem 0.5rem;
+  line-height: 1;
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+.gat-toast__close:hover {
+  opacity: 1;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.gat-toast__close:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* === v2.2 — Toolbar (.gat-toolbar) ========================================
+   Sticky Action-Bar fuer Massen-Aktionen und Selektions-Operationen.
+   Default sticky am unteren Viewport-Rand; .--top kippt nach oben.
+   Flex-Layout mit Wrap, subtle Shadow als Elevation. */
+
+.gat-toolbar {
+  position: sticky;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gat-space-3);
+  padding: var(--gat-web-toolbar-padding-y) var(--gat-web-toolbar-padding-x);
+  background: var(--gat-web-toolbar-bg);
+  border-top: 1px solid var(--gat-web-toolbar-border);
+  box-shadow: var(--gat-web-toolbar-shadow);
+}
+
+.gat-toolbar--top {
+  bottom: auto;
+  top: 0;
+  border-top: none;
+  border-bottom: 1px solid var(--gat-web-toolbar-border);
+  /* Schatten dreht — Elevation kommt jetzt von unten. */
+  box-shadow: 0 2px 8px rgba(31,38,28,.08);
+}
+
+.gat-toolbar__count {
+  font-family: var(--gat-font-headline);
+  font-weight: 700;
+  font-size: var(--gat-text-copy);
+  color: var(--gat-web-text);
+  margin-right: auto;
+}
+
+.gat-toolbar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gat-space-2);
+  margin-left: auto;
+}
+
 /* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
    Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
    Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
@@ -1613,6 +2077,120 @@
 .gat-mode-hc .gat-mark {
   background: var(--gat-color-gelb);
   color: var(--gat-color-anthrazit);
+}
+
+/* HC fuer v2.2 .gat-table — Anthrazit auf Gelb, kein Zebra (zu unruhig
+   in der HC-Palette). Sticky-Head und Sticky-Col behalten ihre Logik,
+   tauschen nur Farben. */
+
+.gat-mode-hc .gat-table {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-table th,
+.gat-mode-hc .gat-table td {
+  border-bottom-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-table thead th {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-bottom: 2px solid var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-table tfoot td {
+  background: color-mix(in srgb, var(--gat-color-anthrazit) 70%, black);
+  color: var(--gat-color-gelb);
+  border-top-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-table tbody tr:hover {
+  background: color-mix(in srgb, var(--gat-color-gelb) 18%, var(--gat-color-anthrazit));
+}
+
+.gat-mode-hc .gat-table--zebra tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--gat-color-gelb) 8%, var(--gat-color-anthrazit));
+}
+
+.gat-mode-hc .gat-table--sticky-col tbody td:first-child,
+.gat-mode-hc .gat-table--sticky-col tfoot td:first-child {
+  background: var(--gat-color-anthrazit);
+}
+
+.gat-mode-hc .gat-table--sticky-col thead th:first-child {
+  background: var(--gat-color-anthrazit);
+}
+
+.gat-mode-hc .gat-table__sortable.is-active::after {
+  color: var(--gat-color-magenta);
+}
+
+.gat-mode-hc .gat-table-scroll {
+  border-color: var(--gat-color-gelb);
+}
+
+/* HC fuer v2.2 .gat-dropzone — Gelb-Border auf Anthrazit, Magenta-Border
+   im Error-State. */
+
+.gat-mode-hc .gat-dropzone {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-dropzone:hover,
+.gat-mode-hc .gat-dropzone.is-dragover {
+  background: color-mix(in srgb, var(--gat-color-gelb) 12%, var(--gat-color-anthrazit));
+  border-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-dropzone.is-error {
+  border-color: var(--gat-color-magenta);
+  color: var(--gat-color-magenta);
+  background: var(--gat-color-anthrazit);
+}
+
+.gat-mode-hc .gat-dropzone__icon,
+.gat-mode-hc .gat-dropzone__hint {
+  color: var(--gat-color-gelb);
+}
+
+/* HC fuer v2.2 .gat-toast / .gat-toaster — Anthrazit + Gelb + Magenta-
+   Error-Border. */
+
+.gat-mode-hc .gat-toast,
+.gat-mode-hc .gat-toast--info,
+.gat-mode-hc .gat-toast--success,
+.gat-mode-hc .gat-toast--warn,
+.gat-mode-hc .gat-toast--error {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-left-color: var(--gat-color-gelb);
+  box-shadow: 0 0 0 1px var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-toast--warn,
+.gat-mode-hc .gat-toast--error {
+  border-left-color: var(--gat-color-magenta);
+}
+
+/* HC fuer v2.2 .gat-toolbar — Anthrazit + Gelb-Border, Magenta-Schatten
+   verzichtet (Schatten in HC unsichtbar). */
+
+.gat-mode-hc .gat-toolbar {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-color: var(--gat-color-gelb);
+  box-shadow: 0 -1px 0 var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-toolbar--top {
+  box-shadow: 0 1px 0 var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-toolbar__count {
+  color: var(--gat-color-gelb);
 }
 
 /* === Patterns =============================================================

@@ -135,6 +135,50 @@
                   onclick="this.closest('dialog').close()">Schließen</button>
         </div>
       </dialog>
+
+      <!-- v2.2: Datentabelle (.gat-table) mit Zebra-Modifier, sticky-Head
+           und numerischer Spalte. Im Scroll-Wrapper, damit die Tabelle bei
+           schmalen Viewports horizontal scrollbar bleibt. -->
+      <h2 class="gat-headline" style="margin-top: var(--gat-space-6);">Förder-Topf 2026</h2>
+      <div class="gat-table-scroll" style="margin-top: var(--gat-space-3);">
+        <table class="gat-table gat-table--zebra">
+          <thead>
+            <tr>
+              <th>Maßnahme</th>
+              <th>Träger</th>
+              <th class="gat-table__num">Förderbetrag €</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Lastenrad-Sharing</td><td>Verein RadAT</td><td class="gat-table__num">42 000</td></tr>
+            <tr><td>Schulgarten-Initiative</td><td>VS Herzogenburg</td><td class="gat-table__num">18 500</td></tr>
+            <tr><td>Energieberatung</td><td>Gemeindeamt</td><td class="gat-table__num">9 200</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="2">Summe</td><td class="gat-table__num">69 700</td></tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- v2.2: Toast-Demo (.gat-toaster + .gat-toast). Button triggert
+           einen einmaligen Success-Toast; Lifecycle (auto-dismiss nach 4 s)
+           ist Konsumenten-JS und absichtlich minimal gehalten. -->
+      <p style="margin-top: var(--gat-space-4);">
+        <button type="button" class="gat-btn gat-btn--primary"
+                onclick="(function(){
+                  var t=document.getElementById('beispiel-toaster');
+                  var n=document.createElement('div');
+                  n.className='gat-toast gat-toast--success';
+                  n.innerHTML='&lt;div class=&quot;gat-toast__body&quot;&gt;Daten gespeichert.&lt;/div&gt;'+
+                              '&lt;button type=&quot;button&quot; class=&quot;gat-toast__close&quot; aria-label=&quot;Schließen&quot;&gt;×&lt;/button&gt;';
+                  n.querySelector('.gat-toast__close').addEventListener('click',function(){n.remove();});
+                  t.appendChild(n);
+                  setTimeout(function(){n.remove();}, 4000);
+                })()">
+          Aktion ausführen
+        </button>
+      </p>
+      <div class="gat-toaster" id="beispiel-toaster" role="status" aria-live="polite"></div>
     </div>
   </section>
 

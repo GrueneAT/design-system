@@ -1988,6 +1988,349 @@
   </section>
 
   <!-- ================================================================== -->
+  <!-- Abschnitt 4c — v2.2 Datenwerkzeug-Standard                          -->
+  <!--   Datentabelle, Drop-Zone, Toast, Toolbar                           -->
+  <!-- ================================================================== -->
+  <section class="gat-section doc-section-alt" id="datentabelle">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Datentabelle</h2>
+        <p>
+          Die <span class="doc-code">.gat-table</span>-Familie liefert eine
+          sticky-Head-Datentabelle mit optionalem Zebra-, Compact-, Dense-
+          und Sticky-erste-Spalte-Modifier. Sortierung und Selektion sind
+          Konsumenten-JS — das DS liefert nur die Optik und die
+          Funktionsklassen <span class="doc-code">.is-active</span> /
+          <span class="doc-code">.is-desc</span>.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Basis + Zebra + sortierbarer Head</h3>
+        <p class="gat-fliesstext doc-lead">
+          <span class="doc-code">.gat-table--zebra</span> alterniert die
+          Zeilenhintergründe. <span class="doc-code">.gat-table__sortable</span>
+          markiert sortierbare Spaltenköpfe mit einem dezenten Pfeil-Indikator
+          (CSS-Pseudo, kein Bild-Asset). Die mittlere Spalte ist hier aktiv-
+          sortiert (<span class="doc-code">.is-active</span>).
+          Die numerische Spalte nutzt
+          <span class="doc-code">.gat-table__num</span> für rechtsbündige,
+          tabellarische Ziffern.
+        </p>
+        <div class="gat-table-scroll">
+          <table class="gat-table gat-table--zebra">
+            <thead>
+              <tr>
+                <th class="gat-table__sortable">Gemeinde</th>
+                <th class="gat-table__sortable is-active">Einwohner</th>
+                <th class="gat-table__sortable gat-table__num">Budget €</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Herzogenburg</td>
+                <td>9 320</td>
+                <td class="gat-table__num">12 480 000</td>
+                <td><span class="gat-tag gat-tag--ok">geprüft</span></td>
+              </tr>
+              <tr>
+                <td>Traismauer</td>
+                <td>5 870</td>
+                <td class="gat-table__num">7 920 400</td>
+                <td><span class="gat-tag gat-tag--warn">offen</span></td>
+              </tr>
+              <tr>
+                <td>St. Pölten</td>
+                <td>57 100</td>
+                <td class="gat-table__num">204 100 000</td>
+                <td><span class="gat-tag gat-tag--ok">geprüft</span></td>
+              </tr>
+              <tr>
+                <td>Krems</td>
+                <td>25 200</td>
+                <td class="gat-table__num">86 740 100</td>
+                <td><span class="gat-tag gat-tag--neutral">in Arbeit</span></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Summe</td>
+                <td>97 490</td>
+                <td class="gat-table__num">311 240 500</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="doc-codeblock">&lt;div class="gat-table-scroll"&gt;
+  &lt;table class="gat-table gat-table--zebra"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th class="gat-table__sortable is-active"&gt;Spalte&lt;/th&gt;
+        &lt;th class="gat-table__sortable gat-table__num"&gt;Wert&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;...&lt;/tbody&gt;
+    &lt;tfoot&gt;...&lt;/tfoot&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Compact + Dense</h3>
+        <p class="gat-fliesstext doc-lead">
+          <span class="doc-code">.gat-table--compact</span> reduziert das
+          Zellpadding; <span class="doc-code">.gat-table--dense</span>
+          schaltet zusätzlich auf
+          <span class="doc-code">--gat-text-micro</span> (~11 px) für
+          datenreiche Vergleichstabellen.
+        </p>
+        <table class="gat-table gat-table--compact gat-table--dense">
+          <thead>
+            <tr>
+              <th>Schrift</th>
+              <th>Gewicht</th>
+              <th class="gat-table__num">px</th>
+              <th class="gat-table__num">rem</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Barlow Semi Condensed</td><td>400</td><td class="gat-table__num">16</td><td class="gat-table__num">1,00</td></tr>
+            <tr><td>Barlow Semi Condensed</td><td>700</td><td class="gat-table__num">20</td><td class="gat-table__num">1,25</td></tr>
+            <tr><td>Vollkorn</td><td>900 italic</td><td class="gat-table__num">25</td><td class="gat-table__num">1,56</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Sticky erste Spalte</h3>
+        <p class="gat-fliesstext doc-lead">
+          <span class="doc-code">.gat-table--sticky-col</span> hält die
+          erste Spalte beim horizontalen Scrollen sichtbar. Wirkt nur
+          innerhalb von <span class="doc-code">.gat-table-scroll</span>.
+        </p>
+        <div class="gat-table-scroll" style="max-width: 32rem;">
+          <table class="gat-table gat-table--zebra gat-table--sticky-col" style="min-width: 48rem;">
+            <thead>
+              <tr>
+                <th>Maßnahme</th>
+                <th class="gat-table__num">2024</th>
+                <th class="gat-table__num">2025</th>
+                <th class="gat-table__num">2026</th>
+                <th class="gat-table__num">2027</th>
+                <th class="gat-table__num">2028</th>
+                <th class="gat-table__num">2029</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Kinderbetreuung</td><td class="gat-table__num">120</td><td class="gat-table__num">135</td><td class="gat-table__num">142</td><td class="gat-table__num">150</td><td class="gat-table__num">158</td><td class="gat-table__num">165</td></tr>
+              <tr><td>Straßeninstandhaltung</td><td class="gat-table__num">88</td><td class="gat-table__num">92</td><td class="gat-table__num">97</td><td class="gat-table__num">99</td><td class="gat-table__num">104</td><td class="gat-table__num">108</td></tr>
+              <tr><td>Wasserversorgung</td><td class="gat-table__num">54</td><td class="gat-table__num">56</td><td class="gat-table__num">59</td><td class="gat-table__num">62</td><td class="gat-table__num">66</td><td class="gat-table__num">68</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gat-section" id="dropzone">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Drop-Zone</h2>
+        <p>
+          Datei-Upload-Zone mit vier visuellen States. Drag/Drop-Listener
+          implementiert der Konsument und schaltet die Funktionsklassen
+          <span class="doc-code">.is-dragover</span> bzw.
+          <span class="doc-code">.is-error</span>.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Idle (Default)</h3>
+        <p class="gat-fliesstext doc-lead">
+          Gestrichelter Rand, leicht entsättigter Hintergrund.
+          <span class="doc-code">.gat-dropzone__trigger</span> ist der
+          Sekundär-Button als File-Picker-Fallback.
+        </p>
+        <div class="gat-dropzone">
+          <div class="gat-dropzone__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <p class="gat-dropzone__label">Datei hierher ziehen</p>
+          <p class="gat-dropzone__hint">PDF, CSV oder XLSX — max. 10 MB</p>
+          <button type="button" class="gat-btn gat-btn--secondary gat-dropzone__trigger">Datei auswählen</button>
+        </div>
+        <div class="doc-codeblock">&lt;div class="gat-dropzone"&gt;
+  &lt;div class="gat-dropzone__icon"&gt;&lt;svg .../&gt;&lt;/div&gt;
+  &lt;p class="gat-dropzone__label"&gt;Datei hierher ziehen&lt;/p&gt;
+  &lt;p class="gat-dropzone__hint"&gt;PDF, CSV oder XLSX — max. 10 MB&lt;/p&gt;
+  &lt;button class="gat-btn gat-btn--secondary gat-dropzone__trigger"&gt;
+    Datei auswählen
+  &lt;/button&gt;
+&lt;/div&gt;</div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Dragover-State (<span class="doc-code">.is-dragover</span>)</h3>
+        <p class="gat-fliesstext doc-lead">
+          Konsument toggelt die Klasse während des nativen
+          <span class="doc-code">dragenter</span> /
+          <span class="doc-code">dragleave</span>-Lifecycles.
+          Rand wird durchgehend, Hintergrund nimmt den Marken-Tint an.
+        </p>
+        <div class="gat-dropzone is-dragover">
+          <div class="gat-dropzone__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <p class="gat-dropzone__label">Loslassen zum Hochladen</p>
+          <p class="gat-dropzone__hint">budget-2026.csv</p>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Error-State (<span class="doc-code">.is-error</span>)</h3>
+        <p class="gat-fliesstext doc-lead">
+          Nach fehlgeschlagenem Upload — Konsument setzt die Klasse und
+          ergänzt einen erklärenden Hinweis.
+        </p>
+        <div class="gat-dropzone is-error">
+          <div class="gat-dropzone__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <p class="gat-dropzone__label">Upload fehlgeschlagen</p>
+          <p class="gat-dropzone__hint">Datei zu groß (max. 10 MB). Bitte erneut versuchen.</p>
+          <button type="button" class="gat-btn gat-btn--secondary gat-dropzone__trigger">Erneut versuchen</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gat-section doc-section-alt" id="toast">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Toast</h2>
+        <p>
+          Kurzlebige Status-Notifications. Container
+          <span class="doc-code">.gat-toaster</span> ist
+          fix-positioniert (Default unten-rechts), die einzelnen
+          <span class="doc-code">.gat-toast</span>-Karten stapeln sich
+          mit Slide-in-Animation. Lifecycle (Anzeige, Auto-Dismiss,
+          Schließen) ist Konsumenten-JS. Hier sind die vier Varianten
+          statisch demonstriert — der Toaster ist
+          <strong>nicht</strong> auf <span class="doc-code">position:
+          fixed</span> geschaltet, damit die Doku-Seite nicht
+          überlagert wird.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Vier Schwere-Varianten</h3>
+        <div style="display: flex; flex-direction: column; gap: var(--gat-space-2); max-width: 28rem;">
+          <div class="gat-toast gat-toast--info">
+            <div class="gat-toast__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <div class="gat-toast__body">CSV-Import läuft im Hintergrund.</div>
+            <button type="button" class="gat-toast__close" aria-label="Schließen">×</button>
+          </div>
+          <div class="gat-toast gat-toast--success">
+            <div class="gat-toast__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="gat-toast__body">Voranschlag erfolgreich gespeichert.</div>
+            <button type="button" class="gat-toast__close" aria-label="Schließen">×</button>
+          </div>
+          <div class="gat-toast gat-toast--warn">
+            <div class="gat-toast__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div class="gat-toast__body">3 Zeilen ohne Konto-Zuordnung übersprungen.</div>
+            <button type="button" class="gat-toast__close" aria-label="Schließen">×</button>
+          </div>
+          <div class="gat-toast gat-toast--error">
+            <div class="gat-toast__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            </div>
+            <div class="gat-toast__body">Verbindung zum Server verloren.</div>
+            <button type="button" class="gat-toast__close" aria-label="Schließen">×</button>
+          </div>
+        </div>
+        <div class="doc-codeblock">&lt;!-- Container fix-positioniert (zur Page-Wurzel) --&gt;
+&lt;div class="gat-toaster" role="status" aria-live="polite"&gt;
+  &lt;div class="gat-toast gat-toast--success"&gt;
+    &lt;div class="gat-toast__icon"&gt;&lt;svg .../&gt;&lt;/div&gt;
+    &lt;div class="gat-toast__body"&gt;Gespeichert.&lt;/div&gt;
+    &lt;button class="gat-toast__close" aria-label="Schließen"&gt;×&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gat-section" id="toolbar">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Toolbar</h2>
+        <p>
+          Sticky Action-Bar für Massen-Aktionen und Selektions-Operationen.
+          Default ist <span class="doc-code">.gat-toolbar</span> sticky am
+          unteren Rand des Scroll-Containers;
+          <span class="doc-code">.gat-toolbar--top</span> kippt nach oben.
+        </p>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Top-Toolbar (<span class="doc-code">--top</span>)</h3>
+        <p class="gat-fliesstext doc-lead">
+          Sticky am oberen Rand — typisch für persistente Filter-/Such-Bars.
+        </p>
+        <div style="border: 1px solid var(--gat-web-hairline); border-radius: var(--gat-web-radius-card); overflow: hidden;">
+          <div class="gat-toolbar gat-toolbar--top">
+            <span class="gat-toolbar__count">12 Einträge</span>
+            <div class="gat-toolbar__actions">
+              <button type="button" class="gat-btn gat-btn--secondary">Filter</button>
+              <button type="button" class="gat-btn gat-btn--primary">Neu</button>
+            </div>
+          </div>
+          <div style="padding: var(--gat-space-3); color: var(--gat-web-text-soft); font-size: var(--gat-text-small);">
+            Beispiel-Inhalt unter der Top-Toolbar. In einer realen Seite
+            scrollt dieser Bereich, die Toolbar bleibt oben kleben.
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-block">
+        <h3 class="gat-subline">Bottom-Toolbar (Default)</h3>
+        <p class="gat-fliesstext doc-lead">
+          Sticky am unteren Rand — typisch für Massen-Aktionen nach
+          Selektion (z. B. „3 ausgewählt → Löschen / Verschieben").
+        </p>
+        <div style="border: 1px solid var(--gat-web-hairline); border-radius: var(--gat-web-radius-card); overflow: hidden;">
+          <div style="padding: var(--gat-space-3); color: var(--gat-web-text-soft); font-size: var(--gat-text-small); min-height: 4rem;">
+            Beispiel-Inhalt über der Bottom-Toolbar.
+          </div>
+          <div class="gat-toolbar">
+            <span class="gat-toolbar__count">3 ausgewählt</span>
+            <div class="gat-toolbar__actions">
+              <button type="button" class="gat-btn gat-btn--secondary">Verschieben</button>
+              <button type="button" class="gat-btn gat-btn--secondary">Exportieren</button>
+              <button type="button" class="gat-btn gat-btn--primary">Löschen</button>
+            </div>
+          </div>
+        </div>
+        <div class="doc-codeblock">&lt;div class="gat-toolbar"&gt;
+  &lt;span class="gat-toolbar__count"&gt;3 ausgewählt&lt;/span&gt;
+  &lt;div class="gat-toolbar__actions"&gt;
+    &lt;button class="gat-btn gat-btn--secondary"&gt;Verschieben&lt;/button&gt;
+    &lt;button class="gat-btn gat-btn--primary"&gt;Löschen&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
   <!-- Abschnitt 4d — Hoher Kontrast (gat-mode-hc)                         -->
   <!-- ================================================================== -->
   <section class="gat-section" id="hoher-kontrast">
