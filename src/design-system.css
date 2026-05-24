@@ -277,6 +277,11 @@
     --gat-web-input-padding-y:      0.5rem;
     --gat-web-input-disabled-bg:    var(--gat-web-surface-sunk);
     --gat-web-input-disabled-text:  var(--gat-web-text-mute);
+
+    /* v2.1.1 — Touch-Target-Floor (WCAG 2.5.5 AAA / 2.5.8 AA, 44px).
+       Konsumenten ueberschreiben diesen Token, wenn sie auf reinen
+       Pointer-Geraeten flachere Inputs wollen — Default ist barrierearm. */
+    --gat-web-input-min-h: 44px;
   }
 }
 
@@ -928,6 +933,10 @@
   border: 1px solid var(--gat-web-input-border);
   border-radius: var(--gat-web-input-radius);
   padding: var(--gat-web-input-padding-y) var(--gat-web-input-padding-x);
+  /* v2.1.1 — WCAG-Touch-Target-Floor (44px). Padding bleibt unveraendert,
+     min-height greift nur, wenn der gerenderte Wert sonst niedriger waere
+     — Konsumenten mit dichter Optik koennen den Token ueberschreiben. */
+  min-height: var(--gat-web-input-min-h, 44px);
   transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
 }
 
