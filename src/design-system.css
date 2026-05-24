@@ -87,6 +87,9 @@
   --text-gat-subline: 1.25rem;
   --text-gat-copy:    1rem;
   --text-gat-small:   0.8rem;
+  /* v2.1.1: micro-Tier (11px) fuer dichten Caption-Kontext — Glossar-
+     Sub-Labels, Tabellenfusszeilen, Meta-Tags. Nicht fuer Lese-Text. */
+  --text-gat-micro:   0.6875rem;
 
   /* === Web-Schicht — entsättigte, web-taugliche Auslegung ================
      Zusätzlich zur Marken-Schicht. Konsumenten wählen, was sie binden:
@@ -162,6 +165,7 @@
     --gat-text-subline: var(--text-gat-subline);
     --gat-text-copy:    var(--text-gat-copy);
     --gat-text-small:   var(--text-gat-small);
+    --gat-text-micro:   var(--text-gat-micro);
 
     /* Zeilenabstände — Multiplikatoren aus dem CD-Quickguide */
     --gat-leading-headline: 0.9;
