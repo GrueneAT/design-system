@@ -302,6 +302,17 @@
                                           var(--gat-web-surface));
     --gat-web-table-row-hover:  var(--gat-web-green-tint);
     --gat-web-table-border:     var(--gat-web-hairline);
+
+    /* === v2.2 — Dropzone (.gat-dropzone) ==================================
+       Token-Quartett aus Border (idle/hover/dragover) + Bg-Trio
+       (idle/dragover/error). Idle ist gestrichelt, dragover gefuellt;
+       der Stilwechsel passiert ueber die Border-Farbe und den Bg-Token. */
+    --gat-web-dropzone-border:           var(--gat-web-hairline);
+    --gat-web-dropzone-border-hover:     var(--gat-web-green);
+    --gat-web-dropzone-border-dragover:  var(--gat-web-green-deep);
+    --gat-web-dropzone-bg-idle:          var(--gat-web-surface-sunk);
+    --gat-web-dropzone-bg-dragover:      var(--gat-web-green-tint);
+    --gat-web-dropzone-bg-error:         var(--gat-web-callout-error-bg);
   }
 }
 
@@ -1563,6 +1574,75 @@
    Tabelle ohne Wrapper im Seitenfluss steht, klebt der Head am
    Viewport-Top (Default-Verhalten). */
 
+/* === v2.2 — Dropzone (.gat-dropzone) ======================================
+   Datei-Upload-Zone mit Idle-/Hover-/Dragover-/Error-State. Das DS
+   liefert die visuelle Optik; Drag/Drop-Listener implementiert der
+   Konsument und toggelt .is-dragover bzw. .is-error. */
+
+.gat-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gat-space-2);
+  padding: var(--gat-space-5) var(--gat-space-4);
+  border: 2px dashed var(--gat-web-dropzone-border);
+  border-radius: var(--gat-web-radius-card);
+  background: var(--gat-web-dropzone-bg-idle);
+  color: var(--gat-web-text);
+  text-align: center;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.gat-dropzone:hover {
+  border-color: var(--gat-web-dropzone-border-hover);
+}
+
+.gat-dropzone.is-dragover {
+  border-style: solid;
+  border-color: var(--gat-web-dropzone-border-dragover);
+  background: var(--gat-web-dropzone-bg-dragover);
+}
+
+.gat-dropzone.is-error {
+  border-color: var(--gat-web-input-border-invalid);
+  background: var(--gat-web-dropzone-bg-error);
+  color: var(--gat-web-callout-error-text);
+}
+
+.gat-dropzone__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--gat-web-text-soft);
+}
+
+.gat-dropzone__icon > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.gat-dropzone__label {
+  font-family: var(--gat-font-headline);
+  font-weight: 700;
+  font-size: var(--gat-text-subline);
+  line-height: var(--gat-leading-headline);
+  margin: 0;
+}
+
+.gat-dropzone__hint {
+  font-size: var(--gat-text-small);
+  color: var(--gat-web-text-mute);
+  margin: 0;
+}
+
+.gat-dropzone__trigger {
+  margin-top: var(--gat-space-2);
+}
+
 /* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
    Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
    Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
@@ -1839,6 +1919,32 @@
 
 .gat-mode-hc .gat-table-scroll {
   border-color: var(--gat-color-gelb);
+}
+
+/* HC fuer v2.2 .gat-dropzone — Gelb-Border auf Anthrazit, Magenta-Border
+   im Error-State. */
+
+.gat-mode-hc .gat-dropzone {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-dropzone:hover,
+.gat-mode-hc .gat-dropzone.is-dragover {
+  background: color-mix(in srgb, var(--gat-color-gelb) 12%, var(--gat-color-anthrazit));
+  border-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-dropzone.is-error {
+  border-color: var(--gat-color-magenta);
+  color: var(--gat-color-magenta);
+  background: var(--gat-color-anthrazit);
+}
+
+.gat-mode-hc .gat-dropzone__icon,
+.gat-mode-hc .gat-dropzone__hint {
+  color: var(--gat-color-gelb);
 }
 
 /* === Patterns =============================================================
