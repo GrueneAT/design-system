@@ -313,6 +313,31 @@
     --gat-web-dropzone-bg-idle:          var(--gat-web-surface-sunk);
     --gat-web-dropzone-bg-dragover:      var(--gat-web-green-tint);
     --gat-web-dropzone-bg-error:         var(--gat-web-callout-error-bg);
+
+    /* === v2.2 — Toast / Toaster (.gat-toast, .gat-toaster) ================
+       Vier semantische Farbtrios (bg/border/text) — gleiche Familie wie
+       Callout, aber eigenstaendige Tokens, damit Toast-Padding/-Optik
+       sich unabhaengig entwickeln kann. Die Toaster-Position ist als
+       override-bare Tokens herausgezogen, damit Konsumenten den
+       Container ohne CSS-Override umpositionieren koennen. */
+    --gat-web-toast-info-bg:        var(--gat-web-green-tint);
+    --gat-web-toast-info-border:    var(--gat-web-green-deep);
+    --gat-web-toast-info-text:      var(--gat-web-text);
+
+    --gat-web-toast-success-bg:     #e2efd9;
+    --gat-web-toast-success-border: var(--gat-web-green);
+    --gat-web-toast-success-text:   #1f4d27;
+
+    --gat-web-toast-warn-bg:        #fdf3d2;
+    --gat-web-toast-warn-border:    #b78a1c;
+    --gat-web-toast-warn-text:      #5a4308;
+
+    --gat-web-toast-error-bg:       #fbe5dc;
+    --gat-web-toast-error-border:   #b3401e;
+    --gat-web-toast-error-text:     #6b2410;
+
+    --gat-web-toaster-position-bottom: 1.25rem;
+    --gat-web-toaster-position-right:  1.25rem;
   }
 }
 
@@ -1643,6 +1668,136 @@
   margin-top: var(--gat-space-2);
 }
 
+/* === v2.2 — Toast / Toaster (.gat-toast, .gat-toaster) ====================
+   Notification-Family. Der Toaster ist der fix-positionierte Container,
+   der Toast die einzelne Nachricht. Vier Schwere-Varianten via Modifier.
+   Slide-in-Animation respektiert prefers-reduced-motion (faellt auf
+   reinen Opacity-Fade zurueck). Auto-dismiss ist Konsumenten-Logik. */
+
+.gat-toaster {
+  position: fixed;
+  bottom: var(--gat-web-toaster-position-bottom);
+  right: var(--gat-web-toaster-position-right);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gat-space-2);
+  max-width: min(28rem, calc(100vw - 2 * var(--gat-web-toaster-position-right)));
+  pointer-events: none;
+}
+
+.gat-toaster > .gat-toast {
+  pointer-events: auto;
+}
+
+@keyframes gat-toast-in {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gat-toast-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.gat-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gat-space-2);
+  padding: var(--gat-space-2) var(--gat-space-3);
+  border-radius: var(--gat-web-radius-card);
+  border-left: 4px solid var(--gat-web-toast-info-border);
+  background: var(--gat-web-toast-info-bg);
+  color: var(--gat-web-toast-info-text);
+  box-shadow: var(--gat-web-shadow-elevated);
+  animation: gat-toast-in 0.22s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gat-toast {
+    animation: gat-toast-fade 0.18s ease-out;
+  }
+}
+
+.gat-toast--info {
+  background: var(--gat-web-toast-info-bg);
+  border-left-color: var(--gat-web-toast-info-border);
+  color: var(--gat-web-toast-info-text);
+}
+
+.gat-toast--success {
+  background: var(--gat-web-toast-success-bg);
+  border-left-color: var(--gat-web-toast-success-border);
+  color: var(--gat-web-toast-success-text);
+}
+
+.gat-toast--warn {
+  background: var(--gat-web-toast-warn-bg);
+  border-left-color: var(--gat-web-toast-warn-border);
+  color: var(--gat-web-toast-warn-text);
+}
+
+.gat-toast--error {
+  background: var(--gat-web-toast-error-bg);
+  border-left-color: var(--gat-web-toast-error-border);
+  color: var(--gat-web-toast-error-text);
+}
+
+.gat-toast__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  margin-top: 0.1rem;
+}
+
+.gat-toast__icon > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.gat-toast__body {
+  flex: 1;
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+}
+
+.gat-toast__body > :first-child { margin-top: 0; }
+.gat-toast__body > :last-child  { margin-bottom: 0; }
+
+.gat-toast__close {
+  flex: none;
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  color: inherit;
+  border-radius: var(--gat-web-radius-control);
+  padding: 0.1rem 0.5rem;
+  line-height: 1;
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+.gat-toast__close:hover {
+  opacity: 1;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.gat-toast__close:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
 /* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
    Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
    Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
@@ -1945,6 +2100,25 @@
 .gat-mode-hc .gat-dropzone__icon,
 .gat-mode-hc .gat-dropzone__hint {
   color: var(--gat-color-gelb);
+}
+
+/* HC fuer v2.2 .gat-toast / .gat-toaster — Anthrazit + Gelb + Magenta-
+   Error-Border. */
+
+.gat-mode-hc .gat-toast,
+.gat-mode-hc .gat-toast--info,
+.gat-mode-hc .gat-toast--success,
+.gat-mode-hc .gat-toast--warn,
+.gat-mode-hc .gat-toast--error {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-left-color: var(--gat-color-gelb);
+  box-shadow: 0 0 0 1px var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-toast--warn,
+.gat-mode-hc .gat-toast--error {
+  border-left-color: var(--gat-color-magenta);
 }
 
 /* === Patterns =============================================================
