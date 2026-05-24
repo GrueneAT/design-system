@@ -3,11 +3,183 @@
 Die Anleitung gliedert sich nach Release. Konsumenten lesen den Abschnitt
 zu dem Sprung, der gerade ansteht — alle früheren Hinweise gelten weiter.
 
+- [v2.1.x → v2.2](#v21x--v22) — Minor, strikt additiv. Vier neue
+  Komponenten-Familien (Table, Dropzone, Toast, Toolbar).
 - [v2.1.0 → v2.1.1](#v210--v211) — Patch, strikt additiv plus zwei
   Mini-Visual-Anpassungen (Tag-Rundung, Input-Touch-Floor).
 - [v2.0 → v2.1](#v20--v21) — strikt additiv, keine Breaking Changes.
 - [v1.x → v2.0](#v1x--v20) — Major, optische Änderungen am Header und
   am Hellgrün-Wert.
+
+---
+
+## v2.1.x → v2.2
+
+**Minor Release. Konsumenten brauchen nichts zu ändern.** Vier neue
+Komponenten-Familien, die nach den vier Konsumenten-Migrationen auf
+v2.1.x als nächste DS-Lücke übrig blieben. Strikt additiv: keine Token-/
+Klassen-Umbenennung, kein Behavior-Bruch, keine sichtbaren Anpassungen
+für bestehende Konsumenten.
+
+### Was Konsumenten **nicht** ändern müssen
+
+- CSS-URL bleibt:
+  `https://grueneat.github.io/design-system/design-system.css`
+- Alle v2.0/v2.1/v2.1.1-Token, -Klassen und -Selektoren bleiben
+  unverändert.
+- Bestehende `.gat-callout`, `.gat-tag`, `.gat-input`, `.gat-modal`,
+  `.gat-header`, `.gat-panel`, `.gat-metric-card` etc. rendern
+  weiterhin identisch. Die vier neuen Familien sind reine Ergänzung.
+
+### Was Konsumenten **neu nutzen können**
+
+#### Datentabelle — `.gat-table`
+
+Ersetzt jede lokale `.app-table` / `.dtable` / `.app-eval-table*`-
+Kopie. Sticky-Head, optionales Zebra, Compact-/Dense-Varianten,
+sticky erste Spalte für breite Vergleichstabellen.
+
+```html
+<div class="gat-table-scroll">
+  <table class="gat-table gat-table--zebra">
+    <thead>
+      <tr>
+        <th class="gat-table__sortable is-active">Gemeinde</th>
+        <th class="gat-table__sortable gat-table__num">Budget €</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Herzogenburg</td>
+        <td class="gat-table__num">12 480 000</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+```
+
+| Klasse | Wirkung |
+|--------|---------|
+| `.gat-table` | Basis: Sticky-Head, Hover-Bg, Tfoot-Akzent |
+| `.gat-table--zebra` | Alternierende Zeilenhintergründe |
+| `.gat-table--compact` | Reduziertes Zellpadding |
+| `.gat-table--dense` | Compact + Micro-Schrift (`--gat-text-micro`) |
+| `.gat-table--sticky-col` | Erste Spalte bleibt beim horizontalen Scrollen sichtbar |
+| `.gat-table__num` | Rechtsbündig + tabellarische Ziffern |
+| `.gat-table__sortable` | Sortierbarer Spaltenkopf mit CSS-Pfeil; `.is-active` + `.is-desc` als Funktionsklassen |
+| `.gat-table-scroll` | Horizontaler Scroll-Wrapper mit Border + Radius |
+
+Sortierung und Selektion implementiert der Konsument via JS und
+toggelt `.is-active` / `.is-desc` auf den Spalten-Köpfen — das DS
+liefert keine Sort-Logik.
+
+#### Drop-Zone — `.gat-dropzone`
+
+Ersetzt lokale `.dropzone`-Kopien (bildgenerator, gemeindefinanzen,
+personenwahl-CSV-Import).
+
+```html
+<div class="gat-dropzone"
+     ondragover="event.preventDefault(); this.classList.add('is-dragover');"
+     ondragleave="this.classList.remove('is-dragover');"
+     ondrop="event.preventDefault(); this.classList.remove('is-dragover'); /* handleDrop(event); */">
+  <div class="gat-dropzone__icon"><svg .../></div>
+  <p class="gat-dropzone__label">Datei hierher ziehen</p>
+  <p class="gat-dropzone__hint">PDF, CSV oder XLSX — max. 10 MB</p>
+  <button class="gat-btn gat-btn--secondary gat-dropzone__trigger">
+    Datei auswählen
+  </button>
+</div>
+```
+
+States:
+- Default (idle): gestrichelter Rand, leicht entsättigter Hintergrund.
+- `:hover`: Rand wird grün.
+- `.is-dragover` (Konsument toggelt): durchgehender Rand, Marken-Tint.
+- `.is-error` (Konsument setzt nach fehlgeschlagenem Upload):
+  Magenta-Rand, Fehler-Tint.
+
+#### Toast — `.gat-toast` / `.gat-toaster`
+
+Ersetzt lokale `.toast`-Kopien (bildgenerator, gemeindefinanzen,
+vorlagen). Container ist fix-positioniert (Default unten-rechts);
+Position via Tokens override-bar.
+
+```html
+<!-- Toaster einmal pro Seite, direkt unter <body>. -->
+<div class="gat-toaster" role="status" aria-live="polite"></div>
+
+<script>
+function showToast(severity, message) {
+  const t = document.createElement('div');
+  t.className = 'gat-toast gat-toast--' + severity;
+  t.innerHTML = '<div class="gat-toast__body">' + message + '</div>' +
+                '<button type="button" class="gat-toast__close" aria-label="Schließen">×</button>';
+  t.querySelector('.gat-toast__close').addEventListener('click', () => t.remove());
+  document.querySelector('.gat-toaster').appendChild(t);
+  setTimeout(() => t.remove(), 4000);
+}
+showToast('success', 'Voranschlag gespeichert.');
+</script>
+```
+
+Vier Schwere-Varianten: `--info`, `--success`, `--warn`, `--error`.
+Subelemente: `__icon`, `__body`, `__close`.
+Slide-in-Animation respektiert `prefers-reduced-motion` (fällt auf
+reinen Opacity-Fade zurück). Auto-Dismiss-Lifecycle ist
+Konsumenten-JS — das DS liefert keine Lifecycle-Logik.
+
+Toaster-Position via Token override-bar:
+
+```css
+:root {
+  --gat-web-toaster-position-bottom: 5rem;  /* Default 1.25rem */
+  --gat-web-toaster-position-right:  2rem;
+}
+```
+
+#### Toolbar — `.gat-toolbar`
+
+Ersetzt lokale Sticky-Action-Footer-Kopien (bildgenerator,
+gemeindefinanzen, personenwahl). Default sticky am unteren Rand;
+`--top` kippt nach oben.
+
+```html
+<div class="gat-toolbar">
+  <span class="gat-toolbar__count">3 ausgewählt</span>
+  <div class="gat-toolbar__actions">
+    <button class="gat-btn gat-btn--secondary">Verschieben</button>
+    <button class="gat-btn gat-btn--primary">Löschen</button>
+  </div>
+</div>
+```
+
+Mit `.gat-toolbar--top` wird die Toolbar sticky am oberen Rand des
+Scroll-Containers — typisch für persistente Filter-/Such-Bars.
+
+### Neue Tokens
+
+| Token-Familie | Anzahl | Verwendung |
+|---------------|--------|------------|
+| `--gat-web-table-{head-bg,row-stripe,row-hover,border}` | 4 | Datentabelle |
+| `--gat-web-dropzone-{border,border-hover,border-dragover,bg-idle,bg-dragover,bg-error}` | 6 | Drop-Zone |
+| `--gat-web-toast-{info,success,warn,error}-{bg,border,text}` | 12 | Toast-Trios |
+| `--gat-web-toaster-position-{bottom,right}` | 2 | Toaster-Container-Positionierung |
+| `--gat-web-toolbar-{bg,border,shadow,padding-x,padding-y}` | 5 | Toolbar |
+
+### High-Contrast (`gat-mode-hc`)
+
+Alle vier neuen Familien haben handgeschriebene HC-Overrides
+(Anthrazit + Gelb + Magenta-Akzent). Konsumenten brauchen nichts zu
+tun — die Overrides greifen automatisch, wenn `.gat-mode-hc` auf
+`<body>` oder einem Ancestor gesetzt ist.
+
+### Was als Nächstes kommt (Folgewellen)
+
+- v2.3: `.gat-chip`, `.gat-combobox`, `.gat-breadcrumb`, `.gat-prose`,
+  `.gat-step-indicator`.
+- v3.0 / optional: `.gat-cmdk-modal`, `.gat-footer`,
+  Print-Page-Tokens (DIN-A4/A3/A5), FAB, Tooltip.
 
 ---
 

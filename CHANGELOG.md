@@ -12,6 +12,89 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-05-24
+
+**Minor Release — Datenwerkzeug-Standard.** Vier Komponenten-Familien,
+die nach den vier Konsumenten-Migrationen auf v2.1.x als nächste
+DS-Lücke übrig blieben — jeweils 3-fach Bedarf, heute in den App-Repos
+als `.app-*` lokal nachgebaut. Strikt additiv: keine Breaking Changes,
+keine Token-/Klassen-Umbenennung. Quelldokumentation:
+`.issues/xuna6-…/ISSUE.md`.
+
+### Added
+
+- **`.gat-table` Familie** — Datentabelle mit Sticky-Head
+  (`position: sticky; top: 0` auf `<thead> th`). Modifier:
+  `--zebra` (alternierende Zeilen), `--compact` (reduziertes
+  Zellpadding), `--dense` (Micro-Schrift via
+  `--gat-text-micro`), `--sticky-col` (sticky erste Spalte für
+  breite Vergleichstabellen). Subelemente: `__num` (rechtsbündig,
+  `font-variant-numeric: tabular-nums`), `__sortable` (Helper für
+  sortierbare Spaltenköpfe mit CSS-Pfeil-Indikator, `.is-active` /
+  `.is-desc` als Funktionsklassen). Wrapper: `.gat-table-scroll`
+  (horizontaler Scroll für breite Tabellen). Bedarf 3-fach:
+  gemeindefinanzen (`.dtable`), personenwahl (`.app-table`),
+  vorlagen (`.app-eval-table*`).
+- **`.gat-dropzone` Familie** — Datei-Upload-Zone mit vier visuellen
+  States: idle (gestrichelter Rand), `:hover`,
+  `.is-dragover` (gefüllter Rand, Marken-Tint),
+  `.is-error` (Magenta-Rand). Subelemente: `__icon` (SVG-Slot),
+  `__label`, `__hint`, `__trigger` (Sekundär-Button für File-Picker-
+  Fallback). Drag/Drop-Listener implementiert der Konsument; das DS
+  liefert nur die Optik und die Funktionsklassen. Bedarf 3-fach:
+  bildgenerator, gemeindefinanzen (`.dropzone`), personenwahl
+  (CSV-Import).
+- **`.gat-toast` / `.gat-toaster` Familie** — Notification-Container
+  `.gat-toaster` (fix-positioniert, Default unten-rechts) mit
+  einzelnen `.gat-toast`-Karten in vier Schwere-Varianten:
+  `--info`, `--success`, `--warn`, `--error`. Subelemente:
+  `__icon`, `__body`, `__close`. Slide-in-Animation
+  (`gat-toast-in` Keyframe, 0.22s) mit
+  `prefers-reduced-motion`-Fallback (reiner Opacity-Fade).
+  Auto-Dismiss-Lifecycle ist Konsumenten-JS — das DS liefert keine
+  Lifecycle-Logik. Bedarf 3-fach: bildgenerator,
+  gemeindefinanzen (`.toast`), vorlagen.
+- **`.gat-toolbar` Familie** — Sticky Action-Bar für Massen-Aktionen.
+  Default: `.gat-toolbar` sticky am unteren Rand; Modifier
+  `--top` kippt nach oben. Subelemente: `__count`
+  (Selektions-Counter), `__actions` (Button-Container). Flex-Layout
+  mit Wrap, subtle Shadow als Elevation. Bedarf 3-fach:
+  bildgenerator, gemeindefinanzen, personenwahl.
+- HC-Variant (`.gat-mode-hc`) für alle vier neuen Familien —
+  Anthrazit + Gelb + Magenta-Akzent. Tabellen-Zebra in HC bewusst
+  zurückgenommen (zu unruhig), bleibt aber definiert; Toast-Warn-/
+  Error-Border wechselt in HC auf Magenta.
+- Style-Guide (`index.html`): vier neue Sections „Datentabelle",
+  „Drop-Zone", „Toast", „Toolbar" mit funktionierenden Demos
+  inklusive aller Modifier und States.
+- `examples/minimal.html`: Datentabelle (Förder-Topf) und Toast-Demo
+  (Success-Toast via Button-Click) eingebaut.
+
+### Token-Notes
+
+- Neue Token-Familie `--gat-web-table-{head-bg,row-stripe,row-hover,
+  border}` — vier Tokens. Stripe-Bg via `color-mix` aus
+  `--gat-web-green-tint` und `--gat-web-surface`.
+- Neue Token-Familie `--gat-web-dropzone-{border,border-hover,
+  border-dragover,bg-idle,bg-dragover,bg-error}` — sechs Tokens.
+- Neue Token-Familie `--gat-web-toast-{info,success,warn,error}-{bg,
+  border,text}` — vier semantische Trios, eigenständig von Callout
+  (Padding/Optik unabhängig). Plus
+  `--gat-web-toaster-position-{bottom,right}` für override-bare
+  Container-Positionierung.
+- Neue Token-Familie `--gat-web-toolbar-{bg,border,shadow,padding-x,
+  padding-y}` — fünf Tokens.
+- Alle v2.0/v2.1/v2.1.1-Token bleiben werteweise unverändert.
+
+### Migration
+
+Strikt additiv. Konsumenten ziehen v2.2 automatisch beim nächsten
+CDN-Refresh. Wer eine bisherige `.app-table` / `.app-dropzone` /
+`.app-toast` / `.app-toolbar`-Lokalkopie hat, kann sie auf die
+`.gat-*`-Familie umstellen — keine sichtbaren Pflicht-Anpassungen für
+bestehende Konsumenten. Vollständige Migration: siehe `MIGRATION.md`
+Abschnitt „v2.1.x → v2.2".
+
 ## [2.1.1] - 2026-05-24
 
 **Patch Release.** Acht Folgebefunde aus den vier Konsumenten-Migrationen
