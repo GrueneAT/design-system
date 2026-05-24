@@ -425,6 +425,42 @@
   color: var(--gat-color-weiss);
 }
 
+/* v2.1.1 — Kompakt-Modifier fuer search-first-Layouts.
+   Default-Header umbricht .gat-header__inner ab >5 Kindern in eine zweite
+   Reihe (flex-wrap:wrap). Mit .gat-header--kompakt bleibt alles auf einer
+   Zeile: kein wrap, reduziertes Padding, truncate erlaubt auf den
+   Sub-Elementen (min-width: 0 + overflow:hidden + ellipsis). Konsumenten
+   mit knapper Brandbar + Search-Trigger + Nav nutzen den Modifier;
+   bestehende .gat-header-Konsumenten bleiben unveraendert. */
+.gat-header--kompakt .gat-header__inner {
+  flex-wrap: nowrap;
+  gap: var(--gat-space-2);
+  padding-block: var(--gat-space-2);
+  padding-inline: clamp(0.75rem, 3vw, 1.75rem);
+}
+
+.gat-header--kompakt .gat-header__brand {
+  min-width: 0;
+  gap: 0.5rem;
+}
+
+.gat-header--kompakt .gat-header__wordmark {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gat-header--kompakt .gat-header__nav,
+.gat-header--kompakt .gat-header__nav-list {
+  min-width: 0;
+  flex-wrap: nowrap;
+}
+
+.gat-header--kompakt .gat-header__nav-list a {
+  white-space: nowrap;
+}
+
 .gat-nav {
   display: flex;
   flex-wrap: wrap;
