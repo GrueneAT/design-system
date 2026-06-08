@@ -435,6 +435,19 @@
   letter-spacing: 0.01em;
 }
 
+/* Navigationszone rechts neben der Wortmarke. Nimmt die Menue-Liste plus
+   optionale Zusatz-Elemente auf (Support-Link, Werkzeug-Steuerelemente) und
+   ordnet sie in einer Zeile mit gleichmaessigem Abstand, rechtsbuendig und
+   vertikal zentriert. Ohne diese Regel fallen mehrere Kinder in den
+   Default-Fluss und kleben aneinander. */
+.gat-header__nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
 .gat-header__nav-list {
   list-style: none;
   margin: 0;
@@ -455,6 +468,54 @@
 
 .gat-header__nav-list a:hover {
   text-decoration: underline;
+}
+
+/* Support-/Kontakt-Link in der Navigationszone — direkter Draht zum Betreuer
+   eines Werkzeugs. Weiche Textfarbe in Ruhe, gruen bei Hover/Fokus. Auf
+   schmalen Viewports bleibt nur das Icon (Label ausgeblendet), damit die
+   Brandbar nicht umbricht. Gehoert ins DS, damit alle Werkzeuge denselben
+   Kontaktpunkt einheitlich tragen (statt lokaler Kopien je Repo). */
+.gat-header__support {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--gat-font-headline);
+  font-size: 0.95rem;
+  color: var(--gat-web-text-soft);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.gat-header__support:hover,
+.gat-header__support:focus-visible {
+  color: var(--gat-web-green-deep);
+}
+
+.gat-header__support-icon {
+  flex: none;
+}
+
+@media (max-width: 48rem) {
+  .gat-header__support-label {
+    display: none;
+  }
+}
+
+/* Marken-Textblock: stapelt Wortmarke und optionalen Subbrand (z. B.
+   „Ein Projekt der Gruenen NOE") vertikal neben dem Logo. */
+.gat-header__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  line-height: 1.1;
+}
+
+.gat-header__subbrand {
+  font-family: var(--gat-font-headline);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--gat-web-text-soft);
+  line-height: 1.2;
 }
 
 .gat-header__nav-current {
