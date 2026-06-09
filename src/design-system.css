@@ -16,14 +16,14 @@
  * Urheber: Die Grünen.
  */
 
-/* Schriften: Barlow Semi Condensed + Vollkorn werden direkt hier per @import
-   geladen, damit jedes konsumierende Tool die Schriften automatisch erhält.
-   @import muss vor allen anderen Regeln stehen — der Datei-Header-Kommentar
-   darüber zählt nicht als Regel. Gewichte auf die tatsächlich von den
-   Komponenten genutzten Schnitte reduziert: Barlow 400 (Copy), 600/700/800
+/* Schriften: Raleway (Raleway-3-Markenschnitt) + Vollkorn werden direkt hier
+   per @import geladen, damit jedes konsumierende Tool die Schriften automatisch
+   erhält. @import muss vor allen anderen Regeln stehen — der Datei-Header-
+   Kommentar darüber zählt nicht als Regel. Gewichte auf die tatsächlich von den
+   Komponenten genutzten Schnitte reduziert: Raleway 400 (Copy), 600/700/800
    (Subline/UI/Headline), 900 (Stoerer) inkl. Kursiv; Vollkorn 400 und
    900-Kursiv (Hervorhebung). */
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,900&family=Vollkorn:ital,wght@0,400;0,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,900&family=Vollkorn:ital,wght@0,400;0,900&display=swap');
 
 @import "tailwindcss";
 
@@ -76,8 +76,8 @@
   --radius-gat-md: 0.5rem;
 
   /* === Schrift =========================================================== */
-  --font-gat-headline: 'Barlow Semi Condensed', sans-serif;
-  --font-gat-copy:     'Barlow Semi Condensed', sans-serif;
+  --font-gat-headline: 'Raleway', sans-serif;
+  --font-gat-copy:     'Raleway', sans-serif;
   --font-gat-emphasis: 'Vollkorn', serif;
 
   /* === Typo-Skala — Basis 1rem, Ratio 1,25 =============================== */

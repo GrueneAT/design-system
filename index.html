@@ -734,8 +734,8 @@
       <p class="gat-fliesstext doc-lead">
         Drei Schrift-Tokens, eine modulare Größenskala (Basis 1rem, Ratio 1,25)
         und zwei Zeilenabstands-Faktoren aus dem CD-Quickguide. Die Headline- und
-        Copy-Rolle nutzen Barlow Semi Condensed als freien Ersatz für das
-        kommerzielle Gotham Narrow.
+        Copy-Rolle nutzen Raleway (Raleway-3-Schnitt) als freie, CD-konforme
+        Display-Schrift.
       </p>
 
       <div class="doc-block">
@@ -743,24 +743,24 @@
         <div class="doc-demo">
           <div class="doc-demo__stage">
             <p style="font-family: var(--gat-font-headline); font-weight: 900; font-size: var(--gat-text-h3); margin: 0;">
-              Barlow Semi Condensed &mdash; Headline-Rolle
+              Raleway &mdash; Headline-Rolle
             </p>
           </div>
           <div class="doc-demo__caption">
             <span class="doc-code">--gat-font-headline</span> &middot;
-            <span class="doc-code">'Barlow Semi Condensed', sans-serif</span> &middot;
-            Headlines (CD: Gotham-Ultra-Ersatz)
+            <span class="doc-code">'Raleway', sans-serif</span> &middot;
+            Headlines (CD-konform, Raleway 900)
           </div>
         </div>
         <div class="doc-demo">
           <div class="doc-demo__stage">
             <p style="font-family: var(--gat-font-copy); font-weight: 400; font-size: var(--gat-text-copy); margin: 0;">
-              Barlow Semi Condensed &mdash; Fließtext und UI-Beschriftungen.
+              Raleway &mdash; Fließtext und UI-Beschriftungen.
             </p>
           </div>
           <div class="doc-demo__caption">
             <span class="doc-code">--gat-font-copy</span> &middot;
-            <span class="doc-code">'Barlow Semi Condensed', sans-serif</span> &middot;
+            <span class="doc-code">'Raleway', sans-serif</span> &middot;
             Fließtext / UI
           </div>
         </div>
@@ -2096,8 +2096,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>Barlow Semi Condensed</td><td>400</td><td class="gat-table__num">16</td><td class="gat-table__num">1,00</td></tr>
-            <tr><td>Barlow Semi Condensed</td><td>700</td><td class="gat-table__num">20</td><td class="gat-table__num">1,25</td></tr>
+            <tr><td>Raleway</td><td>400</td><td class="gat-table__num">16</td><td class="gat-table__num">1,00</td></tr>
+            <tr><td>Raleway</td><td>700</td><td class="gat-table__num">20</td><td class="gat-table__num">1,25</td></tr>
             <tr><td>Vollkorn</td><td>900 italic</td><td class="gat-table__num">25</td><td class="gat-table__num">1,56</td></tr>
           </tbody>
         </table>
@@ -2724,8 +2724,8 @@
       "--gat-color-on-secondary": { "value": "#1d1d1b", "role": "alias", "aliasOf": "--gat-color-anthrazit", "usage": "Text auf Hellgrün — Kontrast 6,09:1." }
     },
     "font": {
-      "--gat-font-headline": { "value": "'Barlow Semi Condensed', sans-serif", "role": "font", "usage": "Headlines (CD: Gotham-Ultra-Ersatz)." },
-      "--gat-font-copy": { "value": "'Barlow Semi Condensed', sans-serif", "role": "font", "usage": "Fließtext / UI." },
+      "--gat-font-headline": { "value": "'Raleway', sans-serif", "role": "font", "usage": "Headlines (CD-konform, Raleway 900)." },
+      "--gat-font-copy": { "value": "'Raleway', sans-serif", "role": "font", "usage": "Fließtext / UI." },
       "--gat-font-emphasis": { "value": "'Vollkorn', serif", "role": "font", "usage": "Hervorhebungen / Zitate." }
     },
     "text": {
@@ -2770,9 +2770,9 @@
     "gat-nav": { "purpose": "Navigations-Container (Flexbox, umbrechend statt Hamburger).", "modifiers": [], "requires": "keiner", "markup": "<nav class=\"gat-nav\">...</nav>" },
     "gat-nav__link": { "purpose": "Navigationslink; Hover/Fokus zeigt gelbe Unterstreichung.", "modifiers": ["gat-nav__link--active"], "requires": "Kind von gat-nav", "markup": "<a class=\"gat-nav__link\" href=\"#...\">...</a>" },
     "gat-nav__link--active": { "purpose": "Aktiver Link — dauerhafte gelbe Unterstreichung.", "modifiers": [], "requires": "mit gat-nav__link kombinieren", "markup": "<a class=\"gat-nav__link gat-nav__link--active\" href=\"#...\">...</a>" },
-    "gat-headline": { "purpose": "Headline (H1-Rolle), Barlow Black 900.", "modifiers": [], "requires": "keiner", "markup": "<h1 class=\"gat-headline\">...</h1>" },
-    "gat-subline": { "purpose": "Subline, Barlow Semibold 600.", "modifiers": [], "requires": "keiner", "markup": "<p class=\"gat-subline\">...</p>" },
-    "gat-fliesstext": { "purpose": "Fließtext, Barlow Regular 400, Zeilenabstand 1,3.", "modifiers": [], "requires": "keiner", "markup": "<p class=\"gat-fliesstext\">...</p>" },
+    "gat-headline": { "purpose": "Headline (H1-Rolle), Raleway Black 900.", "modifiers": [], "requires": "keiner", "markup": "<h1 class=\"gat-headline\">...</h1>" },
+    "gat-subline": { "purpose": "Subline, Raleway Semibold 600.", "modifiers": [], "requires": "keiner", "markup": "<p class=\"gat-subline\">...</p>" },
+    "gat-fliesstext": { "purpose": "Fließtext, Raleway Regular 400, Zeilenabstand 1,3.", "modifiers": [], "requires": "keiner", "markup": "<p class=\"gat-fliesstext\">...</p>" },
     "gat-emphasis": { "purpose": "Hervorhebung/Zitat, Vollkorn Black-Kursiv.", "modifiers": [], "requires": "keiner", "markup": "<em class=\"gat-emphasis\">...</em>" },
     "gat-btn": { "purpose": "Basis-Button (Layout, Padding, Rundung, Fokus-Outline).", "modifiers": ["gat-btn--primary", "gat-btn--secondary"], "requires": "ein Modifier ist Pflicht", "markup": "<a class=\"gat-btn gat-btn--primary\">...</a>" },
     "gat-btn--primary": { "purpose": "Primär-Button: dunkelgrüne Fläche, weißer Text.", "modifiers": [], "requires": "mit gat-btn kombinieren", "markup": "<a class=\"gat-btn gat-btn--primary\">...</a>" },
