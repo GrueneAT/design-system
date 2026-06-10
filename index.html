@@ -1217,6 +1217,63 @@
       </div>
 
       <div class="doc-block">
+        <h3 class="gat-subline">Werkzeug-Navigation</h3>
+        <p class="gat-fliesstext doc-lead">
+          Horizontale Abschnitts-Navigation, gedacht direkt
+          <strong>unter der Seiten-Headline</strong> im Hauptcontainer &mdash;
+          die ruhige Alternative zum vertikalen Seitenmenü. Die Reiter sitzen
+          auf einer Hairline-Grundlinie; der aktive Reiter trägt eine
+          dunkelgrüne Markierung. Optionale
+          <span class="doc-code">.gat-toolnav__label</span>-Gruppen
+          strukturieren längere Navigationen, geplante Schritte bleiben als
+          <span class="doc-code">.gat-toolnav__item--disabled</span> sichtbar.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage" style="display: block;">
+            <h1 class="gat-headline" style="font-size: var(--gat-text-h2); margin-bottom: var(--gat-space-4);">Personenauswahl</h1>
+            <nav class="gat-toolnav" aria-label="Demo-Werkzeugnavigation">
+              <span class="gat-toolnav__group">
+                <a class="gat-toolnav__item gat-toolnav__item--active" href="#komponenten" aria-current="page">Übersicht</a>
+              </span>
+              <span class="gat-toolnav__group">
+                <span class="gat-toolnav__label">Verfahren</span>
+                <a class="gat-toolnav__item" href="#komponenten">Stage&nbsp;1</a>
+                <span class="gat-toolnav__item gat-toolnav__item--disabled" aria-disabled="true">Stage&nbsp;2</span>
+                <a class="gat-toolnav__item" href="#komponenten">Stage&nbsp;3</a>
+              </span>
+              <span class="gat-toolnav__group">
+                <span class="gat-toolnav__label">Mehr</span>
+                <a class="gat-toolnav__item" href="#komponenten">Dokumentation</a>
+              </span>
+            </nav>
+          </div>
+          <div class="doc-demo__caption">
+            <span class="doc-code">.gat-toolnav</span> mit
+            <span class="doc-code">__group</span>,
+            <span class="doc-code">__label</span>,
+            <span class="doc-code">__item</span> (aktiv via
+            <span class="doc-code">--active</span> /
+            <span class="doc-code">aria-current="page"</span>, deaktiviert via
+            <span class="doc-code">--disabled</span>).
+          </div>
+        </div>
+        <div class="doc-codeblock">&lt;h1 class="gat-headline"&gt;Personenauswahl&lt;/h1&gt;
+&lt;nav class="gat-toolnav" aria-label="Werkzeugnavigation"&gt;
+  &lt;span class="gat-toolnav__group"&gt;
+    &lt;a class="gat-toolnav__item gat-toolnav__item--active"
+       href="#uebersicht" aria-current="page"&gt;Übersicht&lt;/a&gt;
+  &lt;/span&gt;
+  &lt;span class="gat-toolnav__group"&gt;
+    &lt;span class="gat-toolnav__label"&gt;Verfahren&lt;/span&gt;
+    &lt;a class="gat-toolnav__item" href="#stage1"&gt;Stage 1&lt;/a&gt;
+    &lt;span class="gat-toolnav__item gat-toolnav__item--disabled"
+          aria-disabled="true"&gt;Stage 2&lt;/span&gt;
+    &lt;a class="gat-toolnav__item" href="#stage3"&gt;Stage 3&lt;/a&gt;
+  &lt;/span&gt;
+&lt;/nav&gt;</div>
+      </div>
+
+      <div class="doc-block">
         <h3 class="gat-subline">Buttons</h3>
         <p class="gat-fliesstext doc-lead">
           Ein Basis-Button mit Pflicht-Modifier. <span class="doc-code">.gat-btn</span>
@@ -2770,6 +2827,12 @@
     "gat-nav": { "purpose": "Navigations-Container (Flexbox, umbrechend statt Hamburger).", "modifiers": [], "requires": "keiner", "markup": "<nav class=\"gat-nav\">...</nav>" },
     "gat-nav__link": { "purpose": "Navigationslink; Hover/Fokus zeigt gelbe Unterstreichung.", "modifiers": ["gat-nav__link--active"], "requires": "Kind von gat-nav", "markup": "<a class=\"gat-nav__link\" href=\"#...\">...</a>" },
     "gat-nav__link--active": { "purpose": "Aktiver Link — dauerhafte gelbe Unterstreichung.", "modifiers": [], "requires": "mit gat-nav__link kombinieren", "markup": "<a class=\"gat-nav__link gat-nav__link--active\" href=\"#...\">...</a>" },
+    "gat-toolnav": { "purpose": "Werkzeug-/Abschnitts-Navigation als horizontale Reiter-Leiste auf Hairline-Grundlinie; gedacht direkt unter der Seiten-Headline im Hauptcontainer (Alternative zum vertikalen Seitenmenue). Bricht um statt Hamburger.", "modifiers": [], "requires": "keiner", "markup": "<nav class=\"gat-toolnav\">...</nav>" },
+    "gat-toolnav__group": { "purpose": "Reiter-Gruppe innerhalb der Werkzeug-Navigation; haelt Label + zugehoerige Items zusammen.", "modifiers": [], "requires": "Kind von gat-toolnav", "markup": "<span class=\"gat-toolnav__group\">...</span>" },
+    "gat-toolnav__label": { "purpose": "Kleines Mono-Caption-Label vor einer Reiter-Gruppe.", "modifiers": [], "requires": "Kind von gat-toolnav__group", "markup": "<span class=\"gat-toolnav__label\">Verfahren</span>" },
+    "gat-toolnav__item": { "purpose": "Einzelner Reiter. Hover/Fokus zeigt gruene Markierung.", "modifiers": ["gat-toolnav__item--active", "gat-toolnav__item--disabled"], "requires": "Kind von gat-toolnav (bzw. gat-toolnav__group)", "markup": "<a class=\"gat-toolnav__item\" href=\"#...\">...</a>" },
+    "gat-toolnav__item--active": { "purpose": "Aktiver Reiter — dunkelgruene Markierung. Alternativ aria-current=\"page\".", "modifiers": [], "requires": "mit gat-toolnav__item kombinieren", "markup": "<a class=\"gat-toolnav__item gat-toolnav__item--active\" aria-current=\"page\" href=\"#...\">...</a>" },
+    "gat-toolnav__item--disabled": { "purpose": "Deaktivierter Reiter (geplant/ausgelagert) — sichtbar, aber nicht anklickbar. Alternativ aria-disabled=\"true\".", "modifiers": [], "requires": "mit gat-toolnav__item kombinieren", "markup": "<span class=\"gat-toolnav__item gat-toolnav__item--disabled\" aria-disabled=\"true\">...</span>" },
     "gat-headline": { "purpose": "Headline (H1-Rolle), Barlow Black 900.", "modifiers": [], "requires": "keiner", "markup": "<h1 class=\"gat-headline\">...</h1>" },
     "gat-subline": { "purpose": "Subline, Barlow Semibold 600.", "modifiers": [], "requires": "keiner", "markup": "<p class=\"gat-subline\">...</p>" },
     "gat-fliesstext": { "purpose": "Fließtext, Barlow Regular 400, Zeilenabstand 1,3.", "modifiers": [], "requires": "keiner", "markup": "<p class=\"gat-fliesstext\">...</p>" },
