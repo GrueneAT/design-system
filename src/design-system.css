@@ -625,6 +625,84 @@
   border-bottom-color: var(--gat-color-highlight);
 }
 
+/* === Werkzeug-Navigation (Reiter-Leiste) ================================= */
+/* Horizontale Abschnitts-Navigation, gedacht direkt unter der Seiten-Headline
+   im Hauptcontainer — die ruhige Alternative zum vertikalen Seitenmenue. Die
+   Reiter sitzen auf einer Hairline-Grundlinie; der aktive Reiter traegt eine
+   dunkelgruene Markierung, Hover/Fokus eine gruene. Bricht auf schmalen
+   Viewports um (kein Hamburger). Optionale Gruppen-Label strukturieren laengere
+   Navigationen, ohne ein Seitenmenue zu brauchen. */
+.gat-toolnav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0 var(--gat-space-1);
+  border-bottom: var(--gat-border-width) solid var(--gat-web-hairline);
+}
+
+.gat-toolnav__group {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gat-space-1);
+}
+
+/* Gruppen-Label — kleine, ruhige Mono-Caption vor einer Reiter-Gruppe. */
+.gat-toolnav__label {
+  align-self: center;
+  padding: 0 var(--gat-space-2) 0 var(--gat-space-3);
+  font-family: var(--gat-font-mono, ui-monospace, monospace);
+  font-size: var(--gat-text-mini, 0.72rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gat-web-text-mute);
+}
+.gat-toolnav__group:first-child .gat-toolnav__label {
+  padding-left: 0;
+}
+
+.gat-toolnav__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gat-space-2);
+  font-family: var(--gat-font-copy);
+  font-weight: 600;
+  color: var(--gat-web-text-soft);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: var(--gat-space-2) var(--gat-space-3);
+  border-bottom: var(--gat-border-width) solid transparent;
+  margin-bottom: calc(-1 * var(--gat-border-width));
+  border-top-left-radius: var(--gat-radius-sm, 6px);
+  border-top-right-radius: var(--gat-radius-sm, 6px);
+  transition:
+    color 120ms ease,
+    border-color 120ms ease,
+    background 120ms ease;
+}
+.gat-toolnav__item:hover,
+.gat-toolnav__item:focus-visible {
+  color: var(--gat-web-text);
+  background: var(--gat-web-green-tint);
+  border-bottom-color: var(--gat-web-green);
+}
+.gat-toolnav__item--active,
+.gat-toolnav__item[aria-current='page'] {
+  color: var(--gat-web-green-deep);
+  border-bottom-color: var(--gat-web-green-deep);
+}
+
+/* Deaktivierter Reiter — geplante/ausgelagerte Schritte bleiben sichtbar,
+   sind aber klar als nicht-anklickbar markiert. */
+.gat-toolnav__item--disabled,
+.gat-toolnav__item[aria-disabled='true'] {
+  color: var(--gat-web-text-mute);
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  border-bottom-color: transparent;
+  background: none;
+}
+
 /* === Typografie ========================================================== */
 
 .gat-headline {
