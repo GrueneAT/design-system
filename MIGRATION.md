@@ -24,7 +24,7 @@ für bestehende Konsumenten.
 ### Was Konsumenten **nicht** ändern müssen
 
 - CSS-URL bleibt:
-  `https://grueneat.github.io/design-system/design-system.css`
+  `https://design-system.gruene.at/design-system.css`
 - Alle v2.0/v2.1/v2.1.1-Token, -Klassen und -Selektoren bleiben
   unverändert.
 - Bestehende `.gat-callout`, `.gat-tag`, `.gat-input`, `.gat-modal`,
@@ -193,7 +193,7 @@ kompatibel: keine Token-/Klassen-Umbenennung, kein Behavior-Bruch.
 ### Was Konsumenten **nicht** ändern müssen
 
 - CSS-URL bleibt:
-  `https://grueneat.github.io/design-system/design-system.css`
+  `https://design-system.gruene.at/design-system.css`
 - Alle v2.0/v2.1-Token, -Klassen und -Selektoren bleiben unverändert.
 - Bestehende `.gat-callout`, `.gat-tag`, `.gat-input`, `.gat-header`
   rendern weiterhin korrekt — die neuen Bausteine sind reine Ergänzung.
@@ -320,7 +320,7 @@ Stil — die neuen Modifier sind reine Ergänzung.
 ### Was Konsumenten **nicht** ändern müssen
 
 - CSS-URL bleibt:
-  `https://grueneat.github.io/design-system/design-system.css`
+  `https://design-system.gruene.at/design-system.css`
 - Alle v2.0-Klassen, Tokens und Selektoren bleiben unverändert.
 - Kein `npm install` auf Konsumenten-Seite, kein Build-Schritt.
 - Optik bestehender Pages bleibt identisch — `.gat-callout` ohne Modifier
@@ -490,7 +490,7 @@ anpassen — die Marken-Tokens (`--gat-color-dunkelgruen`,
 ## Was Konsumenten **nicht** ändern müssen
 
 - **CSS-URL bleibt:**
-  `https://grueneat.github.io/design-system/design-system.css`
+  `https://design-system.gruene.at/design-system.css`
 - Alle `--gat-*`-Token-Namen aus v1.x bleiben stabil. Werte können sich
   ändern (siehe Hellgrün unten), aber kein Name verschwindet.
 - Alle v1.x-Komponenten-Klassen bleiben:
@@ -527,7 +527,7 @@ anpassen — die Marken-Tokens (`--gat-color-dunkelgruen`,
   <div class="gat-header__inner">
     <a class="gat-header__brand" href="#top">
       <img class="gat-header__logo"
-           src="https://grueneat.github.io/design-system/assets/gruene-logo.svg"
+           src="https://design-system.gruene.at/assets/gruene-logo.svg"
            alt="Die Grünen">
       <span class="gat-header__wordmark">Tool-Name</span>
     </a>
@@ -663,7 +663,7 @@ import {
   PALETTE, INK, LABEL_SIZE, AXIS_SIZE,
   BAR_MAX_DICHT, BAR_MAX_WEIT,
   tip, legende, grid, planIstLegende
-} from 'https://grueneat.github.io/design-system/gat-charts.js';
+} from 'https://design-system.gruene.at/gat-charts.js';
 ```
 
 `PALETTE` spiegelt die CSS-Tokens `--gat-web-chart-1..8` 1:1. ECharts

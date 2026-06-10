@@ -6,7 +6,7 @@
  *   import { PALETTE, INK, LABEL_SIZE, AXIS_SIZE,
  *            BAR_MAX_DICHT, BAR_MAX_WEIT, VA_DECAL,
  *            tip, legende, grid, planIstLegende }
- *     from 'https://grueneat.github.io/design-system/gat-charts.js';
+ *     from 'https://design-system.gruene.at/gat-charts.js';
  *
  * Die Palette spiegelt die CSS-Tokens --gat-web-chart-1..8 im DS.
  * Lizenz: CC BY 4.0 (gleich wie design-system.css).

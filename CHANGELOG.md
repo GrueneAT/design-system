@@ -271,7 +271,7 @@ Migration siehe [MIGRATION.md](MIGRATION.md).
 - `@media print`-Block mit Header-/Panel-/Metric-Card-Anpassungen,
   `break-inside`-Regeln und `.gat-no-print`-Hilfsklasse.
 - `gat-charts.js`-ES-Modul mit Palette + ECharts-Helfern
-  (`https://grueneat.github.io/design-system/gat-charts.js`).
+  (`https://design-system.gruene.at/gat-charts.js`).
 - CI-Drift-Guard (`build-check.yml`): jeder Push/PR baut neu und prüft
   per `git diff --exit-code design-system.css`, dass committed Output
   und Source-Build übereinstimmen.

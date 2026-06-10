@@ -6,14 +6,14 @@ wiederverwendbare UI-Bausteine aus dem grünen Corporate Design bereit, damit
 alle Grüne-AT-Anwendungen dasselbe Erscheinungsbild teilen.
 
 Das Designsystem wird als statische Site über GitHub Pages gehostet:
-<https://grueneat.github.io/design-system/>
+<https://design-system.gruene.at/>
 
 ## Einbindung
 
 Das gehostete Stylesheet lässt sich aus jedem Projekt per `<link>` einbinden:
 
 ```html
-<link rel="stylesheet" href="https://grueneat.github.io/design-system/design-system.css">
+<link rel="stylesheet" href="https://design-system.gruene.at/design-system.css">
 ```
 
 Damit erhalten konsumierende Tools automatisch die zentral gepflegten
@@ -39,7 +39,7 @@ body {
 Ein vollständiges, lauffähiges Minimal-Beispiel für ein konsumierendes Tool
 liegt unter [examples/minimal.html](examples/minimal.html) und ist live
 abrufbar unter
-<https://grueneat.github.io/design-system/examples/minimal.html>.
+<https://design-system.gruene.at/examples/minimal.html>.
 
 ### Chart-Helfer (ES-Modul)
 
@@ -51,7 +51,7 @@ import {
   PALETTE, INK, LABEL_SIZE, AXIS_SIZE,
   BAR_MAX_DICHT, BAR_MAX_WEIT,
   tip, legende, grid, planIstLegende
-} from 'https://grueneat.github.io/design-system/gat-charts.js';
+} from 'https://design-system.gruene.at/gat-charts.js';
 ```
 
 Die Palette spiegelt die CSS-Tokens `--gat-web-chart-1..8` 1:1. ECharts
