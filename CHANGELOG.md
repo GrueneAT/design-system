@@ -20,8 +20,10 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
   `__group` + `__label` für gruppierte Reiter, `__item` mit
   `--active` (bzw. `aria-current="page"`) und `--disabled` (bzw.
   `aria-disabled="true"`) für geplante/ausgelagerte Schritte. Bricht auf
-  schmalen Viewports um statt Hamburger. Strikt additiv. Erstabnehmer:
-  Personenwahl (linkes Seitenmenü → Reiter-Leiste unter der Headline).
+  schmalen Viewports vollständig um (Gruppen **und** Reiter innerhalb einer
+  Gruppe) statt horizontal über den Viewport hinauszuwachsen — kein
+  Hamburger. Strikt additiv. Erstabnehmer: Personenwahl (linkes Seitenmenü →
+  Reiter-Leiste unter der Headline).
 
 ## [2.2.0] - 2026-05-24
 

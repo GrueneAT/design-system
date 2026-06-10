@@ -638,10 +638,19 @@
   align-items: stretch;
   gap: 0 var(--gat-space-1);
   border-bottom: var(--gat-border-width) solid var(--gat-web-hairline);
+  /* Nie breiter als der Container — die Reiter brechen um, statt horizontal
+     ueber den Viewport hinauszuwachsen (Mobile). */
+  max-width: 100%;
 }
 
 .gat-toolnav__group {
   display: inline-flex;
+  /* Auch innerhalb einer Gruppe umbrechen: sonst bleibt eine breite Gruppe
+     (z. B. mehrere Stage-Reiter) auf einer Zeile und sprengt schmale
+     Viewports. min-width:0 erlaubt dem Flex-Item, unter die Inhaltsbreite zu
+     schrumpfen, damit der Umbruch greift. */
+  flex-wrap: wrap;
+  min-width: 0;
   align-items: center;
   gap: var(--gat-space-1);
 }
