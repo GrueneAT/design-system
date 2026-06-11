@@ -2016,6 +2016,269 @@
   margin-left: auto;
 }
 
+/* === v2.3 — Suche (.gat-search) ===========================================
+   Such-Vorlage: Feld + Ergebnis-Overlay. Zwei Varianten derselben Familie:
+   (1) Inline-Overlay-Dropdown — absolut positioniert, liegt UEBER dem Content
+   -> kein Layout-Shift; (2) Modal/Strg+K — wiederverwendet .gat-modal
+   (--blur --wide) mit .gat-search--modal darin. Das Verhalten (Open/Close,
+   Pfeiltasten-Navigation, ARIA combobox/listbox/option, Focus-Trap im Modal,
+   prefers-reduced-motion) liefert das ES-Modul gat-search.js — das DS liefert
+   hier nur Optik + Funktionsklassen. App-Spezifika (Filter, Gruppierung,
+   Stemming) bleiben App-Schicht. Komponiert ausschliesslich auf bestehenden
+   --gat-*-Tokens; keine hardcodierten Farben/Radien/Schriften. */
+
+.gat-search {
+  position: relative;
+}
+
+.gat-search__field {
+  /* Optik via .gat-input (im Markup zusaetzlich vergeben). Hier nur der
+     Icon-Slot-Platz links. */
+  padding-left: calc(var(--gat-web-input-padding-x) + 1.5rem);
+}
+
+.gat-search__icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: var(--gat-web-input-min-h, 44px);
+  width: calc(var(--gat-web-input-padding-x) + 1.5rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gat-web-text-mute);
+  pointer-events: none;
+}
+
+.gat-search__icon > svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  display: block;
+}
+
+/* Inline-Overlay: nimmt KEINEN Platz im Fluss -> kein Layout-Shift (harte AC).
+   z-index 50 liegt ueber sticky Headern, aber unter .gat-skiplink (999) und
+   .gat-toaster (1000). */
+.gat-search__overlay {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  margin-top: var(--gat-space-1);
+  background: var(--gat-web-surface);
+  border: 1px solid var(--gat-web-hairline);
+  border-radius: var(--gat-web-radius-card);
+  box-shadow: var(--gat-web-shadow-elevated);
+  overflow: hidden;
+  /* Default versteckt via [hidden]; sichtbar via .is-open. */
+  transform-origin: top center;
+  animation: gat-search-overlay-in 0.16s ease-out;
+}
+
+.gat-search__overlay[hidden] {
+  display: none;
+}
+
+@keyframes gat-search-overlay-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gat-search-overlay-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gat-search__overlay {
+    animation: gat-search-overlay-fade 0.14s ease-out;
+  }
+}
+
+.gat-search__results {
+  margin: 0;
+  padding: var(--gat-space-1);
+  list-style: none;
+  max-height: min(60vh, 28rem);
+  overflow-y: auto;
+}
+
+.gat-search__count {
+  padding: var(--gat-space-2) var(--gat-space-3);
+  font-family: var(--gat-font-copy);
+  font-size: var(--gat-text-small);
+  color: var(--gat-web-text-soft);
+  border-bottom: 1px solid var(--gat-web-hairline);
+}
+
+.gat-search__item {
+  display: block;
+  padding: var(--gat-space-2) var(--gat-space-3);
+  border-radius: var(--gat-web-radius-mini);
+  color: var(--gat-web-text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.gat-search__item:hover {
+  background: var(--gat-web-green-tint);
+}
+
+/* .is-active = aktives Item der Tastatur-Navigation (aria-activedescendant).
+   Sichtbarer Fokus-Ring via Token. */
+.gat-search__item.is-active {
+  background: var(--gat-web-green-tint);
+  box-shadow: var(--gat-web-focus-ring);
+}
+
+.gat-search__item-title {
+  display: block;
+  font-family: var(--gat-font-copy);
+  font-weight: 700;
+  font-size: var(--gat-text-copy);
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-web-text);
+}
+
+.gat-search__item-excerpt {
+  display: block;
+  margin-top: var(--gat-space-1);
+  font-size: var(--gat-text-small);
+  line-height: var(--gat-leading-copy);
+  color: var(--gat-web-text-soft);
+}
+
+/* Treffer-Hervorhebung im Excerpt (Adapter liefert <mark>, HTML-escaped). */
+.gat-search__item-excerpt mark {
+  background: var(--gat-web-green-tint);
+  color: var(--gat-web-green-deep);
+  padding: 0 0.1em;
+  border-radius: var(--gat-web-radius-mini);
+}
+
+.gat-search__item-badge {
+  display: inline-block;
+  margin-top: var(--gat-space-1);
+  padding: 0.1em 0.5em;
+  font-size: var(--gat-text-micro);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--gat-web-green-deep);
+  background: var(--gat-web-surface-sunk);
+  border-radius: var(--gat-web-radius-mini);
+}
+
+/* Vereinheitlichte Zustaende (harte AC): leer / Hinweis / Laden / keine
+   Treffer. Modul setzt den passenden Modifier. */
+.gat-search__state {
+  padding: var(--gat-space-3);
+  font-family: var(--gat-font-copy);
+  font-size: var(--gat-text-small);
+  color: var(--gat-web-text-soft);
+  text-align: center;
+}
+
+.gat-search__state--empty,
+.gat-search__state--hint {
+  color: var(--gat-web-text-mute);
+}
+
+.gat-search__state--loading {
+  color: var(--gat-web-text-soft);
+}
+
+.gat-search__state--no-results {
+  color: var(--gat-web-text-soft);
+}
+
+/* Header-Lupe-Trigger, der das Modal/Strg+K oeffnet. Touch-Floor 44px wie
+   .gat-input. Ersetzt app-lokale .gat-header__search-Kopien. */
+.gat-search-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gat-space-2);
+  min-height: var(--gat-web-input-min-h, 44px);
+  min-width: var(--gat-web-input-min-h, 44px);
+  padding: 0 var(--gat-space-3);
+  font: inherit;
+  font-family: var(--gat-font-copy);
+  color: var(--gat-web-text-soft);
+  background: var(--gat-web-surface);
+  border: 1px solid var(--gat-web-hairline);
+  border-radius: var(--gat-web-input-radius);
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, color 0.15s;
+}
+
+.gat-search-trigger:hover {
+  color: var(--gat-web-text);
+  border-color: color-mix(in srgb, var(--gat-web-green-deep) 50%,
+                          var(--gat-web-hairline));
+}
+
+.gat-search-trigger:focus-visible {
+  outline: none;
+  border-color: var(--gat-web-input-border-focus);
+  box-shadow: var(--gat-web-focus-ring);
+}
+
+.gat-search-trigger > svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+}
+
+/* Tastenkuerzel-Hinweis (Strg/Cmd+K) im Trigger. */
+.gat-search-trigger__kbd {
+  font-family: var(--gat-font-copy);
+  font-size: var(--gat-text-micro);
+  color: var(--gat-web-text-mute);
+  background: var(--gat-web-surface-sunk);
+  border: 1px solid var(--gat-web-hairline);
+  border-radius: var(--gat-web-radius-mini);
+  padding: 0.05em 0.4em;
+  line-height: 1.4;
+}
+
+/* Modal-Variante: das Feld IM .gat-modal (kombiniert mit .gat-modal--blur
+   --wide). Keine neue Modal-Shell. Auf schmalen Viewports Full-Screen —
+   100dvh statt 100vh wegen iOS-Safari-Adressleiste. */
+.gat-search--modal {
+  position: static;
+}
+
+.gat-search--modal .gat-search__overlay {
+  position: static;
+  margin-top: var(--gat-space-3);
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  animation: none;
+}
+
+@media (max-width: 640px) {
+  .gat-modal:has(.gat-search--modal) {
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+    max-width: 100vw;
+    width: 100vw;
+    border-radius: 0;
+  }
+
+  .gat-search--modal .gat-search__results {
+    max-height: none;
+  }
+}
+
 /* === High-Contrast-Modus — handgeschriebene Komponenten-Overrides =========
    Aktiviert über die Klasse .gat-mode-hc auf <body> oder einem Ancestor.
    Palette: Anthrazit + Gelb + Magenta-Akzent — alle aus den bestehenden
@@ -2355,6 +2618,58 @@
 
 .gat-mode-hc .gat-toolbar__count {
   color: var(--gat-color-gelb);
+}
+
+/* HC fuer v2.3 .gat-search — Anthrazit + Gelb, aktives Item invertiert
+   (Gelb-Flaeche), Excerpt-<mark> erbt die globale HC-Mark-Inversion. */
+
+.gat-mode-hc .gat-search__overlay {
+  background: var(--gat-color-anthrazit);
+  border-color: var(--gat-color-gelb);
+  box-shadow: none;
+}
+
+.gat-mode-hc .gat-search__count {
+  color: var(--gat-color-gelb);
+  border-bottom-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-search__item,
+.gat-mode-hc .gat-search__item-title,
+.gat-mode-hc .gat-search__item-excerpt,
+.gat-mode-hc .gat-search__state {
+  color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-search__item:hover,
+.gat-mode-hc .gat-search__item.is-active {
+  background: color-mix(in srgb, var(--gat-color-gelb) 18%, var(--gat-color-anthrazit));
+}
+
+.gat-mode-hc .gat-search__item.is-active {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gat-color-gelb) 50%, transparent);
+}
+
+.gat-mode-hc .gat-search__item-badge {
+  background: color-mix(in srgb, var(--gat-color-gelb) 14%, var(--gat-color-anthrazit));
+  color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-search-trigger {
+  background: var(--gat-color-anthrazit);
+  color: var(--gat-color-gelb);
+  border-color: var(--gat-color-gelb);
+}
+
+.gat-mode-hc .gat-search-trigger:focus-visible {
+  border-color: var(--gat-color-gelb);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gat-color-gelb) 50%, transparent);
+}
+
+.gat-mode-hc .gat-search-trigger__kbd {
+  background: color-mix(in srgb, var(--gat-color-gelb) 14%, var(--gat-color-anthrazit));
+  color: var(--gat-color-gelb);
+  border-color: var(--gat-color-gelb);
 }
 
 /* === Patterns =============================================================
