@@ -25,10 +25,15 @@
   - `#gat-search` section with inline-overlay + modal/Strg+K variants.
   - In-memory dummy adapter; no Pagefind binding; TOC entry added.
   - Verified built CSS unaffected by index.html edits (only existing classes used).
-- [x] Task 5: Build + gebautes CSS committen (CI-Drift-Gate) — covered by commit 4092cbe
-  - Final `npm run build` + `git diff --exit-code design-system.css` = clean.
-  - The built CSS was committed atomically with the source in Task 1, so the
-    drift gate is green and history stays bisectable. No separate commit needed.
+- [x] Task 5: Build + gebautes CSS committen (CI-Drift-Gate) — commits 4092cbe + dc062a8
+  - Task 1 committed the built CSS atomically with the source. During the final
+    self-check the drift gate flagged a real difference: Tailwind v4 scans ALL
+    project files (incl. `.js`), and `gat-search.js`'s `toLowerCase()` makes the
+    scanner emit a `.lowercase` utility. Since gat-search.js did not exist yet
+    when Task 1 built the CSS, the committed output was stale by one utility.
+  - Fix: rebuilt with all v2.3 sources present and committed (dc062a8). The
+    build is now idempotent and `git diff --exit-code design-system.css` is
+    clean — CI drift gate green. The `.gat-search*` classes are in the built CSS.
 - [x] Task 6: Release v2.3.0 — CHANGELOG, MIGRATION, version bump — commit 1ea9365
   - package.json 2.2.0 -> 2.3.0; CHANGELOG [2.3.0] Added block; MIGRATION
     v2.2 -> v2.3 section + TOC. design-spec JSON version (1.0) untouched.
@@ -104,4 +109,12 @@ None.
 - **Result:** PASSED
 
 **Completed:** 2026-06-11
-**Commits:** 6 (4092cbe, 394cae2, 93d9530, 28177be, 1ea9365, 12bab3c)
+**Commits:** 7 implementation/build + 2 docs
+- 4092cbe — feat(search): .gat-search overlay + modal CSS family (+ built CSS)
+- 394cae2 — feat(search): gat-search.js engine-neutral behaviour module
+- 93d9530 — docs(search): optional Pagefind adapter example
+- 28177be — docs(search): search showcase in index.html
+- 1ea9365 — chore(release): v2.3.0 (CHANGELOG/MIGRATION/version)
+- 12bab3c — docs(search): README Such-Helfer section
+- dc062a8 — chore(build): rebuild design-system.css with all v2.3 sources
+- 9960d75 + (this) — docs(issues): execution log
