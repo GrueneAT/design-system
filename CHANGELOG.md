@@ -25,6 +25,18 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
   Hamburger. Strikt additiv. Erstabnehmer: Personenwahl (linkes Seitenmenü →
   Reiter-Leiste unter der Headline).
 
+## [2.3.1] - 2026-06-11
+
+### Hinzugefügt
+
+- **`gat-search.js`: Option `extraContainers`.** Zusätzliche Container
+  (Elemente und/oder Selektor-Strings), die für die Click-outside-Prüfung wie
+  das Overlay als „innen" zählen. Nötig, wenn ein Konsument seine Treffer in ein
+  eigenes Panel außerhalb des DS-Overlays rendert (Adapter gibt `[]` zurück) —
+  Klicks darin schließen die Suche dann nicht mehr. Default leer; ohne die
+  Option ändert sich nichts. Der Inline-Click-outside-Check ist zusätzlich
+  null-sicher gegen ein fehlendes Overlay.
+
 ## [2.3.0] - 2026-06-11
 
 **Minor Release — Such-Vorlage.** Eine wiederverwendbare Suche (Suchfeld +
