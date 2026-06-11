@@ -93,6 +93,20 @@ ein `<dialog class="gat-modal gat-modal--blur gat-modal--wide">` mit
 Modul ergänzt `returnFocus` auf den Auslöser. Beide Varianten sind im
 Style Guide live demonstriert (`index.html`, Abschnitt **Suche**).
 
+Rendert ein Konsument seine Treffer in ein **eigenes Panel ausserhalb** des
+DS-Overlays (z. B. weil der Adapter `[]` zurueckgibt und die App selbst malt),
+registriert man dieses Panel via `extraContainers`, damit Klicks darin die Suche
+nicht schliessen:
+
+```js
+createSearch({
+  input: '#suche',
+  overlay: '#suche-overlay',
+  extraContainers: ['#mein-ergebnis-panel'], // Elemente und/oder Selektoren
+  search: async (query, { signal }) => { /* … */ return []; },
+});
+```
+
 Jeder Treffer folgt dem `SearchResult`-Slot-Schema:
 
 ```js

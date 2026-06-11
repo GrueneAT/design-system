@@ -64,9 +64,23 @@ export function createSearch(options = {}) {
     mode = "inline",
     shortcut = true,
     triggers = [],
+    // Zusaetzliche Container (Elemente und/oder Selektor-Strings), die fuer die
+    // Click-outside-Pruefung wie das Overlay als „innen" zaehlen. Noetig, wenn
+    // ein Consumer seine Ergebnisse in ein eigenes Panel ausserhalb des
+    // DS-Overlays rendert (Adapter gibt [] zurueck) — Klicks darin sollen die
+    // Suche nicht schliessen. Default: leer (unveraendertes Verhalten).
+    extraContainers = [],
     closeOnSelect = true,
     labels: userLabels = {},
   } = options;
+
+  // Roh-Referenzen behalten und erst beim Klick aufloesen, damit auch
+  // dynamisch eingehaengte Panels und Selektoren zuverlaessig greifen.
+  const extraContainerRefs = Array.isArray(extraContainers)
+    ? extraContainers
+    : extraContainers
+      ? [extraContainers]
+      : [];
 
   const inputEl = resolveEl(input);
   if (!inputEl) {
@@ -450,7 +464,13 @@ export function createSearch(options = {}) {
   function onDocumentPointerDown(event) {
     if (mode === "modal") return;
     if (!isOpen) return;
-    const within = inputEl.contains(event.target) || overlayEl.contains(event.target);
+    const within =
+      inputEl.contains(event.target) ||
+      (overlayEl && overlayEl.contains(event.target)) ||
+      extraContainerRefs.some((ref) => {
+        const el = resolveEl(ref);
+        return el ? el.contains(event.target) : false;
+      });
     if (!within) close();
   }
 
