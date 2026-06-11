@@ -58,6 +58,59 @@ Die Palette spiegelt die CSS-Tokens `--gat-web-chart-1..8` 1:1. ECharts
 selbst wird vom Konsumenten unabhängig (eigener CDN-Import) geladen — das
 DS bündelt keine fremden Bibliotheken.
 
+### Such-Helfer (ES-Modul)
+
+Ab v2.3 liefert das DS eine Such-Vorlage: die `.gat-search`-CSS-Familie
+(Suchfeld + Ergebnis-Overlay) plus ein **engine-neutrales** Verhaltensmodul
+`gat-search.js`, ausgeliefert wie `gat-charts.js` von der Pages-URL:
+
+```html
+<div class="gat-search">
+  <input type="search" class="gat-input gat-search__field" id="suche">
+  <div class="gat-search__overlay" id="suche-overlay" hidden></div>
+</div>
+
+<script type="module">
+  import { createSearch }
+    from 'https://design-system.gruene.at/gat-search.js';
+
+  createSearch({
+    input:   '#suche',
+    overlay: '#suche-overlay',
+    // eigener Adapter: irgendeine async-Funktion query -> Treffer
+    search:  async (query, { signal }) => meinIndex.find(query, { signal }),
+  });
+</script>
+```
+
+Das Modul übernimmt das **generische Verhalten** zentral: Open/Close des
+Overlays ohne Layout-Shift, Pfeiltasten-Navigation, ARIA
+(`combobox`/`listbox`/`option` mit `aria-activedescendant`),
+`Enter`/`Esc`, Debounce mit Race-Guard und `prefers-reduced-motion`. Für die
+**Modal-/`Strg+K`-Variante** setzt man `mode: 'modal'` und legt das Feld in
+ein `<dialog class="gat-modal gat-modal--blur gat-modal--wide">` mit
+`.gat-search--modal` — Focus-Trap und Esc liefert der native `<dialog>`, das
+Modul ergänzt `returnFocus` auf den Auslöser. Beide Varianten sind im
+Style Guide live demonstriert (`index.html`, Abschnitt **Suche**).
+
+Jeder Treffer folgt dem `SearchResult`-Slot-Schema:
+
+```js
+{ id, title, excerpt?, url, badge?, meta? }
+```
+
+**XSS-Hinweis:** Der Default-Renderer escaped vom Konsumenten gelieferte
+`title` via `textContent`. `excerpt` wird als HTML eingesetzt (z. B. für
+`<mark>`-Hervorhebungen) — nur befüllen, wenn der Adapter es selbst escaped
+hat.
+
+Die konkrete **Such-Engine bleibt Konsumenten-Aufgabe** (Framework-agnostisch,
+kein Vendoring). Ein fertiges Beispiel für Pagefind liegt unter
+[examples/pagefind-adapter.js](examples/pagefind-adapter.js); es lädt das
+Pagefind-Bundle des Konsumenten zur Laufzeit und mappt es auf das Slot-Schema.
+Auf dieser Vorlage bauen die Folge-Adoptionen in den Tool-Repos
+(werkzeuge#15, Gemeindeordnung#15) auf.
+
 ## Versionierung und Updates
 
 Das Designsystem ist produktiv: Design-Tokens (Farben, Typografie, Abstände,

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="artifact-source-sha256" content="f25aada77653385a52a4ca2f49eaafddd4490ef0c80ad85b9de14bc4a81fae72">
+<meta name="artifact-source-file" content="PLAN.md">
+<meta name="artifact-generated-at" content="2026-06-11">
+<meta name="design-system-version" content="ds-1">
+<title>Plan: Such-Vorlage (Suchfeld + Ergebnis-Overlay) — m1wxd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://flomotlik.github.io/claude-code/design-system.css">
+</head>
+<body>
+<div class="page">
+
+<header class="row">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">00</span>Plan</p>
+  </div>
+  <div class="body">
+    <h1 class="masthead-title">Such-Vorlage (Suchfeld + Ergebnis-Overlay) im Design System</h1>
+    <p class="masthead-sub">Issue: m1wxd (design-system#26) · Generated 2026-06-11</p>
+  </div>
+</header>
+
+<hr class="rule">
+
+<section class="row" id="strategy">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">01</span>Strategy</p>
+    <p class="margin-note">Read this first — the rest is detail.</p>
+  </div>
+  <div class="body">
+    <h2>Strategy summary</h2>
+    <p>Distill the generic search behaviour out of the Gemeindeordnung reference
+       and lift it into the design system, engine-neutral:
+       <span class="mark mark-green">a new <code>.gat-search*</code> CSS family
+       plus one ESM module <code>gat-search.js</code></span>, shipped like
+       <code>gat-charts.js</code> from the Pages URL. Strictly additive minor
+       release v2.3.0 — no breaking changes.</p>
+    <ul class="points">
+      <li class="point">
+        <p class="point-claim">Compose on existing primitives.</p>
+        <p class="point-detail"><code>.gat-input</code> for the field,
+          <code>.gat-modal</code> (native <code>&lt;dialog&gt;</code>) for the
+          modal — only the <code>.gat-search*</code> family and the behaviour
+          module are net-new.</p>
+      </li>
+      <li class="point is-note">
+        <p class="point-claim">Engine-neutral core, optional Pagefind adapter.</p>
+        <p class="point-detail">The module knows no search engine — it takes an
+          <code>async (query) =&gt; results[]</code> adapter and a slot schema.
+          A documented Pagefind adapter ships as an optional example.</p>
+      </li>
+      <li class="point is-risk">
+        <p class="point-claim">A11y is net-new, not ported.</p>
+        <p class="point-detail">Arrow-key navigation, ARIA combobox/listbox/
+          option, focus-trap and <code>prefers-reduced-motion</code> are hard
+          acceptance criteria absent from the reference.</p>
+      </li>
+    </ul>
+    <p>Two locked variants in v1: an inline overlay dropdown that takes no flow
+       space (<span class="mark mark-blue">no layout shift</span> — fixes the
+       werkzeuge symptom) and a modal / <code>Strg+K</code> variant reusing
+       <code>.gat-modal</code>.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num is-green">7</div>
+        <div class="stat-label">Tasks</div></div>
+      <div class="stat">
+        <div class="stat-num">2.3.0</div>
+        <div class="stat-label">Minor release</div></div>
+      <div class="stat">
+        <div class="stat-num is-orange">3</div>
+        <div class="stat-label">Locked decisions</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="flow">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">02</span>Flow</p>
+  </div>
+  <div class="body">
+    <h2>Task flow &amp; dependencies</h2>
+    <div class="flow">
+      <div class="flow-node is-foundation">
+        <span class="n">Task 1</span>
+        <span class="t">.gat-search* CSS family</span>
+        <span class="d">Field, absolute overlay (no shift), states, modal variant, trigger.</span>
+      </div>
+      <div class="flow-node is-key">
+        <span class="n">Task 2</span>
+        <span class="t">gat-search.js ESM module</span>
+        <span class="d">Engine-neutral: ARIA, arrow-keys, focus-trap, returnFocus, debounce.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 3</span>
+        <span class="t">Pagefind adapter example</span>
+        <span class="d">Optional documented helper mapping pagefind.js to the slot schema.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 4</span>
+        <span class="t">Showcase in index.html</span>
+        <span class="d">Both variants + dummy in-memory adapter, TOC entry.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 5</span>
+        <span class="t">Build + commit built CSS</span>
+        <span class="d">npm run build; git diff --exit-code gate (CI drift).</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 6</span>
+        <span class="t">Release v2.3.0</span>
+        <span class="d">CHANGELOG, MIGRATION, package.json bump.</span>
+      </div>
+      <div class="flow-node">
+        <span class="n">Task 7</span>
+        <span class="t">Consumer docs in README</span>
+        <span class="d">Search-helper section so werkzeuge#15 / Gemeindeordnung#15 adopt.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="decisions">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">03</span>Decisions</p>
+  </div>
+  <div class="body">
+    <h2>Key decisions &amp; options</h2>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Modal base: native &lt;dialog&gt; vs. custom backdrop</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body">Keep native <code>&lt;dialog&gt;</code> /
+        <code>showModal()</code> (= <code>.gat-modal</code>): top-layer,
+        focus-trap, ESC and <code>inert</code> background for free.
+        <code>gat-search.js</code> solves the one gap — <code>returnFocus</code>
+        to the triggering element on close.</p>
+      <p class="decision-body rejected">A custom backdrop like the reference —
+        would duplicate the DS modal shell to avoid the focus-loss the module
+        already handles.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Where debouncing happens</p>
+        <span class="lozenge is-chosen">Chosen</span>
+      </div>
+      <p class="decision-body"><code>gat-search.js</code> owns debouncing
+        (configurable) with a generation guard; the Pagefind adapter calls
+        <code>debouncedSearch(q, opts, 0)</code>. No double debouncing.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">ARIA navigation model</p>
+        <span class="lozenge is-note">APG</span>
+      </div>
+      <p class="decision-body"><code>aria-activedescendant</code> (focus stays in
+        the input) over roving <code>tabindex</code> — the APG
+        combobox-with-listbox pattern; net-new vs. the reference.</p>
+    </div>
+    <div class="decision">
+      <div class="decision-head">
+        <p class="decision-title">Locked decisions (CONTEXT.md)</p>
+        <span class="lozenge is-affirmed">Honored</span>
+      </div>
+      <p class="decision-body">(1) ship <code>gat-search.js</code> ESM like
+        <code>gat-charts.js</code>; (2) v1 ships BOTH inline overlay AND
+        modal/<code>Strg+K</code>; (3) engine-agnostic core + optional Pagefind
+        adapter. App-specific concerns (Bundesland filter, content-type tabs,
+        stemming) stay out of the DS template.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="detail">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">04</span>Detail</p>
+  </div>
+  <div class="body">
+    <h2>Full detail</h2>
+    <details class="detail">
+      <summary>Show full artifact source
+        <span class="summary-hint">click to expand</span></summary>
+      <div class="detail-body">
+        <pre><code id="artifact-source-target"></code></pre>
+      </div>
+    </details>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="row" id="provenance">
+  <div class="margin">
+    <p class="kicker"><span class="kicker-num">05</span>Provenance</p>
+  </div>
+  <div class="body">
+    <h2>Provenance</h2>
+    <p>Generated from the canonical <code>.md</code>. This HTML is never
+       hand-edited — if the <code>.md</code> changes, regenerate with
+       <code>/issue:view</code>.</p>
+    <footer class="footer">
+      <span>Source: <code>PLAN.md</code> ·
+        SHA-256 <code>f25aada77653385a52a4ca2f49eaafddd4490ef0c80ad85b9de14bc4a81fae72</code></span>
+      <span>Generated 2026-06-11 · design system ds-1</span>
+    </footer>
+  </div>
+</section>
+
+</div>
+
+<script type="application/json" id="artifact-source">
+{"source": "# Plan: Such-Vorlage (Suchfeld + Ergebnis-Overlay) im Design System\n\n<objective>\nWas dieser Plan liefert: eine wiederverwendbare Such-Vorlage im Gr\u00fcne-AT\nDesign System, bestehend aus (1) einer net-new `.gat-search*`-CSS-Familie in\n`src/design-system.css`, (2) einem engine-neutralen ESM-Verhaltensmodul\n`gat-search.js` (Open/Close, Pfeiltasten-Navigation, ARIA combobox/listbox/\noption, Focus-Trap im Modal, `Strg/Cmd+K`, `prefers-reduced-motion`,\nAdapter-Vertrag), (3) einem dokumentierten, optionalen Pagefind-Adapter, (4)\neinem Showcase in `index.html` mit BEIDEN Varianten (Inline-Overlay +\n`Strg+K`-Modal) und einem Dummy-In-Memory-Adapter, und (5) einem additiven\nMinor-Release v2.3.0 (CHANGELOG, MIGRATION, `package.json`-Bump, neu gebautes\nund mit committetes minifiziertes CSS) plus Consumer-Doku im README.\n\nWarum es z\u00e4hlt: werkzeuge rendert Pagefind-Treffer heute inline (Layout-Shift);\ndie Gemeindeordnung hat eine reife, aber app-verflochtene L\u00f6sung. Diese Vorlage\nhebt das generische Verhalten zentral ins DS (kein Layout-Shift, echte\nA11y/Tastatur-Navigation, einheitliche Zust\u00e4nde), sodass die Folge-Issues\nwerkzeuge#15 und Gemeindeordnung#15 darauf umstellen k\u00f6nnen, ohne die Br\u00fccke\njeweils neu (und unterschiedlich) zu bauen.\n\nScope IN: DS-Vorlage (CSS + ESM + Adapter-Beispiel + Showcase + Release-Doku).\nScope OUT (Deferred, NICHT anfassen): Rollout in werkzeuge/Gemeindeordnung,\nBundesland-Filter, Content-Typ-Gruppierung/Tabs, Stemming-Falsch-Positiv-Filter,\nIntersectionObserver-Hero-Tracking, localStorage-BL-Persistenz, `?highlight=`-\nURL-Bau, FAB-Logik. App-spezifisches bleibt App-Schicht.\n\nHinweis: CONTEXT.md liegt vor \u2014 alle drei gesperrten Entscheidungen sind in\nTasks abgebildet (siehe `<strategy>`).\n</objective>\n\n<strategy>\nRichtung: Generisches Such-Verhalten aus der Gemeindeordnung-Referenz\ndestillieren und engine-neutral ins DS heben \u2014 CSS-Familie + ein ESM-Modul wie\n`gat-charts.js`, additiv hinter Toast/Toolbar, vor dem Hochkontrast-Block.\n\nGesperrte Entscheidungen (CONTEXT.md, nicht relitigieren):\n1. `gat-search.js` als ESM-Verhaltensmodul von der Pages-URL (wie\n   `gat-charts.js`). Implementiert in Task 2.\n2. v1 liefert BEIDE Varianten: Inline-Overlay-Dropdown (kein Layout-Shift) UND\n   Modal/`Strg+K` (wiederverwendet `.gat-modal --blur/--wide`). Tasks 1, 2, 4.\n3. Engine-agnostischer Kern + dokumentierter optionaler Pagefind-Adapter.\n   Tasks 2, 3.\n\nStrategische Optionen und Begr\u00fcndung der Wahl:\n- `<dialog>` vs. eigener Backdrop (zentrale Architektur-Spannung). Die Referenz\n  baut bewusst KEIN `<dialog>`, weil der sticky Trigger beim Schlie\u00dfen den\n  Tastatur-Fokus verliert. Wir bleiben dennoch beim nativen `<dialog>` /\n  `showModal()` (= `.gat-modal`), weil das Top-Layer, Focus-Trap, ESC und\n  `inert`-Hintergrund gratis liefert; `gat-search.js` l\u00f6st die einzige L\u00fccke\n  (`returnFocus` auf das ausl\u00f6sende Trigger-Element) selbst. Eigenen Backdrop\n  nachbauen w\u00fcrde die DS-Modal-Shell duplizieren \u2014 abgelehnt.\n- Debouncing-Ort: `gat-search.js` macht das Debouncing (konfigurierbar); der\n  Pagefind-Adapter ruft `debouncedSearch(q, opts, 0)` oder `search`. Kein\n  doppeltes Debouncing (Referenz warnt davor).\n- ARIA-Navigation: `aria-activedescendant` (Fokus bleibt im Input) statt\n  Roving-`tabindex` \u2014 entspricht dem APG-Combobox-with-listbox-Pattern und ist\n  net-new gegen\u00fcber der Referenz.\n\nKern-Entscheidungspunkte f\u00fcr den Executor: nur `src/design-system.css` editieren\nund neu bauen (CI pr\u00fcft `git diff --exit-code design-system.css`); keine\nhardcodierten Font-Strings (nicht den Barlow-Fehler aus `gat-charts.js`\nwiederholen \u2014 Schrift \u00fcber `--gat-font-*` / CSS); keine Seiteneffekte beim\nModul-Import (Astro-SSR-sicher); `design-spec`-JSON-Version (1.0) NICHT mit\n`package.json` angleichen.\n</strategy>\n\n<context>\nIssue: @.issues/m1wxd-such-vorlage-suchfeld-ergebnis-overlay-im-design-system-abgeleitet-von-gemeindeo/ISSUE.md\nResearch: @.issues/m1wxd-such-vorlage-suchfeld-ergebnis-overlay-im-design-system-abgeleitet-von-gemeindeo/RESEARCH.md\n\nWORKSPACE-LAYOUT (genested): issue-cli-Root ist `/workspace/design-system`\n(KEIN git-Repo). Das git-Repo und der gesamte Code liegen unter\n`/workspace/design-system/design-system/`. ALLE unten genannten `<files>`-Pfade\nsind relativ zu diesem git-Repo-Root (`design-system/...`). Die Execution legt\nden Worktree via `issue-cli` an \u2014 in diesem Plan NICHT selbst.\n\n<interfaces>\n<!-- Executor: diese Vertr\u00e4ge direkt verwenden. Den Code NICHT erneut explorieren. -->\n\n=== Wiederverwendbare DS-CSS-Bausteine (src/design-system.css) \u2014 KOMPONIEREN, nicht neu bauen ===\n.gat-input          : Feld-Optik: width:100%, var(--gat-font-copy),\n                      border var(--gat-web-input-border), radius var(--gat-web-input-radius),\n                      min-height var(--gat-web-input-min-h, 44px) [WCAG Touch-Floor],\n                      :focus-visible -> box-shadow var(--gat-web-focus-ring)\n.gat-modal          : natives <dialog>; bg/radius/shadow; max-width min(40rem,92vw)\n.gat-modal::backdrop: var(--gat-web-modal-backdrop) rgba(31,38,28,.55)\n.gat-modal--blur    : backdrop-filter: blur(3px)\n.gat-modal--wide    : max-width min(64rem,94vw)\n.gat-modal--narrow  : max-width min(28rem,90vw)\n.gat-modal__head/__title/__close/__body/__actions  : __body max-height:70vh; overflow:auto\n.gat-toaster        : position:fixed; z-index:1000 (Overlay-Stacking-Obergrenze)\n.gat-skiplink       : position:fixed; z-index:999\n\nToken-Vokabular (alle :root, consumer-stabil --gat-web-* / --gat-*):\n--gat-web-focus-ring         0 0 0 3px color-mix(... green 38%)\n--gat-web-focus-offset       2px\n--gat-web-shadow-elevated    0 6px 24px (Overlay-Schatten)\n--gat-web-surface / -surface-sunk / -text / -text-soft / -hairline\n--gat-web-green / -green-deep / -green-tint\n--gat-web-radius-card / -radius-control / -radius-mini\n--gat-space-1..6, --gat-text-copy/-small/-micro, --gat-font-copy/-headline\n\nprefers-reduced-motion-Muster (aus .gat-toast, src ~Z.1809):\n  @media (prefers-reduced-motion: reduce){ .gat-toast{ animation: gat-toast-fade ... } }\nHC-Override-Muster (aus .gat-mode-hc .gat-modal, src ~Z.2087): jede Familie hat HC-Overrides.\n\n=== gat-search.js Modul-API (DIESE implementieren, Task 2) ===\nimport { createSearch } from 'https://grueneat.github.io/design-system/gat-search.js';\nconst controller = createSearch({\n  input,                 // HTMLInputElement oder Selector-String (Pflicht)\n  overlay,               // Ergebnis-Container (Inline) - optional im Modal-Modus\n  search,                // async (query, { signal }) => SearchResult[] | null  (Pflicht; LOCKED #3)\n  renderItem,            // (result) => HTMLElement | string  (default: Titel+Snippet+Badge)\n  getItemHref,           // (result) => string  (default: result.url)\n  minQueryLength = 3,\n  debounceMs = 200,\n  mode = 'inline',       // 'inline' | 'modal'\n  shortcut = true,       // Strg/Cmd+K + '/'\n  triggers = [],         // Elemente, die das Modal oeffnen (Header-Lupe etc.)\n  closeOnSelect = true,\n  labels = { placeholder, noResults, hint, loading, count }  // deutsche Defaults\n});\ncontroller.open(); controller.close(); controller.focus(); controller.destroy();\ncontroller.setQuery(q); controller.refresh();\n// SearchResult-Slot-Schema (was der Adapter liefern MUSS):\n//   { id, title, excerpt? (HTML mit <mark>, vom Adapter HTML-escaped), url, badge?, meta? }\n// CustomEvents (auf input/overlay): 'gat-search:open' | ':close' | ':query'\n//   | ':select' (detail {result}) | ':results' (detail {query,count})\n\n=== Pagefind-Adapter-Beispiel (Task 3, dokumentiertes optionales Beispiel) ===\nexport function pagefindAdapter({ bundlePath='/pagefind/', limit=10, filters } = {}) -> async (query,{signal})=>results[]\n// import(`${bundlePath}pagefind.js`); pf.options({bundlePath}); pf.debouncedSearch(q,{filters},0)\n// -> null bei superseded; sonst r.data() je Treffer -> map auf Slot-Schema {id,title,excerpt,url,meta}\n// try/catch + stiller Fallback (Pagefind fehlt im Dev-Modus vor `pagefind --site dist`).\n\n=== ESM-Liefermuster (gat-charts.js) ===\nHeader-Kommentar mit Import-Beispiel + Lizenz (CC BY 4.0); benannte Exporte.\nACHTUNG: gat-charts.js hardcodiert 'Barlow Semi Condensed' - NICHT uebernehmen.\ngat-search.js setzt KEINE Font-Strings; Schrift regelt CSS ueber --gat-font-*.\n</interfaces>\n\n<call_sites>\nGesucht: Einbindungen von `gat-search.js` und der `.gat-search*`-Klassen sowie\nBuild-/Pages-Surface der DS.\nSurfaces gegrept: .github/workflows/, package.json, index.html, examples/,\nREADME.md, CHANGELOG.md, MIGRATION.md (alle unter design-system/).\n\nGefunden:\n- .github/workflows/build-check.yml:19-21 \u2014 `npm run build` + `git diff --exit-code\n  design-system.css` \u2014 IN SCOPE (Task 5: gebautes CSS muss committet sein, sonst CI rot).\n- .github/workflows/pages.yml \u2014 deployt das Repo statisch nach GitHub Pages; macht\n  `gat-search.js` automatisch unter der Pages-URL verfuegbar \u2014 OUT OF SCOPE (kein\n  Workflow-Edit noetig; neue Repo-Root-Datei wird mitdeployt, wie `gat-charts.js`).\n- package.json:7 \u2014 `\"build\": \"tailwindcss -i ./src/design-system.css -o\n  ./design-system.css --minify\"` \u2014 IN SCOPE als Build-Befehl (Task 5).\n- README.md (Abschnitt \u201eChart-Helfer (ES-Modul)\") \u2014 Muster fuer einen neuen\n  \u201eSuch-Helfer (ES-Modul)\"-Abschnitt \u2014 IN SCOPE (Task 7).\n- gat-charts.js (Repo-Root) \u2014 Liefer-/Header-Muster fuer gat-search.js \u2014 Vorlage,\n  keine Aenderung \u2014 OUT OF SCOPE als Edit.\nEs wurde KEIN bestehender App-/CI-Aufruf von `gat-search.js` oder `.gat-search*`\ngefunden (net-new Surface; Consumer-Rollout ist Folge-Issue).\n</call_sites>\n\nKey files:\n@design-system/src/design-system.css \u2014 CSS-Quelle (Tailwind v4 build -> minified Root). NUR hier editieren.\n@design-system/design-system.css \u2014 gebautes/minifiziertes Stylesheet; CI prueft Gleichheit. Mit committen, nie von Hand editieren.\n@design-system/gat-charts.js \u2014 ESM-Praezedenz (Header/Lizenz/Export-Stil) fuer gat-search.js.\n@design-system/index.html \u2014 Styleguide-Showcase; neue Such-Section + TOC-Eintrag.\n@design-system/examples/minimal.html \u2014 Consumer-Minimalbeispiel; Vorlage fuer optionales examples/suche.html.\n@design-system/CHANGELOG.md, @design-system/MIGRATION.md, @design-system/package.json, @design-system/README.md \u2014 Release-Artefakte.\n</context>\n\n<commit_format>\nFormat: conventional mit Issue-Prefix (aus .issues/config.yaml: commits.format=conventional, prefix=true).\nPattern: {issue-id}: {type}({scope}): {description}\nBeispiel: m1wxd: feat(search): add .gat-search overlay + modal CSS family\nTypen: feat, fix, test, refactor, docs, chore. Keine Werkzeug-Attribution.\n</commit_format>\n\n<tasks>\n\n<task type=\"auto\">\n  <name>Task 1: .gat-search*-CSS-Familie in src/design-system.css</name>\n  <files>design-system/src/design-system.css</files>\n  <action>\n  Fuege eine net-new `.gat-search*`-Komponentenfamilie additiv ein \u2014 platziere\n  sie HINTER dem v2.2-Toast/Toolbar-Block und VOR dem Hochkontrast-Block\n  (`.gat-mode-hc ...`, beginnt ~Z.2087). Komponiere ausschliesslich auf\n  vorhandenen Tokens/Bausteinen (siehe interfaces); KEINE hardcodierten\n  Farben/Radien/Spacings, KEINE hardcodierten Font-Strings (Schrift via\n  `--gat-font-*`). Editiere NUR diese Quelldatei, NIE die minifizierte\n  Root-`design-system.css` (das macht Task 5 per Build).\n\n  Klassen-API (BEM-Stil wie der Rest des DS):\n  - `.gat-search` \u2014 Feld-Wrapper, `position: relative` (Overlay-Anker).\n  - `.gat-search__field` \u2014 nutzt `.gat-input`; `padding-left` fuer Icon-Slot.\n  - `.gat-search__icon` \u2014 absolut positionierter Lupe-Slot, `pointer-events:none`.\n  - `.gat-search__overlay` \u2014 `position:absolute; top:100%; left:0; right:0;`\n    `box-shadow: var(--gat-web-shadow-elevated)`; Hintergrund `var(--gat-web-surface)`,\n    Radius `var(--gat-web-radius-card)`; z-index ~50 (ueber sticky Header, UNTER\n    `.gat-skiplink` 999 / `.gat-toaster` 1000). NIMMT KEINEN PLATZ IM FLUSS ->\n    kein Layout-Shift (harte AC). Default versteckt via `[hidden]`; sichtbar via\n    `.is-open`.\n  - `.gat-search__results` \u2014 Listbox-Container; `max-height` + `overflow:auto`.\n  - `.gat-search__item` \u2014 Ergebnis-Item; `.is-active` fuer Highlight des aktiven\n    Items (Tastatur-Navigation / `aria-activedescendant`).\n  - `.gat-search__item-title`, `.gat-search__item-excerpt`, `.gat-search__item-badge`.\n  - `.gat-search__count` \u2014 \"N Treffer\"-Kopf.\n  - `.gat-search__state` mit Zustands-Modifiern `--empty`, `--loading`,\n    `--no-results`, `--hint` (vereinheitlichte Zustaende, harte AC).\n  - `.gat-search-trigger` \u2014 Header-Lupe-Button, der Modal/`Strg+K` ausloest\n    (ersetzt das app-lokale `.gat-header__search`; Touch-Floor 44px wie `.gat-input`).\n  - `.gat-search--modal` \u2014 Variante fuer das Feld IM `.gat-modal`; bei <640px\n    Full-Screen (`inset:0; height:100dvh; max-width:100vw`) \u2014 `100dvh` statt\n    `100vh` (iOS-Safari-Address-Bar). KEINE neue Modal-Shell \u2014 die Modal-Variante\n    nutzt `.gat-modal --blur --wide` + `.gat-search` darin.\n\n  Einblende-Animation des Overlays mit `prefers-reduced-motion`-Fallback nach\n  dem `.gat-toast`-Muster (Slide/Scale -> reiner Opacity-Fade). Sichtbarer Fokus\n  auf Items via `--gat-web-focus-ring`.\n  </action>\n  <verify>\n  <automated>cd design-system && grep -q \"gat-search__overlay\" src/design-system.css && grep -q \"gat-search--modal\" src/design-system.css && grep -q \"gat-search-trigger\" src/design-system.css && grep -q \"gat-search__state\" src/design-system.css && npm run build && echo BUILD_OK</automated>\n  </verify>\n  <done>\n  - `.gat-search`, `__field`, `__icon`, `__overlay`, `__results`, `__item`(+`.is-active`),\n    `__item-title/__item-excerpt/__item-badge`, `__count`, `__state`(--empty/--loading/\n    --no-results/--hint), `.gat-search-trigger`, `.gat-search--modal` sind in src vorhanden.\n  - Overlay ist `position:absolute; top:100%` (kein Fluss-Platz -> kein Layout-Shift).\n  - z-index des Overlays liegt unter 999 (Skiplink) / 1000 (Toaster).\n  - Reduced-motion-Fallback fuer die Overlay-Einblendung vorhanden.\n  - Keine hardcodierten Hex-Farben/Font-Strings in der neuen Familie.\n  - `npm run build` endet mit Exit 0 (BUILD_OK).\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 2: gat-search.js ESM-Verhaltensmodul (engine-neutral)</name>\n  <files>design-system/gat-search.js</files>\n  <action>\n  Erstelle das Modul im Repo-Root neben `gat-charts.js`. Header-Kommentar mit\n  Import-Beispiel von der Pages-URL und Lizenz (CC BY 4.0) im `gat-charts.js`-Stil.\n  KEINE Seiteneffekte beim Import (kein Top-Level-DOM/`document`/`window`-Zugriff \u2014\n  Astro-SSR-sicher); alles erst in `createSearch()`. KEINE hardcodierten\n  Font-Strings (Schrift regelt CSS).\n\n  Implementiere `export function createSearch(options)` exakt nach der Modul-API in\n  interfaces. Verhalten (generisch, aus der Referenz destilliert; LOCKED #1):\n  - Open/Close des Overlays (Inline: `.gat-search__overlay.is-open` toggeln) bzw.\n    Modal (`mode:'modal'` -> `<dialog>.showModal()`/`.close()` auf `.gat-modal`).\n  - Debounce (`debounceMs`, default 200) MIT Generation-/Race-Guard\n    (Generation-Counter), damit veraltete async-Treffer nie eine neuere Anzeige\n    ueberschreiben. Das Modul macht das Debouncing \u2014 NICHT zusaetzlich der Adapter.\n  - Min-Zeichen-Hinweis (`minQueryLength`, default 3) -> `__state--hint`.\n  - Zustaende rendern: `--loading` waehrend Adapter laeuft, `--no-results` bei\n    leerem Ergebnis, `--empty` initial, `__count` bei Treffern.\n  - Adapter-Aufruf `search(query, { signal })`; `null` (superseded) wird ignoriert.\n    Default-`renderItem` baut Titel (`textContent`-escaped \u2014 XSS!), `excerpt`\n    (HTML, NUR wenn vom Adapter escaped, via innerHTML) und optionales Badge.\n    `getItemHref` default `result.url`.\n  - Pfeiltasten-Navigation (NEU, harte AC): ArrowDown/ArrowUp bewegt aktives Item\n    (mit Wrap), Home/End optional, Enter aktiviert (Navigation via `getItemHref`\n    ODER `gat-search:select`-Event), ESC schliesst (Inline: blur/close; Modal:\n    close + `returnFocus`).\n  - ARIA-Verdrahtung (NEU, harte AC) AUTOMATISCH setzen: input\n    `role=combobox aria-expanded aria-controls=<overlay-id> aria-autocomplete=list\n    aria-activedescendant=<aktives-item-id>`; `__results` `role=listbox`; items\n    `role=option id=... aria-selected`.\n  - Modal-Modus: nativer `<dialog>` liefert Focus-Trap + ESC + inert-Hintergrund\n    gratis; Modul ergaenzt NUR `returnFocus` auf das ausloesende Trigger-Element\n    beim Schliessen (loest die in der Referenz dokumentierte Fokus-Verlust-Luecke).\n    Body-Scroll-Lock beim Oeffnen (`overflow:hidden`), Restore beim Schliessen.\n  - `Strg/Cmd+K` und `/` oeffnen (wenn `shortcut`), `triggers[]`-Elemente oeffnen\n    das Modal per Click.\n  - CustomEvents feuern: `gat-search:open|close|query|select|results` wie in interfaces.\n  - Controller zurueckgeben: `open/close/focus/destroy/setQuery/refresh`. `destroy`\n    entfernt ALLE Listener (kein Leak).\n  </action>\n  <verify>\n  <automated>cd design-system && node --input-type=module -e \"import('./gat-search.js').then(m=>{if(typeof m.createSearch!=='function')throw new Error('createSearch fehlt');console.log('IMPORT_OK no side-effects')}).catch(e=>{console.error(e);process.exit(1)})\" && grep -q \"role=.combobox\\|combobox\" gat-search.js && grep -q \"aria-activedescendant\" gat-search.js && grep -q \"returnFocus\\|return.*[Ff]ocus\" gat-search.js && ! grep -q \"Barlow\" gat-search.js && echo CHECKS_OK</automated>\n  </verify>\n  <done>\n  - Modul importiert in Node OHNE Seiteneffekte (kein DOM-Zugriff beim Import) -> IMPORT_OK.\n  - `createSearch` ist exportiert; Controller-Methoden open/close/focus/destroy/setQuery/refresh vorhanden.\n  - ARIA combobox/listbox/option + `aria-activedescendant` werden gesetzt.\n  - Pfeiltasten-Navigation, Enter, ESC, Focus-Trap (Modal via <dialog>) + `returnFocus` implementiert.\n  - Debounce mit Generation-Guard; Adapter wird mit `{signal}` aufgerufen, `null` ignoriert.\n  - Default-Renderer escaped Titel via `textContent`.\n  - Keine hardcodierten Font-Strings (kein \"Barlow\").\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 3: Dokumentierter Pagefind-Adapter (optionales Beispiel)</name>\n  <files>design-system/examples/pagefind-adapter.js</files>\n  <action>\n  Lege einen dokumentierten, optionalen Pagefind-Adapter als Beispiel/Helfer an\n  (LOCKED #3). KEINE Pflicht-Abhaengigkeit, KEIN Vendoring von Pagefind \u2014 der\n  Adapter importiert das Consumer-Bundle dynamisch zur Laufzeit.\n\n  Implementiere `export function pagefindAdapter({ bundlePath='/pagefind/',\n  limit=10, filters } = {})`, die eine `async (query, { signal }) => results[]`\n  zurueckgibt (passt auf die `search`-Adapter-Signatur aus Task 2):\n  - Lazy-Init: beim ersten Aufruf `await import(\\`${bundlePath}pagefind.js\\`)` (mit\n    `/* @vite-ignore */`), dann `await pf.options({ bundlePath })`.\n  - `await pf.debouncedSearch(query, { filters }, 0)` (Debounce macht gat-search;\n    KEIN doppeltes Debouncing). `null` (superseded) unveraendert zurueckgeben ->\n    gat-search ignoriert es.\n  - Sonst `res.results.slice(0, limit)`, je Treffer `await r.data()`, mappen auf\n    das Slot-Schema: `{ id: d.url, title: d.meta?.title ?? '', excerpt: d.excerpt,\n    url: d.url, meta: d.meta }`. (Pagefind-`excerpt` ist HTML-escaped, safe fuer\n    innerHTML; `meta.title` ist es NICHT -> Default-Renderer escaped Titel.)\n  - `try/catch` mit stillem Fallback (leeres Array), weil `pagefind.js` im\n    Dev-Modus vor `pagefind --site dist` fehlt.\n  Kopf-Kommentar dokumentiert Nutzung mit `createSearch({ search: pagefindAdapter(...) })`\n  und den XSS-Hinweis (Titel escapen).\n  </action>\n  <verify>\n  <automated>cd design-system && node --input-type=module -e \"import('./examples/pagefind-adapter.js').then(m=>{if(typeof m.pagefindAdapter!=='function')throw new Error('export fehlt');const fn=m.pagefindAdapter();if(typeof fn!=='function')throw new Error('adapter ist keine Funktion');console.log('ADAPTER_OK')}).catch(e=>{console.error(e);process.exit(1)})\" && grep -q \"debouncedSearch\" examples/pagefind-adapter.js && grep -q \"bundlePath\" examples/pagefind-adapter.js && grep -q \"catch\" examples/pagefind-adapter.js && echo CHECKS_OK</automated>\n  </verify>\n  <done>\n  - `pagefindAdapter` exportiert; Aufruf liefert eine `async`-Funktion.\n  - Nutzt `pf.options({bundlePath})` + `pf.debouncedSearch(...,0)`; kein eigenes Debounce.\n  - Mappt auf Slot-Schema {id,title,excerpt,url,meta}; gibt `null` durch.\n  - `try/catch`-Fallback fuer fehlendes Pagefind im Dev-Modus.\n  - Kopf-Kommentar mit Nutzung + XSS-Hinweis.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 4: Showcase in index.html (beide Varianten + Dummy-Adapter)</name>\n  <files>design-system/index.html</files>\n  <action>\n  Fuege eine neue Such-Section in den Styleguide ein, nach dem bestehenden\n  Section-Muster (`<section class=\"gat-section\" id=\"gat-search\">` mit `doc-block`,\n  `doc-demo`, `doc-codeblock`-Bloecken) und ergaenze einen TOC-Eintrag in\n  `.gat-header__nav-list`. Zebra-Hintergrund (`doc-section-alt`) konsistent zur\n  Nachbarsection waehlen.\n\n  Inhalt der Section:\n  - Variante A \u2014 Inline-Overlay: `.gat-search` mit `.gat-search__field` (nutzt\n    `.gat-input`), `.gat-search__icon`, `.gat-search__overlay`/`__results`. Live-Demo,\n    verdrahtet mit `gat-search.js` (relativer Import `./gat-search.js`) und einem\n    INLINE Dummy-In-Memory-Adapter (kleines Array statisch im Seiten-Script,\n    `async (q) => array.filter(...)`). Zeigt sichtbar: kein Layout-Shift, Tastatur-\n    Navigation, Zustaende.\n  - Variante B \u2014 Modal/`Strg+K`: `.gat-search-trigger` (Header-Lupe) oeffnet ein\n    `<dialog class=\"gat-modal gat-modal--blur gat-modal--wide\">` mit `.gat-search--modal`\n    darin; `createSearch({ mode:'modal', shortcut:true, triggers:[trigger] })`,\n    selber Dummy-Adapter. ESC schliesst, Fokus kehrt zum Trigger zurueck.\n  - Code-Snippet-Block, der die Einbindung zeigt (Import-URL + `createSearch`-Aufruf\n    + Slot-Schema), damit Consumer es kopieren koennen.\n  - `.gat-mode-hc`-Overrides der Such-Section greifen automatisch via CSS aus Task 1\n    (in index.html nur sicherstellen, dass die Demo im HC-Umschalter mitlaeuft).\n\n  KEINE Netzwerk-Referenzen im Showcase ausser den bereits im DS ueblichen\n  (Google-Fonts/Pages). KEINE Pagefind-Einbindung hier (Pagefind ist Consumer-Sache;\n  Dummy-Adapter genuegt fuer die Demo). KEINE App-Spezifika (BL-Filter, Tabs).\n  Optional: spiegel die Demo zusaetzlich als `examples/suche.html` (eigenstaendig,\n  importiert `../gat-search.js`), falls zeitlich machbar \u2014 nicht verpflichtend.\n  </action>\n  <verify>\n  <automated>cd design-system && grep -q \"id=.gat-search\" index.html && grep -q \"gat-search__overlay\" index.html && grep -q \"gat-search--modal\" index.html && grep -q \"createSearch\" index.html && grep -q \"gat-search.js\" index.html && ! grep -q \"pagefind\" index.html && echo SHOWCASE_OK</automated>\n  </verify>\n  <done>\n  - Neue Section `id=\"gat-search\"` mit beiden Varianten (Inline-Overlay + Modal/Strg+K) vorhanden.\n  - TOC-Eintrag in `.gat-header__nav-list` ergaenzt.\n  - Live-Demo verdrahtet `gat-search.js` mit einem Dummy-In-Memory-Adapter (kein Pagefind).\n  - Code-Snippet fuer Consumer-Einbindung vorhanden.\n  - Keine App-Spezifika, keine Pagefind-Einbindung im Showcase.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 5: Build + gebautes CSS committen (CI-Drift-Gate)</name>\n  <files>design-system/design-system.css, design-system/src/design-system.css</files>\n  <action>\n  Stelle sicher, dass das minifizierte Root-`design-system.css` exakt aus dem\n  aktuellen `src/design-system.css` gebaut ist. Fuehre `npm run build` (im\n  Repo-Root `design-system/`) aus \u2014 das ist der gleiche Befehl wie in\n  `build-check.yml`. Editiere die Root-Datei NIE von Hand. Verifiziere danach,\n  dass `git diff --exit-code design-system.css` sauber ist (genau die CI-Pruefung):\n  ein Re-Build darf keine weitere Aenderung produzieren. Beide Dateien (`src/` +\n  Root) werden mit committet.\n  </action>\n  <verify>\n  <automated>cd design-system && npm run build && git diff --exit-code design-system.css && grep -q \"gat-search__overlay\" design-system.css && grep -q \"gat-search--modal\" design-system.css && echo DRIFT_CLEAN</automated>\n  </verify>\n  <done>\n  - `npm run build` endet mit Exit 0.\n  - `git diff --exit-code design-system.css` ist sauber (kein Drift -> CI gruen).\n  - Die `.gat-search*`-Klassen sind im gebauten Root-CSS enthalten.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 6: Release v2.3.0 \u2014 CHANGELOG, MIGRATION, version bump</name>\n  <files>design-system/CHANGELOG.md, design-system/MIGRATION.md, design-system/package.json</files>\n  <action>\n  Additives Minor-Release v2.3.0 (keine Breaking Changes):\n  - `package.json`: `\"version\"` von `2.2.0` auf `2.3.0` heben. NUR dieses Feld.\n  - `CHANGELOG.md`: neuen Block `## [2.3.0] - 2026-06-11` unter `## [Unreleased]`\n    im Keep-a-Changelog-Stil (Abschnitt `### Added`). Beschreibe: `.gat-search*`-\n    Familie (Inline-Overlay ohne Layout-Shift + Modal/`Strg+K`-Variante, Zustaende),\n    `gat-search.js` ESM-Verhaltensmodul (A11y: combobox/listbox/option, Pfeiltasten,\n    Focus-Trap, `returnFocus`, `prefers-reduced-motion`, `Strg/Cmd+K`), dokumentierter\n    optionaler Pagefind-Adapter, Showcase in index.html. Strikt additiv vermerken.\n  - `MIGRATION.md`: neuen Abschnitt `## v2.2 -> v2.3` (additiv, \u201eKonsumenten\n    brauchen nichts zu aendern\") plus TOC-Eintrag oben analog zu den bestehenden\n    Eintraegen. Kurz: wie `gat-search.js` eingebunden wird (Import-URL), Slot-Schema,\n    XSS-Hinweis (Titel escapen), und dass die Pagefind-Anbindung Consumer-Sache ist.\n  ACHTUNG: Die `design-spec`-JSON-Version in index.html (1.0, ~Z.2706) NICHT\n  anfassen/angleichen \u2014 eigenes stabiles Schema-Feld.\n  </action>\n  <verify>\n  <automated>cd design-system && grep -q \"\\\"version\\\": \\\"2.3.0\\\"\" package.json && grep -q \"2.3.0\" CHANGELOG.md && grep -q \"gat-search\" CHANGELOG.md && grep -q \"v2.3\" MIGRATION.md && echo RELEASE_OK</automated>\n  </verify>\n  <done>\n  - `package.json` version = 2.3.0 (nur dieses Feld).\n  - `CHANGELOG.md` hat `[2.3.0]`-Block mit Added-Eintraegen zur Such-Familie + Modul.\n  - `MIGRATION.md` hat `v2.2 -> v2.3`-Abschnitt + TOC-Eintrag, additiv.\n  - `design-spec`-Version in index.html unveraendert.\n  </done>\n</task>\n\n<task type=\"auto\">\n  <name>Task 7: Consumer-Doku im README (Such-Helfer-Abschnitt)</name>\n  <files>design-system/README.md</files>\n  <action>\n  Ergaenze einen Abschnitt \u201eSuch-Helfer (ES-Modul)\" im README, parallel zum\n  bestehenden \u201eChart-Helfer (ES-Modul)\"-Abschnitt. Inhalt: Import von der\n  Pages-URL (`import { createSearch } from\n  'https://grueneat.github.io/design-system/gat-search.js'`), Minimal-Beispiel\n  (Inline-Overlay mit eigenem `search`-Adapter), Verweis auf die Modal/`Strg+K`-\n  Variante, das `SearchResult`-Slot-Schema `{ id, title, excerpt?, url, badge?,\n  meta? }`, der XSS-Hinweis (Consumer-gelieferte Titel werden vom Default-Renderer\n  via `textContent` escaped; `excerpt` nur HTML, wenn der Adapter es escaped) und\n  der Hinweis, dass die konkrete Such-Engine (z. B. Pagefind via\n  `examples/pagefind-adapter.js`) Consumer-Aufgabe bleibt (Framework-agnostisch,\n  kein Vendoring). Verlinke `examples/pagefind-adapter.js` und den index.html-Showcase.\n  Dieser Abschnitt ist die Grundlage, auf die werkzeuge#15 / Gemeindeordnung#15 adoptieren.\n  </action>\n  <verify>\n  <automated>cd design-system && grep -q \"gat-search.js\" README.md && grep -q \"createSearch\" README.md && grep -qi \"pagefind\" README.md && echo README_OK</automated>\n  </verify>\n  <done>\n  - README hat einen \u201eSuch-Helfer (ES-Modul)\"-Abschnitt mit Pages-URL-Import + Minimal-Beispiel.\n  - Slot-Schema + XSS-Hinweis dokumentiert.\n  - Framework-Agnostik + Pagefind-als-Consumer-Aufgabe dokumentiert; Adapter/Showcase verlinkt.\n  </done>\n</task>\n\n</tasks>\n\n<verification>\nNach allen Tasks final pruefen (im Repo-Root design-system/):\n- `npm run build` -> Exit 0.\n- `git diff --exit-code design-system.css` -> sauber (CI-Drift-Gate gruen).\n- `node --input-type=module -e \"import('./gat-search.js').then(m=>process.exit(m.createSearch?0:1))\"` -> Exit 0 (Modul importierbar, kein Seiteneffekt).\n- `grep -q \"gat-search__overlay\" design-system.css` -> Klassen im gebauten CSS.\n- `grep -q \"id=.gat-search\" index.html` -> Showcase vorhanden.\n- `grep -q \"\\\"version\\\": \\\"2.3.0\\\"\" package.json` -> Version gebumpt.\n</verification>\n\n<success_criteria>\nMappt 1:1 auf die Acceptance Criteria aus ISSUE.md:\n- DS enthaelt ein dokumentiertes Suchfeld- + Ergebnis-Overlay-Pattern (CSS + Markup)\n  in `design-system.css` mit Showcase in `index.html` (Tasks 1, 4, 5).\n- Ergebnis-Anzeige als Overlay/Dropdown schiebt keinen Seiteninhalt\n  (`position:absolute; top:100%` \u2014 Task 1; sichtbar in der Demo \u2014 Task 4).\n- A11y: Tastatur-Navigation, aria-Rollen (combobox/listbox/option), ESC/Focus-Handling,\n  Focus-Trap im Modal, `prefers-reduced-motion` (Tasks 1, 2; demonstriert in Task 4).\n- Responsive inkl. Mobile-Full-Screen-Variante (`.gat-search--modal` <640px, Task 1).\n- Framework-agnostisch dokumentiert; Pagefind-Anbindung als Consumer-Aufgabe\n  (engine-neutraler Kern Task 2, Adapter-Beispiel Task 3, README Task 7).\n- CHANGELOG- + Versionseintrag im DS (Task 6).\n- Folge-Issues werkzeuge + Gemeindeordnung: bereits als Deferred/Folge-Issues\n  referenziert (werkzeuge#15, Gemeindeordnung#15) \u2014 Verlinkung in README/Doku (Task 7).\n  Hinweis: das Anlegen der Folge-Issues ist organisatorisch und liegt ausserhalb\n  der Code-Execution; die DS-Vorlage (dieses Issue) ist mit Tasks 1-7 vollstaendig.\n</success_criteria>\n"}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var dataEl = document.getElementById("artifact-source");
+  var target = document.getElementById("artifact-source-target");
+  if (dataEl && target) {
+    try {
+      target.textContent = JSON.parse(dataEl.textContent).source || "";
+    } catch (e) {
+      target.textContent = dataEl.textContent;
+    }
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el) { ev.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

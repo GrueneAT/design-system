@@ -25,6 +25,50 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
   Hamburger. Strikt additiv. Erstabnehmer: Personenwahl (linkes Seitenmenü →
   Reiter-Leiste unter der Headline).
 
+## [2.3.0] - 2026-06-11
+
+**Minor Release — Such-Vorlage.** Eine wiederverwendbare Suche (Suchfeld +
+Ergebnis-Overlay) hebt das generische Such-Verhalten zentral ins DS, damit
+konsumierende Tools die Brücke nicht jeweils neu (und unterschiedlich) bauen.
+Strikt additiv: keine Breaking Changes, keine Token-/Klassen-Umbenennung.
+Quelldokumentation: `.issues/m1wxd-…/ISSUE.md`.
+
+### Added
+
+- **`.gat-search`-Familie** — Suchfeld mit Ergebnis-Overlay. Zwei Varianten
+  derselben Vorlage: ein **Inline-Overlay-Dropdown**
+  (`position:absolute; top:100%`) das **keinen Seiteninhalt verschiebt**
+  (kein Layout-Shift), und eine **Modal-/`Strg+K`-Variante**, die das
+  vorhandene `.gat-modal` (`--blur`/`--wide`) wiederverwendet (Desktop
+  zentriert, Mobile Full-Screen via `100dvh`). Subelemente: `__field`
+  (nutzt `.gat-input`), `__icon`, `__overlay`, `__results`, `__count`,
+  `__item` (+`.is-active`), `__item-title`/`__item-excerpt`/`__item-badge`
+  sowie vereinheitlichte Zustände `__state--empty`/`--hint`/`--loading`/
+  `--no-results`. Zusätzlich `.gat-search-trigger` (Header-Lupe, 44px
+  Touch-Floor) und `.gat-search--modal`. Komponiert ausschließlich auf
+  bestehenden `--gat-*`-Tokens; High-Contrast-Overrides inklusive.
+- **`gat-search.js` — engine-neutrales ES-Modul** (ausgeliefert wie
+  `gat-charts.js` von der Pages-URL). Liefert das generische Verhalten:
+  A11y mit ARIA `combobox`/`listbox`/`option` und `aria-activedescendant`,
+  Pfeiltasten-Navigation (Wrap, Home/End), `Enter`/`Esc`, Focus-Trap im
+  Modal über natives `<dialog>` plus `returnFocus` auf den Auslöser,
+  `Strg/Cmd+K`- und `/`-Shortcut, Debounce mit Generation-Race-Guard,
+  vereinheitlichte Zustände und `prefers-reduced-motion`. Der Kern kennt
+  keine Suchmaschine: der Konsument übergibt einen
+  `async (query, { signal }) => results[]`-Adapter und (optional) ein
+  Render-/Slot-Schema `{ id, title, excerpt?, url, badge?, meta? }`. Der
+  Default-Renderer escaped den Titel via `textContent` (XSS-sicher). Das
+  Modul hat keine Import-Seiteneffekte (SSR-sicher) und setzt keine
+  Font-Strings.
+- **Dokumentierter, optionaler Pagefind-Adapter**
+  (`examples/pagefind-adapter.js`) als Beispiel/Helfer — lädt das
+  Konsumenten-Bundle zur Laufzeit (keine Pflicht-Abhängigkeit, kein
+  Vendoring), nutzt `pf.debouncedSearch(query, opts, 0)` (kein
+  Doppel-Debounce) und mappt auf das Slot-Schema.
+- **Showcase in `index.html`** (`#gat-search`) mit beiden Varianten und
+  einem In-Memory-Dummy-Adapter, plus Consumer-Doku im README
+  („Such-Helfer (ES-Modul)").
+
 ## [2.2.0] - 2026-05-24
 
 **Minor Release — Datenwerkzeug-Standard.** Vier Komponenten-Familien,

@@ -3,6 +3,8 @@
 Die Anleitung gliedert sich nach Release. Konsumenten lesen den Abschnitt
 zu dem Sprung, der gerade ansteht — alle früheren Hinweise gelten weiter.
 
+- [v2.2 → v2.3](#v22--v23) — Minor, strikt additiv. Such-Vorlage
+  (`.gat-search`-Familie + `gat-search.js` + optionaler Pagefind-Adapter).
 - [v2.1.x → v2.2](#v21x--v22) — Minor, strikt additiv. Vier neue
   Komponenten-Familien (Table, Dropzone, Toast, Toolbar).
 - [v2.1.0 → v2.1.1](#v210--v211) — Patch, strikt additiv plus zwei
@@ -10,6 +12,71 @@ zu dem Sprung, der gerade ansteht — alle früheren Hinweise gelten weiter.
 - [v2.0 → v2.1](#v20--v21) — strikt additiv, keine Breaking Changes.
 - [v1.x → v2.0](#v1x--v20) — Major, optische Änderungen am Header und
   am Hellgrün-Wert.
+
+---
+
+## v2.2 → v2.3
+
+**Minor Release. Konsumenten brauchen nichts zu ändern.** Eine neue
+Such-Vorlage (Suchfeld + Ergebnis-Overlay) kommt hinzu. Strikt additiv:
+keine Token-/Klassen-Umbenennung, kein Behavior-Bruch, keine sichtbaren
+Anpassungen für bestehende Konsumenten.
+
+### Was Konsumenten **nicht** ändern müssen
+
+- CSS-URL bleibt:
+  `https://design-system.gruene.at/design-system.css`
+- Alle bisherigen Token, Klassen und Selektoren bleiben unverändert.
+- Die neue `.gat-search`-Familie und das `gat-search.js`-Modul sind reine
+  Ergänzung.
+
+### Was Konsumenten **neu nutzen können**
+
+#### Suche — `.gat-search` + `gat-search.js`
+
+Das DS liefert Markup + CSS für Suchfeld, Overlay und Ergebnis-Items sowie
+ein engine-neutrales Verhaltensmodul, ausgeliefert wie `gat-charts.js` von
+der Pages-URL:
+
+```html
+<div class="gat-search">
+  <input type="search" class="gat-input gat-search__field" id="suche">
+  <div class="gat-search__overlay" id="suche-overlay" hidden></div>
+</div>
+
+<script type="module">
+  import { createSearch }
+    from 'https://design-system.gruene.at/gat-search.js';
+
+  createSearch({
+    input:   '#suche',
+    overlay: '#suche-overlay',
+    search:  async (query, { signal }) => meinIndex.find(query, { signal }),
+  });
+</script>
+```
+
+Das Modul übernimmt Open/Close, Pfeiltasten-Navigation, ARIA
+(`combobox`/`listbox`/`option`), `Strg/Cmd+K`, Debounce und
+`prefers-reduced-motion`. Die **Modal-/`Strg+K`-Variante** setzt
+`mode: 'modal'` und ein `<dialog class="gat-modal gat-modal--blur
+gat-modal--wide">` mit `.gat-search--modal` darin — Focus-Trap und Esc
+liefert der native `<dialog>`, das Modul ergänzt `returnFocus`.
+
+**Slot-Schema** (was der `search`-Adapter je Treffer liefert):
+
+```js
+{ id, title, excerpt?, url, badge?, meta? }
+```
+
+**XSS-Hinweis:** Der Default-Renderer escaped `title` via `textContent`.
+`excerpt` wird als HTML eingesetzt — nur verwenden, wenn der Adapter es
+selbst escaped hat (Pagefind liefert `excerpt` bereits escaped).
+
+**Such-Engine bleibt Konsumenten-Sache.** Der Kern ist engine-neutral; die
+konkrete Anbindung (z. B. Pagefind) baut der Konsument. Ein fertiges
+Beispiel liegt unter `examples/pagefind-adapter.js`. Es wird **nichts**
+vendorisiert — Pagefind & Co. lädt der Konsument selbst.
 
 ---
 

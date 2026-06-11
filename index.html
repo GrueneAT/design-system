@@ -321,6 +321,7 @@
           <li><a href="#komponenten">Komponenten</a></li>
           <li><a href="#formulare">Formulare</a></li>
           <li><a href="#modal">Modal</a></li>
+          <li><a href="#gat-search">Suche</a></li>
           <li><a href="#cd-layout">CD-Layout</a></li>
           <li><a href="#spezifikation">Spezifikation</a></li>
           <li><a href="#einbindung">Einbindung</a></li>
@@ -1893,6 +1894,224 @@
       </div>
     </div>
   </section>
+
+  <!-- ================================================================== -->
+  <!-- Abschnitt 4b2 — Suche (.gat-search + gat-search.js)                -->
+  <!-- ================================================================== -->
+  <section class="gat-section" id="gat-search">
+    <div class="gat-container">
+      <div class="gat-section-head">
+        <h2 class="gat-headline">Suche</h2>
+        <p>
+          v2.3 ergänzt eine Such-Vorlage: ein Suchfeld
+          (<span class="doc-code">.gat-search</span>) mit Ergebnis-Overlay, das
+          <strong>keinen Seiteninhalt verschiebt</strong>
+          (<span class="doc-code">position:absolute; top:100%</span>). Das
+          Verhalten — Pfeiltasten-Navigation, ARIA
+          <span class="doc-code">combobox/listbox/option</span>, Focus-Trap im
+          Modal, <span class="doc-code">Strg/Cmd+K</span>,
+          <span class="doc-code">prefers-reduced-motion</span> — liefert das
+          ES-Modul <span class="doc-code">gat-search.js</span>. Der Kern ist
+          engine-neutral: der Konsument übergibt einen
+          <span class="doc-code">async (query) =&gt; results[]</span>-Adapter;
+          die konkrete Such-Engine bleibt App-Sache (ein
+          fertiges Adapter-Beispiel liegt im <span class="doc-code">examples/</span>-
+          Ordner; siehe README und MIGRATION). Die beiden Demos unten nutzen
+          einen kleinen In-Memory-Dummy-Adapter.
+        </p>
+      </div>
+
+      <!-- Variante A — Inline-Overlay (kein Layout-Shift) -->
+      <div class="doc-block">
+        <h3 class="gat-subline">Variante A — Inline-Overlay</h3>
+        <p class="gat-fliesstext doc-lead">
+          Tippe mindestens drei Zeichen (z. B. „klima", „energie", „budget").
+          Das Overlay legt sich über den Folge-Inhalt — der bleibt an Ort und
+          Stelle. Pfeiltasten ↑/↓ navigieren, Enter aktiviert, Esc schließt.
+          Der Absatz darunter beweist: kein Layout-Shift.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage" style="display: block;">
+            <div class="gat-search" id="demo-search-inline">
+              <span class="gat-search__icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor"
+                     stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="9" r="6"></circle>
+                  <path d="M14 14l4 4"></path>
+                </svg>
+              </span>
+              <input type="search" class="gat-input gat-search__field"
+                     id="demo-search-input" placeholder="Stichwort suchen …"
+                     aria-label="Beispiel-Suche">
+              <div class="gat-search__overlay" id="demo-search-overlay" hidden></div>
+            </div>
+            <p class="gat-fliesstext" style="margin: var(--gat-space-3) 0 0;">
+              Dieser Absatz steht direkt unter dem Suchfeld. Wenn das Overlay
+              erscheint, rückt er <strong>nicht</strong> nach unten — das
+              Ergebnis-Overlay nimmt keinen Platz im Fluss ein.
+            </p>
+          </div>
+          <div class="doc-codeblock">&lt;div class="gat-search"&gt;
+  &lt;span class="gat-search__icon" aria-hidden="true"&gt; … &lt;/span&gt;
+  &lt;input type="search" class="gat-input gat-search__field" id="suche"&gt;
+  &lt;div class="gat-search__overlay" id="suche-overlay" hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script type="module"&gt;
+  import { createSearch } from './gat-search.js';
+  createSearch({
+    input:   '#suche',
+    overlay: '#suche-overlay',
+    search:  async (q) =&gt; meinIndex.filter(/* … */),
+  });
+&lt;/script&gt;</div>
+        </div>
+      </div>
+
+      <!-- Variante B — Modal / Strg+K -->
+      <div class="doc-block">
+        <h3 class="gat-subline">Variante B — Modal / Strg+K</h3>
+        <p class="gat-fliesstext doc-lead">
+          Die Header-Lupe (oder <span class="doc-code">Strg/Cmd+K</span> bzw.
+          <span class="doc-code">/</span>) öffnet die Suche in einem nativen
+          <span class="doc-code">&lt;dialog&gt;</span>
+          (<span class="doc-code">.gat-modal --blur --wide</span>) — Focus-Trap,
+          Esc und inert-Hintergrund liefert der Browser; das Modul ergänzt
+          <span class="doc-code">returnFocus</span> auf den Auslöser. Auf
+          schmalen Viewports wird das Modal Full-Screen.
+        </p>
+        <div class="doc-demo">
+          <div class="doc-demo__stage">
+            <button type="button" class="gat-search-trigger" id="demo-search-trigger">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor"
+                   stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true">
+                <circle cx="9" cy="9" r="6"></circle>
+                <path d="M14 14l4 4"></path>
+              </svg>
+              <span>Suchen</span>
+              <span class="gat-search-trigger__kbd">Strg K</span>
+            </button>
+
+            <dialog class="gat-modal gat-modal--blur gat-modal--wide" id="demo-search-modal">
+              <div class="gat-modal__head">
+                <h2 class="gat-modal__title">Suche</h2>
+                <button type="button" class="gat-modal__close" aria-label="Schließen"
+                        onclick="this.closest('dialog').close()">×</button>
+              </div>
+              <div class="gat-modal__body">
+                <div class="gat-search gat-search--modal" id="demo-search-modal-wrap">
+                  <span class="gat-search__icon" aria-hidden="true">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor"
+                         stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="9" cy="9" r="6"></circle>
+                      <path d="M14 14l4 4"></path>
+                    </svg>
+                  </span>
+                  <input type="search" class="gat-input gat-search__field"
+                         id="demo-search-modal-input" placeholder="Stichwort suchen …"
+                         aria-label="Beispiel-Suche im Modal">
+                  <div class="gat-search__overlay" id="demo-search-modal-overlay"></div>
+                </div>
+              </div>
+            </dialog>
+          </div>
+          <div class="doc-codeblock">&lt;button class="gat-search-trigger" id="lupe"&gt; … &lt;/button&gt;
+
+&lt;dialog class="gat-modal gat-modal--blur gat-modal--wide" id="such-modal"&gt;
+  &lt;div class="gat-modal__body"&gt;
+    &lt;div class="gat-search gat-search--modal"&gt;
+      &lt;input class="gat-input gat-search__field" id="such-input"&gt;
+      &lt;div class="gat-search__overlay"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;
+
+&lt;script type="module"&gt;
+  import { createSearch } from './gat-search.js';
+  createSearch({
+    input:    '#such-input',
+    mode:     'modal',
+    shortcut: true,
+    triggers: ['#lupe'],
+    search:   async (q) =&gt; meinIndex.filter(/* … */),
+  });
+&lt;/script&gt;</div>
+        </div>
+      </div>
+
+      <!-- Slot-Schema -->
+      <div class="doc-block">
+        <h3 class="gat-subline">Ergebnis-Slot-Schema</h3>
+        <p class="gat-fliesstext doc-lead">
+          Der Adapter liefert ein Array von Treffern in diesem Schema. Der
+          Default-Renderer escaped den <span class="doc-code">title</span> via
+          <span class="doc-code">textContent</span> (XSS-sicher);
+          <span class="doc-code">excerpt</span> wird als HTML eingesetzt —
+          nur verwenden, wenn der Adapter es selbst escaped hat.
+        </p>
+        <div class="doc-codeblock">{
+  id:       'eindeutige-id',
+  title:    'Treffer-Titel',          // wird via textContent escaped
+  excerpt:  'Auszug mit &lt;mark&gt;…&lt;/mark&gt;',  // HTML, vom Adapter escaped
+  url:      '/ziel-seite',
+  badge:    'Kategorie',              // optional
+  meta:     { /* beliebig */ }        // optional
+}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- Demo-Verdrahtung für die Such-Section (Dummy-In-Memory-Adapter)    -->
+  <!-- ================================================================== -->
+  <script type="module">
+    import { createSearch } from './gat-search.js';
+
+    // Kleiner statischer In-Memory-Index — nur für die Demo. Eine echte App
+    // übergibt hier ihren eigenen Adapter (Pagefind, eigener Index, API …).
+    const INDEX = [
+      { id: 'klima', title: 'Klimaschutz', url: '#gat-search',
+        badge: 'Thema', excerpt: 'Maßnahmen für ein <mark>gutes Klima</mark> in den Gemeinden.' },
+      { id: 'energie', title: 'Erneuerbare Energie', url: '#gat-search',
+        badge: 'Thema', excerpt: 'Ausbau von <mark>Sonne</mark> und <mark>Wind</mark> vor Ort.' },
+      { id: 'budget', title: 'Gemeindebudget', url: '#gat-search',
+        badge: 'Finanzen', excerpt: 'Transparente <mark>Budget</mark>-Planung und Voranschlag.' },
+      { id: 'verkehr', title: 'Sanfte Mobilität', url: '#gat-search',
+        badge: 'Mobilität', excerpt: 'Sichere Wege für Rad und <mark>Fußverkehr</mark>.' },
+      { id: 'beteiligung', title: 'Bürger:innen-Beteiligung', url: '#gat-search',
+        badge: 'Demokratie', excerpt: 'Mitreden bei kommunalen <mark>Entscheidungen</mark>.' },
+    ];
+
+    function dummyAdapter(query) {
+      const q = query.toLowerCase();
+      return INDEX.filter((r) =>
+        r.title.toLowerCase().includes(q) ||
+        r.excerpt.toLowerCase().includes(q) ||
+        r.badge.toLowerCase().includes(q));
+    }
+
+    const inlineInput = document.getElementById('demo-search-input');
+    if (inlineInput) {
+      createSearch({
+        input:   inlineInput,
+        overlay: document.getElementById('demo-search-overlay'),
+        search:  async (q) => dummyAdapter(q),
+      });
+    }
+
+    const modalInput = document.getElementById('demo-search-modal-input');
+    if (modalInput) {
+      createSearch({
+        input:    modalInput,
+        overlay:  document.getElementById('demo-search-modal-overlay'),
+        mode:     'modal',
+        shortcut: true,
+        triggers: [document.getElementById('demo-search-trigger')],
+        search:   async (q) => dummyAdapter(q),
+      });
+    }
+  </script>
 
   <!-- ================================================================== -->
   <!-- Abschnitt 4c — Steuerungselemente (Tabs / Switcher)                -->
