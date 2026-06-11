@@ -3,6 +3,7 @@ id: m1wxd
 title: Such-Vorlage (Suchfeld + Ergebnis-Overlay) im Design System, abgeleitet von
   Gemeindeordnung
 status: done
+ship_state: pr_open
 priority: high
 labels:
 - design-system
