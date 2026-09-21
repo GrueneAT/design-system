@@ -1,0 +1,18 @@
+/* Werte für examples/theming.html — erfundene Organisation, bewusst kein
+   echtes Parteibranding. Gemessene Kontraste stehen auf der Seite.
+   Organisation: Beispielverband (fiktiv)
+   Quelle:       für diese Demo gewählt
+   Stand:        2026-09-21 */
+:root {
+  --gat-color-dunkelgruen: #1f5c8b;   /* weisse Schrift, 7.09:1 */
+  --gat-color-hellgruen:   #5b9bc4;   /* dunkle Schrift, 5.57:1 */
+  --gat-color-magenta:     #b5335f;
+  --gat-color-gelb:        #f2c200;
+
+  --gat-web-green-deep: #154767;      /* weisse Schrift, 9.86:1 */
+  --gat-web-green:      #1f5c8b;      /* weisse Schrift, 7.09:1 */
+  --gat-web-green-tint: #e4edf4;      /* dunkle Schrift, 14.25:1 */
+
+  --gat-web-chart-1: #1f5c8b;
+  --gat-web-chart-2: #5b9bc4;
+}

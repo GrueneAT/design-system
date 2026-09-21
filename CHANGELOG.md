@@ -24,6 +24,28 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
   Gruppe) statt horizontal über den Viewport hinauszuwachsen — kein
   Hamburger. Strikt additiv. Erstabnehmer: Personenwahl (linkes Seitenmenü →
   Reiter-Leiste unter der Headline).
+- **Dokumentierter Theming-Vertrag für Konsumenten ausserhalb der Grünen
+  Österreich** (#31). Das Erscheinungsbild lässt sich über Tokens anpassen,
+  ohne das Stylesheet zu forken oder zu kopieren — eine eigene `lokal.css`
+  nach dem Design-System, rund ein Dutzend Tokens in einem ungelayerten
+  `:root`-Block. Das funktionierte schon vorher, war aber nirgends
+  beschrieben, sodass jeder Konsument es neu erschliessen musste.
+  - Neuer Abschnitt „Für andere Organisationen" im Style Guide (`#theming`)
+    mit vollständiger Token-Liste, Rollen und gemessenen Kontrastwerten.
+  - `examples/lokal.css` als kommentierte Kopiervorlage.
+  - `examples/theming.html` als lauffähiges Beispiel mit anderer Marke.
+  - Hinweis im README.
+
+  Kein Breaking Change: keine Token-Werte, Klassen oder Defaults geändert.
+  Die ausgelieferte `design-system.css` ist unverändert.
+
+### Dokumentation
+
+- Kontrast-Kommentar bei `--color-gat-hellgruen` präzisiert. Die dort
+  genannten 4.86 gelten gegen reines Schwarz; gegen den tatsächlichen
+  Textton `--color-gat-anthrazit` (#1d1d1b) sind es 3.91 und damit unter AA
+  für Fliesstext. Betroffen ist `.gat-card--secondary`, das genau dieses
+  Paar setzt — als eigener Befund offen, hier nur korrekt dokumentiert.
 
 ## [2.3.1] - 2026-06-11
 

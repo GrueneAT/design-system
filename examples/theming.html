@@ -1,0 +1,154 @@
+<!doctype html>
+<!--
+  Theming-Beispiel: dasselbe Design-System, andere Organisation.
+
+  Diese Seite bindet die gehostete design-system.css ein und danach eine
+  zweite Datei, die nur Tokens überschreibt. Es wird keine Komponente
+  neu definiert und nichts kopiert.
+
+  Kopiervorlage mit allen Tokens und Kommentaren: examples/lokal.css
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Theming-Beispiel — Grüne AT Design System</title>
+
+  <link rel="stylesheet" href="https://design-system.gruene.at/design-system.css">
+  <!-- NACH dem Design-System. Reihenfolge im Dokument ist hier zweitrangig:
+       die Defaults stehen in @layer, ungelayerte Regeln gewinnen ohnehin. -->
+  <link rel="stylesheet" href="beispiel-lokal.css">
+
+  <style>
+    body {
+      margin: 0;
+      background: var(--gat-web-bg);
+      color: var(--gat-web-text);
+      font-family: var(--gat-font-copy);
+    }
+    main { max-width: var(--gat-container-max); margin: 0 auto; padding: var(--gat-space-5) var(--gat-space-3); }
+    .reihe { display: flex; gap: var(--gat-space-2); flex-wrap: wrap; align-items: center; margin: var(--gat-space-3) 0; }
+    .palette span { width: 44px; height: 28px; display: inline-block; border-radius: var(--gat-radius-sm); }
+    .hinweis { color: var(--gat-web-text-mute); font-size: var(--gat-text-small); max-width: 62ch; }
+    section { margin-top: var(--gat-space-6); }
+    section > h2 { margin: 0 0 var(--gat-space-3); }
+    h1 { margin-bottom: var(--gat-space-2); }
+    .gat-dropzone, .gat-metric-card, .gat-callout { margin: var(--gat-space-3) 0; }
+  </style>
+</head>
+<body>
+
+<header class="gat-header">
+  <div class="gat-header__inner">
+    <span class="gat-header__brand">
+      <span class="gat-header__wordmark">Beispielverband</span>
+    </span>
+  </div>
+</header>
+
+<main>
+  <h1 class="gat-headline">Dasselbe System, andere Marke</h1>
+  <p class="gat-subline">
+    Diese Seite lädt unverändert <code class="doc-code">design-system.css</code>
+    und danach eine Datei mit rund einem Dutzend Token-Überschreibungen.
+  </p>
+
+  <p class="hinweis">
+    Die Organisation auf dieser Seite ist erfunden. Ein fremdes Parteibranding
+    ohne Auftrag zu verwenden ist schlechter, als gar keines zu verwenden.
+  </p>
+
+  <section>
+    <h2 class="gat-card__title">Komponenten</h2>
+    <div class="reihe">
+      <button class="gat-btn gat-btn--primary">Primär</button>
+      <button class="gat-btn gat-btn--secondary">Sekundär</button>
+    </div>
+    <div class="reihe">
+      <span class="gat-tag gat-tag--ok">ok</span>
+      <span class="gat-tag gat-tag--warn">Warnung</span>
+      <span class="gat-tag gat-tag--error">Fehler</span>
+      <span class="gat-tag gat-tag--neutral">neutral</span>
+    </div>
+    <p class="hinweis">
+      Die Statusfarben bleiben unverändert — grün heisst ok und rot heisst
+      Fehler, unabhängig von der Marke.
+    </p>
+
+    <div class="gat-callout gat-callout--info">
+      <p class="gat-callout__lead">Hinweis</p>
+      <p>Callouts, Toasts und Tags sind semantisch und werden nicht eingefärbt.</p>
+    </div>
+
+    <div class="gat-dropzone">
+      <p class="gat-dropzone__label">Datei hierher ziehen</p>
+      <p class="gat-dropzone__hint">Die Ablagefläche übernimmt die Markenfarbe im Drag-Zustand.</p>
+    </div>
+
+    <div class="gat-metric-card">
+      <span class="gat-metric-card__label">Kennzahl</span>
+      <span class="gat-metric-card__num">40.640.070</span>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="gat-card__title">Tabelle</h2>
+    <div class="gat-table-scroll">
+      <table class="gat-table gat-table--zebra">
+        <thead><tr><th>Posten</th><th class="gat-table__num">Betrag</th></tr></thead>
+        <tbody>
+          <tr><td>Personal</td><td class="gat-table__num">23.500.000</td></tr>
+          <tr><td>Sachaufwand</td><td class="gat-table__num">10.400.000</td></tr>
+          <tr><td>Transfers</td><td class="gat-table__num">6.740.070</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="hinweis">
+      Zebrastreifen und Fokusring stehen in keiner Überschreibung — sie rechnen
+      sich per <code class="doc-code">color-mix</code> aus den gesetzten Tokens.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="gat-card__title">Diagramm-Palette</h2>
+    <div class="reihe palette" id="palette"></div>
+    <p class="hinweis">
+      Nur die ersten beiden Töne tragen die Marke. Die übrigen sechs bleiben,
+      damit acht Kategorien unterscheidbar bleiben.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="gat-card__title">Gemessene Kontraste</h2>
+    <div class="gat-table-scroll">
+      <table class="gat-table gat-table--compact">
+        <thead><tr><th>Token</th><th>Wert</th><th>Schrift darauf</th><th class="gat-table__num">Ratio</th></tr></thead>
+        <tbody>
+          <tr><td><code class="doc-code">--gat-color-dunkelgruen</code></td><td>#1f5c8b</td><td>weiss</td><td class="gat-table__num">7,09:1</td></tr>
+          <tr><td><code class="doc-code">--gat-color-hellgruen</code></td><td>#5b9bc4</td><td>dunkel</td><td class="gat-table__num">5,57:1</td></tr>
+          <tr><td><code class="doc-code">--gat-web-green</code></td><td>#1f5c8b</td><td>weiss</td><td class="gat-table__num">7,09:1</td></tr>
+          <tr><td><code class="doc-code">--gat-web-green-deep</code></td><td>#154767</td><td>weiss</td><td class="gat-table__num">9,86:1</td></tr>
+          <tr><td><code class="doc-code">--gat-web-green-tint</code></td><td>#e4edf4</td><td>dunkel</td><td class="gat-table__num">14,25:1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="hinweis">
+      Alle über 4,5:1, also AA für Fliesstext. Das ist die Prüfung, die beim
+      Umbranden am häufigsten ausgelassen wird: viele Markenfarben wurden für
+      Logo und Druck gewählt, nicht für weisse Schrift am Bildschirm.
+    </p>
+  </section>
+</main>
+
+<script>
+  // Palette aus den tatsächlich gesetzten Tokens zeichnen, nicht aus einer
+  // Kopie der Werte — so zeigt die Seite, was wirklich gilt.
+  var s = getComputedStyle(document.documentElement), h = '';
+  for (var i = 1; i <= 8; i++) {
+    h += '<span style="background:' + s.getPropertyValue('--gat-web-chart-' + i).trim() + '"></span>';
+  }
+  document.getElementById('palette').innerHTML = h;
+</script>
+
+</body>
+</html>

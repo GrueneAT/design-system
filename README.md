@@ -41,6 +41,33 @@ liegt unter [examples/minimal.html](examples/minimal.html) und ist live
 abrufbar unter
 <https://design-system.gruene.at/examples/minimal.html>.
 
+### Für andere Organisationen
+
+Konsumenten ausserhalb der Grünen Österreich — eine Partei in einem anderen
+Land, ein Landesverband mit eigener Akzentfarbe, ein Verein — passen das
+Erscheinungsbild über **Tokens** an, ohne das Stylesheet zu forken oder zu
+kopieren: eine eigene `lokal.css` nach dem Design-System einbinden und darin
+rund ein Dutzend Tokens in einem `:root`-Block überschreiben.
+
+```html
+<link rel="stylesheet" href="https://design-system.gruene.at/design-system.css">
+<link rel="stylesheet" href="lokal.css">
+```
+
+Ein schlichter `:root`-Block genügt, weil die Defaults in `@layer`-Regeln
+stehen — ungelayerte Deklarationen gewinnen unabhängig von der Reihenfolge.
+Komponentenklassen werden dabei **nie** neu definiert.
+
+- Kopiervorlage mit allen Tokens: [examples/lokal.css](examples/lokal.css)
+- Lauffähiges Beispiel mit anderer Marke: [examples/theming.html](examples/theming.html)
+- Vollständige Token-Liste, Rollen und Kontrast-Anforderungen: Abschnitt
+  „Für andere Organisationen" im [Style Guide](https://design-system.gruene.at/#theming)
+
+Der wichtigste Punkt dabei: `--gat-color-dunkelgruen`, `--gat-web-green` und
+`--gat-web-green-deep` tragen **weisse Schrift** und brauchen mindestens
+4,5:1 gegen Weiss. Viele Markenfarben wurden für Logo und Druck gewählt und
+fallen durch.
+
 ### Chart-Helfer (ES-Modul)
 
 Für ECharts-basierte Datenwerkzeuge liefert das DS ein zusätzliches
