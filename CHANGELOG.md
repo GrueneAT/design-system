@@ -24,7 +24,7 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
   rückgängig gemacht. Dies ist die einzige Stelle im System, an der bewusst
   `#000` statt Anthrazit steht.
 
-  **Ursache:** v2.1.1 hat Hellgrün von `#56af31` auf `#3e8a25` abgedunkelt, um
+  **Ursache:** v2.0.0 hat Hellgrün von `#56af31` auf `#3e8a25` abgedunkelt, um
   den Kontrast gegen Weiss zu härten. Damit fiel der Kontrast gegen den Text
   *darauf* von 6,09 auf 3,91 — die Dokumentation behielt jedoch die alte Zahl,
   weshalb es unbemerkt blieb.
@@ -34,7 +34,7 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
 
 ### Dokumentation
 
-- Veraltete Angaben aus der Zeit vor v2.1.1 im Styleguide korrigiert: das
+- Veraltete Angaben aus der Zeit vor v2.0.0 im Styleguide korrigiert: das
   Farbmuster nannte weiterhin `#56af31`, zwei Stellen behaupteten „Kontrast
   6,09:1", und der maschinenlesbare Spezifikationsblock führte für
   `--gat-color-hellgruen` und `--gat-color-secondary` ebenfalls noch den alten
@@ -97,11 +97,11 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
 
 ### Dokumentation
 
-- Kontrast-Kommentar bei `--color-gat-hellgruen` präzisiert. Die dort
-  genannten 4.86 gelten gegen reines Schwarz; gegen den tatsächlichen
-  Textton `--color-gat-anthrazit` (#1d1d1b) sind es 3.91 und damit unter AA
-  für Fliesstext. Betroffen ist `.gat-card--secondary`, das genau dieses
-  Paar setzt — als eigener Befund offen, hier nur korrekt dokumentiert.
+- Kontrast-Kommentar bei `--color-gat-hellgruen` präzisiert: eine Zahl ohne
+  Angabe des Texttons ist wertlos. Der dort zuvor genannte Wert galt gegen
+  reines Schwarz, nicht gegen den Hausston Anthrazit.
+  *Der daraus folgende Befund ist im selben Release behoben — siehe den
+  Eintrag zu `--gat-color-on-secondary` unter „Geändert" (#33).*
 
 ## [2.3.1] - 2026-06-11
 

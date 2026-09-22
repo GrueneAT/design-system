@@ -520,7 +520,7 @@
             <div class="doc-swatch__chip" style="background: var(--gat-color-secondary); color: var(--gat-color-on-secondary); display: flex; align-items: center; justify-content: center; font-family: var(--gat-font-headline); font-weight: 900;">Aa</div>
             <div class="doc-swatch__meta">
               <span class="doc-code">--gat-color-on-secondary</span>
-              <span class="doc-swatch__hex">&rarr; anthrazit (#1d1d1b)</span>
+              <span class="doc-swatch__hex">#000000</span>
               <span class="doc-swatch__usage">Text auf Hellgrün &mdash; reines Schwarz, Kontrast 4,87:1. Anthrazit erreichte hier nur 3,91:1 (siehe <a href="https://github.com/GrueneAT/design-system/issues/33">#33</a>). Gelb trägt weiterhin Anthrazit, Weiß nie.</span>
             </div>
           </div>
@@ -3005,7 +3005,7 @@
       "--gat-color-text": { "value": "#1d1d1b", "role": "alias", "aliasOf": "--gat-color-anthrazit", "usage": "Standard-Textfarbe." },
       "--gat-color-surface": { "value": "#ffffff", "role": "alias", "aliasOf": "--gat-color-weiss", "usage": "Standard-Hintergrund." },
       "--gat-color-on-primary": { "value": "#ffffff", "role": "alias", "aliasOf": "--gat-color-weiss", "usage": "Text auf Dunkelgrün — Kontrast 5,63:1." },
-      "--gat-color-on-secondary": { "value": "#000000", "role": "primitive", "usage": "Text auf Hellgrün — reines Schwarz, Kontrast 4,87:1. Anthrazit erreichte nur 3,91:1." }
+      "--gat-color-on-secondary": { "value": "#000000", "role": "alias", "aliasOf": null, "usage": "Text auf Hellgrün — reines Schwarz, Kontrast 4,87:1. Einziges Alias ohne Primitive: Anthrazit erreichte hier nur 3,91:1 (#33)." }
     },
     "font": {
       "--gat-font-headline": { "value": "'Barlow Semi Condensed', sans-serif", "role": "font", "usage": "Headlines (CD: Gotham-Ultra-Ersatz)." },
@@ -3213,12 +3213,19 @@
           erfunden ist.
         </p>
         <p>
-          <strong>Jede Zahl gilt nur gegen einen bestimmten Textton.</strong>
-          Die Marken-Schicht misst gegen <span class="doc-code">--gat-color-anthrazit</span>
+          <strong>Jede Zahl gilt nur gegen einen bestimmten Textton</strong>
+          &mdash; und du musst wissen, gegen welchen. Die meisten Flächen der
+          Marken-Schicht messen gegen <span class="doc-code">--gat-color-anthrazit</span>
           (#1d1d1b), die Web-Schicht gegen <span class="doc-code">--gat-web-text</span>
-          (#23271f). Wer gegen reines Schwarz rechnet, bekommt einen zu guten
-          Wert — genau so entstand der Fehler, den dieser Abschnitt bei
-          <span class="doc-code">hellgruen</span> korrigiert.
+          (#23271f). Eine Zahl gegen reines Schwarz ist immer die günstigere
+          und deshalb nur dann richtig, wenn dort tatsächlich Schwarz steht.
+          Genau eine Stelle im System tut das:
+          <span class="doc-code">--gat-color-on-secondary</span> ist seit
+          <a href="https://github.com/GrueneAT/design-system/issues/33">#33</a>
+          <span class="doc-code">#000</span>, weil Anthrazit auf Hellgrün nur
+          3,91:1 erreichte. Wer die Zahl gegen Schwarz nennt, ohne dass dort
+          Schwarz steht, beschönigt &mdash; so entstand der Fehler, den #33
+          behoben hat.
         </p>
       </div>
 

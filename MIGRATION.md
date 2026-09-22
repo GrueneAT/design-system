@@ -637,9 +637,12 @@ dunkler, aber für Akzent-Flächen-Nutzung tauglicher:
 **Strukturelle Regel — gilt auch nach der Wert-Änderung:** Hellgrün ist
 **Akzent-Fläche, nicht Textfarbe auf hellem Grund**. Konkret:
 
-- `--gat-color-on-secondary` bleibt Anthrazit — Anthrazit-Text auf
-  Hellgrün-Fläche ist die gewollte Paarung (Kontrast 3.91, AA-OK für
-  Großschrift).
+- `--gat-color-on-secondary` bleibt dunkel — dunkler Text auf
+  Hellgrün-Fläche ist die gewollte Paarung.
+  *Nachtrag (#33):* Anthrazit erreichte hier nur 3.91 und damit AA nur für
+  Großschrift; seither ist `--gat-color-on-secondary` reines Schwarz
+  (4.87, AA für Fließtext). Die Regel „Fläche, nicht Textfarbe" gilt
+  unverändert.
 - Weiße Schrift auf Hellgrün-Fläche bleibt verboten (Kontrast unter 4).
 - Für Webschrift auf Hellem nutze stattdessen `--gat-color-dunkelgruen`
   oder die neue `--gat-web-green-deep`-Schicht.
