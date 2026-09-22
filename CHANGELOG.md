@@ -20,7 +20,7 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
   einzige Regel, die es setzt. Reines Schwarz erreicht **4,87:1**.
 
   Die Markenfarbe Hellgrün bleibt unverändert. Die Alternative wäre gewesen,
-  sie aufzuhellen — das hätte die AA-Härtung gegen Weiss aus v2.1.1 wieder
+  sie aufzuhellen — das hätte die AA-Härtung gegen Weiss aus v2.0.0 wieder
   rückgängig gemacht. Dies ist die einzige Stelle im System, an der bewusst
   `#000` statt Anthrazit steht.
 
@@ -40,6 +40,42 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
   `--gat-color-hellgruen` und `--gat-color-secondary` ebenfalls noch den alten
   Wert. Die historischen Einträge in CHANGELOG und MIGRATION bleiben
   unverändert — sie beschreiben korrekt, was damals geschah.
+
+- **Schriften werden selbst ausgeliefert statt von Google Fonts geladen**
+  (#30). `design-system.css` begann bisher mit einem `@import` von
+  `fonts.googleapis.com`; damit baute **jede** konsumierende Seite bei jedem
+  Aufruf eine Verbindung zu Google auf und übertrug die IP-Adresse der
+  Besucherin dorthin. Im Quelltext der Konsumenten war davon nichts zu sehen.
+
+  Für Werkzeuge, die damit werben, dass die Daten das Gerät nicht verlassen,
+  war das ein Widerspruch — gemessen gingen beim Öffnen einer rein lokalen
+  Seite sechs Anfragen an `fonts.gstatic.com` hinaus, ohne jede Nutzeraktion.
+
+  Jetzt liegen die Schriften unter `assets/fonts/` und werden per
+  `@font-face` mit relativen Pfaden eingebunden. Am Einbau ändert sich
+  nichts: derselbe `<link>`, dieselbe Optik, kein zusätzlicher Eintrag.
+  Nachgemessen: keine einzige Fremdanfrage mehr.
+
+  **Was es kostet:** GitHub Pages liefert alle Dateien mit
+  `cache-control: max-age=600`, Google lieferte die Schriften mit
+  `max-age=31536000`. Wiederkehrende Besucherinnen revalidieren die Schriften
+  also alle zehn Minuten statt einmal im Jahr. Das ist kein Neu-Download —
+  Pages sendet ETags, die Revalidierung endet mit `304` und null übertragenen
+  Bytes (nachgemessen) — aber es sind zusätzliche Rundreisen, die auf
+  langsamen Verbindungen einen kurzen Wechsel auf die Ersatzschrift
+  verursachen können (`font-display: swap`). Dieselbe Cache-Dauer gilt schon
+  bisher für `design-system.css` selbst und für das Logo; neu ist nur, dass
+  sie jetzt auch für die Schriften gilt. Der Datenschutz-Gewinn ist diesen
+  Preis wert, aber er ist ein Preis.
+
+  Ausgeliefert werden **latin** und **latin-ext** (16 Dateien, 376 KB). Die
+  Sätze kyrillisch, griechisch und vietnamesisch entfallen — sie werden von
+  keinem Werkzeug gebraucht und hätten die Auslieferung verdoppelt. Wer sie
+  braucht, ergänzt sie in `src/design-system.css`.
+
+  Beide Schriften stehen unter der SIL Open Font License 1.1; die Lizenztexte
+  liegen bei. Vollkorn ist ein Variable Font — 400 und 900 teilen sich eine
+  Datei, deklariert als eine Regel mit Gewichtsbereich.
 
 ### Hinzugefügt
 
