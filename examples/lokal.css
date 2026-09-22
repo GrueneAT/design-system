@@ -40,26 +40,49 @@
      (--gat-color-on-secondary). */
   --gat-color-hellgruen: #3e8a25;
 
-  /* Zweitfarben — nur setzen, wenn die Organisation welche hat.
-     gelb trägt dunkle Schrift, magenta weisse. */
-  --gat-color-gelb:    #ffed00;
-  --gat-color-magenta: #e6007e;
+  /* ACHTUNG, keine Schmuckfarbe: --gat-color-gelb ist die TEXTFARBE des
+     Hochkontrast-Modus (.gat-mode-hc setzt Gelb auf Anthrazit). Ein
+     beliebiger Markenwert zerlegt hier lautlos eine Barrierefreiheits-
+     Funktion. Entweder unverändert lassen oder einen Wert wählen, der
+     gegen --gat-color-anthrazit mindestens 4,5:1 erreicht. */
+  --gat-color-gelb:    #ffed00;   /* 13,96:1 gegen anthrazit */
+
+  /* Akzentfläche (.gat-stoerer--magenta), trägt weisse Schrift. */
+  --gat-color-magenta: #e6007e;   /* 4,50:1 gegen weiss */
 
   /* === 2. Web-Schicht ====================================================
      Entsättigte Auslegung für Datenwerkzeuge mit langen Lesestrecken.
      Leitet sich NICHT aus den Marken-Farben ab und muss eigens gesetzt
      werden — sonst bleibt die Kopfleiste im Grün der Grünen AT.
-     green und green-deep tragen weisse Schrift, tint trägt dunkle. */
-  --gat-web-green-deep: #2c6e40;   /* Hover, aktiver Zustand, Rahmen */
+
+     Die Web-Schicht misst gegen --gat-web-text (#23271f), NICHT gegen
+     anthrazit. Eine Zahl ohne Angabe des Texttons ist wertlos. */
+
+  /* Doppelrolle: Fläche mit weissem Text (.gat-skiplink,
+     .gat-switch-btn.is-active) UND Textfarbe auf hellem Grund
+     (.gat-header__nav-list a, .gat-tab.is-active, .gat-tag--info).
+     Braucht daher 4,5:1 gegen Weiss UND gegen green-tint. */
+  --gat-web-green-deep: #2c6e40;   /* 6,16:1 gegen weiss · 5,23:1 auf tint */
+
+  /* Rahmen, Akzentstreifen, transluzente Hover-Flächen.
+     Es steht NIRGENDS Text darauf — keine Kontrast-Anforderung. */
   --gat-web-green:      #4a8a52;   /* Kopfleiste, Akzentlinien */
-  --gat-web-green-tint: #e7efe3;   /* helle Flächen, Zebrastreifen */
-  --gat-web-yellow:     #ecd64a;
+
+  --gat-web-green-tint: #e7efe3;   /* 12,92:1 gegen --gat-web-text */
+  --gat-web-yellow:     #ecd64a;   /* 10,34:1 gegen --gat-web-text */
 
   /* === 3. Diagramm-Palette ===============================================
      Acht kategoriale Töne. Die ersten beiden dürfen die Marke tragen, die
      restlichen müssen untereinander unterscheidbar bleiben — auch bei
      Rot-Grün-Sehschwäche. Zwei Abstufungen derselben Marke nebeneinander
-     in einem gestapelten Balken sind ein Problem, keine Markenführung. */
+     in einem gestapelten Balken sind ein Problem, keine Markenführung.
+
+     ACHTUNG: das mitgelieferte Modul gat-charts.js verdrahtet Palette,
+     Textfarben und Schrift FEST und liest diese Tokens nicht. Wer es
+     importiert und nur hier überschreibt, bekommt weiterhin die Palette
+     der Grünen AT. Eigene Marke = Palette selbst aus dem CSS lesen:
+     getComputedStyle(document.documentElement)
+       .getPropertyValue('--gat-web-chart-1')  usw.  Siehe Issue #34. */
   --gat-web-chart-1: #3f7d4f;
   --gat-web-chart-2: #6ba368;
   --gat-web-chart-3: #4f93a0;
@@ -74,14 +97,22 @@
      (--gat-text-*) und die Zeilenabstände bleiben unangetastet. */
   /* --gat-font-headline: "Deine Schrift", sans-serif; */
   /* --gat-font-copy:     "Deine Schrift", sans-serif; */
+  /* --gat-font-emphasis: "Deine Serifenschrift", serif;  (.gat-emphasis) */
 }
 
 /* ========================================================================= *
  * NICHT ANFASSEN
  *
  * --gat-web-callout-* / --gat-web-tag-* / --gat-web-toast-*
- *     Statusfarben. Grün heisst ok und Rot heisst Fehler — in jeder
- *     Organisation. Wer sie auf die Marke einfärbt, zerstört die Bedeutung.
+ *     Die Varianten warn, error, ok, neutral und legal stehen als eigene
+ *     Werte im System und bleiben. Gelb heisst Warnung, Rot heisst Fehler —
+ *     in jeder Organisation. Wer sie auf die Marke einfärbt, zerstört die
+ *     Bedeutung.
+ *     AUSNAHME: die Variante `info` bezieht Flaeche, Rahmen und Text ganz
+ *     aus green-tint/green-deep und nimmt damit deine Marke an (so gewollt).
+ *     Bei `success` folgt NUR der Rahmen der Marke; Flaeche und Text bleiben
+ *     gruen. Ist deine Marke nicht gruen, pruefe, ob die Erfolgsmeldung noch
+ *     als Erfolg lesbar ist.
  *
  * --gat-space-* / --gat-radius-* / --gat-text-* / --gat-leading-*
  *     Layout-Rhythmus, nicht Marke.
@@ -92,4 +123,8 @@
  * Abgeleitete Werte brauchen keinen Eintrag: --gat-web-focus-ring und
  * --gat-web-table-row-stripe rechnen sich per color-mix aus den Tokens
  * oben und wandern automatisch mit.
+ *
+ * Nicht ueber Tokens loesbar und daher selbst zu ersetzen: das Logo im
+ * Header (eigene Datei), das Favicon, und Schriftdateien, falls du eigene
+ * einbindest.
  * ========================================================================= */

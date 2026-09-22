@@ -71,13 +71,18 @@
       <span class="gat-tag gat-tag--neutral">neutral</span>
     </div>
     <p class="hinweis">
-      Die Statusfarben bleiben unverändert — grün heisst ok und rot heisst
-      Fehler, unabhängig von der Marke.
+      <strong>ok</strong>, <strong>Warnung</strong>, <strong>Fehler</strong>
+      und <strong>neutral</strong> stehen als eigene Werte im System und
+      bleiben unverändert. Die Variante <strong>info</strong> bezieht ihre
+      Farben dagegen ganz aus den Marken-Tokens und nimmt die neue Marke an —
+      so gewollt, „Info" ist kein Warnsignal.
     </p>
 
     <div class="gat-callout gat-callout--info">
       <p class="gat-callout__lead">Hinweis</p>
-      <p>Callouts, Toasts und Tags sind semantisch und werden nicht eingefärbt.</p>
+      <p>Dieser Info-Callout bezieht Fläche und Rahmen aus den Marken-Tokens —
+      er ist hier blau, nicht grün. Warn-, Fehler- und Erfolgsfarben behalten
+      dagegen ihre eigenen Werte; bei „success" folgt nur der Rahmen der Marke.</p>
     </div>
 
     <div class="gat-dropzone">
@@ -122,13 +127,13 @@
     <h2 class="gat-card__title">Gemessene Kontraste</h2>
     <div class="gat-table-scroll">
       <table class="gat-table gat-table--compact">
-        <thead><tr><th>Token</th><th>Wert</th><th>Schrift darauf</th><th class="gat-table__num">Ratio</th></tr></thead>
+        <thead><tr><th>Token</th><th>Wert</th><th>gemessen gegen</th><th class="gat-table__num">Ratio</th></tr></thead>
         <tbody>
-          <tr><td><code class="doc-code">--gat-color-dunkelgruen</code></td><td>#1f5c8b</td><td>weiss</td><td class="gat-table__num">7,09:1</td></tr>
-          <tr><td><code class="doc-code">--gat-color-hellgruen</code></td><td>#5b9bc4</td><td>dunkel</td><td class="gat-table__num">5,57:1</td></tr>
-          <tr><td><code class="doc-code">--gat-web-green</code></td><td>#1f5c8b</td><td>weiss</td><td class="gat-table__num">7,09:1</td></tr>
-          <tr><td><code class="doc-code">--gat-web-green-deep</code></td><td>#154767</td><td>weiss</td><td class="gat-table__num">9,86:1</td></tr>
-          <tr><td><code class="doc-code">--gat-web-green-tint</code></td><td>#e4edf4</td><td>dunkel</td><td class="gat-table__num">14,25:1</td></tr>
+          <tr><td><code class="doc-code">--gat-color-dunkelgruen</code></td><td>#1f5c8b</td><td>weisse Schrift</td><td class="gat-table__num">7,09:1</td></tr>
+          <tr><td><code class="doc-code">--gat-color-hellgruen</code></td><td>#5b9bc4</td><td>--gat-color-anthrazit</td><td class="gat-table__num">5,57:1</td></tr>
+          <tr><td><code class="doc-code">--gat-web-green</code></td><td>#1f5c8b</td><td>kein Text darauf</td><td class="gat-table__num">—</td></tr>
+          <tr><td><code class="doc-code">--gat-web-green-deep</code></td><td>#154767</td><td>weisse Schrift</td><td class="gat-table__num">9,86:1</td></tr>
+          <tr><td><code class="doc-code">--gat-web-green-tint</code></td><td>#e4edf4</td><td>--gat-web-text</td><td class="gat-table__num">12,83:1</td></tr>
         </tbody>
       </table>
     </div>

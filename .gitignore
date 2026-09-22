@@ -2,3 +2,7 @@
 .DS_Store
 node_modules/
 .npm/
+
+# Ausgabe lokaler Analysewerkzeuge — nie committen, und Tailwind soll sie
+# nicht als Quelle scannen (sonst landen fremde Utilities im Build).
+graphify-out/

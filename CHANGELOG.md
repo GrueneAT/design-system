@@ -36,6 +36,14 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
   - `examples/theming.html` als lauffähiges Beispiel mit anderer Marke.
   - Hinweis im README.
 
+  Der Abschnitt benennt dabei ausdrücklich, was Theming **mitzieht** und was
+  es **nicht** kann: die `info`-Variante von Callout/Tag/Toast bezieht ihre
+  Farben ganz aus den Marken-Tokens und nimmt die neue Marke an, beim
+  Success-Rahmen ebenso; `--gat-color-gelb` ist die Textfarbe des
+  Hochkontrast-Modus und keine Schmuckfarbe; `--gat-web-green` trägt nirgends
+  Text; und `gat-charts.js` verdrahtet die Palette fest, greift also nicht auf
+  die Tokens zu (#34).
+
   Kein Breaking Change: keine Token-Werte, Klassen oder Defaults geändert.
   Die ausgelieferte `design-system.css` ist unverändert.
 
