@@ -92,6 +92,32 @@ Die Palette spiegelt die CSS-Tokens `--gat-web-chart-1..8` 1:1. ECharts
 selbst wird vom Konsumenten unabhängig (eigener CDN-Import) geladen — das
 DS bündelt keine fremden Bibliotheken.
 
+**Statisch oder zur Laufzeit.** Das Modul bietet beides, bewusst getrennt:
+
+| Export | Verhalten |
+| --- | --- |
+| `PALETTE`, `INK` | statische Werte, identisch zu den DS-Defaults. Lesbar auf Modulebene und ohne DOM (Node-Tests). Kennen **kein** Theming. |
+| `palette()`, `ink()`, `schrift()` | lesen dieselben Werte zur **Aufrufzeit** aus den CSS-Tokens und folgen damit einer lokalen Überschreibung. Ohne DOM oder ohne geladenes Stylesheet fallen sie auf die statischen Werte zurück. |
+
+Konsumenten der Grünen AT können bei `PALETTE`/`INK` bleiben — nichts ändert
+sich. Wer das Design-System auf eine **andere Marke** umstellt (siehe
+[Für andere Organisationen](#für-andere-organisationen)), nutzt die
+Funktionen; sonst bleiben die Diagramme grün, während der Rest der
+Oberfläche die neue Marke trägt.
+
+```js
+import { palette, ink, schrift } from 'https://design-system.gruene.at/gat-charts.js';
+
+chart.setOption({
+  color: palette(),                                  // folgt --gat-web-chart-1..8
+  textStyle: { color: ink().text, fontFamily: schrift() },
+});
+```
+
+`tip()` und `legende()` lesen ebenfalls zur Aufrufzeit — wer sie verwendet,
+bekommt das richtige Verhalten ohne Zutun. `ink().gridline` und `ink().axis`
+bleiben immer statisch, weil es für sie im DS kein Token gibt.
+
 ### Such-Helfer (ES-Modul)
 
 Ab v2.3 liefert das DS eine Such-Vorlage: die `.gat-search`-CSS-Familie

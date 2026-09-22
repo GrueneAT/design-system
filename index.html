@@ -3270,27 +3270,32 @@
         </li>
       </ul>
 
-      <h3 class="gat-subline">Diagramme: das mitgelieferte Helfer-Modul ignoriert die Tokens</h3>
-      <div class="gat-callout gat-callout--warn">
-        <p>
-          <span class="doc-code">gat-charts.js</span> exportiert
-          <span class="doc-code">PALETTE</span>, <span class="doc-code">INK</span>
-          und die Schriftangaben als <strong>fest verdrahtete Werte</strong>,
-          nicht als Verweise auf die CSS-Tokens. Wer das Modul einbindet und
-          nur <span class="doc-code">--gat-web-chart-1…8</span> überschreibt,
-          bekommt weiterhin die Palette der Grünen AT.
-        </p>
-        <p>
-          Konsumenten mit eigener Marke lesen die Palette daher selbst aus dem
-          CSS, statt <span class="doc-code">PALETTE</span> zu importieren:
-        </p>
-        <div class="doc-codeblock">const s = getComputedStyle(document.documentElement);
-const palette = Array.from({length: 8}, (_, i) =&gt;
-  s.getPropertyValue(`--gat-web-chart-${i + 1}`).trim());</div>
-        <p>
-          Siehe <a href="https://github.com/GrueneAT/design-system/issues/34">#34</a>.
-        </p>
-      </div>
+      <h3 class="gat-subline">Diagramme</h3>
+      <p class="gat-fliesstext doc-lead">
+        <span class="doc-code">gat-charts.js</span> bietet zwei Ebenen. Die
+        statischen Exporte <span class="doc-code">PALETTE</span> und
+        <span class="doc-code">INK</span> kennen <strong>kein</strong> Theming
+        &mdash; sie sind auf Modulebene und ohne DOM lesbar und bleiben
+        deshalb bei den Werten der Grünen AT. Die Funktionen
+        <span class="doc-code">palette()</span>,
+        <span class="doc-code">ink()</span> und
+        <span class="doc-code">schrift()</span> lesen dieselben Werte zur
+        Aufrufzeit aus den CSS-Tokens und folgen deiner Überschreibung.
+      </p>
+      <div class="doc-codeblock">import { palette, ink, schrift } from 'https://design-system.gruene.at/gat-charts.js';
+
+chart.setOption({
+  color: palette(),
+  textStyle: { color: ink().text, fontFamily: schrift() },
+});</div>
+      <p class="gat-fliesstext doc-lead">
+        <span class="doc-code">tip()</span> und
+        <span class="doc-code">legende()</span> lesen intern ebenfalls zur
+        Aufrufzeit &mdash; wer sie verwendet, bekommt das richtige Verhalten
+        ohne Zutun. <span class="doc-code">ink().gridline</span> und
+        <span class="doc-code">ink().axis</span> bleiben immer statisch, weil
+        es für sie kein Token gibt.
+      </p>
 
       <h3 class="gat-subline">Was unangetastet bleibt</h3>
       <ul class="gat-fliesstext doc-lead doc-bullets">

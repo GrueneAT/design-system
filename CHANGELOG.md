@@ -14,6 +14,25 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
 
 ### Hinzugefügt
 
+- **`gat-charts.js` folgt jetzt dem Theming** (#34). Neue Exporte `palette()`,
+  `ink()` und `schrift()` lesen die CSS-Tokens zur Aufrufzeit und folgen damit
+  lokalen Überschreibungen; `tip()` und `legende()` tun das intern ebenfalls.
+  Bisher waren Palette, Textfarben und Schrift fest verdrahtet, sodass ein
+  Konsument mit eigener Marke grüne Diagramme behielt, während der Rest der
+  Oberfläche die neue Marke trug.
+
+  **Strikt additiv, kein Breaking Change:** `PALETTE` und `INK` bleiben
+  unverändert statisch. Das ist Absicht — sie werden von Konsumenten auf
+  Modulebene gelesen (`gemeindefinanzen` baut daraus beim Import eine
+  Farbrollen-Tabelle) und müssen ohne DOM funktionieren (Node-Tests über
+  einen Loader-Shim). Ohne DOM oder ohne geladenes Stylesheet fallen die
+  neuen Funktionen auf genau diese Werte zurück.
+
+  `ink().gridline` und `ink().axis` bleiben immer statisch, weil es für sie
+  im DS kein Token gibt.
+
+### Hinzugefügt
+
 - **`.gat-toolnav` — Werkzeug-Navigation (Reiter-Leiste).** Horizontale
   Abschnitts-Navigation für den Hauptcontainer, gedacht direkt unter der
   Seiten-Headline (Alternative zum vertikalen Seitenmenü). Mit
