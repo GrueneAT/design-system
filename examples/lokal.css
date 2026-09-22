@@ -61,15 +61,20 @@
   /* Doppelrolle: Fläche mit weissem Text (.gat-skiplink,
      .gat-switch-btn.is-active) UND Textfarbe auf hellem Grund
      (.gat-header__nav-list a, .gat-tab.is-active, .gat-tag--info).
-     Braucht daher 4,5:1 gegen Weiss UND gegen green-tint. */
-  --gat-web-green-deep: #2c6e40;   /* 6,16:1 gegen weiss · 5,23:1 auf tint */
+     Dritte Paarung: .gat-tag--pflicht setzt green-deep als Text auf eine
+     14-%-Mischung seiner selbst. Braucht daher 4,5:1 gegen Weiss, gegen
+     green-tint UND gegen diese Mischung. */
+  --gat-web-green-deep: #2c6e40;   /* 6,16:1 weiss · 5,23:1 auf tint · 5,04:1 auf 14%-Mischung */
 
   /* Rahmen, Akzentstreifen, transluzente Hover-Flächen.
      Es steht NIRGENDS Text darauf — keine Kontrast-Anforderung. */
   --gat-web-green:      #4a8a52;   /* Kopfleiste, Akzentlinien */
 
   --gat-web-green-tint: #e7efe3;   /* 12,92:1 gegen --gat-web-text */
-  --gat-web-yellow:     #ecd64a;   /* 10,34:1 gegen --gat-web-text */
+  /* Deklariert, aber von KEINER Komponente verwendet — wie
+     --gat-color-dunkelgruen-strong. Nur setzen, wenn dein eigenes CSS
+     es referenziert. */
+  --gat-web-yellow:     #ecd64a;
 
   /* === 3. Diagramm-Palette ===============================================
      Acht kategoriale Töne. Die ersten beiden dürfen die Marke tragen, die
