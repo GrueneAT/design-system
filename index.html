@@ -403,7 +403,7 @@
             <div class="doc-swatch__chip" style="background: var(--gat-color-hellgruen);"></div>
             <div class="doc-swatch__meta">
               <span class="doc-code">--gat-color-hellgruen</span>
-              <span class="doc-swatch__hex">#56af31</span>
+              <span class="doc-swatch__hex">#3e8a25</span>
               <span class="doc-swatch__usage">Sekundäre Markenfarbe (Hellgrün).</span>
             </div>
           </div>
@@ -472,7 +472,7 @@
             <div class="doc-swatch__chip" style="background: var(--gat-color-secondary);"></div>
             <div class="doc-swatch__meta">
               <span class="doc-code">--gat-color-secondary</span>
-              <span class="doc-swatch__hex">&rarr; hellgruen (#56af31)</span>
+              <span class="doc-swatch__hex">&rarr; hellgruen (#3e8a25)</span>
               <span class="doc-swatch__usage">Sekundärfläche.</span>
             </div>
           </div>
@@ -520,8 +520,8 @@
             <div class="doc-swatch__chip" style="background: var(--gat-color-secondary); color: var(--gat-color-on-secondary); display: flex; align-items: center; justify-content: center; font-family: var(--gat-font-headline); font-weight: 900;">Aa</div>
             <div class="doc-swatch__meta">
               <span class="doc-code">--gat-color-on-secondary</span>
-              <span class="doc-swatch__hex">&rarr; anthrazit (#1d1d1b)</span>
-              <span class="doc-swatch__usage">Text auf Hellgrün &mdash; Kontrast 6,09:1. Hellgrün und Gelb tragen Anthrazit-Text, nie Weiß.</span>
+              <span class="doc-swatch__hex">#000000</span>
+              <span class="doc-swatch__usage">Text auf Hellgrün &mdash; reines Schwarz, Kontrast 4,87:1. Anthrazit erreichte hier nur 3,91:1 (siehe <a href="https://github.com/GrueneAT/design-system/issues/33">#33</a>). Gelb trägt weiterhin Anthrazit, Weiß nie.</span>
             </div>
           </div>
         </div>
@@ -1323,7 +1323,7 @@
             </article>
             <article class="gat-card gat-card--secondary" style="max-width: 22rem;">
               <h3 class="gat-card__title">Sekundär-Karte</h3>
-              <p class="gat-card__body">Hellgrüne Fläche mit Anthrazit-Text &mdash; Kontrast 6,09:1.</p>
+              <p class="gat-card__body">Hellgrüne Fläche mit schwarzem Text &mdash; Kontrast 4,87:1.</p>
             </article>
           </div>
           <div class="doc-codeblock">&lt;article class="gat-card gat-card--primary"&gt;
@@ -1333,7 +1333,7 @@
 
 &lt;article class="gat-card gat-card--secondary"&gt;
   &lt;h3 class="gat-card__title"&gt;Sekundär-Karte&lt;/h3&gt;
-  &lt;p class="gat-card__body"&gt;Hellgrüne Fläche mit Anthrazit-Text.&lt;/p&gt;
+  &lt;p class="gat-card__body"&gt;Hellgrüne Fläche mit schwarzem Text.&lt;/p&gt;
 &lt;/article&gt;</div>
         </div>
       </div>
@@ -1387,8 +1387,8 @@
               <p class="gat-card__body">
                 <span class="doc-code">.gat-card</span> trägt immer
                 <span class="doc-code">--primary</span> oder
-                <span class="doc-code">--secondary</span>; Anthrazit-Text auf
-                Hellgrün.
+                <span class="doc-code">--secondary</span>; schwarzer Text auf
+                Hellgrün, Anthrazit auf Gelb.
               </p>
             </article>
           </div>
@@ -1397,8 +1397,8 @@
             <p class="gat-fliesstext" style="margin: 0;">
               <span class="doc-code">.gat-card</span> ohne Varianten-Modifier
               &mdash; transparente Fläche, der Inhalt wirkt „kaputt". Und:
-              weißer Text auf Hellgrün oder Gelb fällt durch den Kontrast,
-              Hellgrün/Gelb tragen ausschließlich Anthrazit-Text.
+              weißer Text auf Hellgrün oder Gelb fällt durch den Kontrast.
+              Hellgrün trägt reines Schwarz, Gelb trägt Anthrazit &mdash; nie Weiß.
             </p>
           </div>
         </div>
@@ -2993,19 +2993,19 @@
   "tokens": {
     "color": {
       "--gat-color-dunkelgruen": { "value": "#257639", "role": "primitive", "usage": "Primäre Markenfarbe (Dunkelgrün)." },
-      "--gat-color-hellgruen": { "value": "#56af31", "role": "primitive", "usage": "Sekundäre Markenfarbe (Hellgrün)." },
+      "--gat-color-hellgruen": { "value": "#3e8a25", "role": "primitive", "usage": "Sekundäre Markenfarbe (Hellgrün). Flächenfarbe, nicht Textfarbe auf hellem Grund." },
       "--gat-color-gelb": { "value": "#ffed00", "role": "primitive", "usage": "Highlight-Farbe (Gelb)." },
       "--gat-color-magenta": { "value": "#e6007e", "role": "primitive", "usage": "Akzentfarbe (Magenta); HEX maßgeblich." },
       "--gat-color-weiss": { "value": "#ffffff", "role": "neutral", "usage": "Flächen / Text auf Grün." },
       "--gat-color-anthrazit": { "value": "#1d1d1b", "role": "neutral", "usage": "Dunkler Textton." },
       "--gat-color-primary": { "value": "#257639", "role": "alias", "aliasOf": "--gat-color-dunkelgruen", "usage": "Primärfläche." },
-      "--gat-color-secondary": { "value": "#56af31", "role": "alias", "aliasOf": "--gat-color-hellgruen", "usage": "Sekundärfläche." },
+      "--gat-color-secondary": { "value": "#3e8a25", "role": "alias", "aliasOf": "--gat-color-hellgruen", "usage": "Sekundärfläche." },
       "--gat-color-accent": { "value": "#e6007e", "role": "alias", "aliasOf": "--gat-color-magenta", "usage": "Akzent — Unterstreichung, Störer." },
       "--gat-color-highlight": { "value": "#ffed00", "role": "alias", "aliasOf": "--gat-color-gelb", "usage": "Hervorhebung / Nav-Unterstreichung." },
       "--gat-color-text": { "value": "#1d1d1b", "role": "alias", "aliasOf": "--gat-color-anthrazit", "usage": "Standard-Textfarbe." },
       "--gat-color-surface": { "value": "#ffffff", "role": "alias", "aliasOf": "--gat-color-weiss", "usage": "Standard-Hintergrund." },
       "--gat-color-on-primary": { "value": "#ffffff", "role": "alias", "aliasOf": "--gat-color-weiss", "usage": "Text auf Dunkelgrün — Kontrast 5,63:1." },
-      "--gat-color-on-secondary": { "value": "#1d1d1b", "role": "alias", "aliasOf": "--gat-color-anthrazit", "usage": "Text auf Hellgrün — Kontrast 6,09:1." }
+      "--gat-color-on-secondary": { "value": "#000000", "role": "alias", "aliasOf": null, "usage": "Text auf Hellgrün — reines Schwarz, Kontrast 4,87:1. Einziges Alias ohne Primitive: Anthrazit erreichte hier nur 3,91:1 (#33)." }
     },
     "font": {
       "--gat-font-headline": { "value": "'Barlow Semi Condensed', sans-serif", "role": "font", "usage": "Headlines (CD: Gotham-Ultra-Ersatz)." },
@@ -3174,7 +3174,7 @@
           </thead>
           <tbody>
             <tr><td><span class="doc-code">--gat-color-dunkelgruen</span></td><td>Fläche; trägt <strong>weissen</strong> Text (<span class="doc-code">.gat-btn--primary</span>, <span class="doc-code">.gat-card--primary</span>)</td><td>≥ 4,5:1 gegen Weiss</td><td class="gat-table__num">5,63:1</td></tr>
-            <tr><td><span class="doc-code">--gat-color-hellgruen</span></td><td>Fläche; trägt <strong>dunklen</strong> Text (<span class="doc-code">.gat-card--secondary</span>)</td><td>≥ 4,5:1 gegen <span class="doc-code">--gat-color-anthrazit</span></td><td class="gat-table__num">3,91:1 ⚠</td></tr>
+            <tr><td><span class="doc-code">--gat-color-hellgruen</span></td><td>Fläche; trägt <strong>schwarzen</strong> Text (<span class="doc-code">.gat-card--secondary</span>, <span class="doc-code">--gat-color-on-secondary</span> = <span class="doc-code">#000</span>)</td><td>≥ 4,5:1 gegen <span class="doc-code">--gat-color-on-secondary</span></td><td class="gat-table__num">4,87:1</td></tr>
             <tr><td><span class="doc-code">--gat-color-magenta</span></td><td>Akzentfläche (<span class="doc-code">.gat-stoerer--magenta</span>); trägt weissen Text</td><td>≥ 4,5:1 gegen Weiss</td><td class="gat-table__num">4,50:1</td></tr>
             <tr><td><span class="doc-code">--gat-color-gelb</span></td><td><strong>Textfarbe des Hochkontrast-Modus</strong> auf Anthrazit — keine gewöhnliche Zweitfarbe</td><td>≥ 4,5:1 gegen <span class="doc-code">--gat-color-anthrazit</span></td><td class="gat-table__num">13,96:1</td></tr>
             <tr><td><span class="doc-code">--gat-web-green</span></td><td>Rahmen, Akzentstreifen, transluzente Hover-Flächen — <strong>kein Text darauf</strong></td><td>keine Textanforderung</td><td class="gat-table__num">&mdash;</td></tr>
@@ -3213,12 +3213,19 @@
           erfunden ist.
         </p>
         <p>
-          <strong>Jede Zahl gilt nur gegen einen bestimmten Textton.</strong>
-          Die Marken-Schicht misst gegen <span class="doc-code">--gat-color-anthrazit</span>
+          <strong>Jede Zahl gilt nur gegen einen bestimmten Textton</strong>
+          &mdash; und du musst wissen, gegen welchen. Die meisten Flächen der
+          Marken-Schicht messen gegen <span class="doc-code">--gat-color-anthrazit</span>
           (#1d1d1b), die Web-Schicht gegen <span class="doc-code">--gat-web-text</span>
-          (#23271f). Wer gegen reines Schwarz rechnet, bekommt einen zu guten
-          Wert — genau so entstand der Fehler, den dieser Abschnitt bei
-          <span class="doc-code">hellgruen</span> korrigiert.
+          (#23271f). Eine Zahl gegen reines Schwarz ist immer die günstigere
+          und deshalb nur dann richtig, wenn dort tatsächlich Schwarz steht.
+          Genau eine Stelle im System tut das:
+          <span class="doc-code">--gat-color-on-secondary</span> ist seit
+          <a href="https://github.com/GrueneAT/design-system/issues/33">#33</a>
+          <span class="doc-code">#000</span>, weil Anthrazit auf Hellgrün nur
+          3,91:1 erreichte. Wer die Zahl gegen Schwarz nennt, ohne dass dort
+          Schwarz steht, beschönigt &mdash; so entstand der Fehler, den #33
+          behoben hat.
         </p>
       </div>
 

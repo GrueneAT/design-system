@@ -12,6 +12,35 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
 
 ## [Unreleased]
 
+### Geändert
+
+- **`--gat-color-on-secondary` von Anthrazit auf reines Schwarz** (#33). Das
+  Paar Anthrazit (`#1d1d1b`) auf Hellgrün (`#3e8a25`) erreichte nur **3,91:1**
+  und verfehlte damit AA für Fliesstext; `.gat-card--secondary` ist die
+  einzige Regel, die es setzt. Reines Schwarz erreicht **4,87:1**.
+
+  Die Markenfarbe Hellgrün bleibt unverändert. Die Alternative wäre gewesen,
+  sie aufzuhellen — das hätte die AA-Härtung gegen Weiss aus v2.1.1 wieder
+  rückgängig gemacht. Dies ist die einzige Stelle im System, an der bewusst
+  `#000` statt Anthrazit steht.
+
+  **Ursache:** v2.0.0 hat Hellgrün von `#56af31` auf `#3e8a25` abgedunkelt, um
+  den Kontrast gegen Weiss zu härten. Damit fiel der Kontrast gegen den Text
+  *darauf* von 6,09 auf 3,91 — die Dokumentation behielt jedoch die alte Zahl,
+  weshalb es unbemerkt blieb.
+
+  Optisch sichtbar nur auf `.gat-card--secondary`. Keine Anwendung nutzt den
+  Modifier; betroffen sind Styleguide und `examples/minimal.html`.
+
+### Dokumentation
+
+- Veraltete Angaben aus der Zeit vor v2.0.0 im Styleguide korrigiert: das
+  Farbmuster nannte weiterhin `#56af31`, zwei Stellen behaupteten „Kontrast
+  6,09:1", und der maschinenlesbare Spezifikationsblock führte für
+  `--gat-color-hellgruen` und `--gat-color-secondary` ebenfalls noch den alten
+  Wert. Die historischen Einträge in CHANGELOG und MIGRATION bleiben
+  unverändert — sie beschreiben korrekt, was damals geschah.
+
 ### Hinzugefügt
 
 - **`gat-charts.js` folgt jetzt dem Theming** (#34). Neue Exporte `palette()`,
@@ -68,11 +97,11 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
 
 ### Dokumentation
 
-- Kontrast-Kommentar bei `--color-gat-hellgruen` präzisiert. Die dort
-  genannten 4.86 gelten gegen reines Schwarz; gegen den tatsächlichen
-  Textton `--color-gat-anthrazit` (#1d1d1b) sind es 3.91 und damit unter AA
-  für Fliesstext. Betroffen ist `.gat-card--secondary`, das genau dieses
-  Paar setzt — als eigener Befund offen, hier nur korrekt dokumentiert.
+- Kontrast-Kommentar bei `--color-gat-hellgruen` präzisiert: eine Zahl ohne
+  Angabe des Texttons ist wertlos. Der dort zuvor genannte Wert galt gegen
+  reines Schwarz, nicht gegen den Hausston Anthrazit.
+  *Der daraus folgende Befund ist im selben Release behoben — siehe den
+  Eintrag zu `--gat-color-on-secondary` unter „Geändert" (#33).*
 
 ## [2.3.1] - 2026-06-11
 

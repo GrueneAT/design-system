@@ -56,10 +56,10 @@
      Hellgrün bleibt strukturell Akzent-Fläche, nicht Textfarbe auf hellem
      Grund.
      Achtung beim Weiterlesen dieser Zahl: dunkler Text auf Hellgrün ergibt
-     4.86 gegen REINES SCHWARZ, aber nur 3.91 gegen den tatsächlichen
-     Textton --color-gat-anthrazit (#1d1d1b). Genau dieses Paar setzt
-     .gat-card--secondary ein (on-secondary = anthrazit), liegt damit unter
-     AA für Fließtext und ist als eigener Befund offen. */
+     4.87 gegen REINES SCHWARZ, aber nur 3.91 gegen den Hausston
+     --color-gat-anthrazit (#1d1d1b). Deshalb setzt --gat-color-on-secondary
+     seit #33 reines Schwarz statt Anthrazit — siehe dort. Die Abdunklung
+     von #56af31 auf diesen Wert geschah in v2.0.0. */
   --color-gat-hellgruen:   #3e8a25;
   --color-gat-gelb:        #ffed00;
   --color-gat-magenta:     #e6007e; /* HEX maßgeblich, PDF-RGB 225/0/120 inkonsistent */
@@ -159,7 +159,14 @@
     --gat-color-text:         var(--gat-color-anthrazit);
     --gat-color-surface:      var(--gat-color-weiss);
     --gat-color-on-primary:   var(--gat-color-weiss);    /* Text auf Dunkelgrün */
-    --gat-color-on-secondary: var(--gat-color-anthrazit); /* Text auf Hellgrün — Weiß auf Hellgrün fiele durch den Kontrast */
+    /* Text auf Hellgrün. Weiß erreicht auf #3e8a25 nur 4,31:1 und ist als
+       Fließtext zu schwach; der Hausston Anthrazit (#1d1d1b) liegt mit
+       3,91:1 noch darunter. Reines Schwarz erreicht 4,87:1 und besteht AA.
+       Das ist die einzige Stelle im System, an der bewusst #000 statt
+       Anthrazit steht — die Alternative wäre gewesen, die Markenfarbe
+       Hellgrün aufzuhellen, was die AA-Härtung gegen Weiß aus v2.0.0
+       rückgängig gemacht hätte. Siehe #33. */
+    --gat-color-on-secondary: #000000;
 
     /* Schrift */
     --gat-font-headline: var(--font-gat-headline);
