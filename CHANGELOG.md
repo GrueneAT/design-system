@@ -24,6 +24,36 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
   Gruppe) statt horizontal über den Viewport hinauszuwachsen — kein
   Hamburger. Strikt additiv. Erstabnehmer: Personenwahl (linkes Seitenmenü →
   Reiter-Leiste unter der Headline).
+- **Dokumentierter Theming-Vertrag für Konsumenten ausserhalb der Grünen
+  Österreich** (#31). Das Erscheinungsbild lässt sich über Tokens anpassen,
+  ohne das Stylesheet zu forken oder zu kopieren — eine eigene `lokal.css`
+  nach dem Design-System, rund ein Dutzend Tokens in einem ungelayerten
+  `:root`-Block. Das funktionierte schon vorher, war aber nirgends
+  beschrieben, sodass jeder Konsument es neu erschliessen musste.
+  - Neuer Abschnitt „Für andere Organisationen" im Style Guide (`#theming`)
+    mit vollständiger Token-Liste, Rollen und gemessenen Kontrastwerten.
+  - `examples/lokal.css` als kommentierte Kopiervorlage.
+  - `examples/theming.html` als lauffähiges Beispiel mit anderer Marke.
+  - Hinweis im README.
+
+  Der Abschnitt benennt dabei ausdrücklich, was Theming **mitzieht** und was
+  es **nicht** kann: die `info`-Variante von Callout/Tag/Toast bezieht ihre
+  Farben ganz aus den Marken-Tokens und nimmt die neue Marke an, beim
+  Success-Rahmen ebenso; `--gat-color-gelb` ist die Textfarbe des
+  Hochkontrast-Modus und keine Schmuckfarbe; `--gat-web-green` trägt nirgends
+  Text; und `gat-charts.js` verdrahtet die Palette fest, greift also nicht auf
+  die Tokens zu (#34).
+
+  Kein Breaking Change: keine Token-Werte, Klassen oder Defaults geändert.
+  Die ausgelieferte `design-system.css` ist unverändert.
+
+### Dokumentation
+
+- Kontrast-Kommentar bei `--color-gat-hellgruen` präzisiert. Die dort
+  genannten 4.86 gelten gegen reines Schwarz; gegen den tatsächlichen
+  Textton `--color-gat-anthrazit` (#1d1d1b) sind es 3.91 und damit unter AA
+  für Fliesstext. Betroffen ist `.gat-card--secondary`, das genau dieses
+  Paar setzt — als eigener Befund offen, hier nur korrekt dokumentiert.
 
 ## [2.3.1] - 2026-06-11
 

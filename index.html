@@ -64,6 +64,13 @@
       border-bottom: 1px solid #d9ddd6;
     }
 
+    /* Inhaltslisten: das DS setzt list-style zurueck, die Doku braucht Marker. */
+    .doc-bullets {
+      list-style: disc;
+      padding-left: var(--gat-space-4);
+    }
+    .doc-bullets li { margin-bottom: var(--gat-space-2); }
+
     .doc-swatch__meta {
       padding: var(--gat-space-3);
       display: flex;
@@ -325,6 +332,7 @@
           <li><a href="#cd-layout">CD-Layout</a></li>
           <li><a href="#spezifikation">Spezifikation</a></li>
           <li><a href="#einbindung">Einbindung</a></li>
+          <li><a href="#theming">Theming</a></li>
         </ul>
       </nav>
     </div>
@@ -3120,6 +3128,202 @@
         Stand; alle nennenswerten Änderungen &mdash; insbesondere Breaking
         Changes &mdash; sind in der
         <a href="CHANGELOG.md">CHANGELOG.md</a> dokumentiert.
+      </p>
+    </div>
+  </section>
+
+  <section class="gat-section doc-section-alt" id="theming">
+    <div class="gat-container">
+      <h2 class="gat-headline">Für andere Organisationen</h2>
+      <p class="gat-fliesstext doc-lead">
+        Dieses Design-System ist das der Grünen Österreich. Konsumenten
+        ausserhalb &mdash; eine Partei in einem anderen Land, ein Landesverband
+        mit eigener Akzentfarbe, ein Verein &mdash; passen das Erscheinungsbild
+        über <strong>Tokens</strong> an. Das Stylesheet wird dafür weder
+        geforkt noch kopiert.
+      </p>
+
+      <h3 class="gat-subline">Die Regel</h3>
+      <p class="gat-fliesstext doc-lead">
+        Eine eigene Datei <span class="doc-code">lokal.css</span> nach dem
+        Design-System einbinden und darin ausschliesslich Tokens in einem
+        <span class="doc-code">:root</span>-Block überschreiben.
+      </p>
+      <div class="doc-codeblock">&lt;link rel="stylesheet" href="https://design-system.gruene.at/design-system.css"&gt;
+&lt;link rel="stylesheet" href="lokal.css"&gt;</div>
+      <p class="gat-fliesstext doc-lead">
+        Ein schlichter <span class="doc-code">:root</span>-Block genügt, weil
+        die Defaults dieses Stylesheets in <span class="doc-code">@layer</span>-Regeln
+        stehen: ungelayerte Deklarationen gewinnen gegen gelayerte, unabhängig
+        von der Reihenfolge im Dokument. <strong>Komponentenklassen niemals neu
+        definieren</strong> &mdash; wer <span class="doc-code">.gat-btn</span>
+        überschreibt statt der Tokens, bekommt beim nächsten Update lautlos
+        eine kaputte Oberfläche.
+      </p>
+
+      <h3 class="gat-subline">Was überschrieben werden muss</h3>
+      <p class="gat-fliesstext doc-lead">
+        Rund ein Dutzend Tokens genügt. Die Web-Schicht leitet sich
+        <em>nicht</em> aus den Marken-Farben ab und muss eigens gesetzt werden
+        &mdash; sonst bleibt die Kopfleiste im Grün der Grünen AT.
+      </p>
+      <div class="gat-table-scroll">
+        <table class="gat-table gat-table--zebra gat-table--compact">
+          <thead>
+            <tr><th>Token</th><th>Rolle</th><th>Anforderung</th><th class="gat-table__num">Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="doc-code">--gat-color-dunkelgruen</span></td><td>Fläche; trägt <strong>weissen</strong> Text (<span class="doc-code">.gat-btn--primary</span>, <span class="doc-code">.gat-card--primary</span>)</td><td>≥ 4,5:1 gegen Weiss</td><td class="gat-table__num">5,63:1</td></tr>
+            <tr><td><span class="doc-code">--gat-color-hellgruen</span></td><td>Fläche; trägt <strong>dunklen</strong> Text (<span class="doc-code">.gat-card--secondary</span>)</td><td>≥ 4,5:1 gegen <span class="doc-code">--gat-color-anthrazit</span></td><td class="gat-table__num">3,91:1 ⚠</td></tr>
+            <tr><td><span class="doc-code">--gat-color-magenta</span></td><td>Akzentfläche (<span class="doc-code">.gat-stoerer--magenta</span>); trägt weissen Text</td><td>≥ 4,5:1 gegen Weiss</td><td class="gat-table__num">4,50:1</td></tr>
+            <tr><td><span class="doc-code">--gat-color-gelb</span></td><td><strong>Textfarbe des Hochkontrast-Modus</strong> auf Anthrazit — keine gewöhnliche Zweitfarbe</td><td>≥ 4,5:1 gegen <span class="doc-code">--gat-color-anthrazit</span></td><td class="gat-table__num">13,96:1</td></tr>
+            <tr><td><span class="doc-code">--gat-web-green</span></td><td>Rahmen, Akzentstreifen, transluzente Hover-Flächen — <strong>kein Text darauf</strong></td><td>keine Textanforderung</td><td class="gat-table__num">&mdash;</td></tr>
+            <tr><td><span class="doc-code">--gat-web-green-deep</span></td><td>Doppelrolle: Fläche mit weissem Text (<span class="doc-code">.gat-skiplink</span>) <em>und</em> Textfarbe auf hellem Grund (<span class="doc-code">.gat-header__nav-list a</span>, <span class="doc-code">.gat-tag--info</span>)</td><td>≥ 4,5:1 gegen Weiss, gegen <span class="doc-code">--gat-web-green-tint</span> <em>und</em> gegen eine 14-%-Mischung seiner selbst (<span class="doc-code">.gat-tag--pflicht</span>)</td><td class="gat-table__num">6,16:1 / 5,23:1 / 5,04:1</td></tr>
+            <tr><td><span class="doc-code">--gat-web-green-tint</span></td><td>helle Fläche; trägt <span class="doc-code">--gat-web-text</span></td><td>≥ 4,5:1 gegen <span class="doc-code">--gat-web-text</span></td><td class="gat-table__num">12,92:1</td></tr>
+            <tr><td><span class="doc-code">--gat-web-yellow</span></td><td>deklariert, aber von <strong>keiner</strong> Komponente verwendet &mdash; wie <span class="doc-code">--gat-color-dunkelgruen-strong</span>. Nur setzen, wenn dein eigenes CSS es referenziert</td><td>&mdash;</td><td class="gat-table__num">&mdash;</td></tr>
+            <tr><td><span class="doc-code">--gat-web-chart-1…8</span></td><td>Diagramm-Palette (siehe Hinweis zu <span class="doc-code">gat-charts.js</span> unten)</td><td>untereinander unterscheidbar</td><td class="gat-table__num">&mdash;</td></tr>
+            <tr><td><span class="doc-code">--gat-font-headline</span>, <span class="doc-code">--gat-font-copy</span>, <span class="doc-code">--gat-font-emphasis</span></td><td>Schrift, optional. <span class="doc-code">emphasis</span> wird von <span class="doc-code">.gat-emphasis</span> verwendet</td><td>&mdash;</td><td class="gat-table__num">&mdash;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="gat-fliesstext doc-lead">
+        <span class="doc-code">--gat-color-dunkelgruen-strong</span> wird von
+        keiner Komponente dieses Systems verwendet &mdash; es existiert für
+        Konsumenten, die mit <span class="doc-code">opacity</span> arbeiten. Wer
+        es nicht referenziert, kann es weglassen.
+      </p>
+
+      <h3 class="gat-subline">Kontrast ist die eigentliche Hürde</h3>
+      <div class="gat-callout gat-callout--warn">
+        <p class="gat-callout__lead">Markenfarben sind oft zu hell für weisse Schrift</p>
+        <p>
+          Weissen Text tragen <span class="doc-code">--gat-color-dunkelgruen</span>,
+          <span class="doc-code">--gat-color-magenta</span> und
+          <span class="doc-code">--gat-web-green-deep</span>. Sie brauchen
+          mindestens <strong>4,5:1 gegen Weiss</strong>. Viele Parteifarben
+          wurden für Logo und Druck gewählt und fallen durch — ein typisches
+          helles Grün wie <span class="doc-code">#78be20</span> liegt bei 2,29:1.
+        </p>
+        <p>
+          Dann nicht die Marke ändern, sondern die <strong>Rollen trennen</strong>:
+          Markenfarbe als Fläche (<span class="doc-code">hellgruen</span>,
+          <span class="doc-code">web-green-tint</span>), eine abgedunkelte
+          Variante überall dort, wo weisse Schrift darauf liegt. Und im
+          Kommentar festhalten, dass der dunklere Wert abgeleitet und nicht
+          erfunden ist.
+        </p>
+        <p>
+          <strong>Jede Zahl gilt nur gegen einen bestimmten Textton.</strong>
+          Die Marken-Schicht misst gegen <span class="doc-code">--gat-color-anthrazit</span>
+          (#1d1d1b), die Web-Schicht gegen <span class="doc-code">--gat-web-text</span>
+          (#23271f). Wer gegen reines Schwarz rechnet, bekommt einen zu guten
+          Wert — genau so entstand der Fehler, den dieser Abschnitt bei
+          <span class="doc-code">hellgruen</span> korrigiert.
+        </p>
+      </div>
+
+      <div class="gat-callout gat-callout--error">
+        <p class="gat-callout__lead">Zwei Tokens sind keine Schmuckfarben</p>
+        <p>
+          <span class="doc-code">--gat-color-gelb</span> ist die
+          <strong>Textfarbe des Hochkontrast-Modus</strong>
+          (<span class="doc-code">.gat-mode-hc</span> setzt Gelb auf Anthrazit).
+          Wer es auf eine beliebige Markenfarbe setzt, zerlegt lautlos eine
+          Barrierefreiheits-Funktion. Entweder unverändert lassen oder einen
+          Wert wählen, der gegen Anthrazit mindestens 4,5:1 erreicht.
+        </p>
+        <p>
+          <span class="doc-code">--gat-web-green</span> trägt
+          <strong>nirgends</strong> Text — es ist Rahmen, Akzentstreifen und
+          transluzente Hover-Fläche. Sein Default-Wert erreicht gegen Weiss nur
+          4,16:1, und das ist in Ordnung, weil kein Text darauf steht. Eine
+          Kontrast-Anforderung daraus abzuleiten wäre falsch.
+        </p>
+      </div>
+
+      <h3 class="gat-subline">Was die Marke mitzieht, ohne dass du es setzt</h3>
+      <p class="gat-fliesstext doc-lead">
+        Drei Familien folgen den Tokens oben automatisch. Das ist so gewollt,
+        muss aber bekannt sein:
+      </p>
+      <ul class="gat-fliesstext doc-lead doc-bullets">
+        <li>
+          <strong>Abgeleitete Werte</strong> —
+          <span class="doc-code">--gat-web-focus-ring</span> und
+          <span class="doc-code">--gat-web-table-row-stripe</span> rechnen per
+          <span class="doc-code">color-mix</span> aus den gesetzten Tokens.
+        </li>
+        <li>
+          <strong>Info-Zustand</strong> — Callout, Tag und Toast der Variante
+          <span class="doc-code">info</span> beziehen Fläche, Rahmen und Text
+          vollständig aus <span class="doc-code">--gat-web-green-tint</span>
+          und <span class="doc-code">--gat-web-green-deep</span>. Sie werden
+          also deine Marke annehmen — richtig so, „Info" ist kein Warnsignal.
+        </li>
+        <li>
+          <strong>Success-Rahmen</strong> — bei
+          <span class="doc-code">callout-success</span> und
+          <span class="doc-code">toast-success</span> folgt <em>nur der
+          Rahmen</em> (<span class="doc-code">--gat-web-green</span>) der Marke;
+          Fläche und Text bleiben grün. Ist deine Marke nicht grün, prüfe, ob
+          die Erfolgsmeldung noch als Erfolg lesbar ist.
+        </li>
+      </ul>
+
+      <h3 class="gat-subline">Diagramme: das mitgelieferte Helfer-Modul ignoriert die Tokens</h3>
+      <div class="gat-callout gat-callout--warn">
+        <p>
+          <span class="doc-code">gat-charts.js</span> exportiert
+          <span class="doc-code">PALETTE</span>, <span class="doc-code">INK</span>
+          und die Schriftangaben als <strong>fest verdrahtete Werte</strong>,
+          nicht als Verweise auf die CSS-Tokens. Wer das Modul einbindet und
+          nur <span class="doc-code">--gat-web-chart-1…8</span> überschreibt,
+          bekommt weiterhin die Palette der Grünen AT.
+        </p>
+        <p>
+          Konsumenten mit eigener Marke lesen die Palette daher selbst aus dem
+          CSS, statt <span class="doc-code">PALETTE</span> zu importieren:
+        </p>
+        <div class="doc-codeblock">const s = getComputedStyle(document.documentElement);
+const palette = Array.from({length: 8}, (_, i) =&gt;
+  s.getPropertyValue(`--gat-web-chart-${i + 1}`).trim());</div>
+        <p>
+          Siehe <a href="https://github.com/GrueneAT/design-system/issues/34">#34</a>.
+        </p>
+      </div>
+
+      <h3 class="gat-subline">Was unangetastet bleibt</h3>
+      <ul class="gat-fliesstext doc-lead doc-bullets">
+        <li>
+          <strong>Die eigentlichen Statusfarben</strong> &mdash; die Varianten
+          <span class="doc-code">warn</span>, <span class="doc-code">error</span>,
+          <span class="doc-code">ok</span>, <span class="doc-code">neutral</span>
+          und <span class="doc-code">legal</span> bei Callout, Tag und Toast
+          stehen als eigene Werte im System und werden von Theming nicht
+          berührt. Gelb heisst Warnung und Rot heisst Fehler, in jeder
+          Organisation &mdash; wer das auf die Marke einfärbt, zerstört die
+          Bedeutung.
+          <br>
+          <em>Ausnahme:</em> <span class="doc-code">info</span> und der
+          Success-Rahmen ziehen mit der Marke mit, siehe oben.
+        </li>
+        <li>
+          <strong>Layout-Rhythmus</strong> &mdash;
+          <span class="doc-code">--gat-space-*</span>,
+          <span class="doc-code">--gat-radius-*</span>,
+          <span class="doc-code">--gat-text-*</span>. Das ist keine Marke.
+        </li>
+        <li>
+          <strong>Text- und Flächenfarben</strong> &mdash; sie tragen den
+          Kontrast. Nur mit Messung anfassen.
+        </li>
+      </ul>
+
+      <p class="gat-fliesstext doc-lead">
+        Kopiervorlage mit allen Tokens und Kommentaren:
+        <a href="examples/lokal.css">examples/lokal.css</a>. Ein lauffähiges
+        Beispiel mit einer anderen Marke:
+        <a href="examples/theming.html">examples/theming.html</a>.
       </p>
     </div>
   </section>

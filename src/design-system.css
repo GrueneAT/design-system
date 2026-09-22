@@ -53,8 +53,13 @@
      #257639. */
   --color-gat-dunkelgruen-strong: #005538;
   /* AA-Härtung: Kontrast-Ratio 4.31 auf Weiß; v1.x-Wert lag bei 2.77.
-     Hellgrün bleibt strukturell Akzent-Fläche (Text dunkel auf Hellgrün:
-     Ratio 4.86, AA OK), nicht Textfarbe auf hellem Grund. */
+     Hellgrün bleibt strukturell Akzent-Fläche, nicht Textfarbe auf hellem
+     Grund.
+     Achtung beim Weiterlesen dieser Zahl: dunkler Text auf Hellgrün ergibt
+     4.86 gegen REINES SCHWARZ, aber nur 3.91 gegen den tatsächlichen
+     Textton --color-gat-anthrazit (#1d1d1b). Genau dieses Paar setzt
+     .gat-card--secondary ein (on-secondary = anthrazit), liegt damit unter
+     AA für Fließtext und ist als eigener Befund offen. */
   --color-gat-hellgruen:   #3e8a25;
   --color-gat-gelb:        #ffed00;
   --color-gat-magenta:     #e6007e; /* HEX maßgeblich, PDF-RGB 225/0/120 inkonsistent */

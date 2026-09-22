@@ -1,0 +1,135 @@
+/* ========================================================================= *
+ * lokal.css — Kopiervorlage für konsumierende Tools ausserhalb der
+ * Grünen Österreich.
+ *
+ * NACH design-system.css einbinden:
+ *
+ *   <link rel="stylesheet" href="https://design-system.gruene.at/design-system.css">
+ *   <link rel="stylesheet" href="lokal.css">
+ *
+ * Warum ein schlichter :root-Block genügt: die Defaults des Design-Systems
+ * stehen in @layer-Regeln. Ungelayerte Deklarationen gewinnen gegen
+ * gelayerte, unabhängig von der Reihenfolge im Dokument.
+ *
+ * NUR Tokens überschreiben. Niemals gat-Komponentenklassen neu definieren —
+ * sonst bricht das nächste Design-System-Update das Tool lautlos.
+ *
+ * Herkunft der Werte hier eintragen:
+ *   Organisation: <Name>
+ *   Quelle:       <Styleguide, URL, oder wer die Werte genannt hat>
+ *   Stand:        <Datum>
+ * ========================================================================= */
+
+:root {
+  /* === 1. Marken-Farben ==================================================
+     Tragen WEISSE Schrift (--gat-color-on-primary). Mindestens 4.5:1 gegen
+     Weiss, sonst ist Fliesstext darauf nicht lesbar. Der Default #257639
+     liegt bei 5.63:1.
+     Ist die Markenfarbe zu hell — viele Parteigrüns sind es —, NICHT die
+     Marke ändern, sondern die Rollen trennen: Markenfarbe als Fläche
+     (hellgruen / web-green-tint), abgedunkelte Variante überall dort, wo
+     weisse Schrift darauf liegt. */
+  --gat-color-dunkelgruen: #257639;
+
+  /* Vertiefte Variante für Konsumenten, die mit opacity arbeiten. Wird von
+     keiner Komponente des Design-Systems selbst verwendet — wer sie nicht
+     referenziert, kann sie weglassen. */
+  --gat-color-dunkelgruen-strong: #005538;
+
+  /* Flächenfarbe, KEINE Textfarbe auf hellem Grund. Trägt dunkle Schrift
+     (--gat-color-on-secondary). */
+  --gat-color-hellgruen: #3e8a25;
+
+  /* ACHTUNG, keine Schmuckfarbe: --gat-color-gelb ist die TEXTFARBE des
+     Hochkontrast-Modus (.gat-mode-hc setzt Gelb auf Anthrazit). Ein
+     beliebiger Markenwert zerlegt hier lautlos eine Barrierefreiheits-
+     Funktion. Entweder unverändert lassen oder einen Wert wählen, der
+     gegen --gat-color-anthrazit mindestens 4,5:1 erreicht. */
+  --gat-color-gelb:    #ffed00;   /* 13,96:1 gegen anthrazit */
+
+  /* Akzentfläche (.gat-stoerer--magenta), trägt weisse Schrift. */
+  --gat-color-magenta: #e6007e;   /* 4,50:1 gegen weiss */
+
+  /* === 2. Web-Schicht ====================================================
+     Entsättigte Auslegung für Datenwerkzeuge mit langen Lesestrecken.
+     Leitet sich NICHT aus den Marken-Farben ab und muss eigens gesetzt
+     werden — sonst bleibt die Kopfleiste im Grün der Grünen AT.
+
+     Die Web-Schicht misst gegen --gat-web-text (#23271f), NICHT gegen
+     anthrazit. Eine Zahl ohne Angabe des Texttons ist wertlos. */
+
+  /* Doppelrolle: Fläche mit weissem Text (.gat-skiplink,
+     .gat-switch-btn.is-active) UND Textfarbe auf hellem Grund
+     (.gat-header__nav-list a, .gat-tab.is-active, .gat-tag--info).
+     Dritte Paarung: .gat-tag--pflicht setzt green-deep als Text auf eine
+     14-%-Mischung seiner selbst. Braucht daher 4,5:1 gegen Weiss, gegen
+     green-tint UND gegen diese Mischung. */
+  --gat-web-green-deep: #2c6e40;   /* 6,16:1 weiss · 5,23:1 auf tint · 5,04:1 auf 14%-Mischung */
+
+  /* Rahmen, Akzentstreifen, transluzente Hover-Flächen.
+     Es steht NIRGENDS Text darauf — keine Kontrast-Anforderung. */
+  --gat-web-green:      #4a8a52;   /* Kopfleiste, Akzentlinien */
+
+  --gat-web-green-tint: #e7efe3;   /* 12,92:1 gegen --gat-web-text */
+  /* Deklariert, aber von KEINER Komponente verwendet — wie
+     --gat-color-dunkelgruen-strong. Nur setzen, wenn dein eigenes CSS
+     es referenziert. */
+  --gat-web-yellow:     #ecd64a;
+
+  /* === 3. Diagramm-Palette ===============================================
+     Acht kategoriale Töne. Die ersten beiden dürfen die Marke tragen, die
+     restlichen müssen untereinander unterscheidbar bleiben — auch bei
+     Rot-Grün-Sehschwäche. Zwei Abstufungen derselben Marke nebeneinander
+     in einem gestapelten Balken sind ein Problem, keine Markenführung.
+
+     ACHTUNG: das mitgelieferte Modul gat-charts.js verdrahtet Palette,
+     Textfarben und Schrift FEST und liest diese Tokens nicht. Wer es
+     importiert und nur hier überschreibt, bekommt weiterhin die Palette
+     der Grünen AT. Eigene Marke = Palette selbst aus dem CSS lesen:
+     getComputedStyle(document.documentElement)
+       .getPropertyValue('--gat-web-chart-1')  usw.  Siehe Issue #34. */
+  --gat-web-chart-1: #3f7d4f;
+  --gat-web-chart-2: #6ba368;
+  --gat-web-chart-3: #4f93a0;
+  --gat-web-chart-4: #c9a24b;
+  --gat-web-chart-5: #b9744f;
+  --gat-web-chart-6: #9c5b7d;
+  --gat-web-chart-7: #5d6b8a;
+  --gat-web-chart-8: #8a8f7d;
+
+  /* === 4. Schrift ========================================================
+     Nur setzen, wenn wirklich eine andere vorgeschrieben ist. Die Skala
+     (--gat-text-*) und die Zeilenabstände bleiben unangetastet. */
+  /* --gat-font-headline: "Deine Schrift", sans-serif; */
+  /* --gat-font-copy:     "Deine Schrift", sans-serif; */
+  /* --gat-font-emphasis: "Deine Serifenschrift", serif;  (.gat-emphasis) */
+}
+
+/* ========================================================================= *
+ * NICHT ANFASSEN
+ *
+ * --gat-web-callout-* / --gat-web-tag-* / --gat-web-toast-*
+ *     Die Varianten warn, error, ok, neutral und legal stehen als eigene
+ *     Werte im System und bleiben. Gelb heisst Warnung, Rot heisst Fehler —
+ *     in jeder Organisation. Wer sie auf die Marke einfärbt, zerstört die
+ *     Bedeutung.
+ *     AUSNAHME: die Variante `info` bezieht Flaeche, Rahmen und Text ganz
+ *     aus green-tint/green-deep und nimmt damit deine Marke an (so gewollt).
+ *     Bei `success` folgt NUR der Rahmen der Marke; Flaeche und Text bleiben
+ *     gruen. Ist deine Marke nicht gruen, pruefe, ob die Erfolgsmeldung noch
+ *     als Erfolg lesbar ist.
+ *
+ * --gat-space-* / --gat-radius-* / --gat-text-* / --gat-leading-*
+ *     Layout-Rhythmus, nicht Marke.
+ *
+ * --gat-color-text / --gat-color-surface / --gat-web-text / --gat-web-bg
+ *     Tragen den Kontrast. Nur mit Messung anfassen.
+ *
+ * Abgeleitete Werte brauchen keinen Eintrag: --gat-web-focus-ring und
+ * --gat-web-table-row-stripe rechnen sich per color-mix aus den Tokens
+ * oben und wandern automatisch mit.
+ *
+ * Nicht ueber Tokens loesbar und daher selbst zu ersetzen: das Logo im
+ * Header (eigene Datei), das Favicon, und Schriftdateien, falls du eigene
+ * einbindest.
+ * ========================================================================= */
