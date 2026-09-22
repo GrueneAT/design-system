@@ -252,6 +252,13 @@ zusammen 376 KB; ein Browser lädt davon je nach Seite zwei bis vier). Die von
 Google zusätzlich angebotenen Sätze — kyrillisch, griechisch, vietnamesisch —
 entfallen bewusst. Wer sie braucht, ergänzt sie in `src/design-system.css`.
 
+Der Preis dafür: GitHub Pages liefert mit `cache-control: max-age=600`, Google
+lieferte die Schriften mit einem Jahr. Wiederkehrende Besucherinnen
+revalidieren die Schriften also häufiger. Es sind bedingte Anfragen, die mit
+`304` und null Bytes enden — keine Neu-Downloads —, aber es sind zusätzliche
+Rundreisen. Dieselbe Cache-Dauer gilt ohnehin schon für `design-system.css`
+selbst.
+
 Beide Schriften stehen unter der **SIL Open Font License 1.1**, die das
 Selbst-Ausliefern ausdrücklich erlaubt. Die Lizenztexte liegen bei:
 [assets/fonts/OFL-Barlow.txt](assets/fonts/OFL-Barlow.txt) und

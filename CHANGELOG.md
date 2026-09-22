@@ -52,9 +52,21 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
   Seite sechs Anfragen an `fonts.gstatic.com` hinaus, ohne jede Nutzeraktion.
 
   Jetzt liegen die Schriften unter `assets/fonts/` und werden per
-  `@font-face` mit relativen Pfaden eingebunden. **Für Konsumenten ändert
-  sich nichts**: derselbe `<link>`, dieselbe Optik, kein zusätzlicher Eintrag.
+  `@font-face` mit relativen Pfaden eingebunden. Am Einbau ändert sich
+  nichts: derselbe `<link>`, dieselbe Optik, kein zusätzlicher Eintrag.
   Nachgemessen: keine einzige Fremdanfrage mehr.
+
+  **Was es kostet:** GitHub Pages liefert alle Dateien mit
+  `cache-control: max-age=600`, Google lieferte die Schriften mit
+  `max-age=31536000`. Wiederkehrende Besucherinnen revalidieren die Schriften
+  also alle zehn Minuten statt einmal im Jahr. Das ist kein Neu-Download —
+  Pages sendet ETags, die Revalidierung endet mit `304` und null übertragenen
+  Bytes (nachgemessen) — aber es sind zusätzliche Rundreisen, die auf
+  langsamen Verbindungen einen kurzen Wechsel auf die Ersatzschrift
+  verursachen können (`font-display: swap`). Dieselbe Cache-Dauer gilt schon
+  bisher für `design-system.css` selbst und für das Logo; neu ist nur, dass
+  sie jetzt auch für die Schriften gilt. Der Datenschutz-Gewinn ist diesen
+  Preis wert, aber er ist ein Preis.
 
   Ausgeliefert werden **latin** und **latin-ext** (16 Dateien, 376 KB). Die
   Sätze kyrillisch, griechisch und vietnamesisch entfallen — sie werden von
