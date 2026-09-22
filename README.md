@@ -69,11 +69,11 @@ und `--gat-web-green-deep` tragen **weisse Schrift** und brauchen mindestens
 fallen durch. `--gat-web-green` trägt dagegen nirgends Text — es ist Rahmen
 und Akzentfläche.
 
-Zwei Fallen, die der Style-Guide-Abschnitt ausführlich behandelt:
+Eine Falle, die der Style-Guide-Abschnitt ausführlich behandelt:
 `--gat-color-gelb` ist die Textfarbe des Hochkontrast-Modus und keine
-Schmuckfarbe, und das mitgelieferte `gat-charts.js` verdrahtet die
-Diagramm-Palette fest — wer es importiert, muss die Palette selbst aus den
-CSS-Tokens lesen.
+Schmuckfarbe. Für Diagramme siehe „Chart-Helfer" weiter oben — die
+Funktionen `palette()`, `ink()` und `schrift()` folgen den Tokens, die
+statischen Exporte `PALETTE`/`INK` nicht.
 
 ### Chart-Helfer (ES-Modul)
 

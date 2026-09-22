@@ -82,12 +82,10 @@
      Rot-Grün-Sehschwäche. Zwei Abstufungen derselben Marke nebeneinander
      in einem gestapelten Balken sind ein Problem, keine Markenführung.
 
-     ACHTUNG: das mitgelieferte Modul gat-charts.js verdrahtet Palette,
-     Textfarben und Schrift FEST und liest diese Tokens nicht. Wer es
-     importiert und nur hier überschreibt, bekommt weiterhin die Palette
-     der Grünen AT. Eigene Marke = Palette selbst aus dem CSS lesen:
-     getComputedStyle(document.documentElement)
-       .getPropertyValue('--gat-web-chart-1')  usw.  Siehe Issue #34. */
+     Wer das Modul gat-charts.js nutzt: die Funktionen palette(), ink()
+     und schrift() lesen diese Tokens zur Aufrufzeit und folgen der
+     Ueberschreibung. Die statischen Exporte PALETTE und INK tun das
+     nicht — sie bleiben bei den Werten der Gruenen AT. */
   --gat-web-chart-1: #3f7d4f;
   --gat-web-chart-2: #6ba368;
   --gat-web-chart-3: #4f93a0;
