@@ -331,6 +331,7 @@
 
     /* Zeilenabstände — Multiplikatoren aus dem CD-Quickguide */
     --gat-leading-headline: 0.9;
+    --gat-leading-subline:  1.2;
     --gat-leading-copy:     1.3;
 
     /* Abstände */
@@ -881,11 +882,15 @@
   color: var(--gat-color-text);
 }
 
+/* Eigener Zeilenabstand statt --gat-leading-headline (0.9). Der Wert ist
+   Display-Leading: auf einer grossen Headline richtig, auf einer Subline in
+   Absatzgroesse zu eng — bricht sie um, stossen Unterlaengen der ersten Zeile
+   fast in die Oberlaengen der zweiten. */
 .gat-subline {
   font-family: var(--gat-font-headline);
   font-weight: 600;
   font-size: var(--gat-text-subline);
-  line-height: var(--gat-leading-headline);
+  line-height: var(--gat-leading-subline);
   color: var(--gat-color-text);
 }
 
@@ -905,6 +910,65 @@
   font-size: var(--gat-text-copy);
   line-height: var(--gat-leading-copy);
   color: var(--gat-color-text);
+}
+
+/* --- Prosa: vertikaler Rhythmus + Links ---------------------------------
+   Die Typografie-Klassen tragen bewusst nur Schrift und Farbe, keinen
+   Aussenabstand — zwischen Abschnitten regelt .gat-section das, innerhalb
+   eines Abschnitts stossen aufeinanderfolgende Textbloecke aber buendig
+   aneinander. Jede konsumierende Seite hat sich den Rhythmus bisher selbst
+   gebaut. .gat-prose ist der gemeinsame Ort dafuer: opt-in, damit bestehende
+   Seiten unveraendert bleiben. */
+.gat-prose > * + * {
+  margin-top: var(--gat-space-3);
+}
+
+.gat-prose > .gat-headline + .gat-subline {
+  margin-top: var(--gat-space-3);
+}
+
+.gat-prose > .gat-headline + .gat-fliesstext,
+.gat-prose > .gat-subline + .gat-fliesstext {
+  margin-top: var(--gat-space-4);
+}
+
+.gat-prose > h2,
+.gat-prose > h3 {
+  margin-top: var(--gat-space-5);
+}
+
+.gat-prose > :first-child {
+  margin-top: 0;
+}
+
+/* Lesetextbreite. .gat-container ist fuer Raster gedacht und wird fuer
+   Fliesstext auf breiten Schirmen zu weit zum Lesen. */
+.gat-prose--schmal > * {
+  max-width: 62ch;
+}
+
+/* Links im Fliesstext. Das DS setzt keine Tag-Defaults, ein blankes <a> erbt
+   also Textfarbe und hat keine Unterstreichung — im Fliesstext ist es damit
+   von der Umgebung nicht zu unterscheiden. Das ist nicht nur unschoen,
+   sondern ein Zugaenglichkeitsproblem: Ohne Farbe UND ohne Unterstreichung
+   gibt es kein Merkmal, an dem ein Link erkennbar waere. Gilt fuer Prosa,
+   nicht fuer Navigation, Buttons oder Karten — die bringen ihr eigenes
+   Aussehen mit. */
+.gat-link,
+.gat-fliesstext a,
+.gat-prose a:not([class]) {
+  color: var(--gat-color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.gat-link:hover,
+.gat-fliesstext a:hover,
+.gat-prose a:not([class]):hover,
+.gat-link:focus-visible,
+.gat-fliesstext a:focus-visible,
+.gat-prose a:not([class]):focus-visible {
+  text-decoration-thickness: 2px;
 }
 
 .gat-emphasis {
