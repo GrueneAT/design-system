@@ -12,6 +12,39 @@ insbesondere Breaking Changes (MAJOR-Versionssprünge).
 
 ## [Unreleased]
 
+### Added
+
+- **`.gat-prose`** — vertikaler Rhythmus für Fließtextbereiche. Die
+  Typografie-Klassen tragen bewusst nur Schrift und Farbe, keinen
+  Außenabstand; zwischen Abschnitten regelt `.gat-section` das, innerhalb
+  eines Abschnitts stoßen aufeinanderfolgende Textblöcke aber bündig
+  aneinander. Jede konsumierende Seite hat sich den Rhythmus bisher selbst
+  gebaut — `schriften.html` im Bildgenerator mit neun eigenen Regeln.
+  **Opt-in**, damit bestehende Seiten unverändert bleiben.
+- **`.gat-prose--schmal`** — begrenzt die Zeilenlänge auf 62 Zeichen.
+  `.gat-container` ist für Raster gedacht und wird für Fließtext auf breiten
+  Schirmen zu weit zum Lesen.
+- **`.gat-link`** sowie automatische Auszeichnung von `<a>` in
+  `.gat-fliesstext` und von klassenlosen `<a>` in `.gat-prose`.
+- **`--gat-leading-subline`** (1.2) als eigenes Token.
+
+### Fixed
+
+- **Links im Fließtext waren nicht als Links erkennbar.** Das DS setzt keine
+  Tag-Defaults, ein blankes `<a>` erbte damit die Textfarbe und hatte keine
+  Unterstreichung — gemessen `rgb(29,29,27)` gegen `rgb(29,29,27)`,
+  `text-decoration: none`. Ohne Farbe *und* ohne Unterstreichung gibt es kein
+  Merkmal, an dem ein Link erkennbar wäre; das ist ein
+  Zugänglichkeitsproblem, nicht nur eine Geschmacksfrage. Navigation, Buttons
+  und Karten sind nicht betroffen, die bringen ihr eigenes Aussehen mit.
+- **`.gat-subline` nutzte `--gat-leading-headline` (0.9).** Das ist
+  Display-Leading: auf einer großen Headline richtig, auf einer Subline in
+  Absatzgröße zu eng. Bei 20px Schriftgröße lagen die Zeilen 18px
+  auseinander — bricht die Subline um, stoßen die Unterlängen der ersten
+  Zeile fast in die Oberlängen der zweiten. Jetzt `--gat-leading-subline`
+  (1.2), also 24px. Sichtbare Änderung für bestehende Seiten: Eine
+  einzeilige Subline baut minimal höher, eine mehrzeilige wird lesbar.
+
 ### Geändert
 
 - **`--gat-color-on-secondary` von Anthrazit auf reines Schwarz** (#33). Das
